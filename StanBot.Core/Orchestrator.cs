@@ -12,15 +12,18 @@
 
         private readonly MailService mailService;
 
-        public Orchestrator(BaseSocketClient discordClient, MailService mailService)
+        private readonly VerificationCodeManager verificationCodeManager;
+
+        public Orchestrator(BaseSocketClient discordClient, MailService mailService, VerificationCodeManager verificationCodeManager)
         {
             this.discordClient = discordClient;
             this.mailService = mailService;
+            this.verificationCodeManager = verificationCodeManager;
         }
 
-        public async Task LoginAsync()
+        public async Task LoginAsync(string token)
         {
-            await this.discordClient.LoginAsync(TokenType.Bot, "Some Token");
+            await this.discordClient.LoginAsync(TokenType.Bot, token);
             await this.discordClient.StartAsync();
         }
 
@@ -45,7 +48,16 @@
             Match match = regex.Match(message.Content);
             if (match.Success)
             {
-                this.mailService.SendMailTo(message.Content, "STAIR Discord Verification", "Hello....");
+                int verificationCode = this.verificationCodeManager.CreateCodeForUser(message.Author.Id);
+
+                string messageBody = $"Hello {message.Author.Username}\n\r"
+                                     + $"Here is your verification code for the STAIR discord server: {verificationCode}\n\r"
+                                     + $"If you have any questions about me, the discord server or about STAIR please don't "
+                                     + $"hesitate to ask a STAIR member (marked green on discord).\n\r\n\r"
+                                     + $"Kind regards\n"
+                                     + $"Stan";
+
+                this.mailService.SendMailTo(message.Content, "STAIR Discord Verification", messageBody);
             }
             else
             {

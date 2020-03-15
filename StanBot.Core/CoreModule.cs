@@ -8,6 +8,7 @@
         {
             this.Bind<Orchestrator>().ToSelf();
             this.Bind<MailService>().ToSelf().InSingletonScope();
+            this.Bind<VerificationCodeManager>().ToSelf().InSingletonScope();
         }
     }
 }

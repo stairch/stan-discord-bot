@@ -27,7 +27,7 @@
             Config config = this.configLoader.LoadConfigFromFile();
             this.mailService.Initialize(config.FromMailAdress, config.SmtpServer, config.SmtpPort, config.SmtpUsername, config.SmtpPassword);
             this.orchestrator = this.orchestratorFactory.Create();
-            await this.orchestrator.LoginAsync();
+            await this.orchestrator.LoginAsync(config.DiscordApplicationToken);
             this.orchestrator.RegisterNewUserListener();
         }
 

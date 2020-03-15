@@ -1,7 +1,7 @@
 ﻿namespace StanBot.Service
 {
+    using System;
     using System.IO;
-    using System.Security;
 
     using Newtonsoft.Json;
 
@@ -10,37 +10,16 @@
         public Config LoadConfigFromFile(string pathToFile = "./stan.config")
         {
             string readAllText = File.ReadAllText(pathToFile);
-            return JsonConvert.DeserializeObject<Config>(readAllText);
-        }
-    }
-
-    public class Config
-    {
-        [JsonConstructor]
-        public Config(string fromMailAdress, string smtpServer, int smtpPort, string smtpUsername, string smtpPassword, string discordApplicationToken)
-        {
-            this.FromMailAdress = fromMailAdress;
-            this.SmtpServer = smtpServer;
-            this.SmtpPort = smtpPort;
-            this.SmtpUsername = smtpUsername;
-            this.DiscordApplicationToken = discordApplicationToken;
-
-            foreach (char c in smtpPassword)
+            try
             {
-                this.SmtpPassword.AppendChar(c);
+                return JsonConvert.DeserializeObject<Config>(readAllText);
+            }
+            catch (JsonException e)
+            {
+                Console.WriteLine("Json deserialization failed. You probably used the wrong format for the config file. It has to be a json file and needs the following fields: FromMailAdress: string, SmtpServer: string, SmtpPort: int, SmtpUsername: string, SmtpPassword: string and DiscordApplicationToken: string");
+                Console.WriteLine(e);
+                throw;
             }
         }
-
-        public string SmtpServer { get; }
-
-        public int SmtpPort { get; }
-
-        public string SmtpUsername { get; }
-
-        public SecureString SmtpPassword { get; } = new SecureString();
-
-        public string DiscordApplicationToken { get; }
-
-        public string FromMailAdress { get; }
     }
 }

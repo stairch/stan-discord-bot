@@ -6,15 +6,18 @@
     {
         private readonly MailService mailService;
 
-        public OrchestratorFactory(MailService mailService)
+        private readonly VerificationCodeManager verificationCodeManager;
+
+        public OrchestratorFactory(MailService mailService, VerificationCodeManager verificationCodeManager)
         {
             this.mailService = mailService;
+            this.verificationCodeManager = verificationCodeManager;
         }
 
         public Orchestrator Create()
         {
             DiscordSocketClient discordSocketClient = new DiscordSocketClient();
-            return new Orchestrator(discordSocketClient, this.mailService);
+            return new Orchestrator(discordSocketClient, this.mailService, this.verificationCodeManager);
         }
     }
 }
