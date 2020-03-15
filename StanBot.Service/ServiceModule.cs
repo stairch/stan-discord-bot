@@ -7,6 +7,7 @@
         public override void Load()
         {
             this.Bind<ServiceManager>().ToSelf();
+            this.Bind<ConfigLoader>().ToSelf();
         }
     }
 }

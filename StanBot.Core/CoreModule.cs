@@ -7,6 +7,7 @@
         public override void Load()
         {
             this.Bind<Orchestrator>().ToSelf();
+            this.Bind<MailService>().ToSelf().InSingletonScope();
         }
     }
 }

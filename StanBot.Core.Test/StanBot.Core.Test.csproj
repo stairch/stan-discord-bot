@@ -5,12 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="6.0.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StanBot.Core2\StanBot.Core.csproj" />
+    <ProjectReference Include="..\StanBot.Core\StanBot.Core.csproj" />
   </ItemGroup>
 
 </Project>
