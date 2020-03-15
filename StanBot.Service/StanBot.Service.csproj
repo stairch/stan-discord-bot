@@ -16,4 +16,10 @@
     <ProjectReference Include="..\StanBot.Core\StanBot.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="stan.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

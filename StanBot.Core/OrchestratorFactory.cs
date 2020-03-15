@@ -4,11 +4,11 @@
 
     public class OrchestratorFactory
     {
-        private readonly MailService mailService;
+        private readonly IMailService mailService;
 
         private readonly VerificationCodeManager verificationCodeManager;
 
-        public OrchestratorFactory(MailService mailService, VerificationCodeManager verificationCodeManager)
+        public OrchestratorFactory(IMailService mailService, VerificationCodeManager verificationCodeManager)
         {
             this.mailService = mailService;
             this.verificationCodeManager = verificationCodeManager;

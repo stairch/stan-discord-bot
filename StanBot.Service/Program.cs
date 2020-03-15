@@ -13,7 +13,7 @@
         public static void Main(string[] args)
         {
             StandardKernel kernel = new StandardKernel();
-            kernel.Load(AppDomain.CurrentDomain.GetAssemblies());
+            kernel.Load("StanBot.*.dll");
 
             TopshelfExitCode topshelfExitCode = HostFactory.Run(x =>
                 {

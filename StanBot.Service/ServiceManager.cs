@@ -11,11 +11,11 @@
 
         private readonly ConfigLoader configLoader;
 
-        private readonly MailService mailService;
+        private readonly IMailService mailService;
 
         private Orchestrator orchestrator;
 
-        public ServiceManager(OrchestratorFactory orchestratorFactory, ConfigLoader configLoader, MailService mailService)
+        public ServiceManager(OrchestratorFactory orchestratorFactory, ConfigLoader configLoader, IMailService mailService)
         {
             this.orchestratorFactory = orchestratorFactory;
             this.configLoader = configLoader;
@@ -28,7 +28,7 @@
             this.mailService.Initialize(config.FromMailAdress, config.SmtpServer, config.SmtpPort, config.SmtpUsername, config.SmtpPassword);
             this.orchestrator = this.orchestratorFactory.Create();
             await this.orchestrator.LoginAsync(config.DiscordApplicationToken);
-            this.orchestrator.RegisterNewUserListener();
+            this.orchestrator.RegisterListeners();
         }
 
         public void Stop()

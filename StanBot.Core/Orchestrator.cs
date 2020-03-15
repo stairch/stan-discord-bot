@@ -10,11 +10,11 @@
     {
         private readonly BaseSocketClient discordClient;
 
-        private readonly MailService mailService;
+        private readonly IMailService mailService;
 
         private readonly VerificationCodeManager verificationCodeManager;
 
-        public Orchestrator(BaseSocketClient discordClient, MailService mailService, VerificationCodeManager verificationCodeManager)
+        public Orchestrator(BaseSocketClient discordClient, IMailService mailService, VerificationCodeManager verificationCodeManager)
         {
             this.discordClient = discordClient;
             this.mailService = mailService;
@@ -27,14 +27,14 @@
             await this.discordClient.StartAsync();
         }
 
-        public void RegisterNewUserListener()
+        public void RegisterListeners()
         {
             this.discordClient.UserJoined += this.DiscordSocketClientOnUserJoined;
+            this.discordClient.MessageReceived += this.DiscordSocketClientOnMessageReceived;
         }
 
         private async Task DiscordSocketClientOnUserJoined(SocketGuildUser socketGuildUser)
         {
-            this.discordClient.MessageReceived += this.DiscordSocketClientOnMessageReceived;
             await socketGuildUser.SendMessageAsync(
                 "Hello good friend. I am Stan and I would like to welcome you to the STAIR discord.\n\r"
                 + "Since this discord server is only for students at the HSLU department of computer"
@@ -44,6 +44,11 @@
 
         private async Task DiscordSocketClientOnMessageReceived(IMessage message)
         {
+            if (message.Source != MessageSource.User)
+            {
+                return;
+            }
+
             Regex regex = new Regex("(\\w*.\\w*@stud.hslu.ch)");
             Match match = regex.Match(message.Content);
             if (match.Success)
@@ -57,7 +62,7 @@
                                      + $"Kind regards\n"
                                      + $"Stan";
 
-                this.mailService.SendMailTo(message.Content, "STAIR Discord Verification", messageBody);
+                await this.mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
             }
             else
             {

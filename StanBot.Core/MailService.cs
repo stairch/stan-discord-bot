@@ -1,19 +1,29 @@
 ﻿namespace StanBot.Core
 {
+    using System;
     using System.Net;
     using System.Net.Mail;
     using System.Security;
+    using System.Threading.Tasks;
 
-    public class MailService
+    public class MailService : IMailService
     {
         private SmtpClient smtpClient;
 
         private string fromMailAdress;
 
-        public void SendMailTo(string mailAdress, string subject, string messageBody)
+        public async Task SendMailToAsync(string mailAdress, string subject, string messageBody)
         {
-            MailMessage mailMessage = new MailMessage(this.fromMailAdress, mailAdress, subject, messageBody);
-            this.smtpClient.Send(mailMessage);
+            try
+            {
+                MailMessage mailMessage = new MailMessage(this.fromMailAdress, mailAdress, subject, messageBody);
+                await this.smtpClient.SendMailAsync(mailMessage);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public void Initialize(string fromMailAdress, string smtpServer, int smtpPort, string smtpUsername, SecureString smtpPassword)
