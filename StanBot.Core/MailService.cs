@@ -1,23 +1,41 @@
 ﻿namespace StanBot.Core
 {
     using System;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Security;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using Microsoft.Graph;
 
     public class MailService : IMailService
     {
-        private SmtpClient smtpClient;
-
         private string fromMailAdress;
+
+        private GraphServiceClient graphServiceClient;
 
         public async Task SendMailToAsync(string mailAdress, string subject, string messageBody)
         {
             try
             {
-                MailMessage mailMessage = new MailMessage(this.fromMailAdress, mailAdress, subject, messageBody);
-                await this.smtpClient.SendMailAsync(mailMessage);
+                Message message = new Message
+                                      {
+                                          Subject = subject,
+                                          Body = new ItemBody
+                                                     {
+                                                         ContentType = BodyType.Text,
+                                                         Content = messageBody
+                                                     },
+                                          ToRecipients = new List<Recipient>
+                                                             {
+                                                                 new Recipient
+                                                                     {
+                                                                         EmailAddress = new EmailAddress
+                                                                                            {
+                                                                                                Address = mailAdress
+                                                                                            }
+                                                                     }
+                                                             }
+                                      };
+                await this.graphServiceClient.Me.SendMail(message).Request().PostAsync();
             }
             catch (Exception e)
             {
@@ -26,13 +44,13 @@
             }
         }
 
-        public void Initialize(string fromMailAdress, string smtpServer, int smtpPort, string smtpUsername, SecureString smtpPassword)
+        public async Task Initialize(string fromMailAdress, string appId, string[] scopes)
         {
-            this.smtpClient = new SmtpClient(smtpServer, smtpPort)
-                                  {
-                                      Credentials = new NetworkCredential(smtpUsername, smtpPassword)
-                                  };
-            this.fromMailAdress = fromMailAdress;
+            DeviceCodeAuthProvider authProvider = new DeviceCodeAuthProvider(appId, scopes);
+
+            await authProvider.GetAccessToken();
+
+            this.graphServiceClient = new GraphServiceClient(authProvider);
         }
     }
 }

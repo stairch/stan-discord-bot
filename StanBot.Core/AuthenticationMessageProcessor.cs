@@ -6,16 +6,17 @@
     using System.Threading.Tasks;
 
     using Discord;
+    using Discord.WebSocket;
 
     public class AuthenticationMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;
 
-        private readonly MailService mailService;
+        private readonly IMailService mailService;
 
-        private Regex regex;
+        private readonly Regex regex;
 
-        public AuthenticationMessageProcessor(VerificationCodeManager verificationCodeManager, MailService mailService)
+        public AuthenticationMessageProcessor(VerificationCodeManager verificationCodeManager, IMailService mailService)
         {
             this.verificationCodeManager = verificationCodeManager;
             this.mailService = mailService;
@@ -34,7 +35,7 @@
             return this.regex.IsMatch(message);
         }
 
-        public async Task ProcessAsync(IMessage message)
+        public async Task ProcessAsync(SocketMessage message)
         {
             int verificationCode = this.verificationCodeManager.CreateCodeForUser(message.Author.Id);
 

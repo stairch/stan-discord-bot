@@ -1,8 +1,6 @@
 {
-  "SmtpServer": "mail.server.ch",
-  "SmtpPort": 465,
-  "SmtpUsername": "name@server.ch",
-  "SmtpPassword": "VerySecurePassword",
+  "AppId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "Scopes": [ "Mail.Send" ],
   "DiscordApplicationToken": "xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "FromMailAdress": "name@server.ch"
 }

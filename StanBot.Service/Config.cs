@@ -7,27 +7,17 @@
     public class Config
     {
         [JsonConstructor]
-        public Config(string fromMailAdress, string smtpServer, int smtpPort, string smtpUsername, string smtpPassword, string discordApplicationToken)
+        public Config(string fromMailAdress, string appId, string[] scopes, string discordApplicationToken)
         {
             this.FromMailAdress = fromMailAdress;
-            this.SmtpServer = smtpServer;
-            this.SmtpPort = smtpPort;
-            this.SmtpUsername = smtpUsername;
+            this.AppId = appId;
+            this.Scopes = scopes;
             this.DiscordApplicationToken = discordApplicationToken;
-
-            foreach (char c in smtpPassword)
-            {
-                this.SmtpPassword.AppendChar(c);
-            }
         }
 
-        public string SmtpServer { get; }
+        public string AppId { get; }
 
-        public int SmtpPort { get; }
-
-        public string SmtpUsername { get; }
-
-        public SecureString SmtpPassword { get; } = new SecureString();
+        public string[] Scopes { get; }
 
         public string DiscordApplicationToken { get; }
 

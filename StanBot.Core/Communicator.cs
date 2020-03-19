@@ -7,18 +7,20 @@
     using Discord;
     using Discord.WebSocket;
 
+    using Ninject;
+
     public class Communicator
     {
-        private readonly IEnumerable<IMessageProcessor> handles;
+        private readonly IEnumerable<IMessageProcessor> messageReceivedProcessors;
 
-        public Communicator(IMessageProcessor[] messageProcessors)
+        public Communicator([Named("MessageReceived")]IEnumerable<IMessageProcessor> messageReceivedProcessors)
         {
-            this.handles = messageProcessors;
+            this.messageReceivedProcessors = messageReceivedProcessors;
         }
 
-        public async Task DiscordClientOnMessageReceived(IMessage message)
+        public async Task DiscordClientOnMessageReceived(SocketMessage message)
         {
-            foreach (IMessageProcessor handle in this.handles)
+            foreach (IMessageProcessor handle in this.messageReceivedProcessors)
             {
                 if (this.IsMessageSourceCorrect(message, handle) && handle.IsMatch(message.Content))
                 {

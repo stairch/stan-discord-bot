@@ -1,5 +1,6 @@
 ﻿namespace StanBot.Service
 {
+    using System;
     using System.Threading.Tasks;
 
     using StanBot.Core;
@@ -7,17 +8,17 @@
     // ReSharper disable once ClassNeverInstantiated.Global - Jusified because it uses dependency injection
     public class ServiceManager
     {
-        private readonly OrchestratorFactory orchestratorFactory;
+        private readonly DiscordClientFactory discordClientFactory;
 
         private readonly ConfigLoader configLoader;
 
         private readonly IMailService mailService;
 
-        private Orchestrator orchestrator;
+        private DiscordClient discordClient;
 
-        public ServiceManager(OrchestratorFactory orchestratorFactory, ConfigLoader configLoader, IMailService mailService)
+        public ServiceManager(DiscordClientFactory discordClientFactory, ConfigLoader configLoader, IMailService mailService)
         {
-            this.orchestratorFactory = orchestratorFactory;
+            this.discordClientFactory = discordClientFactory;
             this.configLoader = configLoader;
             this.mailService = mailService;
         }
@@ -25,15 +26,15 @@
         public async Task Start()
         {
             Config config = this.configLoader.LoadConfigFromFile();
-            this.mailService.Initialize(config.FromMailAdress, config.SmtpServer, config.SmtpPort, config.SmtpUsername, config.SmtpPassword);
-            this.orchestrator = this.orchestratorFactory.Create();
-            await this.orchestrator.LoginAsync(config.DiscordApplicationToken);
-            this.orchestrator.RegisterListeners();
+            await this.mailService.Initialize(config.FromMailAdress, config.AppId, config.Scopes);
+            this.discordClient = this.discordClientFactory.Create();
+            await this.discordClient.LoginAsync(config.DiscordApplicationToken);
+            this.discordClient.RegisterListeners();
         }
 
         public void Stop()
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Stopping the service.");
         }
     }
 }

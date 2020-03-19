@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Discord;
+    using Discord.WebSocket;
 
     public interface IMessageProcessor
     {
@@ -15,6 +16,6 @@
 
         bool IsMatch(string message);
 
-        Task ProcessAsync(IMessage message);
+        Task ProcessAsync(SocketMessage message);
     }
 }
