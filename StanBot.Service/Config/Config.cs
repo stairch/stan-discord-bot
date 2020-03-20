@@ -1,9 +1,7 @@
-﻿namespace StanBot.Service
+﻿using Newtonsoft.Json;
+
+namespace StanBot.Service.Config
 {
-    using System.Security;
-
-    using Newtonsoft.Json;
-
     public class Config
     {
         [JsonConstructor]

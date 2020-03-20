@@ -1,11 +1,10 @@
-﻿namespace StanBot.Core
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Graph;
+
+namespace StanBot.Core.MailService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    using Microsoft.Graph;
-
     public class MailService : IMailService
     {
         private string fromMailAdress;

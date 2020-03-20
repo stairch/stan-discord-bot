@@ -1,4 +1,6 @@
-﻿namespace StanBot.Core
+﻿using StanBot.Core.MessageProcessors;
+
+namespace StanBot.Core
 {
     using System.Collections.Generic;
     using System.Linq;

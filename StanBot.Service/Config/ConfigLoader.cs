@@ -1,10 +1,9 @@
-﻿namespace StanBot.Service
+﻿using System;
+using System.IO;
+using Newtonsoft.Json;
+
+namespace StanBot.Service.Config
 {
-    using System;
-    using System.IO;
-
-    using Newtonsoft.Json;
-
     public class ConfigLoader
     {
         public Config LoadConfigFromFile(string pathToFile = "./stan.json")

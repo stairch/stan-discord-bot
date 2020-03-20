@@ -1,4 +1,7 @@
-﻿namespace StanBot.Core
+﻿using StanBot.Core.MailService;
+using StanBot.Core.MessageProcessors;
+
+namespace StanBot.Core
 {
     using Ninject.Modules;
 
@@ -7,7 +10,7 @@
         public override void Load()
         {
             this.Bind<DiscordClient>().ToSelf();
-            this.Bind<IMailService>().To<MailService>().InSingletonScope();
+            this.Bind<IMailService>().To<MailService.MailService>().InSingletonScope();
             this.Bind<VerificationCodeManager>().ToSelf().InSingletonScope();
             this.Bind<Communicator>().ToSelf().InSingletonScope();
             this.Bind<IMessageProcessor>().To<AuthenticationMessageProcessor>().Named("MessageReceived");

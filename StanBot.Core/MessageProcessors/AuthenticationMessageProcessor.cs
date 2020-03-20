@@ -1,13 +1,12 @@
-﻿namespace StanBot.Core
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Discord;
+using Discord.WebSocket;
+using StanBot.Core.MailService;
+
+namespace StanBot.Core.MessageProcessors
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
-
-    using Discord;
-    using Discord.WebSocket;
-
     public class AuthenticationMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;

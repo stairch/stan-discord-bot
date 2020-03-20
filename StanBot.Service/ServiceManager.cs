@@ -1,4 +1,7 @@
-﻿namespace StanBot.Service
+﻿using StanBot.Core.MailService;
+using StanBot.Service.Config;
+
+namespace StanBot.Service
 {
     using System;
     using System.Threading.Tasks;
@@ -25,7 +28,7 @@
 
         public async Task Start()
         {
-            Config config = this.configLoader.LoadConfigFromFile();
+            Config.Config config = this.configLoader.LoadConfigFromFile();
             await this.mailService.Initialize(config.FromMailAdress, config.AppId, config.Scopes);
             this.discordClient = this.discordClientFactory.Create();
             await this.discordClient.LoginAsync(config.DiscordApplicationToken);

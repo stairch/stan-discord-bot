@@ -1,7 +1,7 @@
-﻿namespace StanBot.Core
-{
-    using System;
+﻿using System;
 
+namespace StanBot.Core.MessageProcessors
+{
     public class VerificationCode
     {
         public VerificationCode(ulong userId, int code)

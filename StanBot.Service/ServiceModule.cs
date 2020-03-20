@@ -1,4 +1,6 @@
-﻿namespace StanBot.Service
+﻿using StanBot.Service.Config;
+
+namespace StanBot.Service
 {
     using Ninject.Modules;
 

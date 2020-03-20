@@ -1,9 +1,9 @@
-﻿namespace StanBot.Service
-{
-    using System;
-    using System.Collections.Concurrent;
-    using System.Threading;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Threading;
 
+namespace StanBot.Core
+{
     public static class NonBlockingConsole
     {
         private static readonly BlockingCollection<string> MessageQueue = new BlockingCollection<string>();
