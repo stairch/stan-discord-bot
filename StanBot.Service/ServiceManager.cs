@@ -1,12 +1,10 @@
-﻿using StanBot.Core.MailService;
-using StanBot.Service.Config;
-
-namespace StanBot.Service
+﻿namespace StanBot.Service
 {
-    using System;
     using System.Threading.Tasks;
 
     using StanBot.Core;
+    using StanBot.Core.MailService;
+    using StanBot.Service.Configuration;
 
     // ReSharper disable once ClassNeverInstantiated.Global - Jusified because it uses dependency injection
     public class ServiceManager
@@ -28,8 +26,8 @@ namespace StanBot.Service
 
         public async Task Start()
         {
-            Config.Config config = this.configLoader.LoadConfigFromFile();
-            await this.mailService.Initialize(config.FromMailAdress, config.AppId, config.Scopes);
+            Config config = this.configLoader.LoadConfigFromFile();
+            await this.mailService.Initialize(config.FromMailAdress, config.FromName, config.AppId, config.Scopes);
             this.discordClient = this.discordClientFactory.Create();
             await this.discordClient.LoginAsync(config.DiscordApplicationToken);
             this.discordClient.RegisterListeners();
@@ -37,7 +35,6 @@ namespace StanBot.Service
 
         public void Stop()
         {
-            Console.WriteLine("Stopping the service.");
         }
     }
 }

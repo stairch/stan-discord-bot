@@ -2,5 +2,6 @@
   "AppId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "Scopes": [ "Mail.Send" ],
   "DiscordApplicationToken": "xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "FromMailAdress": "name@server.ch"
+  "FromMailAdress": "name@server.ch",
+  "FromName": "Name"
 }

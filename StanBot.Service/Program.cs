@@ -14,7 +14,7 @@
         {
             StandardKernel kernel = new StandardKernel();
             kernel.Load("StanBot.*.dll");
-
+            
             TopshelfExitCode topshelfExitCode = HostFactory.Run(x =>
                 {
                     x.Service<ServiceManager>(s =>

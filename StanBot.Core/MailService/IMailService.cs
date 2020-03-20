@@ -6,6 +6,6 @@ namespace StanBot.Core.MailService
     {
         Task SendMailToAsync(string mailAdress, string subject, string messageBody);
 
-        Task Initialize(string fromMailAdress, string appId, string[] scopes);
+        Task Initialize(string fromMailAdress, string fromName, string appId, string[] scopes);
     }
 }
