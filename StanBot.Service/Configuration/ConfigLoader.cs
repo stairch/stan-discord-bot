@@ -16,7 +16,7 @@
             }
             catch (JsonException e)
             {
-                Console.WriteLine("Json deserialization failed. You probably used the wrong format for the config file. It has to be a json file and needs the following fields: FromMailAdress: string, AppId: string, Scopes: string[], DiscordApplicationToken: string");
+                Console.WriteLine("Json deserialization failed. You probably used the wrong format for the config file. It has to be a json file and needs the following fields: FromMailAddress: string, AppId: string, Scopes: string[], DiscordApplicationToken: string");
                 Console.WriteLine(e);
                 throw;
             }

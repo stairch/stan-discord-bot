@@ -1,9 +1,9 @@
-﻿using StanBot.Core.MailService;
-using StanBot.Core.MessageProcessors;
-
-namespace StanBot.Core
+﻿namespace StanBot.Core
 {
     using Ninject.Modules;
+
+    using StanBot.Core.MailService;
+    using StanBot.Core.MessageProcessors;
 
     public class CoreModule : NinjectModule
     {

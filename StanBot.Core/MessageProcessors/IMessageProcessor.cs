@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Discord;
-using Discord.WebSocket;
-
-namespace StanBot.Core.MessageProcessors
+﻿namespace StanBot.Core.MessageProcessors
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using Discord;
+    using Discord.WebSocket;
+
     public interface IMessageProcessor
     {
         bool ShouldContinueProcessing { get; }

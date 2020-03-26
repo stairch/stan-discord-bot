@@ -27,7 +27,8 @@
         public async Task Start()
         {
             Config config = this.configLoader.LoadConfigFromFile();
-            await this.mailService.Initialize(config.FromMailAdress, config.FromName, config.AppId, config.Scopes);
+            NonBlockingLogger.Info($"Service started with the following config: {config}");
+            await this.mailService.Initialize(config.FromMailAddress, config.FromName, config.AppId, config.Scopes);
             this.discordClient = this.discordClientFactory.Create();
             await this.discordClient.LoginAsync(config.DiscordApplicationToken);
             this.discordClient.RegisterListeners();
@@ -35,6 +36,7 @@
 
         public void Stop()
         {
+            NonBlockingLogger.Info("Service stopped!");
         }
     }
 }

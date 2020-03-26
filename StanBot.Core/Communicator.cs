@@ -1,6 +1,4 @@
-﻿using StanBot.Core.MessageProcessors;
-
-namespace StanBot.Core
+﻿namespace StanBot.Core
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,6 +8,8 @@ namespace StanBot.Core
     using Discord.WebSocket;
 
     using Ninject;
+
+    using StanBot.Core.MessageProcessors;
 
     public class Communicator
     {

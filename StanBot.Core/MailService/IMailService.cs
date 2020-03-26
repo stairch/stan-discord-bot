@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-
-namespace StanBot.Core.MailService
+﻿namespace StanBot.Core.MailService
 {
+    using System.Threading.Tasks;
+
     public interface IMailService
     {
         Task SendMailToAsync(string mailAdress, string subject, string messageBody);
 
-        Task Initialize(string fromMailAdress, string fromName, string appId, string[] scopes);
+        Task Initialize(string fromMailAddress, string fromName, string appId, string[] scopes);
     }
 }

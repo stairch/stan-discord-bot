@@ -8,7 +8,7 @@
 
     public class MailService : IMailService
     {
-        private string fromMailAdress;
+        private string fromMailAddress;
 
         private GraphServiceClient graphServiceClient;
 
@@ -18,23 +18,26 @@
         {
             try
             {
-                Message message = new Message();
-                message.Subject = subject;
-                message.Body = new ItemBody { ContentType = BodyType.Text, Content = messageBody };
-                message.ToRecipients = new List<Recipient> { new Recipient { EmailAddress = new EmailAddress { Address = mailAdress } } };
-                message.Sender = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAdress, Name = this.fromName } };
-                message.From = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAdress, Name = this.fromName } };
+                Message message = new Message
+                                      {
+                                          Subject = subject,
+                                          Body = new ItemBody { ContentType = BodyType.Text, Content = messageBody },
+                                          ToRecipients = new List<Recipient> { new Recipient { EmailAddress = new EmailAddress { Address = mailAdress } } },
+                                          Sender = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } },
+                                          From = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } }
+                                      };
+
                 await this.graphServiceClient.Me.SendMail(message).Request().PostAsync();
             }
             catch (Exception e)
             {
-                await NonBlockingLogger.ErrorAsync($"{e.Message}\nStacktrace: {e.StackTrace}");
+                NonBlockingLogger.Error($"{e.Message}\nStacktrace: {e.StackTrace}");
             }
         }
 
-        public async Task Initialize(string fromMailAdress, string fromName, string appId, string[] scopes)
+        public async Task Initialize(string fromMailAddress, string fromName, string appId, string[] scopes)
         {
-            this.fromMailAdress = fromMailAdress;
+            this.fromMailAddress = fromMailAddress;
             this.fromName = fromName;
             DeviceCodeAuthProvider authProvider = new DeviceCodeAuthProvider(appId, scopes);
 

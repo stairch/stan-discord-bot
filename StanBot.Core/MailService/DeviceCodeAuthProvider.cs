@@ -36,14 +36,18 @@
                     // Invoke device code flow so user can sign-in with a browser
                     result = await this.msalClient.AcquireTokenWithDeviceCode(
                                  this.scopes,
-                                 callback => NonBlockingLogger.InfoAsync(callback.Message)).ExecuteAsync();
+                                 callback =>
+                                     {
+                                         NonBlockingLogger.Info(callback.Message);
+                                         return Task.CompletedTask;
+                                     }).ExecuteAsync();
 
                     this.userAccount = result.Account;
                     return result.AccessToken;
                 }
                 catch (Exception exception)
                 {
-                    await NonBlockingLogger.ErrorAsync($"Error getting access token: {exception.Message}");
+                    NonBlockingLogger.Error($"Error getting access token: {exception.Message}");
                     return null;
                 }
             }

@@ -1,51 +1,72 @@
-﻿using System;
-
-namespace StanBot.Core
+﻿namespace StanBot.Core
 {
+    using Nito.AsyncEx;
+    using System;
+    using System.Collections.Concurrent;
+    using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
-
-    using File = System.IO.File;
 
     public class NonBlockingLogger
     {
         private static readonly NonBlockingLogger Logger = new NonBlockingLogger();
 
+        private readonly ConcurrentQueue<string> messageQueue;
+
+        private readonly AsyncAutoResetEvent asyncAutoResetEvent;
+
         private NonBlockingLogger()
-        { }
+        {
+            this.messageQueue = new ConcurrentQueue<string>();
+            this.asyncAutoResetEvent = new AsyncAutoResetEvent();
+            this.LogToFile();
+        }
         
-        public static async Task DebugAsync(string value)
+        public static void Debug(string value)
         {
-            await Logger.Log($"{DateTime.Now} DEBUG {value}\n");
+            Logger.Log("DEBUG", value);
         }
 
-        public static async Task InfoAsync(string value)
+        public static void Info(string value)
         {
-            await Logger.Log($"{DateTime.Now} INFO {value}\n");
+            Logger.Log("INFO", value);
         }
 
-        public static async Task WarnAsync(string value)
+        public static void Warn(string value)
         {
-            await Logger.Log($"{DateTime.Now} WARN {value}\n");
+            Logger.Log("WARN", value);
         }
 
-        public static async Task ErrorAsync(string value)
+        public static void Error(string value)
         {
-            await Logger.Log($"{DateTime.Now} ERROR {value}\n");
+            Logger.Log("ERROR", value);
         }
 
-        public static async Task FatalAsync(string value)
+        public static void Fatal(string value)
         {
-            await Logger.Log($"{DateTime.Now} FATAL {value}\n");
+            Logger.Log("FATAL", value);
         }
 
-        private async Task Log(string message)
+        private void Log(string level, string value)
         {
-            using (FileStream file = File.Open("./stan.log", FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            this.messageQueue.Enqueue($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} {level} {value}\n\r");
+            this.asyncAutoResetEvent.Set();
+        }
+
+        private async Task LogToFile()
+        {
+            while (true)
             {
-                byte[] bytes = Encoding.ASCII.GetBytes(message);
-                await file.WriteAsync(bytes, 0, bytes.Length);
+                await this.asyncAutoResetEvent.WaitAsync();
+                using (FileStream file = File.Open("./stan.log", FileMode.Append, FileAccess.Write))
+                {
+                    if (this.messageQueue.TryDequeue(out string logMessage))
+                    {
+                        byte[] bytes = Encoding.ASCII.GetBytes(logMessage);
+                        await file.WriteAsync(bytes, 0, bytes.Length);
+                    }
+                }
             }
         }
     }
