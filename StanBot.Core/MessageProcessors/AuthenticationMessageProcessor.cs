@@ -22,7 +22,7 @@
             this.verificationCodeManager = verificationCodeManager;
             this.mailService = mailService;
             this.AllowedMessageSources = new List<MessageSource> { MessageSource.User };
-            this.regex = new Regex("^(\\w*.\\w*@stud.hslu.ch)");
+            this.regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
         }
 
         public bool ShouldContinueProcessing { get; } = false;
