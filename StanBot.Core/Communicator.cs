@@ -9,7 +9,7 @@
 
     using Ninject;
 
-    using StanBot.Core.MessageProcessors;
+    using MessageProcessors;
 
     public class Communicator
     {
@@ -22,16 +22,24 @@
 
         public async Task DiscordClientOnMessageReceived(SocketMessage message)
         {
+            bool wasMessageProcessed = false;
             foreach (IMessageProcessor handle in this.messageReceivedProcessors)
             {
                 if (this.IsMessageSourceCorrect(message, handle) && handle.IsMatch(message.Content))
                 {
                     await handle.ProcessAsync(message);
+                    wasMessageProcessed = true;
                     if (handle.ShouldContinueProcessing == false)
                     {
                         return;
                     }
                 }
+            }
+
+            if (message.Channel is IDMChannel && wasMessageProcessed == false)
+            {
+                await message.Author.SendMessageAsync("Entschuldigung, aber das habe ich nicht verstanden. Bitte überprüfe, dass du keinen Schreibfehler gemacht hast.\n\r" +
+                                                      "Sorry but I didn't understand that. Please check that you didn't make any spelling errors.");
             }
         }
 
