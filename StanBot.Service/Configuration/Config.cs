@@ -27,7 +27,7 @@
         public override string ToString()
         {
             return $"{nameof(this.AppId)}: {this.AppId}\n"
-                + $"{nameof(this.Scopes)}: {this.Scopes}\n"
+                + $"{nameof(this.Scopes)}: {string.Join(", ",this.Scopes)}\n"
                 + $"{nameof(this.DiscordApplicationToken)}: {this.DiscordApplicationToken}\n"
                 + $"{nameof(this.FromMailAddress)}: {this.FromMailAddress}\n"
                 + $"{nameof(this.FromName)}: {this.FromName}";
