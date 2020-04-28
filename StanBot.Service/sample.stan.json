@@ -2,6 +2,8 @@
   "AppId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "Scopes": [ "Mail.Send" ],
   "DiscordApplicationToken": "xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "FromMailAdress": "name@server.ch",
-  "FromName": "Name"
+  "FromMailAddress": "name@server.ch",
+  "FromName": "Name",
+  "GuildName": "DiscordServerName",
+  "AnnouncementRoleName": "RoleNameThatShouldBeAllowedToSendAnnouncements"
 }

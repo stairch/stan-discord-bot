@@ -21,19 +21,22 @@
         {
             this.verificationCodeManager = verificationCodeManager;
             this.mailService = mailService;
+
+            this.ShouldContinueProcessing = false;
+            this.MessageShouldTargetBot = true;
             this.AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             this.regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
         }
 
-        public bool ShouldContinueProcessing { get; } = false;
+        public bool ShouldContinueProcessing { get; }
 
-        public bool MessageShouldTargetBot { get; } = true;
+        public bool MessageShouldTargetBot { get; }
 
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
 
-        public bool IsMatch(string message)
+        public bool IsMatch(SocketMessage message)
         {
-            return this.regex.IsMatch(message);
+            return this.regex.IsMatch(message.Content);
         }
 
         public async Task ProcessAsync(SocketMessage message)

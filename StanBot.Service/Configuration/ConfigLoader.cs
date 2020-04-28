@@ -7,7 +7,11 @@
 
     public class ConfigLoader
     {
+#if DEBUG
+        public Config LoadConfigFromFile(string pathToFile = "./stan-test.json")
+#elif RELEASE
         public Config LoadConfigFromFile(string pathToFile = "./stan.json")
+#endif
         {
             string readAllText = File.ReadAllText(pathToFile);
             try

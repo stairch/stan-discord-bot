@@ -14,7 +14,7 @@
 
         IEnumerable<MessageSource> AllowedMessageSources { get; }
 
-        bool IsMatch(string message);
+        bool IsMatch(SocketMessage message);
 
         Task ProcessAsync(SocketMessage message);
     }

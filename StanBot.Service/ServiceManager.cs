@@ -9,17 +9,15 @@
     // ReSharper disable once ClassNeverInstantiated.Global - Jusified because it uses dependency injection
     public class ServiceManager
     {
-        private readonly DiscordClientFactory discordClientFactory;
+        private readonly Orchestrator orchestrator;
 
         private readonly ConfigLoader configLoader;
 
         private readonly IMailService mailService;
 
-        private DiscordClient discordClient;
-
-        public ServiceManager(DiscordClientFactory discordClientFactory, ConfigLoader configLoader, IMailService mailService)
+        public ServiceManager(Orchestrator orchestrator, ConfigLoader configLoader, IMailService mailService)
         {
-            this.discordClientFactory = discordClientFactory;
+            this.orchestrator = orchestrator;
             this.configLoader = configLoader;
             this.mailService = mailService;
         }
@@ -29,9 +27,7 @@
             Config config = this.configLoader.LoadConfigFromFile();
             NonBlockingLogger.Info($"Service started with the following config: {config}");
             await this.mailService.Initialize(config.FromMailAddress, config.FromName, config.AppId, config.Scopes);
-            this.discordClient = this.discordClientFactory.Create();
-            await this.discordClient.LoginAsync(config.DiscordApplicationToken);
-            this.discordClient.RegisterListeners();
+            await this.orchestrator.InitializeDiscordAsync(config.DiscordApplicationToken, config.GuildName, config.AnnouncementRoleName);
         }
 
         public void Stop()

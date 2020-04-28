@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="stan-test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="stan.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -25,7 +25,7 @@
             bool wasMessageProcessed = false;
             foreach (IMessageProcessor handle in this.messageReceivedProcessors)
             {
-                if (this.IsMessageSourceCorrect(message, handle) && handle.IsMatch(message.Content))
+                if (this.IsMessageSourceCorrect(message, handle) && handle.IsMatch(message))
                 {
                     await handle.ProcessAsync(message);
                     wasMessageProcessed = true;
@@ -46,7 +46,7 @@
         private bool IsMessageSourceCorrect(IMessage message, IMessageProcessor handle)
         {
             return handle.AllowedMessageSources.Contains(message.Source)
-                || (handle.MessageShouldTargetBot && message.Channel.GetType() == typeof(SocketDMChannel));
+                && (handle.MessageShouldTargetBot == false  || message.Channel.GetType() == typeof(SocketDMChannel));
         }
     }
 }

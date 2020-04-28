@@ -9,11 +9,11 @@
     using Discord;
     using Discord.WebSocket;
 
-    public class VerirficationCodeMessageProcessor : IMessageProcessor
+    public class VerificationCodeMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;
 
-        public VerirficationCodeMessageProcessor(VerificationCodeManager verificationCodeManager)
+        public VerificationCodeMessageProcessor(VerificationCodeManager verificationCodeManager)
         {
             this.verificationCodeManager = verificationCodeManager;
             this.ShouldContinueProcessing = false;
@@ -27,10 +27,10 @@
 
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
 
-        public bool IsMatch(string message)
+        public bool IsMatch(SocketMessage message)
         {
             Regex regex = new Regex("^\\d{6}");
-            return regex.IsMatch(message);
+            return regex.IsMatch(message.Content);
         }
 
         public async Task ProcessAsync(SocketMessage message)
@@ -55,7 +55,7 @@
             NonBlockingLogger.Info($"Verification code {verificationCode} is correct for user {messageAuthor.Username}");
             SocketRole socketRole = socketGuild.Roles.Single(sr => sr.Name == "@student");
             await socketGuildUser.AddRoleAsync(socketRole);
-            await socketGuildUser.SendMessageAsync("Danke vielmas. Du bist nun verifiziert als Student.\n\rThank you very much. You're now verified as a student.");
+            await socketGuildUser.SendMessageAsync("Danke vielmals. Du bist nun verifiziert als Student.\n\rThank you very much. You're now verified as a student.");
             NonBlockingLogger.Info($"Assigned role @student to {messageAuthor.Username}");
             this.verificationCodeManager.RemoveCodesForUser(messageAuthor.Id);
         }
