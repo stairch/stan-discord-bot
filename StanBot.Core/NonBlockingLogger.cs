@@ -58,13 +58,13 @@
         {
             while (true)
             {
-                await this.asyncAutoResetEvent.WaitAsync();
+                await this.asyncAutoResetEvent.WaitAsync().ConfigureAwait(false);
                 using (FileStream file = File.Open("./stan.log", FileMode.Append, FileAccess.Write))
                 {
                     if (this.messageQueue.TryDequeue(out string logMessage))
                     {
                         byte[] bytes = Encoding.ASCII.GetBytes(logMessage);
-                        await file.WriteAsync(bytes, 0, bytes.Length);
+                        await file.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
                     }
                 }
             }
