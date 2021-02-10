@@ -15,9 +15,9 @@ namespace StanBot.Core
             this.discordClient = discordClient;
         }
 
-        public async Task InitializeDiscordAsync(string discordApplicationToken, string guildName, string announcementRoleName)
+        public async Task InitializeDiscordAsync(string discordApplicationToken, string guildName, string announcementRoleName, string studentRoleName)
         {
-            this.discordClient.Initialize(guildName, announcementRoleName);
+            this.discordClient.Initialize(guildName, announcementRoleName, studentRoleName);
             await this.discordClient.LoginAsync(discordApplicationToken);
             this.discordClient.RegisterUserJoinedListener(this.DiscordSocketClientOnUserJoined);
             this.discordClient.RegisterMessageReceivedListener(this.communicator.DiscordClientOnMessageReceived);

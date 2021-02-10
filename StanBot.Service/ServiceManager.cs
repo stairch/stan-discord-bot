@@ -27,7 +27,7 @@
             Config config = this.configLoader.LoadConfigFromFile();
             NonBlockingLogger.Info($"Service started with the following config: {config}");
             await this.mailService.Initialize(config.FromMailAddress, config.FromName, config.AppId, config.Scopes);
-            await this.orchestrator.InitializeDiscordAsync(config.DiscordApplicationToken, config.GuildName, config.AnnouncementRoleName);
+            await this.orchestrator.InitializeDiscordAsync(config.DiscordApplicationToken, config.GuildName, config.AnnouncementRoleName, config.StudentRoleName);
         }
 
         public void Stop()

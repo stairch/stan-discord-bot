@@ -12,10 +12,12 @@
     public class VerificationCodeMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;
+        private readonly DiscordClient discordClient;
 
-        public VerificationCodeMessageProcessor(VerificationCodeManager verificationCodeManager)
+        public VerificationCodeMessageProcessor(VerificationCodeManager verificationCodeManager, DiscordClient discordClient)
         {
             this.verificationCodeManager = verificationCodeManager;
+            this.discordClient = discordClient;
             this.ShouldContinueProcessing = false;
             this.MessageShouldTargetBot = true;
             this.AllowedMessageSources = new List<MessageSource> { MessageSource.User };
@@ -53,7 +55,7 @@
             SocketGuild socketGuild = messageAuthor.MutualGuilds.Single(sg => sg.CurrentUser != null && sg.CurrentUser.Guild.Id == sg.Id);
             SocketGuildUser socketGuildUser = socketGuild.Users.Single(sgu => sgu.Id == messageAuthor.Id);
             NonBlockingLogger.Info($"Verification code {verificationCode} is correct for user {messageAuthor.Username}");
-            SocketRole socketRole = socketGuild.Roles.Single(sr => sr.Name == "@student");
+            SocketRole socketRole = socketGuild.Roles.Single(sr => sr.Name == this.discordClient.StudentRoleName);
             await socketGuildUser.AddRoleAsync(socketRole);
             await socketGuildUser.SendMessageAsync("Danke vielmals. Du bist nun verifiziert als Student.\n\rThank you very much. You're now verified as a student.");
             NonBlockingLogger.Info($"Assigned role @student to {messageAuthor.Username}");

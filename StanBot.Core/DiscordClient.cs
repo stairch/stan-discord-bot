@@ -22,10 +22,13 @@ namespace StanBot.Core
 
         public string AnnouncementRoleName { get; private set; }
 
-        public void Initialize(string guildName, string announcementRoleName)
+        public string StudentRoleName { get; private set; }
+
+        public void Initialize(string guildName, string announcementRoleName, string studentRoleName)
         {
             this.GuildName = guildName;
             this.AnnouncementRoleName = announcementRoleName;
+            this.StudentRoleName = studentRoleName;
         }
 
         public async Task LoginAsync(string token)
