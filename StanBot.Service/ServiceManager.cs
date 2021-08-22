@@ -1,11 +1,10 @@
-﻿namespace StanBot.Service
+﻿using StanBot.Core;
+using StanBot.Core.MailService;
+using StanBot.Service.Configuration;
+using System.Threading.Tasks;
+
+namespace StanBot.Service
 {
-    using System.Threading.Tasks;
-
-    using StanBot.Core;
-    using StanBot.Core.MailService;
-    using StanBot.Service.Configuration;
-
     // ReSharper disable once ClassNeverInstantiated.Global - Jusified because it uses dependency injection
     public class ServiceManager
     {

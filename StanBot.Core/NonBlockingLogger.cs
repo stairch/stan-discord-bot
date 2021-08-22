@@ -1,13 +1,13 @@
-﻿namespace StanBot.Core
-{
-    using Nito.AsyncEx;
-    using System;
-    using System.Collections.Concurrent;
-    using System.Globalization;
-    using System.IO;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿using Nito.AsyncEx;
+using System;
+using System.Collections.Concurrent;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace StanBot.Core
+{
     public class NonBlockingLogger
     {
         private static readonly NonBlockingLogger Logger = new NonBlockingLogger();
@@ -22,7 +22,7 @@
             this.asyncAutoResetEvent = new AsyncAutoResetEvent();
             this.LogToFile();
         }
-        
+
         public static void Debug(string value)
         {
             Logger.Log("DEBUG", value);
