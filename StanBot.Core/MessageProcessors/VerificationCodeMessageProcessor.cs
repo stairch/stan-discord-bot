@@ -1,18 +1,24 @@
-﻿namespace StanBot.Core.MessageProcessors
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
+﻿using Discord;
+using Discord.WebSocket;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-    using Discord;
-    using Discord.WebSocket;
+namespace StanBot.Core.MessageProcessors
+{
 
     public class VerificationCodeMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;
         private readonly DiscordClient discordClient;
+
+        public bool ShouldContinueProcessing { get; }
+
+        public bool MessageShouldTargetBot { get; }
+
+        public IEnumerable<MessageSource> AllowedMessageSources { get; }
 
         public VerificationCodeMessageProcessor(VerificationCodeManager verificationCodeManager, DiscordClient discordClient)
         {
@@ -23,14 +29,9 @@
             this.AllowedMessageSources = new List<MessageSource> { MessageSource.User };
         }
 
-        public bool ShouldContinueProcessing { get; }
-
-        public bool MessageShouldTargetBot { get; }
-
-        public IEnumerable<MessageSource> AllowedMessageSources { get; }
-
         public bool IsMatch(SocketMessage message)
         {
+            // check for 6 digit number
             Regex regex = new Regex("^\\d{6}");
             return regex.IsMatch(message.Content);
         }
@@ -46,9 +47,9 @@
                 NonBlockingLogger.Warn($"{messageAuthor.Username} provided a wrong verification code: {verificationCode}. Correct would have been: {this.verificationCodeManager.GetCodeForUser(messageAuthor.Id)}");
                 await messageAuthor.SendMessageAsync(
                     "Hmmm... Es sieht aus, als wäre das der falsche Code. Bitte überprüfe, ob du mir den richtigen " +
-                        "Code geschickt hast. Falls Ja, gib mir nochmals deine Mail Adresse, dann schicke ich dir ein neues Mail.\n\r" +
-                        "Hmmm... It looks like that's the wrong code. Please make sure that you entered the code correctly. If you did, " +
-                        "send me your mail address again and I'll send you another mail with a new verification code.");
+                    "Code geschickt hast. Falls Ja, gib mir nochmals deine Mail Adresse, dann schicke ich dir ein neues Mail.\n\r" +
+                    "Hmmm... It looks like that's the wrong code. Please make sure that you entered the code correctly. If you did, " +
+                    "send me your mail address again and I'll send you another mail with a new verification code.");
                 return;
             }
 

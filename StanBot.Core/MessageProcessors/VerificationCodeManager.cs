@@ -1,9 +1,12 @@
-﻿namespace StanBot.Core.MessageProcessors
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace StanBot.Core.MessageProcessors
+{
+    /// <summary>
+    /// code isn't saved or only as long service is running, after restarting the code is gone
+    /// </summary>
     public class VerificationCodeManager
     {
         private readonly List<VerificationCode> verificationCodes = new List<VerificationCode>();

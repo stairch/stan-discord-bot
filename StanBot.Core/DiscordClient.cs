@@ -1,28 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using Discord;
+using Discord.WebSocket;
+using System;
+using System.Threading.Tasks;
 
 namespace StanBot.Core
 {
-    using System.Threading.Tasks;
-
-    using Discord;
-    using Discord.WebSocket;
-
     public class DiscordClient
     {
         private readonly BaseSocketClient discordClient;
-
-        public DiscordClient()
-        {
-            this.discordClient = new DiscordSocketClient();
-        }
 
         public string GuildName { get; private set; }
 
         public string AnnouncementRoleName { get; private set; }
 
         public string StudentRoleName { get; private set; }
+
+        public DiscordClient()
+        {
+            this.discordClient = new DiscordSocketClient();
+        }
 
         public void Initialize(string guildName, string announcementRoleName, string studentRoleName)
         {

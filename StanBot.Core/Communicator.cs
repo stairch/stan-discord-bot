@@ -1,16 +1,16 @@
-﻿namespace StanBot.Core
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Discord;
+using Discord.WebSocket;
+using Ninject;
+using StanBot.Core.MessageProcessors;
+
+namespace StanBot.Core
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using Discord;
-    using Discord.WebSocket;
-
-    using Ninject;
-
-    using MessageProcessors;
-
+    /// <summary>
+    /// is called when a message is received in a direct message.
+    /// </summary>
     public class Communicator
     {
         private readonly IEnumerable<IMessageProcessor> messageReceivedProcessors;
@@ -20,6 +20,11 @@
             this.messageReceivedProcessors = messageReceivedProcessors;
         }
 
+        /// <summary>
+        /// direct message to Stan
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task DiscordClientOnMessageReceived(SocketMessage message)
         {
             bool wasMessageProcessed = false;
@@ -46,7 +51,8 @@
         private bool IsMessageSourceCorrect(IMessage message, IMessageProcessor handle)
         {
             return handle.AllowedMessageSources.Contains(message.Source)
-                && (handle.MessageShouldTargetBot == false  || message.Channel.GetType() == typeof(SocketDMChannel));
+                // TODO: check for "typeof" instead of "is idmchannel"
+                && (handle.MessageShouldTargetBot == false || message.Channel.GetType() == typeof(SocketDMChannel));
         }
     }
 }

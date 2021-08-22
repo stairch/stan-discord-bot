@@ -1,11 +1,10 @@
-﻿namespace StanBot.Core.MailService
+﻿using Microsoft.Graph;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace StanBot.Core.MailService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    using Microsoft.Graph;
-
     public class MailService : IMailService
     {
         private string fromMailAddress;
@@ -19,13 +18,13 @@
             try
             {
                 Message message = new Message
-                                      {
-                                          Subject = subject,
-                                          Body = new ItemBody { ContentType = BodyType.Text, Content = messageBody },
-                                          ToRecipients = new List<Recipient> { new Recipient { EmailAddress = new EmailAddress { Address = mailAdress } } },
-                                          Sender = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } },
-                                          From = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } }
-                                      };
+                {
+                    Subject = subject,
+                    Body = new ItemBody { ContentType = BodyType.Text, Content = messageBody },
+                    ToRecipients = new List<Recipient> { new Recipient { EmailAddress = new EmailAddress { Address = mailAdress } } },
+                    Sender = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } },
+                    From = new Recipient { EmailAddress = new EmailAddress { Address = this.fromMailAddress, Name = this.fromName } }
+                };
 
                 await this.graphServiceClient.Me.SendMail(message).Request().PostAsync();
             }
@@ -43,6 +42,7 @@
 
             await authProvider.GetAccessToken();
 
+            // graphservice client sends the actual messgae
             this.graphServiceClient = new GraphServiceClient(authProvider);
         }
     }
