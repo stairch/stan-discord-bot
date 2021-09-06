@@ -1,21 +1,23 @@
-﻿namespace StanBot.Core.MessageProcessors
+﻿using Discord;
+using Discord.WebSocket;
+using StanBot.Core.MailService;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace StanBot.Core.MessageProcessors
 {
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
-
-    using Discord;
-    using Discord.WebSocket;
-
-    using StanBot.Core.MailService;
-
     public class AuthenticationMessageProcessor : IMessageProcessor
     {
         private readonly VerificationCodeManager verificationCodeManager;
-
         private readonly IMailService mailService;
-
         private readonly Regex regex;
+
+        public bool ShouldContinueProcessing { get; }
+
+        public bool MessageShouldTargetBot { get; }
+
+        public IEnumerable<MessageSource> AllowedMessageSources { get; }
 
         public AuthenticationMessageProcessor(VerificationCodeManager verificationCodeManager, IMailService mailService)
         {
@@ -25,14 +27,8 @@
             this.ShouldContinueProcessing = false;
             this.MessageShouldTargetBot = true;
             this.AllowedMessageSources = new List<MessageSource> { MessageSource.User };
-            this.regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
+            this.regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase); // is hslu regex
         }
-
-        public bool ShouldContinueProcessing { get; }
-
-        public bool MessageShouldTargetBot { get; }
-
-        public IEnumerable<MessageSource> AllowedMessageSources { get; }
 
         public bool IsMatch(SocketMessage message)
         {

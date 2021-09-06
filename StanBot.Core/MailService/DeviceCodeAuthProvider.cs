@@ -1,13 +1,12 @@
-﻿namespace StanBot.Core.MailService
+﻿using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
+namespace StanBot.Core.MailService
 {
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
-
-    using Microsoft.Graph;
-    using Microsoft.Identity.Client;
-
     public class DeviceCodeAuthProvider : IAuthenticationProvider
     {
         private readonly IPublicClientApplication msalClient;

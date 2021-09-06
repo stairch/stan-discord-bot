@@ -26,9 +26,9 @@
         public string FromMailAddress { get; }
 
         public string FromName { get; }
-        
+
         public string GuildName { get; }
-        
+
         public string AnnouncementRoleName { get; }
 
         public string StudentRoleName { get; }
