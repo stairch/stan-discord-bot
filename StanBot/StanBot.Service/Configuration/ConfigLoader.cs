@@ -9,7 +9,8 @@
     {
 #if DEBUG
         public Config LoadConfigFromFile(string pathToFile = "./stan.json")
-#elif RELEASE
+#else
+        // release
         public Config LoadConfigFromFile(string pathToFile = "./stan.json")
 #endif
         {
