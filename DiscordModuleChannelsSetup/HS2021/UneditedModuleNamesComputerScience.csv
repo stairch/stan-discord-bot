@@ -1,0 +1,461 @@
+﻿Anlassnummer,Anlassbezeichnung
+I.BA_102_KICKPROG.16,I.DI_Kick-Start Algorithmic Thinking & Programming
+I.BA_110_SUSHI.16,I.DI_Running Sushi Einführungswoche
+I.BA_111_DIGITECH.16,I.DI_Digital Technologies Fundamentals
+I.BA_112_UX.16,I.DI_User Experience Design & Engineering
+I.BA_113_GAME.20,I.DI_Game Design & Engineering
+I.BA_123_MATH1.16,I.DI_Mathematics for Games and Computergraphics
+I.BA_161_STUPROT.16,I.DI_Studio Physical Prototyping
+I.BA_162_COMGRAP.16,I.DI_Computer Graphics & Computational Perception
+I.BA_163_STUINFAE.16,I.DI_Studio Information Aesthetics & Engineering
+I.BA_164_STUINFAX.18,I.DI_Studio Information Aesthetics & Engineering extended
+I.BA_165_STUEMTEC.16,I.DI_Studio Emerging Technologies
+I.BA_166_STUEMTEX.16,I.DI_Studio Emerging Technologies extended
+I.BA_167_STUPROTX.16,I.DI_Studio Physical Prototyping extended
+I.BA_172_MATH2.16,I.DI_Beautiful Mathematics
+I.BA_173_DEWEBMO.16,I.DI_Development for Web & Mobile
+I.BA_211_STUWE1.16,I.DI_Studio Web & Mobile Design
+I.BA_212_STUUE1.16,I.DI_Studio User Experience Design
+I.BA_213_STUGA1.16,I.DI_Studio Game Design
+I.BA_214_STUWE1X.16,I.DI_Studio Web & Mobile Design extended
+I.BA_215_STUUE1X.16,I.DI_Studio User Experience Design extended
+I.BA_216_STUGA1X.16,I.DI_Studio Game Design extended
+I.BA_218_COMPPX.18,I.Computational Perception extended
+I.BA_219_COMGRAPX.16,I.DI_Computer Graphics extended
+I.BA_222_GENCG.16,I.DI_Generative Computer Graphics
+I.BA_223_SOCPRO.16,I.DI_Social Projekt Digital Ideation
+I.BA_224_DMATHPRO.17,I.Diskrete Mathematik Pro
+I.BA_261_STUWE2.16,I.DI_Studio Web&Mobile Design & Engineering 2
+I.BA_262_STUUE2.16,I.DI_Studio UX Design & Engineering 2
+I.BA_263_STUGA2.16,I.DI_Studio Game Design & Engineering 2
+I.BA_291_BHELP1.20,I.DI_Bachelor Project Help
+I.BA_311_BSTUDY.18,I.Bachelor Study
+I.BA_331_INNO.18,I.Creative Entrepreneur & Corporate Innovation
+I.BA_361_BPROI.18,I.Bachelor Arbeit Fokus Informatik
+I.BA_3DMOD4RT.21,I.3D Modellieren für Echtzeitanwendungen
+I.BA_ABIZ_E.21,I.Algorithmic Business
+I.BA_ABIZ_K.21,I.Algorithmic Business
+I.BA_ABIZ_MM.21,I.Algorithmic Business
+I.BA_ACBA.16,I.Accounting Basics
+I.BA_ACMET.19,I.Academic Methods
+I.BA_AD.16,I.Algorithmen & Datenstrukturen
+I.BA_ADML_E.21,I.Advanced Machine Learning
+I.BA_ADML_K.21,I.Advanced Machine Learning
+I.BA_ADML_MM.21,I.Advanced Machine Learning
+I.BA_ADPENTEST.20,I.Advanced Penetration Testing
+I.BA_ADRM.19,I.Advanced Risk Management
+I.BA_ADS.19,I.Algorithmen & Datenstrukturen ICS
+I.BA_AEDC1.20,I.Advanced English Diploma Course I
+I.BA_AEDC1_E.18,I.Advanced English Diploma Course I
+I.BA_AEDC1_K.18,I.Advanced English Diploma Course I
+I.BA_AEDC1_MM.18,I.Advanced English Diploma Course I
+I.BA_AEDC1_Z.18,I.Advanced English Diploma Course I
+I.BA_AEDC2.19,I.Advanced English Diploma Course II (IELTS)
+I.BA_AEDC2IL.19,I.Advanced English Diploma Course II (IELTS)
+I.BA_AEDCIT.20,I.Academic English IELTS Preparation
+I.BA_AEDCTO.20,I.Advanced English Diploma Course TOEFL Preparation
+I.BA_AEDCTO_E.19,I.Advanced English Diploma Course II (TOEFL)
+I.BA_AEDCTO_K.19,I.Advanced English Diploma Course II (TOEFL)
+I.BA_AEDCTO_MM.19,I.Advanced English Diploma Course II (TOEFL)
+I.BA_AEDCTO_Z.19,I.Advanced English Diploma Course II (TOEFL)
+I.BA_AGAMEDEV.21,I.Advanced Game Development
+I.BA_AI.16,I.Artificial Intelligence
+I.BA_AICH.22,I.AI Challenge
+I.BA_AIOT.19,I.Advanced Internet of Things
+I.BA_AISO_E.17,I.Artificial Intelligence: Search & Optimization
+I.BA_AISO_K.17,I.Artificial Intelligence: Search & Optimization
+I.BA_AISO_MM.17,I.Artificial Intelligence: Search & Optimization
+I.BA_AITEC.16,I.Advanced Internet Technologies
+I.BA_ANCPH.20,"I.Anglo-Saxon Culture, Politics & History"
+I.BA_ANCPH_K.19,"I.Anglo-Saxon Culture, Politics & History"
+I.BA_ANCPH_MM.19,"I.Anglo-Saxon Culture, Politics & History"
+I.BA_ANCPH_Z.19,"I.Anglo-Saxon Culture, Politics & History"
+I.BA_ANGCPH.20,I.Introduction to Anglo-Saxon Culture Politics & History
+I.BA_ANLIS.20,I.Analysis
+I.BA_ANLS.19,I.Analysis
+I.BA_APMAT.20,I.Applied Mathematics
+I.BA_APPE_E.17,I.Applikationsentwicklung
+I.BA_APPE_K.17,I.Applikationsentwicklung
+I.BA_APPE_MM.17,I.Applikationsentwicklung
+I.BA_APPRE.21,I.Applied Entrepreneurship (Blockwoche)
+I.BA_APP_ISA.19,I.ISA_App-Entwicklung für Einsteiger
+I.BA_AR.21,I.Augmented Reality
+I.BA_ARINT.20,I.Artificial Intelligence
+I.BA_ASACPH.20,I.Introduction to Asia Culture Politics & History
+I.BA_ASCPH.20,"I.Asia Culture, Politics & History"
+I.BA_ASTA1.18,I.Applied Statistics 1
+I.BA_ASTA2.18,I.Applied Statistics 2
+I.BA_ASTAT_E.20,I.Applied Statistics for Data Science
+I.BA_ASTAT_K.20,I.Applied Statistics for Data Science
+I.BA_ASTAT_MM.20,I.Applied Statistics for Data Science
+I.BA_BAA+INF.16,I.Bachelor Diplomarbeit Informatik
+I.BA_BAA.19,I.Bachelorarbeit
+I.BA_BADIT.21,I.Bachelor Diploma Thesis
+I.BA_BCHAIN.18,I.Blockchain
+I.BA_BDLC.19,I.Big Data Lab Cluster
+I.BA_BDLS.18,I.Big Data Lab Sandbox
+I.BA_BDM.17,I.Big Data Management
+I.BA_BIDS.18,I.Business Intelligence & Decision Support
+I.BA_BLOCC.20,I.Blockchain
+I.BA_BPM.16,I.Business Process Management
+I.BA_BPRAXIS_F21.21,I.Anrechnung Praxistätigkeit 6 ECTS
+I.BA_BPRAXIS_H21.21,I.Anrechnung Praxistätigkeit 6 ECTS
+I.BA_BSCMA.18,I.Business & Supply Chain Management
+I.BA_BUETC.20,I.Business Ethics
+I.BA_BUINT.20,I.Business Intelligence
+I.BA_BUPEC.19,I.Business Project 2 Economics
+I.BA_BUPIC.20,I.Intercultural Business Project
+I.BA_BUPTE.19,I.Business Project 1 Technology
+I.BA_BUSOD.19,I.Business Software Development
+I.BA_BW.16,I.Betriebswirtschaft
+I.BA_CAB_E.19,I.Cloud-Services Angebot & Betrieb
+I.BA_CAB_K.19,I.Cloud-Services Angebot & Betrieb
+I.BA_CAB_MM.19,I.Cloud-Services Angebot & Betrieb
+I.BA_CAEPRO.19,I.Cambridge Proficiency
+I.BA_CCNA.16,I.Computer Networks (CCNA)
+I.BA_CCNA1&2ZERT.20,I.Cisco Zertifizierung Semester 1&2
+I.BA_CG_E.18,I.Computer Graphics
+I.BA_CG_K.18,I.Computer Graphics
+I.BA_CG_MM.18,I.Computer Graphics
+I.BA_CHMA.16,I.Change Management
+I.BA_CI.17,I.Cloud Infrastructure
+I.BA_CILAB_E.18,I.Cloud Infrastructure Lab
+I.BA_CILAB_K.18,I.Cloud Infrastructure Lab
+I.BA_CILAB_MM.18,I.Cloud Infrastructure Lab
+I.BA_CISO_ISSUES.21,I.Ciso Office Issues
+I.BA_CLOUDSEC.20,I.Cloud Security
+I.BA_CLOUDSEC_E.21,I.Cloud Security
+I.BA_CLOUDSEC_K.21,I.Cloud Security
+I.BA_CLOUDSEC_MM.21,I.Cloud Security
+I.BA_CNA.16,I.Computer & Network Architecture
+I.BA_CNF.16,I.Computer Network Fundamentals
+I.BA_CNF_2_NETW2.21,I.CNF Upgrade zu NETW2
+I.BA_CNF_K.18,I.Computer Network Fundamentals
+I.BA_COBAU.20,I.Compilerbau
+I.BA_CONS.19,I.Consulting
+I.BA_CONS.20,I.Consulting (Blockwoche)
+I.BA_CONWB.18,I.Computer & Network Basics
+I.BA_CPLAB.20,I.Cloud Programming Lab
+I.BA_CRS.19,I.Crisis Recovery Strategies
+I.BA_CSA.16,I.C# in Action
+I.BA_CSF.18,I.Computer Science Fundamentals
+I.BA_CT_E.21,I.Cloud Technology
+I.BA_CT_K.21,I.Cloud Technology
+I.BA_CT_MM.21,I.Cloud Technology
+I.BA_CVIZ.22,I.Computer Vision
+I.BA_CYBER.17,I.Cyber Defence
+I.BA_CYBER2.22,I.Cyber 2 Advanced Pentesting and Bug Bounties
+I.BA_DAMA_E.19,I.Datenmanagement
+I.BA_DAMA_K.19,I.Datenmanagement
+I.BA_DAMA_MM.19,I.Datenmanagement
+I.BA_DAMGT.19,I.Data Management
+I.BA_DASB.18,I.Data Science Basics
+I.BA_DAVI.18,I.Datenvisualisierung
+I.BA_DAWA.17,I.Data Warehousing
+I.BA_DB&S.19,I.Datenbanken & Sicherheit
+I.BA_DBS.17,I.Datenbanksysteme
+I.BA_DCEX.19,I.Digital Customer Experience
+I.BA_DIBA.16,I.Digital & IT Basics
+I.BA_DIBM.18,I.Digitale Business Models
+I.BA_DICO.19,I.Digitales Controlling / IT Controlling
+I.BA_DIGCRE.21,I.Digital Creativity
+I.BA_DILA.17,I.Digital Law
+I.BA_DIMA.19,I.Digital Marketing
+I.BA_DIST.17,I.Digital Strategy
+I.BA_DITI.19,I.Digitale Transformation in der Industrie
+I.BA_DI_TUT.19,I.Tutorials Digital Ideation
+I.BA_DL4G.18,I.Deep Learning for Games
+I.BA_DMATH.16,I.Diskrete Mathematik
+I.BA_DMG.16,I.Datenmanagement
+I.BA_DMGH.22,I.Digital Marketing and Growth Hacking (Blockwoche)
+I.BA_DSO.19,I.Datenschutz in Organisation
+I.BA_DSTPS.20,"I.Digital Strategies, Products & Services"
+I.BA_DS_ISA.20,I.ISA_Drehbuch schreiben
+I.BA_DTHINK.21,I.Design Thinking for Entrepreneurs (Blockwoche)
+I.BA_DVIZ.21,I.Data Visualisation for AI and Machine Learning
+I.BA_EALA.19,I.Enterprise & Application Landscape Architecture
+I.BA_ECOM.21,I.E-Commerce
+I.BA_ENGDBU.20,I.English for Digital Business
+I.BA_ENGFTD.20,I.English for Future Technology Development
+I.BA_ENGPRA.20,I.English for Preparation Abroad
+I.BA_ENGSDC.20,I.English for Strategic and Digital Communication
+I.BA_ENGTCS.20,I.English for Technical & Computer Science
+I.BA_ENICS1.19,I.English for Information & Cyber Security C1
+I.BA_ENLAB_E.20,I.Enterprise Programming Lab
+I.BA_ENLAB_K.20,I.Enterprise Programming Lab
+I.BA_ENLAB_MM.20,I.Enterprise Programming Lab
+I.BA_ENWC_A.17,I.21st Century Workplace Communication - Advanced
+I.BA_ENWC_HI.17,I.21st Century Workplace Communication - Higher Intermediate
+I.BA_EPRE.20,I.Enterpreneurship
+I.BA_ERP1.18,I.ERP-Zertifizierung 1 (Anwender SAP)
+I.BA_ERP2.19,I.ERP-Zertifizierung 2 (Beraterzertifikat SAP)
+I.BA_ERPAP.19,I.ERP-Systems
+I.BA_ESHIP.18,I.Entrepreneurship (Blockwoche)
+I.BA_ETHAI.22,I.Ethics and AI
+I.BA_ETHIK_E.19,I.Ethik
+I.BA_ETHIK_K.19,I.Ethik
+I.BA_ETHIK_MM.19,I.Ethik
+I.BA_ETHIK_Z.19,I.Ethik
+I.BA_EXCH2.21,I.Exchange 2: Campus Experience India/China
+I.BA_FADU.16,I.Finance & Accounting im digitalen Umfeld
+I.BA_FININ.20,I.Finance & Investments
+I.BA_FITE.21,I.FinTech
+I.BA_FITI.16,I.Future IT Infrastructure
+I.BA_FKOM.16,I.Fachkommunikation
+I.BA_FM_3.19,I.Forschungsmitarbeit
+I.BA_FM_6.19,I.Forschungsmitarbeit
+I.BA_FM_6a.19,I.Forschungsmitarbeit
+I.BA_FM_6b.19,I.Forschungsmitarbeit
+I.BA_FOMED.17,I.Formen der Mediengestaltung
+I.BA_FORDIN.21,I.Forensic Readiness
+I.BA_GAMEDES.19,I.Game Design
+I.BA_GAMEDEV.18,I.Game Development
+I.BA_GAME_E.21,I.Game Theory
+I.BA_GAME_K.21,I.Game Theory
+I.BA_GAME_MM.21,I.Game Theory
+I.BA_GEEI.20,I.Geistiges Eigentum – Chancen und Risiken (Blockwoche)
+I.BA_GIS.19,I.Geographic Information Systems
+I.BA_GPDA.19,I.Geschäftsprozesse digitalisieren und automatisieren
+I.BA_GPOR_E.18,I.Geschäftsprozesse & Organisation
+I.BA_GPOR_K.18,I.Geschäftsprozesse & Organisation
+I.BA_GPOR_MM.18,I.Geschäftsprozesse & Organisation
+I.BA_HFD.18,I.Human Factors & Design
+I.BA_HOA.21,I.Human & Organizational Apsects of InfoSec
+I.BA_HPP_1_3.18,I.High Potential Project 1
+I.BA_HPP_1_6.18,I.High Potential Project 1
+I.BA_HTCLAW.21,I.High Tech Cybercrime & Law
+I.BA_IAM.19,I.Identity Access Management & DLP
+I.BA_IAVR.18,I.Interaction for Virtual Reality (Blockwoche)
+I.BA_IAVR.19,I.Interaction for Virtual Reality
+I.BA_IBIS.21,I.Integrierte betriebliche Informationssysteme
+I.BA_IGL.16,I.Informatik-Grundlagen
+I.BA_IIP1.21,I.Integrales Informatik Praxisprojekt 1
+I.BA_IIP2.22,I.Integrales Informatik Praxisprojekt 2
+I.BA_IL_LECT.21,I.Lecture at Tel Aviv University
+I.BA_IL_PROJ.21,I.Israel Project
+I.BA_IMATH.16,I.Informatik Mathematik
+I.BA_IMLAB.20,I.Immersive Labs
+I.BA_IM_B.16,I.IT-Konzepte & Modelle
+I.BA_IM_I.16,I.IT-Konzepte & Modelle
+I.BA_IM_MM.16,I.IT-Konzepte & Modelle
+I.BA_IND4.19,I.Industrie 4.0
+I.BA_INFKOL.16,I.Computer Science Hot Topics
+I.BA_INFR.16,I.Informatikrecht
+I.BA_INFSC.19,I.Informations Security
+I.BA_INFSEC+MAN.16,I.IT-Security Management
+I.BA_INFSEC.16,I.Information Security
+I.BA_INLP.21,I.Introduction to NLP
+I.BA_INMA.18,I.Innovationsmanagement
+I.BA_INMAC.19,I.International Management Accounting
+I.BA_INTAC.19,I.International Financial Accounting
+I.BA_INTAF.19,I.International Affairs Economics
+I.BA_INTLA_E.18,I.International Law
+I.BA_INTLA_K.18,I.International Law
+I.BA_INTLA_MM.18,I.International Law
+I.BA_INTOT.20,I.Internet of Things
+I.BA_INTRO.17,I.Infotronik
+I.BA_INTROL.19,I.Einführendes Labor Sicherheit
+I.BA_IOPT.21,I.Industrial Optimization
+I.BA_IOS.16,I.Programmieren fürs iOS
+I.BA_IOT.18,I.Internet of Things
+I.BA_IOTHACK_E.19,I.Blockchain & Security for IoT Hackathon (Blockwoche)
+I.BA_IOTHACK_MM.19,I.Blockchain & Security for IoT Hackathon (Blockwoche)
+I.BA_IOTHACK_Z.19,I.Blockchain & Security for IoT Hackathon (Blockwoche)
+I.BA_IPCV.16,I.Image Processing & Computer Vision
+I.BA_IPEUS.20,I.International Project Experience - Aufenthalt Silicon Valley
+I.BA_IPREN1.21,I.Informatik Produktentwicklung 1
+I.BA_IRFORENSIC.21,I.Angewandte Incident Response und IT Forensik
+I.BA_IRSECPOL.20,"I.International Relations, Security and Policy"
+I.BA_ISFBIT.18,I.International School for Business IT students (Intensive Week)
+I.BA_ISFCS.16,I.International School for Computer Science Students (Intensive Week)
+I.BA_ISF_E.20,I.Information Security Fundamentals
+I.BA_ISF_K.20,I.Information Security Fundamentals
+I.BA_ISF_MM.20,I.Information Security Fundamentals
+I.BA_ISF_TUT.19,I.Tutorial ISF
+I.BA_ISLAB_E.18,I.Informationssicherheitslabor
+I.BA_ISLAB_K.18,I.Informationssicherheitslabor
+I.BA_ISLAB_MM.18,I.Informationssicherheitslabor
+I.BA_ISM.19,I.Information Security Management
+I.BA_ISMA.19,I.IT Service Management
+I.BA_ISM_E.20,I.Information Security Management
+I.BA_ISM_K.20,I.Information Security Management
+I.BA_ISM_MM.20,I.Information Security Management
+I.BA_ISOA.19,I.Information Security: Organisatorische Aspekte
+I.BA_ITAU.19,I.IT Audit
+I.BA_ITEO.16,I.IT-System Engineering & Operation
+I.BA_ITPMF.16,I.IT-Projektmanagement & Führung
+I.BA_ITRE_E.20,I.IT-Recht
+I.BA_ITRE_K.20,I.IT-Recht
+I.BA_ITRE_MM.20,I.IT-Recht
+I.BA_JSJ_ISA.19,I.ISA_Gesund bleiben mit Jin Shin Jyutsu
+I.BA_KBDS.18,I.Knowledge based Decision Systems
+I.BA_KNRE_E.21,I.Knowledge Representation
+I.BA_KNRE_K.21,I.Knowledge Representation
+I.BA_KNRE_MM.21,I.Knowledge Representation
+I.BA_KOMA.17,I.Konfliktmanagement
+I.BA_KRINF.21,I.Kritische Infrastruktur Sicherheit
+I.BA_KRINFLAB.21,I.Kritische Infrastruktur Labor
+I.BA_KRKO.21,I.Krisenmanagement & -kommunikation
+I.BA_KRYPTO.19,I.Kryptologie & Anwendungen
+I.BA_KRYPTOB.21,I.Krypto for Business
+I.BA_KRYPTO_E.20,I.Kryptologie & Anwendungen
+I.BA_KRYPTO_K.20,I.Kryptologie & Anwendungen
+I.BA_KRYPTO_MM.20,I.Kryptologie & Anwendungen
+I.BA_KUFA_E.17,I.Die Kunst der Finanzanlagen
+I.BA_KUFA_MM.17,I.Die Kunst der Finanzanlagen
+I.BA_KUFA_Z.17,I.Die Kunst der Finanzanlagen
+I.BA_KWI_ISA.21,I.ISA_Kreatives Wissen in Innovationen
+I.BA_LAEPRE.22,I.Legal Aspects for Entrepreneurs (Blockwoche)
+I.BA_LIAL_E.20,I.Lineare Algebra
+I.BA_LIAL_K.20,I.Lineare Algebra
+I.BA_LIAL_MM.20,I.Lineare Algebra
+I.BA_MA+PHY1_T_E.18,I.Mathematik & Physik Technik 1
+I.BA_MA+PHY2_T_E.19,I.Mathematik & Physik Technik 2
+I.BA_MAAC.19,I.Management Accounting
+I.BA_MABU.20,I.Mobile Applications in the Business World
+I.BA_MAGA.16,I.Management-Game (Blockwoche)
+I.BA_MALWLAB.22,I.Malwareanalyse Labor
+I.BA_MANSEC.17,I.Management Aspekte der Informationssicherheit
+I.BA_MARI.17,I.Management & Recht im Informationszeitalter
+I.BA_MAT1.17,I.Angewandte Mathematik 1 (Mathematik in der Wirtschaftsinformatik I)
+I.BA_MAT2.18,I.Angewandte Mathematik 2
+I.BA_MC_E.17,I.Mikrocontroller
+I.BA_MED_PRG_DUMMY.17,I.Medizinproduktentwicklung Grundlagen
+I.BA_MICRO.20,I.Microcontroller
+I.BA_MLPW.21,"I.Machine Learning, Perzeption und Wissen"
+I.BA_ML_E.17,I.Machine Learning
+I.BA_ML_K.17,I.Machine Learning
+I.BA_ML_MM.17,I.Machine Learning
+I.BA_MMF.16,"I.Informatik für Musik, Medien & Film"
+I.BA_MOBILSEC.21,I.Mobile Secuirty
+I.BA_MOBLAB.18,I.Mobile Programming Lab
+I.BA_MOBPRO.16,I.Mobile Programming
+I.BA_MOBSYS.16,I.Mobile Systems
+I.BA_MOD_E.20,I.Modellierung Grundlagen
+I.BA_MOD_K.20,I.Modellierung Grundlagen
+I.BA_MOD_MM.20,I.Modellierung Grundlagen
+I.BA_MOVK_E.18,I.Moderne Verfahren der Kryptographie
+I.BA_MOVK_K.18,I.Moderne Verfahren der Kryptographie
+I.BA_MOVK_MM.18,I.Moderne Verfahren der Kryptographie
+I.BA_MTOP.16,I.Mainframe Topics (Blockwoche)
+I.BA_MWI1_E.20,I.Management für Wirtschaftsinformatik 1
+I.BA_MWI1_K.20,I.Management für Wirtschaftsinformatik 1
+I.BA_MWI1_MM.20,I.Management für Wirtschaftsinformatik 1
+I.BA_MWI2.19,I.Management für Wirtschaftsinformatik 2
+I.BA_NATCYSEC.19,I.Blockwoche National Cyber Security
+I.BA_NETDA.19,I.Network Defense & Architecture
+I.BA_NETT.19,I.Netzwerktechnologien
+I.BA_NETW1.19,I.Networking & CCNA 1
+I.BA_NETW1_E.20,I.Networking & CCNA 1
+I.BA_NETW1_K.20,I.Networking & CCNA 1
+I.BA_NETW1_MM.20,I.Networking & CCNA 1
+I.BA_NETW2.19,I.Networking & CCNA 2
+I.BA_NETW3.21,I.Networking und Kommunikation (CCNA Sem 3)
+I.BA_NLP.22,I.Natural Language Processing
+I.BA_NPE1.20,I.National Project Experience 1
+I.BA_NPE1.21,I.National Project Experience 1
+I.BA_NPE2.21,I.National Project Experience 2
+I.BA_NPE2.22,I.National Project Experience 2
+I.BA_NS.16,"I.Network, Clouds & Services"
+I.BA_ONBU.18,I.Online Business Workshop (Blockwoche)
+I.BA_OOP.16,I.Objektorientierte Programmierung
+I.BA_OOP_E.21,I.Objektorientierte Programmierung
+I.BA_OOP_K.21,I.Objektorientierte Programmierung
+I.BA_OOP_MM.21,I.Objektorientierte Programmierung
+I.BA_OSA.19,I.Operating System & Architecture
+I.BA_OSSEC.20,I.Operating System Security
+I.BA_PAWI.16,I.Informatikprojekt
+I.BA_PCP_E.18,I.Programming Concepts & Paradigms
+I.BA_PCP_K.18,I.Programming Concepts & Paradigms
+I.BA_PCP_MM.18,I.Programming Concepts & Paradigms
+I.BA_PEFU.18,I.Personal & Führung
+I.BA_PHKI.20,"I.Philosophie, Kunst und künstliche Intelligenz"
+I.BA_PIPE.20,I.Preparation for International Project Experience
+I.BA_PLAB.16,I.Programmier-Labor
+I.BA_PMB.16,I.Project Management Basics
+I.BA_PMPCT.18,"I.Project Management, Professional Communication & Teamwork"
+I.BA_PMRE.17,I.Projektmanagement & Requirements Engineering
+I.BA_PRAXIS_3_F21.21,I.Praxismodul 3 ECTS
+I.BA_PRAXIS_3_H21.21,I.Praxismodul 3 ECTS
+I.BA_PRAXIS_6_F21.21,I.Praxismodul 6 ECTS
+I.BA_PRAXIS_6_H21.21,I.Praxismodul 6 ECTS
+I.BA_PRAXIS_VT.17,I.Praxis im Vollzeit-/Teilzeitstudium
+I.BA_PRAXIS_VTZ.16,I.Praxis im Studium
+I.BA_PRG.16,I.Programmierung
+I.BA_PRG1.16,I.Programmieren & Algorithmen
+I.BA_PRG2.16,I.Programmieren & Datenstrukturen
+I.BA_PRIVACY1.19,I.Privatheit und Datenschutz 1
+I.BA_PRIVACY1_E.20,I.Privatheit und Datenschutz 1
+I.BA_PRIVACY1_K.20,I.Privatheit und Datenschutz 1
+I.BA_PRIVACY1_MM.20,I.Privatheit und Datenschutz 1
+I.BA_PROA.17,I.Process Automation
+I.BA_PROFU.18,I.Programming Fundamentals
+I.BA_PROG.20,I.Programming for Data Science
+I.BA_PROTCO.20,I.Professional Technical Communication
+I.BA_PTA.16,I.Projekt und Teamarbeit
+I.BA_PTA.21,I.Projekt und Teamarbeit
+I.BA_PTCO.19,I.Professional Technical Communication
+I.BA_REUF.20,I.Recht in der Unternehmensführung
+I.BA_REVE1.19,I.Reverse Engineering 1 (Blockwoche)
+I.BA_REVE2.19,I.Reverse Engineering 2 (Blockwoche)
+I.BA_RL_E.21,I.Reinforcement Learning
+I.BA_RL_K.21,I.Reinforcement Learning
+I.BA_RL_MM.21,I.Reinforcement Learning
+I.BA_ROBLAB.17,I.Cognitive Robotics Lab
+I.BA_ROBO.21,I.Robotics
+I.BA_SAQT.16,"I.Software Architecture, Quality & Testing"
+I.BA_SECPROJ.20,I.Special Project
+I.BA_SEGA_ISA.19,I.ISA_Serious Games & Gamification
+I.BA_SGC.19,I.Secure Governance and Compliance
+I.BA_SGPOR.19,I.Secure Geschäftsprozesse und Organisation
+I.BA_SIOT.20,I.Secure IOT
+I.BA_SM.16,I.Social Media
+I.BA_SOC.21,I.Security Operation Center Issues
+I.BA_SOCIAL.16,I.Social Project
+I.BA_SP1.16,I.Spanisch 1
+I.BA_SPA_A1_SZ.19,I.SZ_Spanisch Grundkurs A1
+I.BA_SPREN1.19,I.Sicherheit in der Produktentwicklung 1
+I.BA_SPREN2.19,I.Sicherheit in der Produkt und Projektentwicklung 2
+I.BA_SPRG_E.19,I.Sicheres Programmieren
+I.BA_SPRG_K.19,I.Sicheres Programmieren
+I.BA_SPRG_MM.19,I.Sicheres Programmieren
+I.BA_SPTA.19,I.Secure Project und Teamarbeit
+I.BA_SQAS.21,I.Software Qualität und Sicherheit
+I.BA_SSM.16,I.Service & System Management
+I.BA_STA1_E.19,I.Angewandte Statistik 1
+I.BA_STA2.17,I.Angewandte Statistik 2
+I.BA_STAIR.17,I.Anrechnung Vorstandstätigkeit Studierendenrat
+I.BA_STMGT.19,I.Strategic Management
+I.BA_SUM_SCHOOL.20,I.International Summer School Lucerne (Blockwoche)
+I.BA_SWAT_E.19,I.Software Architecture & Techniques
+I.BA_SWAT_K.19,I.Software Architecture & Techniques
+I.BA_SWAT_MM.19,I.Software Architecture & Techniques
+I.BA_SWDE.19,I.Software Development
+I.BA_SWE.17,I.Softwareentwicklung
+I.BA_SWENG.19,I.Software Engineering
+I.BA_SWT.19,I.Software Testing
+I.BA_SYSSEC.20,I.System & Security
+I.BA_TUT.16,I.Tutorials
+I.BA_UCDE.17,I.User Centered Design – Engineering
+I.BA_UEDE.18,I.User Experience Design & Engineering
+I.BA_UGDM.16,I.Unternehmungsgründungen in digitalen Märkten
+I.BA_UKOM.17,I.Unternehmenskommunikation & Sprachtechnologien
+I.BA_USAB.16,I.Usability
+I.BA_VID.19,I.Visual Interface Design
+I.BA_VRT.19,I.Virtual Reality Technologies
+I.BA_VSK.16,I.Verteilte Systeme & Komponenten
+I.BA_VSK_E.21,I.Verteilte Systeme & Komponenten
+I.BA_VSK_K.21,I.Verteilte Systeme & Komponenten
+I.BA_VSK_MM.21,I.Verteilte Systeme & Komponenten
+I.BA_VWL.17,I.Volkswirtschaft
+I.BA_WEBLAB.17,I.Web Programming Lab
+I.BA_WEBT_E.19,I.Web-Technologien
+I.BA_WEBT_K.19,I.Web-Technologien
+I.BA_WEBT_MM.19,I.Web-Technologien
+I.BA_WECOT.19,I.Web & Communications Technologies
+I.BA_WIDA.21,I.Wirtschaft & Datenschutz (Blockwoche)
+I.BA_WINT_SCHOOL.17,I.International Winter School Lucerne (Blockwoche)
+I.BA_WIPRO.18,I.Wirtschaftsprojekt/Wissenschaftliche Methoden
+I.BA_WSFM.20,I.Wissenschaftliches Schreiben & Forschungsmethodik (Blockwoche)
+I.BA_XML.19,I.XML & JSON Technologies (Blockwoche)
+,
