@@ -21,9 +21,10 @@
 7. Create `StanBot` folder
 8. Paste the new dlls from `StanBot.Service/bin/Release/netcoreapp3.1/win-x64` from your local build
 9. Open "Services"
-10. Right click and select "Restart" for the Discord Bot
+10. Right click and select "Restart" for the Discord Bot. Name: "STAIR Discord Bot"
 11. Go into the log file and do what is written there\
     open <https://microsoft.com/devicelogin>\
+    log in to your Microsoft STAIR account\
     enter code\
     accept
 12. Go to chapter "check if bot is online and running"
@@ -58,4 +59,3 @@ See the "Deployment" chapter on how to restart.
 ## Useful links
 
 * <https://discord.gg/discord-api> (helper Discord for the used librarys)
-
