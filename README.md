@@ -1,11 +1,13 @@
 # Stan Discord Bot
 
+This repository contains the STAIR discord bot named Stan. Also it contains some automation tools for setting up the Discord correctly.
+
 ## Getting started
 
-* Copy stan.json to your StanBot.Service folder. You get the file from an existing developer or the virtual machine.
+* Copy stan.json to your StanBot.Service folder. You get the file from another developer or the virtual machine.
 * Request access to the virtual machine.
 * Request access to the Stan mailbox.
-* Setup a C# dev IDE (Visual Studio 2019+ recommended)
+* Setup a C# dev IDE (Visual Studio 2019 recommended)
 
 ## Deployment
 
