@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Fach Abkürzung Filter</h1>
+    <textarea id="input" cols="30" rows="25"></textarea>
+    <button onclick="start()">start</button>
+    <textarea id="output" cols="30" rows="25"></textarea>
+    <script>
+        function start() {
+            let originalText = $("#input").val();
+            let lines = originalText.split("\n");
+            let editedLines = [];
+            for (let i = 0; i < lines.length; i++) {
+                editedLines.push(formatAbbreviation(lines[i]));
+            }
+            output = [...new Set(editedLines)].join("\n");
+            $("#output").val(output);
+        }
+        function formatAbbreviation(fullAbbreviation) {
+            // I steht für Informatik Departament
+            // BA steht für Bachelor
+            abbreviation = fullAbbreviation.replace("I.BA_", "");
+            // check if starts with number
+            if (!isNaN(abbreviation.split("_")[0])) {
+                abbreviation = abbreviation.split("_")[1];
+            }
+            if (abbreviation.includes(".")) {
+                abbreviation = abbreviation.split(".")[0];
+            }
+            if (abbreviation.includes("_")) {
+                abbreviation = abbreviation.split("_")[0];
+            }
+            console.log(abbreviation);
+            return abbreviation;
+        }
+    </script>
+
+    <h1>Full Content Filter (upgraded)</h1>
+    <div>Enter CSV data</div>
+    <div>Format (without clamps obviously!): {module abbreviation},{Full module name}</div>
+    <textarea id="inputFullContent" cols="75" rows="25"></textarea>
+    <button onclick="filterFullContent()">filter (upgraded)</button>
+    <textarea id="outputFullContent" cols="75" rows="25"></textarea>
+    <script>
+        function filterFullContent() {
+            unmodifiedInput = $("#inputFullContent").val()
+            let lines = unmodifiedInput.split("\n");
+            let editedLines = [];
+            let moduleAbbreviationSet = []
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                let moduleNames = line.split(",");
+                let abbreviation = formatAbbreviation(moduleNames[0]);
+                if (!moduleAbbreviationSet.includes(abbreviation)) {
+                    moduleAbbreviationSet.push(abbreviation);
+                    let formattedLine = abbreviation + "\t" + formatFullName(moduleNames[1]);
+                    editedLines.push(formattedLine);
+                }
+            }
+            output = editedLines.join("\n");
+            $("#outputFullContent").val(output);
+        }
+    </script>
+
+    <h1>Fachname Filter</h1>
+    <textarea id="inputFullName" cols="75" rows="25"></textarea>
+    <button onclick="filterFullName()">filter</button>
+    <textarea id="outputFullName" cols="75" rows="25"></textarea>
+    <script>
+        function filterFullName() {
+            unmodifiedInput = $("#inputFullName").val()
+            let lines = unmodifiedInput.split("\n");
+            let editedLines = [];
+            for (let i = 0; i < lines.length; i++) {
+                editedLines.push(formatFullName(lines[i]));
+            }
+            output = [...new Set(editedLines)].join("\n");
+            $("#outputFullName").val(output);
+        }
+        function formatFullName(unformattedFullName) {
+            console.log(unformattedFullName);
+            fullName = unformattedFullName.split(".")[1];
+            console.log(fullName);
+            if (fullName.includes("_")) {
+                fullName = fullName.split("_")[1];
+            }
+            console.log(fullName);
+            return fullName;
+        }
+    </script>
+
+    <h1>Kategorie Filter</h1>
+    <div>Entfernt doppelte Aufträge aus der Liste</div>
+    <textarea id="inputCategorySet" cols="75" rows="25"></textarea>
+    <button onclick="filterCategorySet()">filter</button>
+    <textarea id="outputCategorySet" cols="75" rows="25"></textarea>
+    <script>
+        function filterCategorySet() {
+            let inputCategories = $("#inputCategorySet").val().split("\n");
+            inputCategories = [...new Set(inputCategories)]
+
+            for (let i = 0; i < inputCategories.length; i++) {
+                let category = inputCategories[i];
+                let categoryCommand = ".cr " + category + "\n.asar " + category;
+                inputCategories[i] = categoryCommand;
+            }
+
+            output = inputCategories.join("\n");
+            $("#outputCategorySet").val(output);
+        }
+    </script>
+    
+    <h1>Kategorie Filter</h1>
+    <div>Sortiert nach Kategorie und dann nach ABC</div>
+    <div>Input: CSV Daten im Format: ModuleName,ModuleFullName,Category</div>
+    <div>Output: Category as title, then all associated modules as list, with button for easy copy</div>
+    <textarea id="inputForOrderedChannels" cols="75" rows="25"></textarea>
+    <button onclick="orderChannels()">order</button>
+    <div id="outputOrderedChannels"></div>
+    <script>
+        function orderChannels() {
+            let inputModules = $("#inputForOrderedChannels").val().split("\n");
+            
+            // find all Discord categories
+            let allPossibleCategories = inputModules.map(function(value,index) { return value.split(",")[2]; });
+            let categoryNames = [...new Set(allPossibleCategories)];
+            let categoryCount = new Array(categoryNames.length);
+            for (let categoryIndex = 0; categoryIndex < categoryNames.length; categoryIndex++) {
+                for (let i = 0; i < inputModules.length; i++) {
+                    let categoryName = inputModules[i].split(",")[2];
+                    //console.log(categoryName);
+                    let categoryCheckName = categoryNames[categoryIndex];
+                    //console.log("category check name: " + categoryName);
+                    if (categoryName === categoryCheckName) {
+                        if (isNaN(categoryCount[categoryIndex])) {
+                            categoryCount[categoryIndex] = 1;
+                        }
+                        else {
+                            categoryCount[categoryIndex]++;
+                        }
+                    }
+                }
+            }
+
+            // log only
+            for (let categoryIndex = 0; categoryIndex < categoryNames.length; categoryIndex++) {
+                //console.log(categoryNames[categoryIndex] + " - " + categoryCount[categoryIndex]);
+            }
+
+            // remove categories without enough elements
+            // all that have 2 or less elements go into category "MODULE"            
+            let orderedCategories = [];
+            orderedCategories.push("MODULE");
+            for (let categoryIndex = 0; categoryIndex < categoryNames.length; categoryIndex++) {
+                if (categoryCount[categoryIndex] > 2) {
+                    orderedCategories.push(categoryNames[categoryIndex]);
+                }
+            }
+            orderedCategories.sort();
+            console.log("number of categories: " + orderedCategories.length);
+            console.log("orderedCategories: ", orderedCategories);
+
+            // add modules/channels to categories
+            let categoriesWithChannels = new Array(orderedCategories.length);
+            let allModuleNames = []
+            for (let i = 0; i < inputModules.length; i++) {
+                let categoryLine = inputModules[i];
+                let moduleAndCategory = categoryLine.split(",");
+
+                // is category in list
+                // when category is not found, its in "MODULE" with index 0
+                let categoryIndex = orderedCategories.indexOf("MODULE");
+                if (orderedCategories.includes(moduleAndCategory[2])) {
+                    categoryIndex = orderedCategories.indexOf(moduleAndCategory[2]);
+                }
+                if (typeof(categoriesWithChannels[categoryIndex]) == "undefined") {
+                    categoriesWithChannels[categoryIndex] = [];
+                }
+                categoriesWithChannels[categoryIndex].push(moduleAndCategory[0]);
+                allModuleNames.push(moduleAndCategory[0]);
+            }
+
+            // order category elements and create output
+            let output = ""
+            for (let categoryIndex = 0; categoryIndex < orderedCategories.length; categoryIndex++) {
+                output += "<h3>" + orderedCategories[categoryIndex] + "</h3>\n";
+                console.log(orderedCategories[categoryIndex])
+                console.log(categoriesWithChannels[categoryIndex])
+                categoriesWithChannels[categoryIndex].sort();
+                for (let channelIndex = 0; channelIndex < categoriesWithChannels[categoryIndex].length; channelIndex++) {
+                    output += "<div>" + categoriesWithChannels[categoryIndex][channelIndex];
+                    output += "\n<button onclick='copyButtonTextToClipboard(this)'>" + categoriesWithChannels[categoryIndex][channelIndex] + "</div>\n";
+                    // module name contains special chars or has a different role name than module name
+                    if (!isAlphanumeric(categoriesWithChannels[categoryIndex][channelIndex]) || 
+                        categoriesWithChannels[categoryIndex][channelIndex] !== orderedCategories[categoryIndex]) {
+                        let channelName = categoriesWithChannels[categoryIndex][channelIndex];
+
+                        let categoryName = orderedCategories[categoryIndex];
+                        if (orderedCategories[categoryIndex] === "MODULE" && allPossibleCategories.includes(channelName)) {
+                            categoryName = channelName;
+                        }
+                        
+                        if (!isAlphanumeric(channelName)) {
+                            let moduleNameWithoutSpecialChars = replaceNonAlphanumericCharacters(categoriesWithChannels[categoryIndex][channelIndex], "")
+                            if (!allModuleNames.includes(moduleNameWithoutSpecialChars)) {
+                                // remove special chars when no name exists without that char
+                                channelName = moduleNameWithoutSpecialChars;
+                            }
+                            else {
+                                // replace special chars with _ when a name exists without that char
+                                channelName = replaceNonAlphanumericCharacters(channelName, "_");
+                            }
+                        }
+                        let aliasCommand = '.cmdmap "show ' + categoriesWithChannels[categoryIndex][channelIndex] + '" .iam ' + categoryName;
+
+                        if (categoryName !== channelName) {
+                            output += '\n<div style="margin-left: 250px;">' + aliasCommand + "</div>";
+                            output += '\n<button style="margin-left: 250px;" onclick="copyButtonTextToClipboard(this)">' + aliasCommand + "</button>";
+                        }
+                    }
+                    output += "</div>";
+                }
+            }
+
+            $("#outputOrderedChannels").html(output);
+            // TODO: output number of channels
+        }
+        function copyButtonTextToClipboard(btn) {
+            navigator.clipboard.writeText($(btn).text());
+        }
+        function isAlphanumeric(stringToTest) {
+            return stringToTest.match(/^[0-9a-z]+$/);
+        }
+        function replaceNonAlphanumericCharacters(stringToEdit, newChar) {
+            return stringToEdit.replace(/[\W_]+/g, newChar);
+        }
+    </script>
+</body>
+</html>
