@@ -61,3 +61,16 @@ See the "Deployment" chapter on how to restart.
 ## Useful links
 
 * <https://discord.gg/discord-api> (helper Discord for the used librarys)
+* <https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit>
+* <https://support.discord.com/hc/en-us/community/posts/360032363631-Increase-the-Max-Number-of-Roles-per-Server>
+
+## Nadeko Bot
+
+Nadeko is the bot that is used for students, so they can assign a module channel to their account.
+
+### Links
+
+* <https://nadeko.bot/commands>
+* <https://top.gg/bot/116275390695079945>
+* <https://scbot.readthedocs.io/en/stable/Commands%20List/>
+* <https://epicbotnew.readthedocs.io/en/latest/Commands%20List/>
