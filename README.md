@@ -68,6 +68,18 @@ See the "Deployment" chapter on how to restart.
 
 Nadeko is the bot that is used for students, so they can assign a module channel to their account.
 
+### Most important commands
+
+Sent this commands in a channel with Nadeko
+
+| Command | Description |
+| ------- | ----------- |
+| .listperms | List permissions - which role can do what |
+| .aliaslist | list all alias commands |
+| .cr VRT | Create role |
+| .asar VRT | Make it possible for a user to assign the role (here: "VRT") to himself/herself |
+| .cmdmap "show KICKPROG" .iam KICKPROG | Add alias (alias is here: show KICKPROG, the command that gets executed in the background: .iam KICKPROG) |
+
 ### Links
 
 * <https://nadeko.bot/commands>
