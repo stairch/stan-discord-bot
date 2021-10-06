@@ -41,5 +41,21 @@
     <textarea id="moduleOutput" cols="30" rows="35"></textarea>
     <label for="roleOutput">Role output:</label>
     <textarea id="roleOutput" cols="30" rows="35"></textarea>
+
+    <script>
+		function start() {
+			let rawInput = $("input").val()
+
+			let moduleResult = ""
+			$("moduleOutput").val(moduleResult)
+			
+			let roleResult = ""
+			$("roleOutput").val(roleResult)
+		}
+    
+        function copyButtonTextToClipboard(btn) {
+            navigator.clipboard.writeText($(btn).text())
+        }
+    </script>
 </body>
 </html>
