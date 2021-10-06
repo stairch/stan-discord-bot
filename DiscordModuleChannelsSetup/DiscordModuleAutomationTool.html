@@ -9,9 +9,11 @@
 </head>
 <body>
     <h1>Discord Automation Tool</h1>
+    
     <h2>Description</h2>
     <div>Export the data from the excel file as CSV and then copy&paste it into the textbox.</div>
     <div>Make sure the table has the format described below.</div>
+
     <h2>Format</h2>
     <div>Input format: Full module abbreviation, full module name, discord category</div>
     <div>Output format (fields can be splitted with a comma, a new row is a new module):</div>
@@ -31,5 +33,12 @@
     	<li>Nadeko "show"-alias command</li>
     	<li>Nadeko "hide"-alias command</li>
     </ul>
-</body>
+
+    <h2>Tool</h2>
+    <textarea id="input" cols="30" rows="35"></textarea>
+    <button onclick="start()">start</button>
+    <label for="moduleOutput">Module output:</label>
+    <textarea id="moduleOutput" cols="30" rows="35"></textarea>
+    <label for="roleOutput">Role output:</label>
+    <textarea id="roleOutput" cols="30" rows="35"></textarea></body>
 </html>
