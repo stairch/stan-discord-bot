@@ -35,6 +35,8 @@
     </ul>
 
     <h2>Tool</h2>
+    <!-- TODO: make field splitting char a field -->
+    <!-- TODO: make module splitting char a field -->
     <textarea id="input" cols="30" rows="35"></textarea>
     <button onclick="start()">start</button>
     <label for="moduleOutput">Module output:</label>
@@ -45,14 +47,23 @@
     <script>
 		function start() {
 			let rawInput = $("input").val()
+			let inputLines = rawInput.split("\n")
+			let numberOfModules = inputLines.length
+			let allModuleData = []
 
+			for (let i = 0; i < numberOfModules; i++) {
+				let moduleData = inputLines[i].split(",")
+			}
+
+			// TODO: cast module data to string for output
 			let moduleResult = ""
 			$("moduleOutput").val(moduleResult)
-			
+
+			// TODO: cast role data to string for output
 			let roleResult = ""
 			$("roleOutput").val(roleResult)
 		}
-    
+
         function copyButtonTextToClipboard(btn) {
             navigator.clipboard.writeText($(btn).text())
         }
