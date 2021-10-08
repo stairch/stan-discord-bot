@@ -95,18 +95,25 @@
         }
 
         function formatModuleName(fullModuleName) {
-            console.log(fullModuleName);
-            moduleName = fullModuleName.split(".")[1];
-            console.log(moduleName);
+            console.log(fullModuleName)
+            moduleName = fullModuleName.split(".")[1]
+            console.log(moduleName)
             if (moduleName.includes("_")) {
-                moduleName = moduleName.split("_")[1];
+                moduleName = moduleName.split("_")[1]
             }
-            console.log(moduleName);
-            return moduleName;
+            console.log(moduleName)
+            return moduleName
         }
 
         function copyButtonTextToClipboard(btn) {
             navigator.clipboard.writeText($(btn).text())
+        }
+
+        // helper functions
+        function getColumn(dataArray, columnIndex) {
+            return dataArray.map(function(row) {
+                return row[columnIndex]
+            })
         }
     </script>
 </body>
