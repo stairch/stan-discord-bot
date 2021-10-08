@@ -53,7 +53,14 @@
 
 			for (let i = 0; i < numberOfModules; i++) {
 				let moduleData = inputLines[i].split(",")
+				console.log(moduleData)
+                moduleData.push(formatModuleAbbreviation(moduleData[0]))
+                // TODO: filter after module name
+                // because the same module can be multiple times in the same semester
+                moduleData.push(formatModuleName(moduleData[1]))
 			}
+
+            // TODO: get cateogry set
 
 			// TODO: cast module data to string for output
 			let moduleResult = ""
@@ -63,6 +70,28 @@
 			let roleResult = ""
 			$("roleOutput").val(roleResult)
 		}
+
+        function formatModuleAbbreviation(fullModuleAbbreviation) {
+            // I steht für Informatik Departament
+            // BA steht für Bachelor
+            let moduleAbbreviation = fullModuleAbbreviation.replace("I.BA_", "")
+            // check if starts with number
+            if (!isNaN(moduleAbbreviation.split("_")[0])) {
+                moduleAbbreviation = moduleAbbreviation.split("_")[1]
+            }
+            if (moduleAbbreviation.includes(".")) {
+                moduleAbbreviation = moduleAbbreviation.split(".")[0]
+            }
+            if (moduleAbbreviation.includes("_")) {
+                moduleAbbreviation = moduleAbbreviation.split("_")[0]
+            }
+            console.log(moduleAbbreviation)
+            return moduleAbbreviation
+        }
+
+        function formatModuleName() {
+
+        }
 
         function copyButtonTextToClipboard(btn) {
             navigator.clipboard.writeText($(btn).text())
