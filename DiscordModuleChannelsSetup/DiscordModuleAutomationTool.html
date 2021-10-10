@@ -62,6 +62,7 @@
 				console.log(moduleData)
                 moduleData.push(formatModuleAbbreviation(moduleData[0]))
                 moduleData.push(formatModuleName(moduleData[1]))
+
                 // TODO: filter after module name
                 // because the same module can be multiple times in the same semester
                 allModuleData.push(moduleData)
@@ -70,6 +71,13 @@
             // categories
             let unfilteredCategories = getColumn(moduleData, 2)
             let filteredCategories = [...new Set(unfilteredCategories)]
+
+            let allCateoryData = []
+            for (let i = 0; i < filteredCategories.length; i++) {
+                let roleName = filteredCategories[i].toLowerCase()
+                let createRoleCommand = ".cr " + roleName + "\n.asar " + category
+                let categoryData = [filteredCategories[i], createRoleCommand]
+            }
 
             // output
 			// TODO: cast module data to string for output
