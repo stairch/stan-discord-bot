@@ -79,14 +79,15 @@ Sent this commands in a channel with Nadeko
 | .rp 4 | remove permission that is at index 4 |
 | .resetperms | reset permissions |
 | .permrole stair | users require "stair" role in order to edit permissions |
-| .arm disable student nsfw | 
-| .aum enable stair | 
+| .arm disable student nsfw | |
+| .aum enable stair | |
 | .aliaslist | list all alias commands |
 | .cr VRT | Create role |
 | .setavatar www.link.com/image.png | edit the user image (only when selfhosting) |
 | .asar VRT | Make it possible for a user to assign the role (here: "VRT") to himself/herself |
 | .ctch testkanal3 | create channel "testkanal3" |
 | .cmdmap "show KICKPROG" .iam KICKPROG | Add alias (alias is here: show KICKPROG, the command that gets executed in the background: .iam KICKPROG) |
+| .cmdmap "hide KICKPROG" .iamn KICKPROG | Add alias to remove role (alias is here: show KICKPROG, the command that gets executed in the background: .iam KICKPROG) |
 | .stats | show statistics from bot |
 
 ### Links
