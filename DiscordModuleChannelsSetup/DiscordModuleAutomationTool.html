@@ -61,9 +61,10 @@
 				let moduleData = inputLines[i].split(",")
 				console.log(moduleData)
                 moduleData.push(formatModuleAbbreviation(moduleData[0]))
+                moduleData.push(formatModuleName(moduleData[1]))
                 // TODO: filter after module name
                 // because the same module can be multiple times in the same semester
-                moduleData.push(formatModuleName(moduleData[1]))
+                allModuleData.push(moduleData)
 			}
 
             // categories
