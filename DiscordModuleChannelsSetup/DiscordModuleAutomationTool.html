@@ -27,7 +27,10 @@
     	<li>Full module name</li>
     	<li>Discord category name</li>
     	<li>Module abbreviation</li>
+    	<li>Module name</li>
     	<li>Nadeko channel creation command</li>
+    	<li>Nadeko "show"-alias command</li>
+    	<li>Nadeko "hide"-alias command</li>
     </ul>
     <div>Discord role output (fields can be splitted with a comma, a new row is a new role):</div>
     <ul>
@@ -35,8 +38,6 @@
     	<li>Discord role name</li>
     	<li>Nadeko role creation command</li>
     	<li>Nadeko role for user assignment command</li>
-    	<li>Nadeko "show"-alias command</li>
-    	<li>Nadeko "hide"-alias command</li>
     </ul>
 
     <h2>Tool</h2>
@@ -62,6 +63,11 @@
 				console.log(moduleData)
                 moduleData.push(formatModuleAbbreviation(moduleData[0]))
                 moduleData.push(formatModuleName(moduleData[1]))
+                moduleData.push("Channel creation not implemented yet")
+                let showCommand = '.cmdmap "show ' + moduleName + '" .iam ' + moduleData[2]
+                moduleData.push(showCommand)
+                let hideCommand = '.cmdmap "hide ' + moduleName + '" .iamn ' + moduleData[2]
+                moduleData.push(hideCommand)
 
                 // filter after module name
                 // because the same module can be multiple times in the same semester
@@ -84,8 +90,6 @@
                 let roleName = filteredCategories[i].toLowerCase()
                 let createRoleCommand = ".cr " + roleName
                 let roleAssignmentCommand = ".asar " + roleName
-                let showCommand = '.cmdmap "show ' + roleName + '" .iam ' + roleName
-                let hideCommand = '.cmdmap "hide ' + roleName + '" .iamn ' + roleName
                 let categoryData = [filteredCategories[i], roleName, createRoleCommand, roleAssignmentCommand, showCommand, hideCommand]
                 allCateoryData.push(categoryData)
             }
