@@ -54,18 +54,25 @@
 			let rawInput = $("input").val()
 			let inputLines = rawInput.split("\n")
 			let numberOfModules = inputLines.length
-			let allModuleData = []
 
             // modules
+			let allModuleData = []
 			for (let i = 0; i < numberOfModules; i++) {
 				let moduleData = inputLines[i].split(",")
 				console.log(moduleData)
                 moduleData.push(formatModuleAbbreviation(moduleData[0]))
                 moduleData.push(formatModuleName(moduleData[1]))
 
-                // TODO: filter after module name
+                // filter after module name
                 // because the same module can be multiple times in the same semester
+                let indexOfModule = getColumn(allModuleData, 4).indexOf(moduleData[4])
+                if (indexOfModule >= 0) {
                 allModuleData.push(moduleData)
+			}
+                else {
+                    // add alternative full module name
+                    allModuleData[indexOfModule] += ", " + moduleData[1]
+                }
 			}
 
             // categories
