@@ -67,8 +67,8 @@
                 // because the same module can be multiple times in the same semester
                 let indexOfModule = getColumn(allModuleData, 4).indexOf(moduleData[4])
                 if (indexOfModule >= 0) {
-                allModuleData.push(moduleData)
-			}
+                    allModuleData.push(moduleData)
+                }
                 else {
                     // add alternative full module name
                     allModuleData[indexOfModule] += ", " + moduleData[1]
@@ -96,9 +96,11 @@
                 fullModuleResult += "<div>" + allModuleData[i].join(" | ") + "</div>\n"
             }
 			$("moduleOutput").val(fullModuleResult)
-
-			// TODO: cast role data to string for output
-			let roleResult = allCateoryData.join("\n")
+ 
+			let fullRoleResult = ""
+            for (let i = 0; i < allCategoryData.length; i++) {
+                fullRoleResult += "<div>" + allCategoryData[i].join(" | ") + "</div>\n";
+            }
 			$("roleOutput").val(roleResult)
 		}
 
