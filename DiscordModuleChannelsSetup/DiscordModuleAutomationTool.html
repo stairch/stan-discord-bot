@@ -91,9 +91,11 @@
             }
 
             // output
-			// TODO: cast module data to string for output
-			let moduleResult = allModuleData.join("\n")
-			$("moduleOutput").val(moduleResult)
+            let fullModuleResult = ""
+            for (let i = 0; i < allModuleData.length; i++) {
+                fullModuleResult += "<div>" + allModuleData[i].join(" | ") + "</div>\n"
+            }
+			$("moduleOutput").val(fullModuleResult)
 
 			// TODO: cast role data to string for output
 			let roleResult = allCateoryData.join("\n")
