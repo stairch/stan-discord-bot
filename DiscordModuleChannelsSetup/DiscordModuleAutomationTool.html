@@ -82,8 +82,12 @@
             let allCateoryData = []
             for (let i = 0; i < filteredCategories.length; i++) {
                 let roleName = filteredCategories[i].toLowerCase()
-                let createRoleCommand = ".cr " + roleName + "\n.asar " + category
-                let categoryData = [filteredCategories[i], createRoleCommand]
+                let createRoleCommand = ".cr " + roleName
+                let roleAssignmentCommand = ".asar " + roleName
+                let showCommand = '.cmdmap "show ' + roleName + '" .iam ' + roleName
+                let hideCommand = '.cmdmap "hide ' + roleName + '" .iamn ' + roleName
+                let categoryData = [filteredCategories[i], roleName, createRoleCommand, roleAssignmentCommand, showCommand, hideCommand]
+                allCateoryData.push(categoryData)
             }
 
             // output
