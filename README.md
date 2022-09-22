@@ -1,15 +1,19 @@
 # Stan Discord Bot
 
-This repository contains the STAIR discord bot named Stan. Also it contains some automation tools for setting up the Discord correctly.
+This repository contains the STAIR discord bot named Stan.
+Also it contains some automation tools for setting up the Discord correctly.
 
-## Getting started
+## Stan Bot V1
 
-* Copy stan.json to your StanBot.Service folder. You get the file from another developer or the virtual machine.
+### Getting started
+
+* Copy stan.json to your StanBot.Service folder.
+  You get the file from another developer or the virtual machine.
 * Request access to the virtual machine.
 * Request access to the Stan mailbox.
 * Setup a C# dev IDE (Visual Studio 2019 recommended)
 
-## Deployment
+### Deployment
 
 1. open package manager console in Visual Studio 1. Build:
 
@@ -22,55 +26,58 @@ This repository contains the STAIR discord bot named Stan. Also it contains some
 6. Rename `StanBot` to `StanBot.old`
 7. Create `StanBot` folder
 8. Paste the new dlls from `StanBot.Service/bin/Release/netcoreapp3.1/win-x64` from your local build
-9. Open "Services"
+9. Open "Services" from Windows
 10. Right click and select "Restart" for the Discord Bot. Name: "STAIR Discord Bot"
 11. Go into the log file and do what is written there\
     open <https://microsoft.com/devicelogin>\
     log in to your Microsoft STAIR account\
     enter code\
     accept
-12. Go to chapter "check if bot is online and running"
+12. Go to chapter `Check if the bot is online and running`
 13. Sign out
 
-## Check if bot is online and running
+### Check if the bot is online and running
 
 You can check if it's online when you go to the Discord and check for the green point next to the Stan Bot.
 If the point is not green, there is a problem.
 
 You can also check if it works when you send the student email as a direct message.
 
-## Workflow
+### Workflow
 
 When students join the Discord they don't have any rights.
 
 They can get access to the channels when they authenticate themselfs with theyr student email from HSLU.
 
-### Authentication
+#### Authentication
 
-So, they send a message to the Stan-bot. He receives it. Then this bot here gets it over an API and sends a new random code to him.
+So, they send a message to the Stan-bot. He receives it.
+Then this bot here gets it over an API and sends a new random code to him.
 The student then has to go to his email and send now the code to the bot over Discord.
-The bot then gets the message again over the API and checks it. 
+The bot then gets the message again over the API and checks it.
 When it's correct, the student gets his role and with it the rights and access.
 
-## Recover
+### Recover
 
 Look in the `StanBot.log` file under `C:/Services/StanBot` for more information.
 
 See the "Deployment" chapter on how to restart.
 
-## Useful links
+### Useful links
 
-* <https://discord.gg/discord-api> (helper Discord for the used librarys)
+* <https://discord.gg/discord-api> (helper Discord for the used libraries)
 * <https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit>
 * <https://support.discord.com/hc/en-us/community/posts/360032363631-Increase-the-Max-Number-of-Roles-per-Server>
 
 ## Nadeko Bot
 
 Nadeko is the bot that is used for students, so they can assign a module channel to their account.
+Go to the `DiscordModuleChannelsSetup` folder for automation tools.
+You can let the Nadeko commands be generated for you and only have to copy/paste them to the correct Discord channel.
 
 ### Most important commands
 
-Sent this commands in a channel with Nadeko
+Send these commands in a channel with Nadeko
 
 | Command | Description |
 | ------- | ----------- |
