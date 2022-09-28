@@ -219,10 +219,10 @@
                                 channelName = replaceNonAlphanumericCharacters(channelName, "_");
                             }
                         }
-                        let aliasCommand = '.cmdmap "show ' + categoriesWithChannels[categoryIndex][channelIndex] + '" .iam ' + categoryName;
-                        let aliasHideCommand = '.cmdmap "hide ' + categoriesWithChannels[categoryIndex][channelIndex] + '" .iamn ' + categoryName;
 
                         if (categoryName !== channelName) {
+                            let aliasCommand = '.cmdmap "show ' + categoriesWithChannels[categoryIndex][channelIndex] + '" .iam ' + categoryName;
+                            let aliasHideCommand = '.cmdmap "hide ' + categoriesWithChannels[categoryIndex][channelIndex] + '" .iamn ' + categoryName;
                             output += '\n<div style="margin-left: 250px;">' + aliasCommand + "</div>";
                             output += '\n<button style="margin-left: 250px;" onclick="copyButtonTextToClipboard(this)">' + aliasCommand + "</button>";
                             output += '\n<div style="margin-left: 250px;">' + aliasHideCommand + "</div>";

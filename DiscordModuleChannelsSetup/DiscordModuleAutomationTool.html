@@ -60,13 +60,18 @@
 			let allModuleData = []
 			for (let i = 0; i < numberOfModules; i++) {
 				let moduleData = inputLines[i].split(",")
+                console.log("Module data:")
 				console.log(moduleData)
+                let discordRoleName = moduleData[2]
+                if (discordRoleName == "MODULE") {
+                    discordRoleName = moduleData[1]
+                }
                 moduleData.push(formatModuleAbbreviation(moduleData[0]))
                 moduleData.push(formatModuleName(moduleData[1]))
                 moduleData.push("Channel creation not implemented yet")
-                let showCommand = '.cmdmap "show ' + moduleName + '" .iam ' + moduleData[2]
+                let showCommand = '.cmdmap "show ' + moduleData[1] + '" .iam ' + discordRoleName
                 moduleData.push(showCommand)
-                let hideCommand = '.cmdmap "hide ' + moduleName + '" .iamn ' + moduleData[2]
+                let hideCommand = '.cmdmap "hide ' + moduleData[1] + '" .iamn ' + discordRoleName
                 moduleData.push(hideCommand)
 
                 // filter after module name

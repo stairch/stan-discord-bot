@@ -1,0 +1,73 @@
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue
+}
+% changes font
+\usepackage{times}
+% Set name of image label
+\renewcommand{\figurename}{Abbildung}
+
+\title{
+    {PREN2 Dokumentation} \\
+    \vspace{10mm}
+    { Frühlings Semester 2022 } \\
+    \vspace{10mm}
+    % https://commons.wikimedia.org/wiki/File:HSLU_2022_logo.svg
+    {\includegraphics[width=75mm]{img/hsluLogo2022.png}}
+}
+
+\author{Gruppe 36}
+% TODO: Update date
+\date{21.04.2022}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Testkapitel}
+
+Hier kommt mein Text.
+\newline
+Mein neuer Absatz
+
+\subsection{Anderes}
+
+\begin{itemize}
+    \item \url{mywebsite.ch}
+    \item \url{www.beispiel.de}
+    \item \url{www.wikipedia.org}
+\end{itemize}
+
+\subsubsection{Wieder anderes}
+
+% image with black border
+\begin{figure}[!htb]\centering
+    \begin {minipage}{0.6\textwidth}
+        \frame{\includegraphics[width=1\linewidth]{img/hsluLogo2022.png}}
+        \caption{HSLU Logo als Testbild}\label{Fig:Data3}
+    \end{minipage}
+\end{figure}
+
+\section{Änderung Plan}
+
+\section{Lessons Learned}
+
+\section{Anhang}
+
+\end{document}
