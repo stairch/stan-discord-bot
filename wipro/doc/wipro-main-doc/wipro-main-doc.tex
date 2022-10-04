@@ -1,5 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper, table]{article}
 
+\usepackage{xcolor}
 \usepackage{amssymb} 
 \usepackage[a4paper]{geometry}
 \usepackage[T1]{fontenc}
@@ -18,7 +19,10 @@
 \usepackage[style=verbose-ibid,backend=bibtex]{biblatex}
 \bibliography{wipro-main-doc}
 
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
 \usepackage{times}
+
 % Set name of image label
 \renewcommand{\figurename}{Abbildung}
 
@@ -99,12 +103,12 @@ Discord ist für alle g\"angigen Betriebssysteme verfügbar und unterstützt zud
 Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommuniaktion zwischen den Spielkameraden zu vereinfachen/
 verbessern. Das Ziel war es, nebst der komplexen Spielmechanik einen Messanger zu bauen, der sich als
 benutzerfreundlich und effizient erweist. Das Unternehmen Discord Inc (damals noch Hammer \& Chisel) wurde im Jahr 2012
-als Start Up gegr\"undet.\autocite{} Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
+als Start Up gegr\"undet.\autocite{noauthor_discord_2021} Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
 Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
 
 2015 folgte die Veröffentlichung unter der Domain "discordapp.com". Der Sprach- und Messanger Dienstleister erfreute sich schnell
 grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund 
-20 Millionen US-Dollar unterstützte. \autocite{} .
+20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
 2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre XBox Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung
 von 150 Millionen US-Dollar. Bewertet wurde Discord Inc nun auf etwa 2 Milliarden US-Dollar.
 
@@ -114,9 +118,9 @@ wie das Schulwesen oder innerhalb Unternehmen, ansprechender zu machen. Damit \"
 von \textit{Chat for Gamers} zu \textit{Chat for Communities and Friends} und f\"uhrte Servervorlagen ein.
 
 Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
-wird auf 15 Milliarden US-Dollar gewertet. (Stand 2021) \autocite{}
+wird auf 15 Milliarden US-Dollar gewertet. (Stand 2021) \autocite{david_curry_discord_2022}
 
-\autocite{discord_wiki}
+\autocite{noauthor_discord_2022}
 
 
 \subsubsection{Discord Einschr\"ankungen}
@@ -157,16 +161,83 @@ Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
 \subsection{Projektführung}
 
 \subsubsection{Projektart}
+Es gibt verschiedene Projektarten, welche je nach Vorhaben zur Anwendung kommen. Eine Projektart hilft, die erwarteten Ergebnisse zu spezifizieren
+und geht auch mit der richtigen Wahl eines Vorgehensmodells daher.
+\newline
+Ein Projekt kann nach verschiedenen Modellen typisiert werden. Verbreitete Ansätze dabei sind:
+\begin{itemize}
+    \item Portfoliobezogene Projektklassifikation
+    \item Externe und interne Projekte
+    \item Projektarten nach Trägern
+    \item Unterteilung nach Komplexität von Projektinhalt und Projektumwelt
+    \item Diamond Approach
+    \item oder die Erstellung eines Projektprofils\autocite{claus_husselmann_zielgerichtete_nodate} %PMRE Projekttypisierung
+\end{itemize}
+Auf den genaueren Beschrieb der einzelnen Modelle, wird verzichtet, da für dieses Projekt eine Vorgabe der verschiedenen Projektarten gemacht wurde.
+Für zukünftige Projekte könnte man aber auf diese Projekttypisierungsmodelle zurückgreifen um sein Vorhaben genau einzustufen.
+\newline
+\newline
+Für dieses Wirtschaftsprojekt standen folgende Projektarten zur Auswahl:
+\begin{itemize}
+    \item Einsatz von Standardsoftware und Services
+    \item Software- und Produktentwicklung
+    \item Innovationsprojekte (Projekte mit Erkenntnisgewinn, Forschungsprojekte)
+    \item IT-Infrastrukturentwicklung
+    \item Strukturierte Analyse und Konzeption von Systemen und Abläufen \autocite{oliver_gilbert_wipro_2022} %Wegleitung
+\end{itemize}
 
+Unsere Aufgabestellung verlangt, dass wir in einer ersten Phase, eine Analyse der bestehenden Infrastruktur und des zur Zeit laufenden Bots durchführen.
+Die Analyse beruht auf der Frage, ob die zurzeit laufende Applikation, den neuen Features angepasst werden kann oder ersetzt werden muss.
+In einer zweiten Phase wird evtl. ein neuer Bot in einer neuen Infrastruktur implementiert oder nur die neuen Features hinzugefügt.
+In einer dritten Phase wird eine Anleitung für den zukünftigen Unterhalt des Discord-Servers und des Bots erstellt.
+
+Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentwicklung" gewählt. Da wir eine Analyse von bestehender Software machen und 
+entweder bestehende Software weiterentwickeln oder eine neue erstellen.
+\newline
 \subsubsection{Vorgehensmodell}
+"\textit{Ein Vorgehensmodell ist eine mehr oder weniger genau Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel 
+erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
+Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
+Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
+Bei Nutzung eines Vorgehensmodells ist die Wahrscheinlichkeit ein Projekt innerhalb der festgelegten Zeit, mit dem verfügbarem Budget und in einer
+angemessenen Qualität fertigzustellen, insgesamt grösser.
+\newline \newline
+
+
 
 \subsubsection{Rahmenplan}
-Rahmenplan
+Der Rahmenplan gibt ein Überblick über die ganzen Phasen des Projekts. Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als 
+Meilensteine deklariert und mit konkretem Datum versehen.
+\begin{figure}[h]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/Rahmenplan.jpg}
+    \caption{Rahmenplan}
+    \label{fig:Rahmenplan}
+\end{figure}
 
 \subsubsection*{Meilensteine}
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \rowcolor[gray]{.9} Meilenstein Nr. & Titel & Artefakte \\
+        \hline
+        1 & Initialisierungsphase beendet & \tabitem Architekturdokument \\
+         & & \tabitem Analyse \\
+        \hline
+    \end{tabular}    
+\end{center}
 
 
-\subsubsection*{Sprintplanung}
+\subsection{Anforderungen}
+
+
+\subsubsection{Epics}
+
+\subsubsection{User Stories}
+
+
+\subsubsection{Sprintplanung}
 
 
 \newpage
