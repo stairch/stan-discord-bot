@@ -103,7 +103,7 @@ Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen 
 Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommuniaktion zwischen den Spielkameraden zu vereinfachen und zu verbessern.
 Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
 2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
-als Startup gegr\"undet.\autocite{noauthor_discord_2021} 
+als Startup gegr\"undet.\autocite{noauthor_discord_2021}
 Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
 Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
 
@@ -197,7 +197,7 @@ Ein Projekt kann nach verschiedenen Modellen typisiert werden. Verbreitete Ansä
 Auf den genaueren Beschrieb der einzelnen Modelle, wird verzichtet, da für dieses Projekt eine Vorgabe der verschiedenen Projektarten gemacht wurde.
 Für zukünftige Projekte könnte man aber auf diese Projekttypisierungsmodelle zurückgreifen um sein Vorhaben genau einzustufen.
 \newline
-\newline
+
 Für dieses Wirtschaftsprojekt standen folgende Projektarten zur Auswahl:
 \begin{itemize}
     \item Einsatz von Standardsoftware und Services
@@ -214,21 +214,77 @@ In einer dritten Phase wird eine Anleitung für den zukünftigen Unterhalt des D
 
 Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentwicklung" gewählt. Da wir eine Analyse von bestehender Software machen und
 entweder bestehende Software weiterentwickeln oder eine neue erstellen.
-\newline
+\newpage
 \subsubsection{Vorgehensmodell}
 "\textit{Ein Vorgehensmodell ist eine mehr oder weniger genau Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
 Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
 Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
 Bei Nutzung eines Vorgehensmodells ist die Wahrscheinlichkeit ein Projekt innerhalb der festgelegten Zeit, mit dem verfügbarem Budget und in einer
-angemessenen Qualität fertigzustellen, insgesamt grösser.
-\newline \newline
+angemessenen Qualität fertigzustellen, insgesamt grösser. \autocite{} %PMB Projektmanagement folie23
+\newline
+
+Man unterscheidet grundlegend zwischen klassischem und agilem Projektmanagement.
+Beim klassischen Vorgehensmodellen arbeitet man meist sequentiell.
+Also eine Phase folgt der anderen und baut darauf auf.
+Rückkopplungen sind meistens nicht möglich und verzögern den Endtermin des Projektes.\\
+Bespiele für klassische Vorgehensmodelle sind
+\begin{itemize}
+    \item das Wasserfallmodell, in dem die Phasen die verschiedenen Aktivitäten darstellen.
+    \item das V-Modell, welches man gut für die Qualitätssicherung brauchen kann.
+    \item oder Hermes, welches vor allem vom Schweizer Bund verwendet wird.
+    \item etc.
+\end{itemize}
+
+Im agilen Projektmanagement arbeitet man iterativ und kann in den einzelnen Phasen immer wieder neu planen.
+Dies erlaubt eine schnellere Rücksprache mit den Stakeholdern und die Einbringung neuer Ideen. \\
+Beispiele für iterative Vorgehensmodelle sind
+\begin{itemize}
+    \item Scrum, welches den Grundstein des agilen Projektmanagement gebildet hat.
+    \item SAFe steht für (Scaled Agile Framework) und erlaubt es Scrum in grossen Organisationen einzusetzen.
+    \item etc. \autocite{} %https://de.wikipedia.org/wiki/Liste_von_Softwareentwicklungsprozessen
+\end{itemize}
+
+Je nach Teamgrösse und Vorhaben eignet sich eher ein klassisches oder agiles Vorgehen.
+Klassische Vorgehen werden meist bei sehr grossen Projekten eingesetzt, wie Bau- und Infrastruktur Projekten oder
+innerhalb Wertschöpfungsketten. Also dort, wo es eine lange Planungsphase braucht und es keinen Sinn macht iterativ vorzugehen.
+Das agile Vorgehen wird meist eher in kleineren Teams verwendet und ist vor allem in der Software-Entwicklung oder
+im Marketing bekannt.
+\newline
+
+Für dieses Projekt wird SoDa (Software Development Agile) verwendet und ist ein hybrides Vorgehen,
+das bedeutet ein Mix aus klassischem und agilem Vorgehen.
+Es besteht auch aus verschiedenen Phasen die untereinander abgeschlossen sind,
+hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
+\newpage
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/SoDa.png}
+    \caption{Software Development Agile}
+    \label{fig:SoDa}
+\end{figure}
 
 
+Wie der Name schon sagt, ist es für die Software Entwicklung konzipiert und erlaubt es, die gängigen Artefakte,
+welche man bei der Software Entwicklung erstellen muss, in die Projektphasen miteinzubinden.
+So wird in der Initialisierungsphase der Projektauftrag, Business-Case und der Anfroderungskatalog definiert und
+in der Einführungsphase können Anleitungen oder Einführungen für den operativen Einsatz erstellt werden.
+Die Konzeptions- und Realisierungphase erlaubt es, die Vorteile von der agilen Vorgehensweise nach Scrum,
+in der Entwicklung zu gebrauchen. Durch das Vorgehen mithilfe von Sprints können bei jedem Zyklus neue
+Anforderungen erfasst und das weitere Vorgehen geplant werden. Die Sprints können beliebig lang gesetzt werden,
+im Geschäftsumfeld üblich sind aber 2-Wochen.
+
+
+Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von SoDa abbilden.
+In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant.
+In der Konzeptiopns- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt.
+Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.
 
 \subsubsection{Rahmenplan}
-Der Rahmenplan gibt ein Überblick über die ganzen Phasen des Projekts. Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als
-Meilensteine deklariert und mit konkretem Datum versehen.
+Der Rahmenplan gibt ein Überblick über die ganzen Phasen des Projekts.
+Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als Meilensteine deklariert und mit konkretem Datum versehen.
+
 \begin{figure}[h]
     \centering
     \hspace*{-2cm}
@@ -236,33 +292,108 @@ Meilensteine deklariert und mit konkretem Datum versehen.
     \caption{Rahmenplan}
     \label{fig:Rahmenplan}
 \end{figure}
+\todo{Hinzufügen von Meilenstein am Anfang von Projekt}
+\todo{Datum bei Projektstart stimmt nicht}
+Es wurde entschieden eine Intialisierungsphase von 3 Wochen zu planen, da die Analyse der bestehenden Software in dieser Phase stattfindet.
+Am Schluss bleibt noch eine Woche für die Einführungsphase und das Erstellen der Anleitung.
+Für die Realisierungsphase bleiben 9 Wochen Zeit, die in Sprints eingeteilt werden können.
+Es verbleibt ein einwöchiger Sprint und 4 reguläre zweiwöchige Sprints.
 
 \subsubsection*{Meilensteine}
-\begin{center}
-    \begin{tabular}{|c|c|c|}
+Meilensteine erlauben es den Projektfortschritt festzustellen,
+in dem zuvor definierte Projektergebnisse (Artefakte) an einem gewissen Datum vorliegen.\\
+Artefakte sind konkrete Dokumente oder Software die vorliegen muss. Zum Beispiel:
+\begin{itemize}
+    \item Testprotokolle
+    \item Prototypen
+    \item Software Releases
+    \item Sprintplannungen
+    \item etc.
+\end{itemize}
+
+In SoDa ist es normal, bei jedem Phasenwechsel ein Meilenstein zu definieren und in der Mitte der
+Realisierungsphase noch einmal. \autocite{} % PMB Projektplanung p23-25
+Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|}
         \hline
-        \rowcolor[gray]{.9} Meilenstein Nr. & Titel & Artefakte \\
+        \rowcolor[gray]{.9} MS & Datum & Artefakte \\
         \hline
-        1 & Initialisierungsphase beendet & \tabitem Architekturdokument \\
+        1 & 19.09.2022 & \tabitem Aufgabenstellung \\
+        \hline
+        2 & 09.10.2022 & \tabitem Architekturdokument \\
          & & \tabitem Analyse \\
+         & & \tabitem Testkonzept \\
+         & & \tabitem Sprintplannung 1 \\
+        \hline
+        3 & 13.11.2022 & \tabitem Software-Release 0.5 \\
+         & & \tabitem Sprintplannung 4 \\
+        \hline
+        4 & 12.12.2022 & \tabitem Software-Release 1.0 \\
+         & & \tabitem Dokumentation Realisierung \\
+        \hline
+        5 & 18.12.2022 & \tabitem Bedienungsanleitung \\
         \hline
     \end{tabular}
-\end{center}
-
+    \caption{Meilensteine}
+    \label{tab: Meilensteine}
+\end{table}
 
 \subsection{Anforderungen}
-
+Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
+Diese werden für die Realisierungsphase in Epics umgewandelt.
+Die Epics werden im Anschluss in einzelne User Stories aufgeteilt, die dann in den Sprints seperat behandelt und gelöst werden.
+\newpage
 
 \subsubsection{Epics}
+Für das Projekt werden folgende Epics definiert.
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ | p{1em} | p{35em} | p{2em} |}
+        \hline
+        \rowcolor[gray]{.9} ID & Beschreibung & Prio \\
+        \hline
+        1 & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt.
+        Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentisierungsprozess.
+        Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server Und
+        hat nur Zugriff auf den Channel "Help". & A \\
+        \hline
+        2 & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können.
+        Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und auf unvorhergesehene
+        Interaktionen, von Seiten des Benutzers, reagieren können. & A \\
+        \hline
+        3 & Ein Student kann sich beim Bot für ein Modul anmelden. Dieser schaltet den Channel für den Studenten frei,
+        so das er darin mit anderen Studierenden kommunizieren kann. Falls das Modul für den Studenten nicht mehr relevant ist,
+        kann er es beim Bot wieder abmelden. & A \\
+        \hline
+        4 & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können.
+        Die neuen oder nicht mehr Verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht.
+        An dem Verhalten des Benutzers soll sich nichts ändern. & A \\
+        \hline
+        5 & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen.
+        Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser zugewiesen. & A \\
+        \hline
+        6 & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle Statistiken über
+        den Discord erstellen können. & B \\
+        \hline
+        7 & Fehlereingaben in den Modulregistrierungschannel oder interne Fehler vom Bot, sollen direkt automatisch
+        an einen hinterlegten Mitarbeiter von Stair gemeldet werden & C \\
+        \hline
+    \end{tabular}
+    \caption{Epics}
+    \label{tab: Epics}
+\end{table}
 
 \subsubsection{User Stories}
 
 
 \subsubsection{Sprintplanung}
-
-
+Some text.
 \newpage
+
 \section{Realisierung}
 
 \subsection{Analyse der bestehenden Infrastruktur}
