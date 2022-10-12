@@ -174,6 +174,18 @@ Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
 % https://www.nuget.org/packages/linq2db.MySql/
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
 
+\subsection{Teststrategie- \& Drehbuch}
+In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
+Ein genauerer Beschrieb dazu ist im Kapitel \ref{SoDa} auf Seite \pageref{SoDa} zu finden. 
+Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und 
+während jeder Phase die Funktionalität sicher zu stellen.
+\newline
+Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
+Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{} % AAA Pattern
+Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
+
+\subsubsection{Testdrehbuch}
+
 \newpage
 \section{Methoden}
 
@@ -215,7 +227,7 @@ Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentw
 entweder bestehende Software weiterentwickeln oder eine neue erstellen.
 \newpage
 \subsubsection{Vorgehensmodell}
-"\textit{Ein Vorgehensmodell ist eine mehr oder weniger genau Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
+"\textit{Ein Vorgehensmodell ist eine mehr oder weniger genaue Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
 Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
 Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
@@ -458,9 +470,46 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
     \label{tab: UserStories}
 \end{longtable}
 
-\subsubsection{Sprintplanung}
-Some text.
-\newpage
+\subsubsection*{Sprintplanung}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \rowcolor[gray]{.9} Sprint & Start & Ende & Artefakte \\
+        \hline
+        Sprint 1 & 10.10.2022 & 16.10.2022 & \tabitem Studentenerfassung implementiert \\
+         & & & \tabitem Sprintreview S01 \\
+         & & & \tabitem Sprintplannung S02 \\
+        \hline
+        Sprint 2 & 17.10.2022 & 30.10.2022 & \tabitem Modulerfassung implementiert \\
+         & & & \tabitem Sprintreview S02 \\
+         & & & \tabitem Sprintplannung S03 \\
+        \hline
+        Sprint 3 & 31.10.2022 & 13.11.2022 & \tabitem Authentifizierung implementiert \\
+         & & & \tabitem Sprintreview S03 \\
+         & & & \tabitem Sprintplannung S04 \\
+        \hline
+        Sprint 4 & 14.11.2022 & 27.11.2022 & \tabitem Statistiken implementiert \\
+         & & & \tabitem Sprintreview S04 \\
+         & & & \tabitem Sprintplannung S05 \\
+        \hline
+        Sprint 5 & 28.11.2022 & 11.12.2022 & \tabitem Fehlererkennung implementiert \\
+         & & & \tabitem Sprintreview S05 \\
+        \hline
+    \end{tabular}
+    \caption{Sprintplanung}
+    \label{tab: Sprintplanung}
+\end{table}
+
+Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
+\begin{itemize}
+    \item Burndown-Charts
+    \item Github Story-Board
+    \item Sprintreviews (Anhang)
+\end{itemize}
+
+\subsection{Risikomanagement}
+
 
 \section{Realisierung}
 
@@ -515,6 +564,8 @@ Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren
 
 \subsubsection{Funktionsweise Bot}
 Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
+
+\subsubsection*{Konfigurationsmanagement alter Bot}
 In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizierung und den eingesetzten Libraries.
 \todo{Tabelle mit Spezifikationen vom System. (Versionen, Libraries)}
 \newline
@@ -582,7 +633,48 @@ Entscheid schreiben eines eigenen Bots
 
 \section{Anh\"ange}
 
-\todo{schreiben}
+\subsection{Sprintreviews}
+In diesem Kapitel werden die einzelnen Sprintreviews augelistet.
+Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und 
+einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
+
+\subsubsection{Sprint 1}
+\subsubsection*{Sprintziel}
+Ziel
+
+\subsubsection*{Risiko-Update}
+Update
+
+\subsubsection*{Sprintbacklog}
+Link zu dem Backlog für den Sprint 1:\\
+% Link
+Aufwandschätzung für den Sprint: XX Story Points
+
+\subsubsection*{Sprintreview}
+Bild von Burndown-Chart
+
+Geschätzter Aufwand: XX \\
+Effektiver Aufwand: XX \\
+
+Bild von Umgesetzten User Stories aus dem Backlog.
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item XX 
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item XX
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item XX 
+\end{itemize}
+
+\subsubsection{Sprint 2}
+Same for Sprint 2
+\newpage
 
 \section{Glossar}
 
