@@ -176,17 +176,133 @@ Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
 
 \subsection{Teststrategie- \& Drehbuch}
 In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
-Ein genauerer Beschrieb dazu ist im Kapitel \ref{SoDa} auf Seite \pageref{SoDa} zu finden. 
+Ein genauerer Beschrieb dazu ist im Kapitel \nameref{Vorgehensmodell} zu finden. 
 Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und 
 während jeder Phase die Funktionalität sicher zu stellen.
 \newline
 Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
-Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{} % AAA Pattern
+Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{noauthor_arrangeactassert_nodate}
 Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
 
 \subsubsection{Testdrehbuch}
+Im Folgenden werden die einzelnen Systemtests beschrieben. 
+Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
+\newline
+Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
+Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
-\newpage
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Betritt ein neuer Student den Discord-Server, bekommt er direkt eine Nachricht}} \\*
+    \multicolumn{2}{|l|}{\textbf{vom Stan Bot.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#1 \\
+     & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt. 
+     Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentifizierungsprozess. 
+     Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und 
+     hat nur Zugriff auf den Channel "Help". \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Bereitstellen eines Discord Accounts, welcher noch nicht auf dem Stair-Discord Server angemeldet ist.
+        \item Dem Stair Discord Server beitreten. \url{https://discord.com/invite/Tp7XgzZ}
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Sobald man dem Server beigetreten ist, bekommt man vom Stan Bot eine private Nachricht.
+    Dort stehen allgemeine Informationen zum Server und zum Anmeldeprozess. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#1}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Student kann sich beim Bot authentifizieren.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#2}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#2 \\
+     & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Student hat eine Nachricht von Stan als Direkt Nachricht erhalten.
+        \item Der Student schickt dem Bot seine E-Mail Adresse nach dem Muster \textit{<name.vorname>@stud.hslu.ch} .
+        \item Nach Erhalt der E-Mail, schickt der Student, Stan den 6-stelligen Verifizierungscode.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Student sollte nach Senden seiner E-Mail Adresse dem Bot, eine E-Mail von ihm erhalten.
+    In dieser ist ein zufällig generierter 6-stelliger Verifizierungscode enthalten.
+    Nach dem verifizieren, bekommt der Nutzer die Rolle Student und "Haus" zugeteilt und hat Zugriff auf die Grund-Channels. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#2}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Nicht-Student kann sich nicht authentifizieren.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#3}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#2 \\
+     & Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und 
+     auf unvorhergesehene Interaktionen, von Seiten des Benutzers, reagieren können. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Ein Nicht-Student schickt dem Bot eine E-Mail, welche sich vom Muster \textit{<name.vorname>@stud.hslu.ch} unterscheidet.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Nutzer bekommt direkt eine Nachricht vom Bot, das diese E-Mail nicht gültig ist.
+    Es können sich nur Studenten authentifizieren. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#3}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Stair Administartor kann eine Liste mit Studenten in das System einlesen.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#4}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#5 \\
+     & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen. 
+     Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Stair Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
+        \item Er kann die Liste als Parameter an ein "LoadStudent" Script übergeben.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt. 
+    Studenten, welche das letzte Semester bestanden haben und nicht mehr auf der Liste vorhanden sind, werden als Ex-Studenten markiert.\\
+    \hline
+    \caption{Testdrehbuch - Testfall \#4}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Das ist die Testbeschreibung}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#1 \\
+     & Epicbeschreibung \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Bli 
+        \item Blub
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Verhaltensbeschreibung \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#1}
+\end{longtable}
+
+\clearpage
 \section{Methoden}
 
 \subsection{Projektführung}
@@ -226,13 +342,13 @@ In einer dritten Phase wird eine Anleitung für den zukünftigen Unterhalt des D
 Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentwicklung" gewählt. Da wir eine Analyse von bestehender Software machen und
 entweder bestehende Software weiterentwickeln oder eine neue erstellen.
 \newpage
-\subsubsection{Vorgehensmodell}
+\subsubsection{Vorgehensmodell}\label{Vorgehensmodell}
 "\textit{Ein Vorgehensmodell ist eine mehr oder weniger genaue Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
 Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
 Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
 Bei Nutzung eines Vorgehensmodells ist die Wahrscheinlichkeit ein Projekt innerhalb der festgelegten Zeit, mit dem verfügbarem Budget und in einer
-angemessenen Qualität fertigzustellen, insgesamt grösser. \autocite{} %PMB Projektmanagement folie23
+angemessenen Qualität fertigzustellen, insgesamt grösser. \autocite{jenny_projektmanagement_2016} %PMB Projektmanagement folie23
 \newline
 
 Man unterscheidet grundlegend zwischen klassischem und agilem Projektmanagement.
@@ -253,7 +369,7 @@ Beispiele für iterative Vorgehensmodelle sind
 \begin{itemize}
     \item Scrum, welches den Grundstein des agilen Projektmanagement gebildet hat.
     \item SAFe steht für (Scaled Agile Framework) und erlaubt es Scrum in grossen Organisationen einzusetzen.
-    \item etc. \autocite{} %https://de.wikipedia.org/wiki/Liste_von_Softwareentwicklungsprozessen
+    \item etc. \autocite{noauthor_liste_2022}
 \end{itemize}
 
 Je nach Teamgrösse und Vorhaben eignet sich eher ein klassisches oder agiles Vorgehen.
@@ -323,7 +439,7 @@ Artefakte sind konkrete Dokumente oder Software die vorliegen muss. Zum Beispiel
 \end{itemize}
 
 In SoDa ist es normal, bei jedem Phasenwechsel ein Meilenstein zu definieren und in der Mitte der
-Realisierungsphase noch einmal. \autocite{} % PMB Projektplanung p23-25
+Realisierungsphase noch einmal. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
 Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
 
 \begin{table}[h]
@@ -358,7 +474,7 @@ Diese werden für die Realisierungsphase in Epics umgewandelt.
 Die Epics werden im Anschluss in einzelne User Stories aufgeteilt, die dann in den Sprints seperat behandelt und gelöst werden.
 \newpage
 
-\subsubsection{Epics}
+\subsubsection{Epics}\label{Epics}
 Für das Projekt werden folgende Epics definiert.
 
 \begin{table}[h]
@@ -406,55 +522,55 @@ User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
 Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder 
 infrastrukturelle User-Stories so gebildet werden.
 
-In der Strintplannung werden zu jeder User-Story zugehörige Aktzeptanzkriterien definiert.
+In der Strintplannung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert.
 Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und 
 können auch als Test während der Entwicklung gebraucht werden.
 Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
 
-Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{} % PMB Projektplanung p.101-103
+Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{hammerschall_software_2013} % PMB Projektplanung p.101-103
 \begin{itemize}
     \item \textbf{I}ndependent  unabhängig voneinander
     \item \textbf{N}egotiable   zerlegbar, änderbar, kombinierbar, verhandelbar
     \item \textbf{V}aluable     hat wirtschaftlichen Wert
     \item \textbf{E}stimatable  so klar, dass es vom Team geschätzt werden kann
     \item \textbf{S}mall        klein genug, um in einem Sprint entwicklet werden zu können
-    \item \textbf{T}estable     klare Aktzeptanzkriterien
+    \item \textbf{T}estable     klare Akzeptanzkriterien
 \end{itemize}
 
 Beim Story-Splitting werden folgende User-Stories für das Projekt definiert. 
 
 \begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
     \hline
-    \rowcolor[gray]{.9} ID & Beschreibung & Aktzeptanzkriterien & Prio & Weight & Sprint \\
+    \rowcolor[gray]{.9} ID & Beschreibung & Akzeptanzkriterien & Prio & Weight & Sprint \\
     \hline
     1 & Als Bot möchte ich den Benutzer beim ersten Betreten des Server authentifizieren können,
     um ihm die ihm zugeteilten Rollen zuweisen zu können. & 
-    \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\
+    \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\*
     & & \tabitem Der Student bekommt nach der Anmeldung die Rolle Student zugeteilt und wird dem richtigen Haus-Channel zugewiesen. & & & \\
     \hline
-    2 & Als Bot möchte ich den Studenten mittels E-Mail Verfikation authentifizieren können,
+    2 & Als Bot möchte ich den Studenten mittels E-Mail Verifikation authentifizieren können,
     um sicher zu gehen, dass dieser eine gültige Studenten-Mail besitzt. &
-    \tabitem Der Student bekommt eine E-Mail auf der Addresse, die er dem Bot mitteilt. & A & 15 & 3 \\
-     & & \tabitem Ein Student kann sich authentifizieren, ein Nicht-Student wird abgewiesen. & & & \\
-     & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\
+    \tabitem Der Student bekommt eine E-Mail auf der Adresse, die er dem Bot mitteilt. & A & 15 & 3 \\*
+     & & \tabitem Ein Student kann sich authentifizieren, ein Nicht-Student wird abgewiesen. & & & \\*
+     & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\*
      & & \tabitem Der Bot kann den Code verifizieren, nachdem der Student die E-Mail erhalten hat. & & & \\
     \hline
     3 & Als Stair Administrator möchte ich neue Studenten einfach erfassen können,
-    um sie dem System bekannt zu machen und die Adminstration zu vereinfachen. & 
-    \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\
+    um sie dem System bekannt zu machen und die Administration zu vereinfachen. & 
+    \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\*
      & & \tabitem Die neu erfassten Studenten werden im System eingetragen und können für die Authentifizierung verwendet werden. & & & \\
     \hline
     4 & Als Student möchte ich mich für neue Modul-Channels an und abmelden können,
     um mich mit anderen Studenten austauschen zu können. & 
-    \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\
-     & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\
+    \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\*
+     & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\*
      & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste, 
-     so dass der Channel dem Studenten nicht mehr sichtbar ist. & & & \\ 
+     so dass der Channel für den Studenten nicht mehr sichtbar ist. & & & \\ 
     \hline
     5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
     um sie für den Bot nutzbar zu machen. &
-    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\
-     & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\
+    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\*
+     & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\*
      & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
     \hline
     6 & Als Stair Administrator möchte ich Statistiken aus dem System auslesen können,
@@ -463,13 +579,13 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
     \hline
     7 & Als Stair Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
     um Gegenmassnahmen ergreifen zu können. & 
-    \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\
+    \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\*
      & & \tabitem Der Administrator wird benachrichtigt wenn der E-Mail Versand zur Authentifikation nicht mehr funktioniert. & & & \\
     \hline
     \caption{User-Stories}
     \label{tab: UserStories}
 \end{longtable}
-
+\clearpage
 \subsubsection*{Sprintplanung}
 \begin{table}[h]
     \centering
@@ -503,14 +619,14 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
 
 Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
 \begin{itemize}
-    \item Burndown-Charts
-    \item Github Story-Board
-    \item Sprintreviews (Anhang)
+    \item Github Story-Board (\href{https://github.com/orgs/stairch/projects/1/views/4}{Link zum Story-Board})
+    \item Sprintreviews (\nameref{Sprintreviews})
 \end{itemize}
 
 \subsection{Risikomanagement}
+Risikomanagement
 
-
+\newpage
 \section{Realisierung}
 
 \subsection{Analyse der bestehenden Infrastruktur}
@@ -618,8 +734,6 @@ Entscheid schreiben eines eigenen Bots
 - Statistiken
 - Keine ungewollten Features
 
-\subsection{Sprint 1}
-
 \newpage
 \section{Evaluation und Validation}
 
@@ -633,7 +747,7 @@ Entscheid schreiben eines eigenen Bots
 
 \section{Anh\"ange}
 
-\subsection{Sprintreviews}
+\subsection{Sprintreviews}\label{Sprintreviews}
 In diesem Kapitel werden die einzelnen Sprintreviews augelistet.
 Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und 
 einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
