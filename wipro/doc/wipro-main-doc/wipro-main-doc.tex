@@ -9,6 +9,7 @@
 \graphicspath{ {images/} }
 \usepackage{todonotes}
 \usepackage{hyperref}
+\usepackage{longtable}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -154,9 +155,7 @@ Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
 \textit{Chat for Communities and Friends} und f\"uhrte Servervorlagen ein.
 
 Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
-wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{}
-
-\autocite{noauthor_discord_2022}
+wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
 
 \subsubsection{Discord Einschr\"ankungen}
 
@@ -216,6 +215,18 @@ Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohn
 % https://www.nuget.org/packages/linq2db.MySql/
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
 
+\subsection{Teststrategie- \& Drehbuch}
+In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
+Ein genauerer Beschrieb dazu ist im Kapitel \ref{SoDa} auf Seite \pageref{SoDa} zu finden. 
+Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und 
+während jeder Phase die Funktionalität sicher zu stellen.
+\newline
+Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
+Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{} % AAA Pattern
+Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
+
+\subsubsection{Testdrehbuch}
+
 \newpage
 \section{Methoden}
 
@@ -257,7 +268,7 @@ Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentw
 entweder bestehende Software weiterentwickeln oder eine neue erstellen.
 \newpage
 \subsubsection{Vorgehensmodell}
-"\textit{Ein Vorgehensmodell ist eine mehr oder weniger genau Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
+"\textit{Ein Vorgehensmodell ist eine mehr oder weniger genaue Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
 Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
 Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
@@ -399,7 +410,7 @@ Für das Projekt werden folgende Epics definiert.
         \hline
         1 & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt.
         Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentisierungsprozess.
-        Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server Und
+        Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und
         hat nur Zugriff auf den Channel "Help". & A \\
         \hline
         2 & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können.
@@ -415,7 +426,7 @@ Für das Projekt werden folgende Epics definiert.
         An dem Verhalten des Benutzers soll sich nichts ändern. & A \\
         \hline
         5 & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen.
-        Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser zugewiesen. & A \\
+        Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. & A \\
         \hline
         6 & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle Statistiken über
         den Discord erstellen können. & B \\
@@ -429,11 +440,117 @@ Für das Projekt werden folgende Epics definiert.
 \end{table}
 
 \subsubsection{User Stories}
+Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Bausteine eines Sprints.
+Dieser Prozess wird auch \textbf{Story-Splitting} genannt
+User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
+"Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>." \\
+Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder 
+infrastrukturelle User-Stories so gebildet werden.
 
+In der Strintplannung werden zu jeder User-Story zugehörige Aktzeptanzkriterien definiert.
+Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und 
+können auch als Test während der Entwicklung gebraucht werden.
+Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
 
-\subsubsection{Sprintplanung}
-Some text.
-\newpage
+Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{} % PMB Projektplanung p.101-103
+\begin{itemize}
+    \item \textbf{I}ndependent  unabhängig voneinander
+    \item \textbf{N}egotiable   zerlegbar, änderbar, kombinierbar, verhandelbar
+    \item \textbf{V}aluable     hat wirtschaftlichen Wert
+    \item \textbf{E}stimatable  so klar, dass es vom Team geschätzt werden kann
+    \item \textbf{S}mall        klein genug, um in einem Sprint entwicklet werden zu können
+    \item \textbf{T}estable     klare Aktzeptanzkriterien
+\end{itemize}
+
+Beim Story-Splitting werden folgende User-Stories für das Projekt definiert. 
+
+\begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
+    \hline
+    \rowcolor[gray]{.9} ID & Beschreibung & Aktzeptanzkriterien & Prio & Weight & Sprint \\
+    \hline
+    1 & Als Bot möchte ich den Benutzer beim ersten Betreten des Server authentifizieren können,
+    um ihm die ihm zugeteilten Rollen zuweisen zu können. & 
+    \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\
+    & & \tabitem Der Student bekommt nach der Anmeldung die Rolle Student zugeteilt und wird dem richtigen Haus-Channel zugewiesen. & & & \\
+    \hline
+    2 & Als Bot möchte ich den Studenten mittels E-Mail Verfikation authentifizieren können,
+    um sicher zu gehen, dass dieser eine gültige Studenten-Mail besitzt. &
+    \tabitem Der Student bekommt eine E-Mail auf der Addresse, die er dem Bot mitteilt. & A & 15 & 3 \\
+     & & \tabitem Ein Student kann sich authentifizieren, ein Nicht-Student wird abgewiesen. & & & \\
+     & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\
+     & & \tabitem Der Bot kann den Code verifizieren, nachdem der Student die E-Mail erhalten hat. & & & \\
+    \hline
+    3 & Als Stair Administrator möchte ich neue Studenten einfach erfassen können,
+    um sie dem System bekannt zu machen und die Adminstration zu vereinfachen. & 
+    \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\
+     & & \tabitem Die neu erfassten Studenten werden im System eingetragen und können für die Authentifizierung verwendet werden. & & & \\
+    \hline
+    4 & Als Student möchte ich mich für neue Modul-Channels an und abmelden können,
+    um mich mit anderen Studenten austauschen zu können. & 
+    \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\
+     & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\
+     & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste, 
+     so dass der Channel dem Studenten nicht mehr sichtbar ist. & & & \\ 
+    \hline
+    5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
+    um sie für den Bot nutzbar zu machen. &
+    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\
+     & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\
+     & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
+    \hline
+    6 & Als Stair Administrator möchte ich Statistiken aus dem System auslesen können,
+    um sie für Marketing oder andere Zwecke gebrauchen zu können. & 
+    \tabitem Es stehen ein paar vorgefertigte Auslesemöglichkeiten bereit, um sie für den Administrator nutzbar zu machen & C & 9 & 4 \\
+    \hline
+    7 & Als Stair Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
+    um Gegenmassnahmen ergreifen zu können. & 
+    \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\
+     & & \tabitem Der Administrator wird benachrichtigt wenn der E-Mail Versand zur Authentifikation nicht mehr funktioniert. & & & \\
+    \hline
+    \caption{User-Stories}
+    \label{tab: UserStories}
+\end{longtable}
+
+\subsubsection*{Sprintplanung}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \rowcolor[gray]{.9} Sprint & Start & Ende & Artefakte \\
+        \hline
+        Sprint 1 & 10.10.2022 & 16.10.2022 & \tabitem Studentenerfassung implementiert \\
+         & & & \tabitem Sprintreview S01 \\
+         & & & \tabitem Sprintplannung S02 \\
+        \hline
+        Sprint 2 & 17.10.2022 & 30.10.2022 & \tabitem Modulerfassung implementiert \\
+         & & & \tabitem Sprintreview S02 \\
+         & & & \tabitem Sprintplannung S03 \\
+        \hline
+        Sprint 3 & 31.10.2022 & 13.11.2022 & \tabitem Authentifizierung implementiert \\
+         & & & \tabitem Sprintreview S03 \\
+         & & & \tabitem Sprintplannung S04 \\
+        \hline
+        Sprint 4 & 14.11.2022 & 27.11.2022 & \tabitem Statistiken implementiert \\
+         & & & \tabitem Sprintreview S04 \\
+         & & & \tabitem Sprintplannung S05 \\
+        \hline
+        Sprint 5 & 28.11.2022 & 11.12.2022 & \tabitem Fehlererkennung implementiert \\
+         & & & \tabitem Sprintreview S05 \\
+        \hline
+    \end{tabular}
+    \caption{Sprintplanung}
+    \label{tab: Sprintplanung}
+\end{table}
+
+Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
+\begin{itemize}
+    \item Burndown-Charts
+    \item Github Story-Board
+    \item Sprintreviews (Anhang)
+\end{itemize}
+
+\subsection{Risikomanagement}
+
 
 \section{Realisierung}
 
@@ -488,6 +605,8 @@ Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren
 
 \subsubsection{Funktionsweise Bot}
 Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
+
+\subsubsection*{Konfigurationsmanagement alter Bot}
 In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizierung und den eingesetzten Libraries.
 \todo{Tabelle mit Spezifikationen vom System. (Versionen, Libraries)}
 \newline
@@ -579,7 +698,48 @@ Entscheid schreiben eines eigenen Bots
 
 \section{Anh\"ange}
 
-\todo{schreiben}
+\subsection{Sprintreviews}
+In diesem Kapitel werden die einzelnen Sprintreviews augelistet.
+Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und 
+einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
+
+\subsubsection{Sprint 1}
+\subsubsection*{Sprintziel}
+Ziel
+
+\subsubsection*{Risiko-Update}
+Update
+
+\subsubsection*{Sprintbacklog}
+Link zu dem Backlog für den Sprint 1:\\
+% Link
+Aufwandschätzung für den Sprint: XX Story Points
+
+\subsubsection*{Sprintreview}
+Bild von Burndown-Chart
+
+Geschätzter Aufwand: XX \\
+Effektiver Aufwand: XX \\
+
+Bild von Umgesetzten User Stories aus dem Backlog.
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item XX 
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item XX
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item XX 
+\end{itemize}
+
+\subsubsection{Sprint 2}
+Same for Sprint 2
+\newpage
 
 \section{Glossar}
 
