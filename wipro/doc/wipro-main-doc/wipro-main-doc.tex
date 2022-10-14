@@ -86,10 +86,43 @@ Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*
 \newpage
 
 \tableofcontents
-\newpage
-\section{Problem, Fragestellung, Vision}
 
-\todo{Yannis schreiben}
+\newpage
+
+\section{Problem, Fragestellung, Vision}
+Die bisherige Lösung ist instabil und führt regelmässig zu Problemen.
+So zum Beispiel funktionieren gewisse Befehle von Nadeko nicht mehr.
+Was dazu geführt hat ist nicht bekannt.
+Der Stan-Bot hat keine Bugs, jedoch gibt es hin und wieder unklarheiten bei den Studenten,
+weshalb diese nachfragen in den Hilf-Channels auf dem Discord Server.
+In der neuen Version sollten die nächsten Schritte und Abläufe für die Studenten verdeutlicht werden.
+\newline
+Die Lösung soll vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
+Auch hat die jetztige Lösung einige Einschränkungen.
+Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal freigegeben werden.
+Die Module sind dabei auch ungleichmässig verteilt.
+So gibt zum Beispiel die Rolle Security 14 Module auf einmal frei, die Rolle PREN hingegen nur vier Module und die Rolle AD nur ein einziges Modul.
+Hierbei sind vor allem die grössten Zusammenfassungen ein Problem, da dann Studierende mit zu vielen Nachrichten belästigt werden.
+Diese negative Nutzererfahrung soll zukünftig verhindert werden.
+\newline
+Zukünftig sollten Statistiken für den Vorstand von STAIR verfügbar sein um mehr über die Nutzung des Discord Servers zu erfahren
+und datenbasierte Entscheidungen treffen, sowie Werbung bei den Studentengruppen einsetzen zu können.
+\newline
+Neu soll eine Fehlererkennung eingeführt werden.
+Bisher wurde kein Admin informiert bei Problemen.
+Dies führte zu länger anhaltenden Problemen als nötig.
+Mit einer automatischen Erkennung, zum Beispiel von der nicht-erreichbarkeit des Mail-Servers, Datenbank oder Discord-Servers könnte ein Admin umgehend informiert werden um Massnahmen zu treffen.
+Hierzu würde der jeweils andere Kommunikationskanal genutzt werden, also bei einem Fehler mit Discord wird per E-Mail informiert und umgekehrt.
+Es kann auch auftreten, dass eine Verbindung zu der Datenbank möglich ist, jedoch können keine Daten gespeichert werden.
+\todo{Decide if this will be done or not}
+Auch wenn jemand versucht für ein Modul anzumelden, welches nicht existiert, sollte dies erfasst werden um mögliche Fehler zu erkennen.
+\todo{Decide if this will be done or not}
+Ein weiterer Fall wäre wenn jemand versucht mit einer ungültigen E-Mail sich anzumelden.
+Hierbei wird unterschieden zwischen nicht erfasster Studenten Mail und einer nicht-studenten Mail.
+\todo{Format Studenten Mail irgendwo einfügen}
+Mit Hilfe einer Logging Library sollen Fehler nachvollziehbar bleiben.
+Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden bis auf die unterteilung der verschiedenen Log Levels
+und ein lokales Speichern der Log Messages ist ausreichend.
 
 \section{Stand der Technik}
 
@@ -101,7 +134,7 @@ Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen
 Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
 
 \subsubsection{Geschichte}
-Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommuniaktion zwischen den Spielkameraden zu vereinfachen und zu verbessern.
+Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
 Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
 2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
 als Startup gegr\"undet.\autocite{noauthor_discord_2021}
@@ -169,7 +202,15 @@ Beschrieb ER-Diagramm
 \subsubsection{C\# und .NET Framework}
 Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
 
-\subsubsection{Mysql}
+\todo{siehe Kapitel "Geplante Änderungen}
+
+\subsubsection{MySQL}
+
+Als Datenbank wurde MySQL ausgewählt.
+MSSQL hat die beste Unterstützung in C# jedoch ist diese Kostenpflichtig.
+Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert.
+Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen.
+\todo{source: https://www.microsoft.com/en-us/sql-server/sql-server-2017#OneGDCWeb-Banner-c3psyqy}
 
 % https://www.nuget.org/packages/linq2db.MySql/
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
@@ -709,17 +750,39 @@ Windows Services und läuft dementsprechend durchgehend.
 
 \subsubsection{Geplante Änderungen}
 \todo{Yannis}
-Wechsel auf Linux Server, warum
 
+\subsubsection*{Wechsel zu Linux Server}
 
-Entscheid neuer Bot schreiben, mit neuen Libraries.
+Es wurde zusammen mit dem STAIR Team entschieden,
+auf Linux zu wechseln um alle Server einheitlich auf Linux zu haben.
+\todo{Wordpress erklären}
+Bei STAIR wird noch eine Wordpress-Seite und eine JavaScript Webseite betrieben.
+Da die Projekte jedoch sich von einander stark unterscheiden wurde entschieden mit verschiedenen Servern zu arbeiten und nicht alle auf dem gleichen Server zu hosten.
 
+\subsubsection*{Entscheid den Bot neu zu schreiben}
 
-Entscheid von Login mittels E-Mail, nicht über Switch Account.
+\todo{replace .NET Standard with .NET Framework version}
+\todo{Add sources}
+Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core mit 3.1 mit veralteten Libraries genützt wurden.
+Diese werden nicht mehr unterstützt und sollten ersetzt werden.
+Hierbei wird .NET 6 mit C# verwendet.
+So kann man Teile des Codes wiederverwenden.
+Die neueren .NET Versionen sind Cross-Platform fähig und können damit nun auch auf Linux verwendet werden. \todo{source}
+Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul dazu und ist ähnlich zu Java,
+welche grundsätzlich an der Hochschule verwendet wird. \todo{source}
 
+\todo{ist "wir" okay hier?}
+Aus persönlicher Erfahrung finden wir, dass Java häufiger zu Problemen führt als C#.
 
-Entscheid wechsel auf Community server
+\subsubsection*{Entscheid Login Funktionsweise}
+\todo{source}
+Beim Login wurde überlegt das Switch-Login der Hochschule zu verwenden, welches auch für aussenstehende Zwecke verwendet werden kann.
+Hierbei wurde dagegen entschieden, da STAIR nicht die volle Kontrolle über den Service hat und deshalb plötzlich neue Interface Standards erlassen werden können, was zu Problemen führen kann.
+Auch muss hierzu ein bestimmter Link geöffnet werden, welcher von Stan verschickt werden muss um die Switch Login Seite zu öffnen.
+Dies könnte nicht vertrauenswürdig wirken bei Studenten.
+Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nun weiterhin verwendet wird.
 
+\subsubsection*{Wechsel zu Community Server}
 
 Entscheid Anbindung an Datenbank
 - Einfachere Verwaltung von Studenten und Modulen
@@ -738,6 +801,8 @@ Entscheid schreiben eines eigenen Bots
 \section{Evaluation und Validation}
 
 \todo{schreiben}
+
+\subsection{Fehlererkennung}
 
 \section{Ausblick}
 
