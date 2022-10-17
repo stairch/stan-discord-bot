@@ -124,6 +124,7 @@ Mit Hilfe einer Logging Library sollen Fehler nachvollziehbar bleiben.
 Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden bis auf die unterteilung der verschiedenen Log Levels
 und ein lokales Speichern der Log Messages ist ausreichend.
 
+\newpage
 \section{Stand der Technik}
 
 \subsection{Sprach- und Text-Messenger}
@@ -163,26 +164,33 @@ wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_di
 % https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit
 % https://support.discord.com/hc/en-us/community/posts/360032363631-Increase-the-Max-Number-of-Roles-per-Server
 
-\subsection{Alternativen zu Discord}
+\subsubsection{Alternativen zu Discord}
 \todo{Yannis}
 
-\subsubsection{Slack}
+\subsubsection*{Slack}
 
 Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
 Dabei liegt der Fokus der Anwendung auch stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord mehr fokusiert.
 % TODO: add source
 
-\subsection{Skype}
+\subsubsection*{Skype}
 
 \todo{Yannis}
 
-\subsection{TeamSpeak}
+\subsubsection*{TeamSpeak}
 
 TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen aufzusetzen.
 Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und klar nicht der Fokus der Anwendung.
 % TODO: check this statement
 Da Textchat der stärkere Fokus ist für den Austausch den STAIR anbieten will,
 ist dies wohl keine geeignete Lösung.
+
+\subsubsection*{Warum Discord?}
+Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt.
+Für dieses Projekt ist Discord verbindlich festgelegt.
+Stair kommuniziert schon lange über die Plattform und es hat sich eine grosse Community aufgebaut.
+Discord erlaubt grosse Freiheiten in der Erstellung von Servern und Channels, deren Bearbeitung und der Freigabe unter den Mitgliedern.
+Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist es sehr verbreitet bei jungen Leuten aller Ethnien und Gruppierungen.
 
 \newpage
 \section{Ideen und Konzepte}
@@ -207,15 +215,15 @@ Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
 \subsubsection{MySQL}
 
 Als Datenbank wurde MySQL ausgewählt.
-MSSQL hat die beste Unterstützung in C# jedoch ist diese Kostenpflichtig.
+MSSQL hat die beste Unterstützung in C\# jedoch ist diese Kostenpflichtig.
 Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert.
 Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen.
-\todo{source: https://www.microsoft.com/en-us/sql-server/sql-server-2017#OneGDCWeb-Banner-c3psyqy}
+%\todo{source https://www.microsoft.com/en-us/sql-server/sql-server-2017#OneGDCWeb-Banner-c3psyqy}
 
 % https://www.nuget.org/packages/linq2db.MySql/
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
 
-\subsection{Teststrategie- \& Drehbuch}
+\subsection{Teststrategie}\label{Teststrategie}
 In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
 Ein genauerer Beschrieb dazu ist im Kapitel \nameref{Vorgehensmodell} zu finden. 
 Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und 
@@ -224,126 +232,10 @@ während jeder Phase die Funktionalität sicher zu stellen.
 Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
 Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{noauthor_arrangeactassert_nodate}
 Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
-
-\subsubsection{Testdrehbuch}
-Im Folgenden werden die einzelnen Systemtests beschrieben. 
-Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
 \newline
-Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
-Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
+Das Drehbuch für die manuellen Systemtests findet man im Kapitel \nameref{Testdrehbuch}.
 
-\begin{longtable}[h]{|p{15em}|p{25em}|}
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Betritt ein neuer Student den Discord-Server, bekommt er direkt eine Nachricht}} \\*
-    \multicolumn{2}{|l|}{\textbf{vom Stan Bot.}} \\
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
-    \hline
-    \textbf{Epic / Anforderung} & \#1 \\
-     & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt. 
-     Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentifizierungsprozess. 
-     Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und 
-     hat nur Zugriff auf den Channel "Help". \\
-    \hline
-    \textbf{Durchführung} & 
-    \begin{enumerate}
-        \item Bereitstellen eines Discord Accounts, welcher noch nicht auf dem Stair-Discord Server angemeldet ist.
-        \item Dem Stair Discord Server beitreten. \url{https://discord.com/invite/Tp7XgzZ}
-    \end{enumerate}\\
-    \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Sobald man dem Server beigetreten ist, bekommt man vom Stan Bot eine private Nachricht.
-    Dort stehen allgemeine Informationen zum Server und zum Anmeldeprozess. \\
-    \hline
-    \caption{Testdrehbuch - Testfall \#1}
-\end{longtable}
-
-\begin{longtable}[h]{|p{15em}|p{25em}|}
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Student kann sich beim Bot authentifizieren.}} \\
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Testfall \#2}} \\
-    \hline
-    \textbf{Epic / Anforderung} & \#2 \\
-     & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können. \\
-    \hline
-    \textbf{Durchführung} & 
-    \begin{enumerate}
-        \item Der Student hat eine Nachricht von Stan als Direkt Nachricht erhalten.
-        \item Der Student schickt dem Bot seine E-Mail Adresse nach dem Muster \textit{<name.vorname>@stud.hslu.ch} .
-        \item Nach Erhalt der E-Mail, schickt der Student, Stan den 6-stelligen Verifizierungscode.
-    \end{enumerate}\\
-    \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Der Student sollte nach Senden seiner E-Mail Adresse dem Bot, eine E-Mail von ihm erhalten.
-    In dieser ist ein zufällig generierter 6-stelliger Verifizierungscode enthalten.
-    Nach dem verifizieren, bekommt der Nutzer die Rolle Student und "Haus" zugeteilt und hat Zugriff auf die Grund-Channels. \\
-    \hline
-    \caption{Testdrehbuch - Testfall \#2}
-\end{longtable}
-
-\begin{longtable}[h]{|p{15em}|p{25em}|}
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Nicht-Student kann sich nicht authentifizieren.}} \\
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Testfall \#3}} \\
-    \hline
-    \textbf{Epic / Anforderung} & \#2 \\
-     & Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und 
-     auf unvorhergesehene Interaktionen, von Seiten des Benutzers, reagieren können. \\
-    \hline
-    \textbf{Durchführung} & 
-    \begin{enumerate}
-        \item Ein Nicht-Student schickt dem Bot eine E-Mail, welche sich vom Muster \textit{<name.vorname>@stud.hslu.ch} unterscheidet.
-    \end{enumerate}\\
-    \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Der Nutzer bekommt direkt eine Nachricht vom Bot, das diese E-Mail nicht gültig ist.
-    Es können sich nur Studenten authentifizieren. \\
-    \hline
-    \caption{Testdrehbuch - Testfall \#3}
-\end{longtable}
-
-\begin{longtable}[h]{|p{15em}|p{25em}|}
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Stair Administartor kann eine Liste mit Studenten in das System einlesen.}} \\
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Testfall \#4}} \\
-    \hline
-    \textbf{Epic / Anforderung} & \#5 \\
-     & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen. 
-     Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. \\
-    \hline
-    \textbf{Durchführung} & 
-    \begin{enumerate}
-        \item Der Stair Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
-        \item Er kann die Liste als Parameter an ein "LoadStudent" Script übergeben.
-    \end{enumerate}\\
-    \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt. 
-    Studenten, welche das letzte Semester bestanden haben und nicht mehr auf der Liste vorhanden sind, werden als Ex-Studenten markiert.\\
-    \hline
-    \caption{Testdrehbuch - Testfall \#4}
-\end{longtable}
-
-\begin{longtable}[h]{|p{15em}|p{25em}|}
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Das ist die Testbeschreibung}} \\
-    \hline
-    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
-    \hline
-    \textbf{Epic / Anforderung} & \#1 \\
-     & Epicbeschreibung \\
-    \hline
-    \textbf{Durchführung} & 
-    \begin{enumerate}
-        \item Bli 
-        \item Blub
-    \end{enumerate}\\
-    \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Verhaltensbeschreibung \\
-    \hline
-    \caption{Testdrehbuch - Testfall \#1}
-\end{longtable}
-
-\clearpage
+\newpage
 \section{Methoden}
 
 \subsection{Projektführung}
@@ -509,161 +401,6 @@ Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
     \label{tab: Meilensteine}
 \end{table}
 
-\subsection{Anforderungen}
-Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
-Diese werden für die Realisierungsphase in Epics umgewandelt.
-Die Epics werden im Anschluss in einzelne User Stories aufgeteilt, die dann in den Sprints seperat behandelt und gelöst werden.
-\newpage
-
-\subsubsection{Epics}\label{Epics}
-Für das Projekt werden folgende Epics definiert.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{ | p{1em} | p{35em} | p{2em} |}
-        \hline
-        \rowcolor[gray]{.9} ID & Beschreibung & Prio \\
-        \hline
-        1 & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt.
-        Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentisierungsprozess.
-        Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und
-        hat nur Zugriff auf den Channel "Help". & A \\
-        \hline
-        2 & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können.
-        Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und auf unvorhergesehene
-        Interaktionen, von Seiten des Benutzers, reagieren können. & A \\
-        \hline
-        3 & Ein Student kann sich beim Bot für ein Modul anmelden. Dieser schaltet den Channel für den Studenten frei,
-        so das er darin mit anderen Studierenden kommunizieren kann. Falls das Modul für den Studenten nicht mehr relevant ist,
-        kann er es beim Bot wieder abmelden. & A \\
-        \hline
-        4 & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können.
-        Die neuen oder nicht mehr Verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht.
-        An dem Verhalten des Benutzers soll sich nichts ändern. & A \\
-        \hline
-        5 & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen.
-        Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. & A \\
-        \hline
-        6 & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle Statistiken über
-        den Discord erstellen können. & B \\
-        \hline
-        7 & Fehlereingaben in den Modulregistrierungschannel oder interne Fehler vom Bot, sollen direkt automatisch
-        an einen hinterlegten Mitarbeiter von Stair gemeldet werden & C \\
-        \hline
-    \end{tabular}
-    \caption{Epics}
-    \label{tab: Epics}
-\end{table}
-
-\subsubsection{User Stories}
-Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Bausteine eines Sprints.
-Dieser Prozess wird auch \textbf{Story-Splitting} genannt
-User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
-"Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>." \\
-Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder 
-infrastrukturelle User-Stories so gebildet werden.
-
-In der Strintplannung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert.
-Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und 
-können auch als Test während der Entwicklung gebraucht werden.
-Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
-
-Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{hammerschall_software_2013} % PMB Projektplanung p.101-103
-\begin{itemize}
-    \item \textbf{I}ndependent  unabhängig voneinander
-    \item \textbf{N}egotiable   zerlegbar, änderbar, kombinierbar, verhandelbar
-    \item \textbf{V}aluable     hat wirtschaftlichen Wert
-    \item \textbf{E}stimatable  so klar, dass es vom Team geschätzt werden kann
-    \item \textbf{S}mall        klein genug, um in einem Sprint entwicklet werden zu können
-    \item \textbf{T}estable     klare Akzeptanzkriterien
-\end{itemize}
-
-Beim Story-Splitting werden folgende User-Stories für das Projekt definiert. 
-
-\begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
-    \hline
-    \rowcolor[gray]{.9} ID & Beschreibung & Akzeptanzkriterien & Prio & Weight & Sprint \\
-    \hline
-    1 & Als Bot möchte ich den Benutzer beim ersten Betreten des Server authentifizieren können,
-    um ihm die ihm zugeteilten Rollen zuweisen zu können. & 
-    \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\*
-    & & \tabitem Der Student bekommt nach der Anmeldung die Rolle Student zugeteilt und wird dem richtigen Haus-Channel zugewiesen. & & & \\
-    \hline
-    2 & Als Bot möchte ich den Studenten mittels E-Mail Verifikation authentifizieren können,
-    um sicher zu gehen, dass dieser eine gültige Studenten-Mail besitzt. &
-    \tabitem Der Student bekommt eine E-Mail auf der Adresse, die er dem Bot mitteilt. & A & 15 & 3 \\*
-     & & \tabitem Ein Student kann sich authentifizieren, ein Nicht-Student wird abgewiesen. & & & \\*
-     & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\*
-     & & \tabitem Der Bot kann den Code verifizieren, nachdem der Student die E-Mail erhalten hat. & & & \\
-    \hline
-    3 & Als Stair Administrator möchte ich neue Studenten einfach erfassen können,
-    um sie dem System bekannt zu machen und die Administration zu vereinfachen. & 
-    \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\*
-     & & \tabitem Die neu erfassten Studenten werden im System eingetragen und können für die Authentifizierung verwendet werden. & & & \\
-    \hline
-    4 & Als Student möchte ich mich für neue Modul-Channels an und abmelden können,
-    um mich mit anderen Studenten austauschen zu können. & 
-    \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\*
-     & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\*
-     & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste, 
-     so dass der Channel für den Studenten nicht mehr sichtbar ist. & & & \\ 
-    \hline
-    5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
-    um sie für den Bot nutzbar zu machen. &
-    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\*
-     & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\*
-     & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
-    \hline
-    6 & Als Stair Administrator möchte ich Statistiken aus dem System auslesen können,
-    um sie für Marketing oder andere Zwecke gebrauchen zu können. & 
-    \tabitem Es stehen ein paar vorgefertigte Auslesemöglichkeiten bereit, um sie für den Administrator nutzbar zu machen & C & 9 & 4 \\
-    \hline
-    7 & Als Stair Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
-    um Gegenmassnahmen ergreifen zu können. & 
-    \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\*
-     & & \tabitem Der Administrator wird benachrichtigt wenn der E-Mail Versand zur Authentifikation nicht mehr funktioniert. & & & \\
-    \hline
-    \caption{User-Stories}
-    \label{tab: UserStories}
-\end{longtable}
-\clearpage
-\subsubsection*{Sprintplanung}
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        \rowcolor[gray]{.9} Sprint & Start & Ende & Artefakte \\
-        \hline
-        Sprint 1 & 10.10.2022 & 16.10.2022 & \tabitem Studentenerfassung implementiert \\
-         & & & \tabitem Sprintreview S01 \\
-         & & & \tabitem Sprintplannung S02 \\
-        \hline
-        Sprint 2 & 17.10.2022 & 30.10.2022 & \tabitem Modulerfassung implementiert \\
-         & & & \tabitem Sprintreview S02 \\
-         & & & \tabitem Sprintplannung S03 \\
-        \hline
-        Sprint 3 & 31.10.2022 & 13.11.2022 & \tabitem Authentifizierung implementiert \\
-         & & & \tabitem Sprintreview S03 \\
-         & & & \tabitem Sprintplannung S04 \\
-        \hline
-        Sprint 4 & 14.11.2022 & 27.11.2022 & \tabitem Statistiken implementiert \\
-         & & & \tabitem Sprintreview S04 \\
-         & & & \tabitem Sprintplannung S05 \\
-        \hline
-        Sprint 5 & 28.11.2022 & 11.12.2022 & \tabitem Fehlererkennung implementiert \\
-         & & & \tabitem Sprintreview S05 \\
-        \hline
-    \end{tabular}
-    \caption{Sprintplanung}
-    \label{tab: Sprintplanung}
-\end{table}
-
-Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
-\begin{itemize}
-    \item Github Story-Board (\href{https://github.com/orgs/stairch/projects/1/views/4}{Link zum Story-Board})
-    \item Sprintreviews (\nameref{Sprintreviews})
-\end{itemize}
-
 \subsection{Risikomanagement}
 Risikomanagement
 
@@ -765,14 +502,14 @@ Da die Projekte jedoch sich von einander stark unterscheiden wurde entschieden m
 \todo{Add sources}
 Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core mit 3.1 mit veralteten Libraries genützt wurden.
 Diese werden nicht mehr unterstützt und sollten ersetzt werden.
-Hierbei wird .NET 6 mit C# verwendet.
+Hierbei wird .NET 6 mit C\# verwendet.
 So kann man Teile des Codes wiederverwenden.
 Die neueren .NET Versionen sind Cross-Platform fähig und können damit nun auch auf Linux verwendet werden. \todo{source}
 Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul dazu und ist ähnlich zu Java,
 welche grundsätzlich an der Hochschule verwendet wird. \todo{source}
 
 \todo{ist "wir" okay hier?}
-Aus persönlicher Erfahrung finden wir, dass Java häufiger zu Problemen führt als C#.
+Aus persönlicher Erfahrung finden wir, dass Java häufiger zu Problemen führt als C\#.
 
 \subsubsection*{Entscheid Login Funktionsweise}
 \todo{source}
@@ -796,6 +533,347 @@ Entscheid schreiben eines eigenen Bots
 - Kontrolle und Handlungsspielraum
 - Statistiken
 - Keine ungewollten Features
+
+\subsection{Initialisierungsphase}
+Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
+Diese werden für die Realisierungsphase in Epics umgewandelt.
+Die Epics werden im Anschluss in einzelne User Stories aufgeteilt, die dann in den Sprints seperat behandelt und gelöst werden.
+
+\subsubsection{Epics}\label{Epics}
+Für das Projekt werden folgende Epics definiert.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ | p{1em} | p{35em} | p{2em} |}
+        \hline
+        \rowcolor[gray]{.9} ID & Beschreibung & Prio \\
+        \hline
+        1 & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt.
+        Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentisierungsprozess.
+        Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und
+        hat nur Zugriff auf den Channel "Help". & A \\
+        \hline
+        2 & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können.
+        Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und auf unvorhergesehene
+        Interaktionen, von Seiten des Benutzers, reagieren können. & A \\
+        \hline
+        3 & Ein Student kann sich beim Bot für ein Modul anmelden. Dieser schaltet den Channel für den Studenten frei,
+        so das er darin mit anderen Studierenden kommunizieren kann. Falls das Modul für den Studenten nicht mehr relevant ist,
+        kann er es beim Bot wieder abmelden. & A \\
+        \hline
+        4 & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können.
+        Die neuen oder nicht mehr Verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht.
+        An dem Verhalten des Benutzers soll sich nichts ändern. & A \\
+        \hline
+        5 & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen.
+        Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. & A \\
+        \hline
+        6 & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über
+        den Discord erstellen. & B \\
+        \hline
+        7 & Fehlereingaben in dem Modulregistrierungschannel oder interne Fehler vom Bot, sollen direkt automatisch
+        an einen hinterlegten Mitarbeiter von Stair gemeldet werden & C \\
+        \hline
+    \end{tabular}
+    \caption{Epics}
+    \label{tab: Epics}
+\end{table}
+
+\subsubsection{User Stories}
+Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Bausteine eines Sprints.
+Dieser Prozess wird auch \textbf{Story-Splitting} genannt
+User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
+"Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>." \\
+Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder 
+infrastrukturelle User-Stories so gebildet werden.
+
+In der Strintplannung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert.
+Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und 
+können auch als Test während der Entwicklung gebraucht werden.
+Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
+
+Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{hammerschall_software_2013} % PMB Projektplanung p.101-103
+\begin{itemize}
+    \item \textbf{I}ndependent  unabhängig voneinander
+    \item \textbf{N}egotiable   zerlegbar, änderbar, kombinierbar, verhandelbar
+    \item \textbf{V}aluable     hat wirtschaftlichen Wert
+    \item \textbf{E}stimatable  so klar, dass es vom Team geschätzt werden kann
+    \item \textbf{S}mall        klein genug, um in einem Sprint entwicklet werden zu können
+    \item \textbf{T}estable     klare Akzeptanzkriterien
+\end{itemize}
+
+Beim Story-Splitting werden folgende User-Stories für das Projekt definiert. 
+
+\begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
+    \hline
+    \rowcolor[gray]{.9} ID & Beschreibung & Akzeptanzkriterien & Prio & Weight & Sprint \\
+    \hline
+    1 & Als Bot möchte ich den Benutzer beim ersten Betreten des Server authentifizieren können,
+    um ihm die ihm zugeteilten Rollen zuweisen zu können. & 
+    \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\*
+    & & \tabitem Der Student bekommt nach der Anmeldung die Rolle Student zugeteilt und wird dem richtigen Haus-Channel zugewiesen. & & & \\
+    \hline
+    2 & Als Bot möchte ich den Studenten mittels E-Mail Verifikation authentifizieren können,
+    um sicher zu gehen, dass dieser eine gültige Studenten-Mail besitzt. &
+    \tabitem Der Student bekommt eine E-Mail auf der Adresse, die er dem Bot mitteilt. & A & 15 & 3 \\*
+     & & \tabitem Ein Student kann sich authentifizieren, ein Nicht-Student wird abgewiesen. & & & \\*
+     & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\*
+     & & \tabitem Der Bot kann den Code verifizieren, nachdem der Student die E-Mail erhalten hat. & & & \\
+    \hline
+    3 & Als Stair Administrator möchte ich neue Studenten einfach erfassen können,
+    um sie dem System bekannt zu machen und die Administration zu vereinfachen. & 
+    \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\*
+     & & \tabitem Die neu erfassten Studenten werden im System eingetragen und können für die Authentifizierung verwendet werden. & & & \\
+    \hline
+    4 & Als Student möchte ich mich für neue Modul-Channels an und abmelden können,
+    um mich mit anderen Studenten austauschen zu können. & 
+    \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\*
+     & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\*
+     & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste, 
+     so dass der Channel für den Studenten nicht mehr sichtbar ist. & & & \\ 
+    \hline
+    5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
+    um sie für den Bot nutzbar zu machen. &
+    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\*
+     & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\*
+     & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
+    \hline
+    6 & Als Stair Administrator möchte ich Statistiken aus dem System auslesen können,
+    um sie für Marketing oder andere Zwecke gebrauchen zu können. & 
+    \tabitem Es stehen ein paar vorgefertigte Auslesemöglichkeiten bereit, um sie für den Administrator nutzbar zu machen & C & 9 & 4 \\
+    \hline
+    7 & Als Stair Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
+    um Gegenmassnahmen ergreifen zu können. & 
+    \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\*
+     & & \tabitem Der Administrator wird benachrichtigt wenn der E-Mail Versand zur Authentifikation nicht mehr funktioniert. & & & \\
+    \hline
+    \caption{User-Stories}
+    \label{tab: UserStories}
+\end{longtable}
+\subsubsection*{Sprintplanung}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \rowcolor[gray]{.9} Sprint & Start & Ende & Artefakte \\
+        \hline
+        Sprint 1 & 10.10.2022 & 16.10.2022 & \tabitem Studentenerfassung implementiert \\
+         & & & \tabitem Sprintreview S01 \\
+         & & & \tabitem Sprintplannung S02 \\
+        \hline
+        Sprint 2 & 17.10.2022 & 30.10.2022 & \tabitem Modulerfassung implementiert \\
+         & & & \tabitem Sprintreview S02 \\
+         & & & \tabitem Sprintplannung S03 \\
+        \hline
+        Sprint 3 & 31.10.2022 & 13.11.2022 & \tabitem Authentifizierung implementiert \\
+         & & & \tabitem Sprintreview S03 \\
+         & & & \tabitem Sprintplannung S04 \\
+        \hline
+        Sprint 4 & 14.11.2022 & 27.11.2022 & \tabitem Statistiken implementiert \\
+         & & & \tabitem Sprintreview S04 \\
+         & & & \tabitem Sprintplannung S05 \\
+        \hline
+        Sprint 5 & 28.11.2022 & 11.12.2022 & \tabitem Fehlererkennung implementiert \\
+         & & & \tabitem Sprintreview S05 \\
+        \hline
+    \end{tabular}
+    \caption{Sprintplanung}
+    \label{tab: Sprintplanung}
+\end{table}
+
+Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
+\begin{itemize}
+    \item Github Story-Board (\href{https://github.com/orgs/stairch/projects/1/views/4}{Link zum Story-Board})
+    \item Sprintreviews (\nameref{Sprintreviews})
+\end{itemize}
+
+\subsubsection{Testdrehbuch}\label{Testdrehbuch}
+Wie im Kapitel \nameref{Teststrategie} erwähnt, werden im Folgenden die einzelnen Systemtests beschrieben. 
+Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
+\newline
+Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
+Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Betritt ein neuer Student den Discord-Server, bekommt er direkt eine Nachricht.}} \\*
+    \multicolumn{2}{|l|}{\textbf{vom Stan Bot.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#1 \\
+     & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt. 
+     Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentifizierungsprozess. 
+     Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und 
+     hat nur Zugriff auf den Channel "Help". \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Bereitstellen eines Discord Accounts, welcher noch nicht auf dem Stair-Discord Server angemeldet ist.
+        \item Dem Stair Discord Server beitreten. \url{https://discord.com/invite/Tp7XgzZ}
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Sobald man dem Server beigetreten ist, bekommt man vom Stan Bot eine private Nachricht.
+    Dort stehen allgemeine Informationen zum Server und zum Anmeldeprozess. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#1}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Student kann sich beim Bot authentifizieren.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#2}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#2 \\*
+     & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Student hat eine Nachricht von Stan als Direkt Nachricht erhalten.
+        \item Der Student schickt dem Bot seine E-Mail Adresse nach dem Muster \textit{<name.vorname>@stud.hslu.ch} .
+        \item Nach Erhalt der E-Mail, schickt der Student, Stan den 6-stelligen Verifizierungscode.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Student sollte nach Senden seiner E-Mail Adresse dem Bot, eine E-Mail von ihm erhalten.
+    In dieser ist ein zufällig generierter 6-stelliger Verifizierungscode enthalten.
+    Nach dem verifizieren, bekommt der Nutzer die Rolle Student und "Haus" zugeteilt und hat Zugriff auf die Grund-Channels. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#2}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Nicht-Student kann sich nicht authentifizieren.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#3}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#2 \\*
+     & Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und 
+     auf unvorhergesehene Interaktionen, von Seiten des Benutzers, reagieren können. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Ein Nicht-Student schickt dem Bot eine E-Mail, welche sich vom Muster \textit{<name.vorname>@stud.hslu.ch} unterscheidet.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Nutzer bekommt direkt eine Nachricht vom Bot, das diese E-Mail nicht gültig ist.
+    Es können sich nur Studenten authentifizieren. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#3}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Stair Administartor kann eine Liste mit Studenten in das System einlesen.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#4}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#5 \\*
+     & Die Adminsitration kann jedes Semester die neuen Studierenden hinzufügen. 
+     Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Stair Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
+        \item Er kann die Liste als Parameter an ein "LoadStudent" Script übergeben.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt. 
+    Studenten, welche das letzte Semester bestanden haben und nicht mehr auf der Liste vorhanden sind, werden als Ex-Studenten markiert.\\
+    \hline
+    \caption{Testdrehbuch - Testfall \#4}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Stair Administrator kann eine Liste mit Modulen in das System einlesen.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#5}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#4 \\*
+     & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können. 
+     Die neuen oder nicht mehr verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht. 
+     An dem Verhalten des Benutzers soll sich nichts ändern. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Stair Administrator muss sich eine Liste mit allen verfügbaren Modulen des Departements Informatik von der Hochschul-Administration besorgen. 
+        \item Er kann die Liste als Parameter an ein "LoadModules" Script übergeben.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Alle Module sollen in das System eingelesen werden und 
+    die entsprechenden Datenbankeinträge werden erstellt. 
+    Neue Module werden automatisch hinzugefügt.
+    Module, welche nicht mehr auf der Liste vorhanden sind, werden gelöscht. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#5}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Student kann sich beim Bot für ein Modul anmelden.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#6}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#3 \\*
+     & Ein Student kann sich beim Bot für ein Modul anmelden. 
+     Dieser schaltet den Channel für den Studenten frei, so, dass er darin mit anderen Studierenden kommunizieren kann. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Student geht auf den Registrierungs-Channel. 
+        \item Er schreibt \textit{show <module>} in den Chat. (Also z.B. \textit{show ISF})
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und fügt den Studenten automatisch als Mitglied diesem Text-Channel hinzu.
+    Der Channel ist nun für den Studenten sichtbar. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#6}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Student kann sich beim Bot bei einem Modul abmelden.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#7}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#3 \\*
+     & Falls das Modul für den Studenten nicht mehr relevant ist, kann er es beim Bot wieder abmelden. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Student geht auf den Registrierungs-Channel. 
+        \item Er schreibt \textit{hide <module>} in den Chat. (Also z.B. \textit{hide ISF})
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und meldet den Studenten automatisch davon ab.
+    Dies entfernt ihn von der Mitgliederliste des Channels und wird dadurch für ihn wieder nicht einsehbar. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#7}
+\end{longtable}
+
+\begin{longtable}[h]{|p{15em}|p{25em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Ein Stair Administrator kann über ein Script Statistiken auslesen.}} \\
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#8}} \\
+    \hline
+    \textbf{Epic / Anforderung} & \#6 \\*
+     & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über den Discord erstellen. \\
+    \hline
+    \textbf{Durchführung} & 
+    \begin{enumerate}
+        \item Der Stair Administrator kann sich mit dem Script "Statistics" über die verschiedenen Statistiken informieren.
+        \item Er kann einen Befehl auf diesem Script ausführen.
+    \end{enumerate}\\
+    \hline
+    \textbf{Erwartetes Ergebnis / Verhalten} & Je nach Befehl gibt das Script die gewünschten Werte zurück.
+    So können zum Beispiel die Anzahl Studenten pro Haus, oder die momentanen Modulanmeldungen ausgelesen werden. \\
+    \hline
+    \caption{Testdrehbuch - Testfall \#8}
+\end{longtable}
+\clearpage
 
 \newpage
 \section{Evaluation und Validation}
