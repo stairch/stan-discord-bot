@@ -6,10 +6,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\graphicspath{ {images/} }
 \usepackage{todonotes}
 \usepackage{hyperref}
 \usepackage{longtable}
+\usepackage{times}
+\usepackage[style=verbose-ibid,backend=bibtex]{biblatex}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -17,12 +19,12 @@
     urlcolor=blue
 }
 % changes font
-\usepackage[style=verbose-ibid,backend=bibtex]{biblatex}
+
 \bibliography{wipro-main-doc}
+\graphicspath{ {images/} }
 
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
-
-\usepackage{times}
+\newcommand{\rot}{\rotatebox{90}}
 
 % Set name of image label
 \renewcommand{\figurename}{Abbildung}
@@ -79,6 +81,7 @@ Ort / Datum, Unterschrift	\underline{\hspace*{8cm}} \newline \newline \newline
 Eingangsvisum durch das Sekretariat auszuf\"ullen}\newline \newline
 Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*{4cm}}
 
+\normalfont
 \newpage
 \section*{I{\hspace*{1cm}}Abstract}
 \todo{schreiben}
@@ -400,11 +403,119 @@ Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
     \caption{Meilensteine}
     \label{tab: Meilensteine}
 \end{table}
-
+\clearpage
 \subsection{Risikomanagement}
-Risikomanagement
+Das Ziel jedes Projektes ist, eine möglichst hohe Wertschöpfung zu generieren.
+Doch Wertschöpfung und Risiko stehen komplementär zueinander.
+Das bedeutet, je höher die Wertschöpfung, desto höher das Risiko.
+Um die Wertschöpfung möglichst hoch zu halten und die Risiken zu minimieren wird Risikomanagement betrieben.
+Im Risikomanagement unterscheidet man zwischen \textbf{Produktrisiken} und \textbf{Projektrisiken}.
+\newline
+Produktrisiken werden direkt als Arbeitspakete im Projekt verbaut.
+Dabei wird geschaut, welche Gefahren für Mensch und Umwelt während der ganzen Umsetzung und Betreibung auftreten können.
+\newline
+Die Projektrisiken werden im Projektmanagement behandelt. 
+Dabei wird geschaut, welche Probleme mich daran hindern könnten ein Projekt erfolgreich abzuschliessen.
+Dies könnten sein:
+\begin{itemize}
+    \item technische Risiken
+    \item Implementierungsrisiken
+    \item wirtschaftliche, industrielle und Geschäftsrisiken \autocite{} % PMB Risikomanagement p8-10
+\end{itemize}
+\noindent
+Das Ziel des Risikomanagements ist es, Risiken frühzeitig zu erkennen und entsprechende Massnahmen zu ergreifen.
+Der Prozess dabei ist folgender:
+\begin{enumerate}
+    \item Identifizieren
+    \item Analysieren
+    \item Priorisieren
+    \item Massnahmen erarbeiten
+    \item Überwachen \autocite{} % PMB Risikomanagement p16
+\end{enumerate}
+\noindent
+In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten.
+Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.
 
-\newpage
+\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
+    \hline
+    \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
+    \hline
+    R1 & Verbindung zwischen Bot und Discord bricht ab. & 
+    Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
+    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
+    Dadurch können keine Daten und Befehle ausgetauscht werden. & 
+    Möglich & Hoch & 6 \\
+    \hline
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird, 
+    enthält irgendwelche Escape-Characters. 
+    Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
+    Unwahrscheinlich & Kritisch & 4 \\
+    \hline
+\end{longtable}
+
+% Library nicht alle Funktionen die benötigt werden
+% Fehlermeldungen an Admin weiterleiten
+% Absturz des Servers Enterprise Lab
+
+\begin{tabular}[h]{ll}
+    \textbf{Eintrittswahrscheinlichkeit} & \textbf{Schadensausmass} \\
+    \tabitem Unwahrscheinlich (1) & \tabitem Gering (1) \\
+    \tabitem Möglich (2) & \tabitem Mittel (2) \\
+    \tabitem Wahrscheinlich (3) & \tabitem Hoch (3) \\
+    \tabitem Sehr wahrscheinlich (4) & \tabitem Kritisch (4) \\
+\end{tabular}
+
+\clearpage
+\subsubsection{Massnahmen}
+\noindent
+Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
+Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
+\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
+    \hline
+    \rot{ID} & \rot{Risiko} & \rot{Massnahmen} & 
+    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} & 
+    \rot{\shortstack[l]{Schadensausmass\\(neu)}} & 
+    \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
+    \hline
+    R1 & Verbindung zwischen Bot und Discord bricht ab. & 
+    Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
+    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
+    Dadurch können keine Daten und Befehle ausgetauscht werden. & 
+    Möglich & Hoch & 6 \\
+    \hline
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird, 
+    enthält irgendwelche Escape-Characters. 
+    Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
+    Unwahrscheinlich & Kritisch & 4 \\
+    \hline
+\end{longtable}
+
+\subsubsection{Risikomatrix}
+Die Risiken werden in eine sogenannte Risikomatrix eingetragen, wobei die Achsen die Eintrittswahrscheinlichkeit und das Schadensausmass repräsentieren.
+In dieser Matrix kann die Risikobereitschaft der Projektverantwortlichen eingetragen werden.
+Die Risikobereitschaft wird mit einer Linie durch die Matrix dargestellt.
+Wenn ein Risiko über der Linie liegt, müssen zwingend bessere Massnahmen ergriffen werden.
+\newline
+Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobereitschaftslinie zu bringen.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        \shortstack[c]{Schadensausmass / \\ Eintrittswahrscheinlichkeit} & Gering & Mittel & Hoch & Kritisch \\[10pt]
+        \hline
+        Sehr wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} & \cellcolor{red!50} \\[10pt]
+        \hline
+        Wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} \\[10pt]
+        \hline
+        Möglich & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} \\[10pt]
+        \hline
+        Unwahrscheinlich & \cellcolor{green!50} & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} \\[10pt]
+        \hline
+    \end{tabular}
+\end{table}
+
+\clearpage
 \section{Realisierung}
 
 \subsection{Analyse der bestehenden Infrastruktur}
@@ -634,7 +745,7 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
     \hline
     5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
     um sie für den Bot nutzbar zu machen. &
-    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 12 & 2 \\*
+    \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 8 & 2 \\*
      & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\*
      & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
     \hline
@@ -875,6 +986,27 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 \end{longtable}
 \clearpage
 
+\subsection{Sprint 1}
+Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie folgt aus.
+\begin{figure}[h]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/Start_Sprint1_Stories.jpg}
+    \caption{Start Sprint 1 User Stories}
+    \label{fig:start_sprint_one}
+\end{figure}
+
+In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und 
+mit dem Aufsetzten der Linux Umgebung befasst.
+
+\subsubsection{Entity Relationship Diagramm}
+Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden, 
+welche Daten im System wichtig sind und wie diese gespeichert werden.
+
+
+\subsubsection{Studentenerfassung}
+\todo{Yannis}
+
 \newpage
 \section{Evaluation und Validation}
 
@@ -897,36 +1029,35 @@ einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
 
 \subsubsection{Sprint 1}
 \subsubsection*{Sprintziel}
-Ziel
+Studentenerfassung ist implementiert.
 
 \subsubsection*{Risiko-Update}
-Update
+\begin{itemize}
+    \item Kommunikation in Richtung Discord wurde im Vorfeld noch nicht bedacht.
+    Kann sein das die Architektur angepasst werden muss, um Kommunikation ausgehend vom Bot starten zu können.
+\end{itemize}
 
 \subsubsection*{Sprintbacklog}
-Link zu dem Backlog für den Sprint 1:\\
-% Link
-Aufwandschätzung für den Sprint: XX Story Points
-
-\subsubsection*{Sprintreview}
-Bild von Burndown-Chart
-
-Geschätzter Aufwand: XX \\
-Effektiver Aufwand: XX \\
-
-Bild von Umgesetzten User Stories aus dem Backlog.
+In diesem Sprint wurde nur eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues/2}
+\newline
+Geschätzer Aufwand: 8h
+\newline
+Effektiver Aufwand: 6 1/2 h
 
 \subsubsection*{Retrospektive}
 Erfolge:
 \begin{itemize}
-    \item XX 
+    \item LoadStudenten Script konnte einfach und schnell erstellt werden.
+    \item Library Linq2db einfacher als erwartet.
 \end{itemize}
 Probleme:
 \begin{itemize}
-    \item XX
+    \item Linq2db stellt keine Generierung der Datenbank aus den Klassen zur Verfügung.
 \end{itemize}
 Massnahmen:
 \begin{itemize}
-    \item XX 
+    \item Datenbank Schema muss manuell erstellt werden.
 \end{itemize}
 
 \subsubsection{Sprint 2}
