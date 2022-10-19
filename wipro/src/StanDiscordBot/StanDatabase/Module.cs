@@ -1,5 +1,4 @@
 ﻿using LinqToDB.Mapping;
-using System.Numerics;
 
 namespace StanDatabase
 {
@@ -19,9 +18,9 @@ namespace StanDatabase
         public string FullModuleName { get; set; }
 
         [Column]
-        public int FkCategoryId { get; set; }
+        public int FkDiscordCategoryId { get; set; }
 
-        [Association(ThisKey = nameof(FkCategoryId), OtherKey = nameof(StanDatabase.DiscordCategory.CategoryId))]
+        [Association(ThisKey = nameof(FkDiscordCategoryId), OtherKey = nameof(StanDatabase.DiscordCategory.DiscordCategoryId))]
         public DiscordCategory DiscordCategory { get; set; }
     }
 }

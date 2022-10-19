@@ -2,8 +2,8 @@
 
 namespace StanDatabase
 {
-    [Table(Name = "AccountModule")]
-    public class AccountModule
+    [Table(Name = "DiscordAccountsModules")]
+    public class DiscordAccountModule
     {
         [PrimaryKey, Identity]
         public int AccountModuleId { get; set; }

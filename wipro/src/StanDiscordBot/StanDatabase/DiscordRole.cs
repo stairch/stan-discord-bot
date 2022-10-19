@@ -6,9 +6,9 @@ namespace StanDatabase
     public class DiscordRole
     {
         [PrimaryKey, Identity]
-        public int RoleId { get; set; }
+        public int DiscordRoleId { get; set; }
 
         [Column, NotNull]
-        public string RoleName { get; set; }
+        public string DiscordRoleName { get; set; }
     }
 }

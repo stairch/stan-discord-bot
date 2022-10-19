@@ -2,7 +2,8 @@
 
 namespace StanDatabase
 {
-    public class AccountRole
+    [Table(Name = "DiscordAccountsDiscordRoles")]
+    public class DiscordAccountDiscordRole
     {
         [Column, NotNull]
         public int FkDiscordAccountId { get; set; }

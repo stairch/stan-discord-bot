@@ -6,7 +6,7 @@ namespace StanDatabase
     public class DiscordCategory
     {
         [PrimaryKey, Identity]
-        public int CategoryId { get; set; }
+        public int DiscordCategoryId { get; set; }
 
         [Column, NotNull]
         public string DiscordCategoryName { get; set; }

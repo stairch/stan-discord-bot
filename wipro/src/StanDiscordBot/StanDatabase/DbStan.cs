@@ -4,9 +4,9 @@ namespace StanDatabase
 {
     public class DbStan : LinqToDB.Data.DataConnection
     {
-        public ITable<AccountModule> AccountModule => this.GetTable<AccountModule>();
+        public ITable<DiscordAccountModule> AccountModule => this.GetTable<DiscordAccountModule>();
 
-        public ITable<AccountRole> AccountRole => this.GetTable<AccountRole>();
+        public ITable<DiscordAccountDiscordRole> AccountRole => this.GetTable<DiscordAccountDiscordRole>();
 
         public ITable<DiscordAccount> DiscordAccount => this.GetTable<DiscordAccount>();
 
@@ -20,6 +20,7 @@ namespace StanDatabase
 
         public ITable<Student> Student => this.GetTable<Student>();
 
+        // TODO: check for singleton
         public DbStan()
             : base(StanSettings.DatabaseName)
         {
