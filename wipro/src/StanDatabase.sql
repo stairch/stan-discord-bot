@@ -1,6 +1,7 @@
 CREATE DATABASE StanDB;
 USE StanDB;
 
+-- https://www.w3schools.com/mysql/mysql_datatypes.asp
 CREATE TABLE DiscordCategories (
     DiscordCategoryId INT NOT NULL,
     DiscordCategoryName VARCHAR(255) NOT NULL,
@@ -36,6 +37,7 @@ CREATE TABLE Students (
     StillStudying BOOL NOT NULL,
     SEMESTER TINYINT NOT NULL,
     FkHouseId INT NOT NULL,
+    IsDiscordAdmin BOOL NOT NULL,
     PRIMARY KEY (StudentId),
     CONSTRAINT FkHouseId FOREIGN KEY (HouseId) REFERENCES Houses(HouseId)
 );
@@ -54,6 +56,7 @@ CREATE TABLE DiscordAccountsModules (
     CreationDate DATETIME NOT NULL,
     FkDiscordAccountId INT,
     FkModuleId INT,
+     -- https://stackoverflow.com/questions/5835978/how-to-properly-create-composite-primary-keys-mysql
     PRIMARY KEY (FkDiscordAccountId, FkModuleId),
     CONSTRAINT FkDiscordAccountId FOREIGN KEY (DiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
     CONSTRAINT FkModuleId FOREIGN KEY (ModuleId) REFERENCES Modules(ModuleId)

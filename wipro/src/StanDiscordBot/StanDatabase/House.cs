@@ -14,7 +14,7 @@ namespace StanDatabase
         [Column, NotNull]
         public int FkDiscordRoleId { get; set; }
 
-        [Association(ThisKey = nameof(FkDiscordRoleId), OtherKey = nameof(StanDatabase.DiscordRole.RoleId))]
+        [Association(ThisKey = nameof(FkDiscordRoleId), OtherKey = nameof(StanDatabase.DiscordRole.DiscordRoleId))]
         public DiscordRole DiscordRole { get; set; }
 
         public static int GetHouseIdByName(string houseName)

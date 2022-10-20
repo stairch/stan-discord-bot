@@ -9,6 +9,6 @@ namespace StanDatabase
         public int DiscordRoleId { get; set; }
 
         [Column, NotNull]
-        public string DiscordRoleName { get; set; }
+        public string RoleName { get; set; }
     }
 }

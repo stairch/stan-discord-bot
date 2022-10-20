@@ -25,5 +25,22 @@ namespace StanDatabase
 
         [Column]
         public DateTime RegisterDate { get; set; }
+
+        public DiscordAccount(int discordAccountId, string username, int accountId, string activationCode, DateTime verifiedDate, DateTime registerDate)
+        {
+            DiscordAccountId = discordAccountId;
+            Username = username;
+            AccountId = accountId;
+            ActivationCode = activationCode;
+            VerifiedDate = verifiedDate;
+            RegisterDate = registerDate;
+        }
+
+        public DiscordAccount(string username, int accountId, string activationCode)
+        {
+            Username = username;
+            AccountId = accountId;
+            ActivationCode = activationCode;
+        }
     }
 }

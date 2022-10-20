@@ -24,6 +24,9 @@ namespace StanDatabase
         [Column]
         public int Semester { get; set; }
 
+        [Column, NotNull]
+        public bool IsDiscordAdmin { get; set; }
+
         public Student(string studentEmail, int houseId, bool stillStudying, int semester)
         {
             this.StudentEmail = studentEmail;
