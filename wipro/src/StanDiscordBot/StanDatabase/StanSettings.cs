@@ -11,8 +11,10 @@ namespace StanDatabase
 
         // CSV configuration
         public static char Separator = ',';
-        public static string emailColumnNameInCsv = "E-Mail";
-        public static string houseColumnNameInCsv = "STAIR House";
-        public static string semesterColumnNameInCsv = "Semester";
+        public static string EmailColumnNameInCsv = "E-Mail";
+        public static string HouseColumnNameInCsv = "STAIR House";
+        public static string SemesterColumnNameInCsv = "Semester";
+        public static string ModuleShortnameInCsv = "Anlassnummer";
+        public static string ModuleFullnameInCsv = "Anlassbezeichnung";
     }
 }

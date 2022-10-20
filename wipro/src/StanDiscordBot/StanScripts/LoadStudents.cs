@@ -1,5 +1,6 @@
 ﻿using LinqToDB;
 using StanDatabase;
+using StanScript;
 
 namespace StanScripts
 {
@@ -15,19 +16,19 @@ namespace StanScripts
 
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
 
-            IList<string> columnNames = getCsvValuesOnNextLine(reader).ToList();
+            IList<string> columnNames = CsvHelper.GetCsvValuesOnNextLine(reader).ToList();
             Console.WriteLine($"Columns in file: {String.Join(", ", columnNames)}");
 
-            int emailIndex = columnNames.IndexOf(StanSettings.emailColumnNameInCsv);
-            int houseIndex = columnNames.IndexOf(StanSettings.houseColumnNameInCsv);
-            int semesterIndex = columnNames.IndexOf(StanSettings.semesterColumnNameInCsv);
+            int emailIndex = columnNames.IndexOf(StanSettings.EmailColumnNameInCsv);
+            int houseIndex = columnNames.IndexOf(StanSettings.HouseColumnNameInCsv);
+            int semesterIndex = columnNames.IndexOf(StanSettings.SemesterColumnNameInCsv);
 
             Console.WriteLine($"{nameof(emailIndex)}: {emailIndex} | {nameof(houseIndex)}: {houseIndex} | {nameof(semesterIndex)}: {semesterIndex}");
 
             IList<Student> currentStudents = new List<Student>();
             while (!reader.EndOfStream)
             {
-                string[] values = getCsvValuesOnNextLine(reader);
+                string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
                 string email = values[emailIndex].Trim();
                 if (!Student.IsStudentEmailFormatValid(email))
@@ -92,22 +93,9 @@ namespace StanScripts
 
         private static bool ShouldOldStudentsBeMarkedAsExstudents()
         {
-            string yesAnswer = "y";
-            string noAnswer = "n";
-
-            string answer;
-            do
-            {
-                Console.WriteLine($"Are students that are not in this list exstudents? ({yesAnswer}/{noAnswer})");
-                Console.WriteLine($"Answering with {yesAnswer} sets {nameof(Student.StillStudying)} to false on the other students");
-                answer = Console.ReadLine().ToLower();
-                if (answer != yesAnswer && answer != noAnswer)
-                {
-                    Console.Error.WriteLine("Unknown input! Try again.");
-                }
-            } while (answer != yesAnswer && answer != noAnswer);
-
-            return answer == yesAnswer;
+            string question = $"Are students that are not in this list exstudents? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
+                $"Answering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
+            return ConsoleHelper.YesNoQuestion(question);
         }
 
         /// <summary>
@@ -135,14 +123,6 @@ namespace StanScripts
                     // TODO: how to update discord role on server from here?
                 }
             }
-        }
-
-        private static string[] getCsvValuesOnNextLine(StreamReader reader)
-        {
-            string line = reader.ReadLine();
-            line = line.Trim();
-            string[] values = line.Split(StanSettings.Separator);
-            return values;
         }
     }
 }
