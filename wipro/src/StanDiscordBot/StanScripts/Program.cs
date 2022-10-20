@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using NLog;
+using System.Linq;
 
 namespace StanScripts
 {
     public static class Program
     {
+        private static Logger logger;
+
         /// <summary>
         ///
         /// </summary>
@@ -13,15 +16,17 @@ namespace StanScripts
         /// </param>
         public static void Main(string[] args)
         {
+            logger = LogManager.GetCurrentClassLogger();
             if (args.Length == 0)
             {
+                logger.Info("No arguments given");
                 PrintHelp();
                 return;
             }
 
             Console.WriteLine($"arguments: {String.Join(", ", args)} | length: {args.Length}");
             string commandName = args[0];
-            Console.WriteLine($"Selected task: {commandName}");
+            logger.Info($"Selected {nameof(commandName)}: {commandName}");
             if (commandName == "printHelp")
             {
                 PrintHelp();
@@ -34,7 +39,10 @@ namespace StanScripts
                 }
                 else
                 {
-                    Console.Error.WriteLine("Wrong number of arguments! Check your command and try again. This is most likely an issue from the user.");
+                    string errorMessage = $"Wrong number of arguments given for {commandName}!";
+                    logger.Error(errorMessage);
+                    Console.Error.WriteLine($"{errorMessage} Check your command and try again. This is most likely an issue from the user.");
+                    PrintHelp();
                 }
             }
             else if (commandName == "loadModules")
@@ -45,15 +53,19 @@ namespace StanScripts
                 }
                 else
                 {
-                    Console.Error.WriteLine("Wrong number of arguments! Check your command and try again. This is most likely an issue from the user.");
+                    string errorMessage = $"Wrong number of arguments given for {commandName}!";
+                    logger.Error(errorMessage);
+                    Console.Error.WriteLine($"{errorMessage} Check your command and try again. This is most likely an issue from the user.");
+                    PrintHelp();
                 }
             }
         }
 
         public static void PrintHelp()
         {
+            logger.Debug($"{nameof(PrintHelp)} is called");
             // TODO: describe the commands here
-            Console.WriteLine("This program is for the Stan discord bot from STAIR");
+            Console.WriteLine("This program is for the Stan Discord bot from STAIR");
         }
     }
 }
