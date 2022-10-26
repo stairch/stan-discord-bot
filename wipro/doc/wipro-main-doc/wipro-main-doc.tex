@@ -1079,4 +1079,57 @@ Same for Sprint 2
 \section{Literaturverzeichnis}
 \printbibliography
 
+\section{Bedienungsanleitung}
+
+\subsection{Aufsetzen des Servers}
+
+Der Stan Discord Bot kann auf verschiedenen Betriebssystemen genützt werden.
+In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
+
+\begin{enumerate}
+    \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
+    \item Verbinde zum Server über SSH
+        \begin{verbatim}
+            $ ssh localadmin@stair-bot-lnx.el.eee.intern
+        \end{verbatim}
+    \item Führe Updates durch
+        \begin{verbatim}
+            # sudo apt update
+            $ apt list --upgradable
+            # sudo apt upgrade -y
+            # sudo apt autoremove
+        \end{verbatim}
+    \item Installiere MySQL
+        \begin{verbatim}
+            # sudo apt install mysql-server
+            # sudo systemctl start mysql.service
+        \end{verbatim}
+    \item Installiere .NET 6
+        \begin{verbatim}
+            # wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+            # sudo dpkg -i packages-microsoft-prod.deb
+            $ rm packages-microsoft-prod.deb
+            # sudo apt update
+            # sudo apt install -y dotnet-sdk-6.0
+        \end{verbatim}
+    \item Lade den Code auf den Server \todo{complete tutorial}
+        \begin{verbatim}
+            # 
+        \end{verbatim}
+    \item Erstelle die Datenbank
+        \begin{verbatim}
+            # 
+        \end{verbatim}
+    \item Starte die Software \todo{complete tutorial}
+        \begin{verbatim}
+            # sudo apt update
+            # sudo apt upgrade -y
+        \end{verbatim}
+\end{enumerate}
+
+\subsection{Unterhalt}
+
+Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
+\todo{Write tutorial}
+
 \end{document}
