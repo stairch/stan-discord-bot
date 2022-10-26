@@ -13,17 +13,17 @@ namespace StanBot.Services
         private readonly ILogger _discordLogger;
         private readonly ILogger _commandsLogger;
 
-        public LogService(DiscordSocketClient discord, ILoggerFactory loggerFactory)
+        public LogService(DiscordSocketClient discord, CommandService commands, ILoggerFactory loggerFactory)
         {
             _discord = discord;
-            //_commands = commands;
+            _commands = commands;
 
             _loggerFactory = ConfigureLogging(loggerFactory);
             _discordLogger = _loggerFactory.CreateLogger("discord");
-            //_commandsLogger = _loggerFactory.CreateLogger("commands");
+            _commandsLogger = _loggerFactory.CreateLogger("commands");
 
             _discord.Log += LogDiscord;
-            //_commands.Log += LogCommand;
+            _commands.Log += LogCommand;
         }
 
         private ILoggerFactory ConfigureLogging(ILoggerFactory factory)

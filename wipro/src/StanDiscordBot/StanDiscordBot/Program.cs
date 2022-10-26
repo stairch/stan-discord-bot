@@ -1,53 +1,40 @@
 ﻿
 using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using StanBot.Services;
 
 namespace StanBot
 {
     public class Program
     {
-
         public static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
-
-        private DiscordSocketClient _discordSocketClient;
-        private IConfiguration _configuration;
 
         public async Task MainAsync()
         {
+            Config.LoadConfig();
 
-            _discordSocketClient = new DiscordSocketClient();
-            _configuration = BuildConfiguration();
-
-            var services = ConfigureServices();
-            services.GetRequiredService<LogService>();
-
-            await _discordSocketClient.LoginAsync(TokenType.Bot, _configuration["DiscordApplicationToken"]);
-            await _discordSocketClient.StartAsync();
-
-            await Task.Delay(-1);
-        }
-
-        private IServiceProvider ConfigureServices()
-        {
-            return new ServiceCollection()
-                .AddSingleton(_discordSocketClient)
-                // add service
-                // add logging
-                .AddLogging()
-                .AddSingleton<LogService>()
-                // extra
-                .AddSingleton(_configuration)
-                .BuildServiceProvider();
-        }
-
-        private IConfiguration BuildConfiguration()
-        {
-            return new ConfigurationBuilder()
-                .AddJsonFile($"stan.json")
+            using IHost host = Host.CreateDefaultBuilder()
+                .ConfigureServices((_, services) => services
+                    .AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
+                    {
+                        GatewayIntents = GatewayIntents.All,
+                        AlwaysDownloadUsers = true,
+                        LogLevel = LogSeverity.Debug
+                    }))
+                    .AddSingleton(new CommandService(new CommandServiceConfig
+                    {
+                        DefaultRunMode = RunMode.Async,
+                        LogLevel = LogSeverity.Debug
+                    }))
+                    .AddSingleton<CommandManager>()
+                    .AddLogging()
+                    .AddSingleton<LogService>())
                 .Build();
+
+            await new Bot(host).RunAsync();
         }
     }
 }
