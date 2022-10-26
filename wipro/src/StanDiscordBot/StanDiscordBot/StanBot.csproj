@@ -17,8 +17,4 @@
     <ProjectReference Include="..\StanDatabase\StanDatabase.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\" />
-  </ItemGroup>
-
 </Project>

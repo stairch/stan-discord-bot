@@ -1,36 +1,33 @@
-﻿using Discord;
-using Discord.Commands;
+﻿using Discord.Commands;
+using Discord;
 using Discord.WebSocket;
-using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace StanBot
+namespace StanBot.Core.Events.Messages
 {
-    public class CommandManager
+    public class CommandMessageReceivedEvent : IMessageReceiver
     {
         private readonly DiscordSocketClient _discordSocketClient;
         private readonly CommandService _commandService;
         private IServiceProvider _serviceProvider;
 
-        public CommandManager(DiscordSocketClient discordSocketClient, CommandService commandService, IServiceProvider serviceProvider)
+        public CommandMessageReceivedEvent(DiscordSocketClient discordSocketClient, CommandService commandService, IServiceProvider serviceProvider)
         {
             _discordSocketClient = discordSocketClient;
             _commandService = commandService;
             _serviceProvider = serviceProvider;
-
-            _discordSocketClient.MessageReceived += MessageReceived;
         }
 
-        public async Task InitializeAsync(IServiceProvider provider)
-        {
-            _serviceProvider = provider;
-            Console.WriteLine("Command Manager initialized async");
-            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
-        }
 
-        private async Task MessageReceived(SocketMessage rawMessage)
+        public async Task ProcessMessage(SocketMessage socketMessage)
         {
             // Ignore system messages and messages from bots
-            if (!(rawMessage is SocketUserMessage message)) return;
+            if (!(socketMessage is SocketUserMessage message)) return;
             if (message.Source != MessageSource.User) return;
 
             int argPos = 0;
@@ -40,7 +37,7 @@ namespace StanBot
             var context = new SocketCommandContext(_discordSocketClient, message);
             var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
 
-            if(!result.IsSuccess && result.Error != CommandError.UnknownCommand)
+            if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
             {
                 Console.Error.WriteLine(result.Error);
                 var embed = new EmbedBuilder();

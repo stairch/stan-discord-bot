@@ -16,28 +16,20 @@ namespace StanBot
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task RunAsync()
+        public async Task StartAsync()
         {
             using IServiceScope serviceScope = _hostEnvironment.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
             _discordSocketClient = provider.GetRequiredService<DiscordSocketClient>();
 
             provider.GetRequiredService<LogService>();
-            await provider.GetRequiredService<CommandManager>().InitializeAsync(provider);
+            await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
 
+            if (string.IsNullOrWhiteSpace(Config.Get().DiscordApplicationToken)) return;
             await _discordSocketClient.LoginAsync(TokenType.Bot, Config.Get().DiscordApplicationToken);
             await _discordSocketClient.StartAsync();
 
-            _discordSocketClient.Ready += ReadyEvent;
-
             await Task.Delay(-1);
-        }
-
-        private async Task ReadyEvent()
-        {
-            Console.WriteLine($"Ready Event triggered! {_discordSocketClient.CurrentUser.Username}");
-            await _discordSocketClient.SetGameAsync($"{Config.Get().Prefix}help");
-            await _discordSocketClient.SetStatusAsync(UserStatus.Online);
         }
     }
 }

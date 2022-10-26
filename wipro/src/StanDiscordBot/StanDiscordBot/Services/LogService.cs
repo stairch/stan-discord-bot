@@ -7,23 +7,23 @@ namespace StanBot.Services
 {
     public class LogService
     {
-        private readonly DiscordSocketClient _discord;
-        private readonly CommandService _commands;
+        private readonly DiscordSocketClient _discordSocketClient;
+        private readonly CommandService _commandService;
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _discordLogger;
         private readonly ILogger _commandsLogger;
 
         public LogService(DiscordSocketClient discord, CommandService commands, ILoggerFactory loggerFactory)
         {
-            _discord = discord;
-            _commands = commands;
+            _discordSocketClient = discord;
+            _commandService = commands;
 
             _loggerFactory = ConfigureLogging(loggerFactory);
             _discordLogger = _loggerFactory.CreateLogger("discord");
             _commandsLogger = _loggerFactory.CreateLogger("commands");
 
-            _discord.Log += LogDiscord;
-            _commands.Log += LogCommand;
+            _discordSocketClient.Log += LogDiscord;
+            _commandService.Log += LogCommand;
         }
 
         private ILoggerFactory ConfigureLogging(ILoggerFactory factory)

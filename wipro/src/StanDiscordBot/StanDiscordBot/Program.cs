@@ -4,6 +4,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StanBot.Core.Events;
+using StanBot.Core.Events.Messages;
 using StanBot.Services;
 
 namespace StanBot
@@ -29,12 +31,16 @@ namespace StanBot
                         DefaultRunMode = RunMode.Async,
                         LogLevel = LogSeverity.Debug
                     }))
-                    .AddSingleton<CommandManager>()
+                    .AddSingleton<EventHandler>()
+                    .AddSingleton<MessageHandler>()
+                    .AddScoped<IMessageReceiver, AuthenticationMessageReceivedEvent>()
+                    .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()
+                    .AddTransient<OnUserJoinedEvent>()
                     .AddLogging()
                     .AddSingleton<LogService>())
                 .Build();
 
-            await new Bot(host).RunAsync();
+            await new Bot(host).StartAsync();
         }
     }
 }
