@@ -100,9 +100,9 @@ Der Stan-Bot hat keine Bugs, jedoch gibt es hin und wieder unklarheiten bei den 
 weshalb diese nachfragen in den Hilf-Channels auf dem Discord Server.
 In der neuen Version sollten die nächsten Schritte und Abläufe für die Studenten verdeutlicht werden.
 \newline
-Die Lösung soll vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
+Die beiden bisherigen Lösungen sollen vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
 Auch hat die jetztige Lösung einige Einschränkungen.
-Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal freigegeben werden.
+Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal an Studenten freigegeben werden.
 Die Module sind dabei auch ungleichmässig verteilt.
 So gibt zum Beispiel die Rolle Security 14 Module auf einmal frei, die Rolle PREN hingegen nur vier Module und die Rolle AD nur ein einziges Modul.
 Hierbei sind vor allem die grössten Zusammenfassungen ein Problem, da dann Studierende mit zu vielen Nachrichten belästigt werden.
@@ -113,7 +113,7 @@ und datenbasierte Entscheidungen treffen, sowie Werbung bei den Studentengruppen
 \newline
 Neu soll eine Fehlererkennung eingeführt werden.
 Bisher wurde kein Admin informiert bei Problemen.
-Dies führte zu länger anhaltenden Problemen als nötig.
+Dies führte zu länger anhaltenden Fehlern als nötig.
 Mit einer automatischen Erkennung, zum Beispiel von der nicht-erreichbarkeit des Mail-Servers, Datenbank oder Discord-Servers könnte ein Admin umgehend informiert werden um Massnahmen zu treffen.
 Hierzu würde der jeweils andere Kommunikationskanal genutzt werden, also bei einem Fehler mit Discord wird per E-Mail informiert und umgekehrt.
 Es kann auch auftreten, dass eine Verbindung zu der Datenbank möglich ist, jedoch können keine Daten gespeichert werden.
@@ -124,7 +124,7 @@ Ein weiterer Fall wäre wenn jemand versucht mit einer ungültigen E-Mail sich a
 Hierbei wird unterschieden zwischen nicht erfasster Studenten Mail und einer nicht-studenten Mail.
 \todo{Format Studenten Mail irgendwo einfügen}
 Mit Hilfe einer Logging Library sollen Fehler nachvollziehbar bleiben.
-Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden bis auf die unterteilung der verschiedenen Log Levels
+Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden
 und ein lokales Speichern der Log Messages ist ausreichend.
 
 \newpage
@@ -173,25 +173,55 @@ wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_di
 \subsubsection*{Slack}
 
 Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
-Dabei liegt der Fokus der Anwendung auch stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord mehr fokusiert.
+Dies ist auch gut auf der Homepage des jeweiligen Unternehmens zu erkennen.
+So erwähnt Discord zum Beispiel: "\textit{STELL DIR EINEN ORT VOR, …
+… an dem du Teil eines Schulklubs, einer Gaming-Gruppe oder einer weltweiten Kunst-Community sein kannst. Ein Ort, an dem du einfach Zeit mit Freunden verbringen kannst. Ein Ort, an dem es leicht ist, sich jederzeit zu treffen und zu unterhalten.}" \todo{source: www.discord.com}
+wo hingegen Slack folgendes schreibt: "\textit{Great teamwork starts with a digital HQ
+With all your people, tools and communication in one place, you can work faster and more flexibly than ever before.}" \todo{Source: slack.com}
+Auch der Fokus der Anwendung liegt stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord widerum mehr fokusiert.
+Da STAIR und der Discord Server auch für die Freizeit gedacht sind, macht es mehr Sinn auf ein Freizeit Tool zu setzen.
 \todo{add source}
 
 \subsubsection*{Skype}
-
-\todo{Yannis}
+Skype ist eine ältere und sehr verbreitete Sprachchat Lösungen mit 100 Millionen aktiven Nutzern jeden Monat.
+\todo{source: https://techcrunch.com/2020/03/30/microsoft-teams-is-coming-to-consumers-but-skype-is-here-to-stay/}
+Skype ist jedoch auch sehr eingeschränkt, was die Features angeht.
+So sind keine echten Communities möglich und Sprachchat ist nur per Anruf möglich.
+So können neue Nutzer also nicht einfach zu einem Sprachchat hinzukommen.
+Richtige Communities sind ebenfalls nicht vorhanden.
+\todo{source: https://www.gamingscan.com/discord-vs-skype-for-gaming/}
+Diese fehlenden Features machen das Programm ungeeignet als Alternative.
+\todo{Source:}
 
 \subsubsection*{TeamSpeak}
 
-TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen aufzusetzen.
+TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen auf dem eigenen Server aufzusetzen.
 Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und klar nicht der Fokus der Anwendung.
 % TODO: check this statement
 Da Textchat der stärkere Fokus ist für den Austausch den STAIR anbieten will,
 ist dies wohl keine geeignete Lösung.
 
+\subsubsection*{Matrix}
+
+Matrix wurde 2019 veröffentlicht und ist eine Open Source Alternative zu Discord.
+Hierbei kommt Matrix dem Discord mit der Bedienung sehr nahe.
+Ein starker Fokus liegt auf der Privatsphäre der Nutzer.
+So ist man unabhängig von den Entwicklern und kann den Matrix Server auf dem eigenen Server aufsetzen.
+Die Software bringt jedoch auch seine Nachteile mit sich.
+So ist die Verbreitung noch relativ klein und hat wenig Nutzer.
+Mit 17 Millionen Nutzer \todo{source: https://matrix.org/faq/} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinten nach. \todo{source: https://www.businessofapps.com/data/discord-statistics/}
+So müssten viele Studierende zuerst einen Account erstellen und sich einen Matrix aussschliesslich für den STAIR Server herunterladen. Dies wäre eine zusätzliche Hürde.
+Auch wäre das betreiben des Matrix Servers umständlicher, da die Updates neu manuell installiert werden müssen anstatt dies von Discord machen zu lassen.
+Auch wäre unklar, ob das Enterprise Lab eine solche Applikation zulassen würde, da dies einiges an Bandbreite kosten würde, was Discord zurzeit übernimmt für STAIR.
+
+Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann. \todo{source: https://matrix.org/clients}
+So sollte jeder Nutzer etwas passendes finden.
+Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
+
 \subsubsection*{Warum Discord?}
 Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt.
 Für dieses Projekt ist Discord verbindlich festgelegt.
-STAIR kommuniziert schon lange über die Plattform und es hat sich eine grosse Community aufgebaut.
+STAIR kommuniziert schon lange über die Plattform und es hat sich eine grosse Community mit knapp 700 Studierenden und Exstudierenden aufgebaut.
 Discord erlaubt grosse Freiheiten in der Erstellung von Servern und Channels, deren Bearbeitung und der Freigabe unter den Mitgliedern.
 Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist es sehr verbreitet bei jungen Leuten aller Ethnien und Gruppierungen.
 
@@ -1062,7 +1092,7 @@ Massnahmen:
 \end{itemize}
 
 \subsubsection{Sprint 2}
-Same for Sprint 2
+\todo{Same for Sprint 2}
 \newpage
 
 \section{Glossar}
