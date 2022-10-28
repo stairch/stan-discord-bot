@@ -56,7 +56,7 @@ CREATE TABLE DiscordAccountsModules (
     CreationDate DATETIME NOT NULL,
     FkDiscordAccountId INT,
     FkModuleId INT,
-     -- https://stackoverflow.com/questions/5835978/how-to-properly-create-composite-primary-keys-mysql
+    -- https://stackoverflow.com/questions/5835978/how-to-properly-create-composite-primary-keys-mysql
     PRIMARY KEY (FkDiscordAccountId, FkModuleId),
     FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
     FOREIGN KEY (FkModuleId) REFERENCES Modules(ModuleId)
@@ -65,7 +65,6 @@ CREATE TABLE DiscordAccountsModules (
 CREATE TABLE DiscordAccountsDiscordRoles (
     FkDiscordAccountId INT NOT NULL,
     FkDiscordRoleId INT NOT NULL,
-    #--PRIMARY KEY (FkDiscordAccountId, FkDiscordRoleId),
     FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
     FOREIGN KEY (FkDiscordRoleId) REFERENCES DiscordRoles(DiscordRoleId)
 );
