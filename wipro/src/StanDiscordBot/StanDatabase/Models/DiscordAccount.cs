@@ -1,6 +1,6 @@
 ﻿using LinqToDB.Mapping;
 
-namespace StanDatabase
+namespace StanDatabase.Models
 {
     [Table(Name = "DiscordAccounts")]
     public class DiscordAccount

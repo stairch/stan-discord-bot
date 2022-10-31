@@ -1,11 +1,20 @@
 ﻿using StanDatabase;
+using StanDatabase.Models;
+using StanDatabase.Repositories;
 using StanScript;
 
 namespace StanScripts
 {
-    internal static class LoadModules
+    public class LoadModules
     {
-        public static void LoadModulesFromFile(String filePath)
+        private readonly IModuleRepository _moduleRepository;
+
+        public LoadModules(IModuleRepository moduleRepository)
+        {
+            _moduleRepository = moduleRepository;
+        }
+
+        public void LoadModulesFromFile(String filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -42,31 +51,19 @@ namespace StanScripts
                 Console.WriteLine(module);
             }
 
-            //InsertStudentsIntoDb(currentModules);
+            //_moduleRepository.InsertMultiple(currentModules);
 
             if (ShouldOldModulesBeRemoved())
             {
-                //RemoveOldModules(currentModules);
+                //_moduleRepository.RemoveOld(currentModules);
             }
         }
 
-        private static void InsertStudentsIntoDb(IList<Module> currentModules)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private static bool ShouldOldModulesBeRemoved()
+        private bool ShouldOldModulesBeRemoved()
         {
             // TODO
             string question = "";
             return ConsoleHelper.YesNoQuestion(question);
-        }
-
-        private static void RemoveOldModules(IList<Module> currentModules)
-        {
-            // TODO
-            throw new NotImplementedException();
         }
     }
 }

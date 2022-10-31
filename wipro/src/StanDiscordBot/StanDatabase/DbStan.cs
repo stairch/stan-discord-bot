@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using StanDatabase.Models;
 
 namespace StanDatabase
 {
