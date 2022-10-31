@@ -12,5 +12,12 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <param name="students"></param>
         void DeactivateOldStudents(IList<Student> students);
+
+        /// <summary>
+        /// Checks if a student with the given E-Mail exists.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Returns the student found or null otherwise.</returns>
+        Student? FindWithEmail(string email);
     }
 }

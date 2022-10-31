@@ -3,6 +3,7 @@ using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using StanBot.Services;
 using Microsoft.Extensions.Hosting;
+using EventHandler = StanBot.Core.Events.EventHandler;
 
 namespace StanBot
 {

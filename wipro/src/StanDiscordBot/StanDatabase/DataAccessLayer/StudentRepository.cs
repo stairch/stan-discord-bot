@@ -51,5 +51,19 @@ namespace StanDatabase.DataAccessLayer
                 }
             }
         }
+
+        public Student? FindWithEmail(string email)
+        {
+            using (var db = new DbStan())
+            {
+                var student = from s in db.Student
+                              where s.StudentEmail == email
+                              select s;
+
+                if (student.Count() == 0) return null;
+
+                return student.First();
+            }
+        }
     }
 }

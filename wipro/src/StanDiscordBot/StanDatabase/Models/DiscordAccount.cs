@@ -17,8 +17,14 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public int AccountId { get; set; }
 
+        [Column]
+        public int FkStudentId { get; set; }
+
+        [Association(ThisKey = nameof(FkStudentId), OtherKey = nameof(Models.Student.StudentId))]
+        public Student Student { get; set; }
+
         [Column, NotNull]
-        public string ActivationCode { get; set; }
+        public int ActivationCode { get; set; }
 
         [Column]
         public DateTime VerifiedDate { get; set; }
@@ -26,21 +32,26 @@ namespace StanDatabase.Models
         [Column]
         public DateTime RegisterDate { get; set; }
 
-        public DiscordAccount(int discordAccountId, string username, int accountId, string activationCode, DateTime verifiedDate, DateTime registerDate)
+        public DiscordAccount(string username, int accountId, int activationCode, int fkStudentId)
         {
-            DiscordAccountId = discordAccountId;
             Username = username;
             AccountId = accountId;
             ActivationCode = activationCode;
-            VerifiedDate = verifiedDate;
-            RegisterDate = registerDate;
+            RegisterDate = DateTime.Now;
+            FkStudentId = fkStudentId;
         }
 
-        public DiscordAccount(string username, int accountId, string activationCode)
+        public override string ToString()
         {
-            Username = username;
-            AccountId = accountId;
-            ActivationCode = activationCode;
+            return $"{base.ToString()}[" +
+                $"{nameof(DiscordAccountId)}: {DiscordAccountId}, " +
+                $"{nameof(Username)}: {Username}, " +
+                $"{nameof(AccountId)}: {AccountId}, " +
+                $"{nameof(FkStudentId)}: {FkStudentId}, " +
+                $"{nameof(ActivationCode)}: {ActivationCode}" +
+                $"{nameof(VerifiedDate)}: {VerifiedDate}" +
+                $"{nameof(RegisterDate)}: {RegisterDate}" +
+                $"]";
         }
     }
 }

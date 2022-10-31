@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
+using StanDatabase.DataAccessLayer;
+using StanDatabase.Repositories;
+using EventHandler = StanBot.Core.Events.EventHandler;
 
 namespace StanBot
 {
@@ -31,11 +34,14 @@ namespace StanBot
                         DefaultRunMode = RunMode.Async,
                         LogLevel = LogSeverity.Debug
                     }))
+                    .AddScoped<IStudentRepository, StudentRepository>()
+                    .AddScoped<IDiscordAccountRepository, DiscordAccountRepository>()
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
+                    .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()
-                    .AddTransient<OnUserJoinedEvent>()
+                    .AddScoped<OnUserJoinedEvent>()
                     .AddLogging()
                     .AddSingleton<LogService>())
                 .Build();

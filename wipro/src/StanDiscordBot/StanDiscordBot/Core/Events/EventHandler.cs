@@ -1,7 +1,6 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StanBot
+namespace StanBot.Core.Events
 {
     public class EventHandler
     {
@@ -20,8 +19,8 @@ namespace StanBot
         private readonly MessageHandler _messageHandler;
 
         public EventHandler(
-            DiscordSocketClient discordSocketClient, 
-            MessageHandler messageHandler, 
+            DiscordSocketClient discordSocketClient,
+            MessageHandler messageHandler,
             CommandService commandService,
             OnUserJoinedEvent onUserJoinedEvent)
         {

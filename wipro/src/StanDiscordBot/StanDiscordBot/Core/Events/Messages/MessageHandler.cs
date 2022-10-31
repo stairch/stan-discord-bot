@@ -14,7 +14,6 @@ namespace StanBot.Core.Events.Messages
 
         public async Task OnMessageReceived(SocketMessage socketMessage)
         {
-            Console.WriteLine($"Message received");
             // Ignore System messages
             if (!(socketMessage is SocketUserMessage message)) return;
             Console.WriteLine($"Socket Message received {message.Channel.GetType()} and {message.Source}");
