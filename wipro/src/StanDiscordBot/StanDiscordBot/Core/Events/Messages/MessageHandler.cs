@@ -1,9 +1,5 @@
-﻿using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Discord;
+using Discord.WebSocket;
 
 namespace StanBot.Core.Events.Messages
 {
@@ -18,11 +14,24 @@ namespace StanBot.Core.Events.Messages
 
         public async Task OnMessageReceived(SocketMessage socketMessage)
         {
-            Console.WriteLine($"Message received. Send to all message processors: {messageReceivers.Count()}");
+            Console.WriteLine($"Message received");
+            // Ignore System messages
+            if (!(socketMessage is SocketUserMessage message)) return;
+            Console.WriteLine($"Socket Message received {message.Channel.GetType()} and {message.Source}");
+
             foreach (IMessageReceiver receiver in messageReceivers)
             {
-                await receiver.ProcessMessage(socketMessage);
+                if (IsMessageSourceCorrect(message, receiver) && receiver.IsMatch(message))
+                {
+                    Console.WriteLine("Sending message");
+                    await receiver.ProcessMessage(message);
+                }
             }
+        }
+
+        private bool IsMessageSourceCorrect(IMessage message, IMessageReceiver messageReceiver)
+        {
+            return messageReceiver.AllowedMessageSources.Contains(message.Source) && message.Channel.GetType() == messageReceiver.ChannelType;
         }
     }
 }

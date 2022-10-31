@@ -33,7 +33,7 @@ namespace StanBot
                     }))
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
-                    .AddScoped<IMessageReceiver, AuthenticationMessageReceivedEvent>()
+                    .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()
                     .AddTransient<OnUserJoinedEvent>()
                     .AddLogging()

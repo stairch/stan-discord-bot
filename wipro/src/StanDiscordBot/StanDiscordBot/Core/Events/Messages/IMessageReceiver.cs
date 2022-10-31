@@ -1,9 +1,17 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 
 namespace StanBot.Core.Events.Messages
 {
     public interface IMessageReceiver
     {
-        Task ProcessMessage(SocketMessage socketMessage);
+        IEnumerable<MessageSource> AllowedMessageSources { get; }
+
+        Type ChannelType { get; }
+
+        bool IsMatch(SocketMessage message);
+
+        Task ProcessMessage(SocketUserMessage socketMessage);
+
     }
 }
