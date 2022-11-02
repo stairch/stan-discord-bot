@@ -25,10 +25,5 @@ namespace StanDatabase
             : base(StanSettings.DatabaseName)
         {
         }
-
-        public static void CreateDatabase()
-        {
-            //LinqToDB.DataProvider.MySql.MySqlTools.CreateDatabase();
-        }
     }
 }
