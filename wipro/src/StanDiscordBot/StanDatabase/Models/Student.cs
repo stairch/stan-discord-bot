@@ -35,6 +35,7 @@ namespace StanDatabase.Models
             Semester = semester;
         }
 
+        // TODO: eigene Util klasse
         public static bool IsStudentEmailFormatValid(string email)
         {
             string hsluStudentEmailUrl = "stud.hslu.ch";

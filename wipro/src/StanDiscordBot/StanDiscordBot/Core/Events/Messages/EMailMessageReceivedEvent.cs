@@ -27,6 +27,7 @@ namespace StanBot.Core.Events.Messages
         }
         public bool IsMatch(SocketMessage message)
         {
+            // Student.IsStudentEmailFormatValid(message.Content);
             return _regex.IsMatch(message.Content) && message.Content.Count(c => (c == '@')) == 1;
         }
 

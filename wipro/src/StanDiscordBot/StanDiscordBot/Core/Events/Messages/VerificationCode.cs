@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StanBot.Core.Events.Messages
+﻿namespace StanBot.Core.Events.Messages
 {
     public class VerificationCode
     {
@@ -14,11 +8,14 @@ namespace StanBot.Core.Events.Messages
 
         public int Code { get; }
 
-        public VerificationCode(ulong userId, int code)
+        public string Email { get; }
+
+        public VerificationCode(ulong userId, int code, string email)
         {
-            this.UserId = userId;
-            this.DateOfCreation = DateTime.Now;
-            this.Code = code;
+            UserId = userId;
+            DateOfCreation = DateTime.Now;
+            Code = code;
+            Email = email;
         }
     }
 }
