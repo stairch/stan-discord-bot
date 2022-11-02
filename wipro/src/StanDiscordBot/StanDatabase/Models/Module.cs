@@ -1,6 +1,6 @@
 ﻿using LinqToDB.Mapping;
 
-namespace StanDatabase
+namespace StanDatabase.Models
 {
     [Table(Name = "Modules")]
     public class Module
@@ -20,7 +20,7 @@ namespace StanDatabase
         [Column]
         public int FkDiscordCategoryId { get; set; }
 
-        [Association(ThisKey = nameof(FkDiscordCategoryId), OtherKey = nameof(StanDatabase.DiscordCategory.DiscordCategoryId))]
+        [Association(ThisKey = nameof(FkDiscordCategoryId), OtherKey = nameof(Models.DiscordCategory.DiscordCategoryId))]
         public DiscordCategory DiscordCategory { get; set; }
     }
 }

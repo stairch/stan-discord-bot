@@ -1,12 +1,20 @@
-﻿using LinqToDB;
-using StanDatabase;
+﻿using StanDatabase;
+using StanDatabase.Models;
+using StanDatabase.Repositories;
 using StanScript;
 
 namespace StanScripts
 {
-    internal static class LoadStudents
+    public class LoadStudents
     {
-        public static void LoadStudentsFromFile(string filePath)
+        private readonly IStudentRepository _studentRepository;
+
+        public LoadStudents(IStudentRepository studentRepository)
+        {
+            _studentRepository = studentRepository;
+        }
+
+        public void LoadStudentsFromFile(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -60,69 +68,19 @@ namespace StanScripts
                 Console.WriteLine(currentStudent);
             }
 
-            //InsertStudentsIntoDb(currentStudents);
+            //_studentRepository.InsertMultiple(currentStudents);
 
             if (ShouldOldStudentsBeMarkedAsExstudents())
             {
-                //DeactivateOldStudents(currentStudents);
+                //_studentRepository.DeactivateOldStudents(currentStudents);
             }
         }
 
-        private static void InsertStudentsIntoDb(IList<Student> currentStudents)
-        {
-            using (var db = new DbStan())
-            {
-                foreach (Student student in currentStudents)
-                {
-                    if (!db.Student.Any(s => s.StudentEmail == student.StudentEmail))
-                    {
-                        db.Insert(student);
-                    }
-                    else
-                    {
-                        db.Student
-                            .Where(s => s.StudentEmail == student.StudentEmail)
-                            .Set(s => s.Semester, student.Semester)
-                            .Set(s => s.StillStudying, student.StillStudying)
-                            .Set(s => s.House, student.House)
-                            .Update();
-                    }
-                }
-            }
-        }
-
-        private static bool ShouldOldStudentsBeMarkedAsExstudents()
+        private bool ShouldOldStudentsBeMarkedAsExstudents()
         {
             string question = $"Are students that are not in this list exstudents? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
                 $"Answering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
             return ConsoleHelper.YesNoQuestion(question);
-        }
-
-        /// <summary>
-        /// deactivates all students that aren't in the given list.
-        /// </summary>
-        /// <param name="currentStudents"></param>
-        private static void DeactivateOldStudents(IList<Student> currentStudents)
-        {
-            using (var db = new DbStan())
-            {
-                IList<string> currentStudentEmails = currentStudents
-                    .Select(cs => cs.StudentEmail)
-                    .ToList();
-
-                IList<Student> oldStudents = db.Student
-                    .Where(s => currentStudentEmails.Contains(s.StudentEmail))
-                    .ToList();
-
-                foreach (Student oldStudent in oldStudents)
-                {
-                    db.Student
-                            .Where(s => s.StudentEmail == oldStudent.StudentEmail)
-                            .Set(s => s.StillStudying, false)
-                            .Update();
-                    // TODO: how to update discord role on server from here?
-                }
-            }
         }
     }
 }

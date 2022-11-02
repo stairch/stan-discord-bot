@@ -1,5 +1,5 @@
 ﻿using NLog;
-using System.Linq;
+using StanDatabase.DataAccessLayer;
 
 namespace StanScripts
 {
@@ -35,7 +35,8 @@ namespace StanScripts
             {
                 if (args.Length == 2)
                 {
-                    LoadStudents.LoadStudentsFromFile(args[1]);
+                    LoadStudents loadStudents = new LoadStudents(new StudentRepository());
+                    loadStudents.LoadStudentsFromFile(args[1]);
                 }
                 else
                 {
@@ -49,7 +50,8 @@ namespace StanScripts
             {
                 if (args.Length == 2)
                 {
-                    LoadModules.LoadModulesFromFile(args[1]);
+                    LoadModules loadModules = new LoadModules(new ModuleRepository());
+                    loadModules.LoadModulesFromFile(args[1]);
                 }
                 else
                 {

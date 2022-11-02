@@ -1,6 +1,6 @@
 ﻿using LinqToDB.Mapping;
 
-namespace StanDatabase
+namespace StanDatabase.Models
 {
     [Table(Name = "Students")]
     public class Student
@@ -14,7 +14,7 @@ namespace StanDatabase
         [Column, NotNull]
         public int FkHouseId { get; set; }
 
-        [Association(ThisKey = nameof(FkHouseId), OtherKey = nameof(StanDatabase.House.HouseId))]
+        [Association(ThisKey = nameof(FkHouseId), OtherKey = nameof(Models.House.HouseId))]
         public House House { get; set; }
 
         [Column, NotNull]
@@ -29,19 +29,20 @@ namespace StanDatabase
 
         public Student(string studentEmail, int houseId, bool stillStudying, int semester)
         {
-            this.StudentEmail = studentEmail;
-            this.House = House.GetHouseById(houseId);
-            this.StillStudying = stillStudying;
-            this.Semester = semester;
+            StudentEmail = studentEmail;
+            House = House.GetHouseById(houseId);
+            StillStudying = stillStudying;
+            Semester = semester;
         }
 
+        // TODO: eigene Util klasse
         public static bool IsStudentEmailFormatValid(string email)
         {
             string hsluStudentEmailUrl = "stud.hslu.ch";
             string hsluEmailUrl = "hslu.ch";
             return (email.EndsWith($"@{hsluStudentEmailUrl}") || email.EndsWith($"@{hsluEmailUrl}")) &&
                 // not checking for name format because it can be different when two have the same name
-                email.Count(c => (c == '@')) == 1;
+                email.Count(c => c == '@') == 1;
         }
 
         public override string ToString()
