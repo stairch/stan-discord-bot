@@ -3,13 +3,13 @@ using Discord.WebSocket;
 using LinqToDB;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
+using StanDatabase.Util;
 using System.Text.RegularExpressions;
 
 namespace StanBot.Core.Events.Messages
 {
     internal class EMailMessageReceivedEvent : IMessageReceiver
     {
-        private readonly Regex _regex;
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountRepository _discordAccountRepository;
 
@@ -18,17 +18,11 @@ namespace StanBot.Core.Events.Messages
 
         public EMailMessageReceivedEvent(IStudentRepository studentRepository, IDiscordAccountRepository discordAccountRepository)
         {
-            _regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
             _studentRepository = studentRepository;
             _discordAccountRepository = discordAccountRepository;
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketDMChannel);
-        }
-        public bool IsMatch(SocketMessage message)
-        {
-            // Student.IsStudentEmailFormatValid(message.Content);
-            return _regex.IsMatch(message.Content) && message.Content.Count(c => (c == '@')) == 1;
         }
 
         public async Task ProcessMessage(SocketUserMessage message)
@@ -60,20 +54,21 @@ namespace StanBot.Core.Events.Messages
                     );
 
                 int accountId = _discordAccountRepository.Insert(discordAccount);
-            } 
+            }
             catch (LinqToDBException exception)
             {
                 // Send Mail to Admin, because of connection problems
                 Console.WriteLine(exception.Message);
             }*/
-            
-
 
             // TODO: send Email to user.
-
 
             await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
         }
 
+        public bool IsMatch(SocketMessage message)
+        {
+            return StudentUtil.IsStudentEmailFormatValid(message.Content);
+        }
     }
 }

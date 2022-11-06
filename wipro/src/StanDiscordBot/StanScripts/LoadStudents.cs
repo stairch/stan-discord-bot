@@ -1,4 +1,4 @@
-﻿using StanDatabase;
+using StanDatabase;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 using StanScript;
@@ -39,7 +39,7 @@ namespace StanScripts
                 string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
                 string email = values[emailIndex].Trim();
-                if (!Student.IsStudentEmailFormatValid(email))
+                if (!StudentUtil.IsStudentEmailFormatValid(email))
                 {
                     Console.Error.WriteLine($"Student email format is wrong! No changes made! Fix it and retry the whole file. Email: {email}");
                     return;

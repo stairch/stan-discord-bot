@@ -1,6 +1,7 @@
 ﻿using StanDatabase;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
+using StanDatabase.Util;
 using StanScript;
 
 namespace StanScripts
@@ -38,7 +39,7 @@ namespace StanScripts
                 string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
                 string moduleShortname = values[moduleShortnameIndex].Trim();
-                if (!Student.IsStudentEmailFormatValid(moduleShortname))
+                if (!StudentUtil.IsStudentEmailFormatValid(moduleShortname))
                 {
                     Console.Error.WriteLine($"Module format is wrong! No changes made! Fix it and retry the whole file. Module: {moduleShortname}");
                     return;
