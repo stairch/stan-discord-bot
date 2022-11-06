@@ -1,6 +1,7 @@
-using StanDatabase;
+﻿using StanDatabase;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
+using StanDatabase.Util;
 using StanScript;
 
 namespace StanScripts
@@ -79,7 +80,7 @@ namespace StanScripts
         private bool ShouldOldStudentsBeMarkedAsExstudents()
         {
             string question = $"Are students that are not in this list exstudents? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
-                $"Answering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
+                $"\nAnswering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
             return ConsoleHelper.YesNoQuestion(question);
         }
     }
