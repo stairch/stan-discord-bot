@@ -1,4 +1,5 @@
 ﻿using StanDatabase;
+using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 using StanDatabase.Util;
@@ -6,6 +7,7 @@ using StanScript;
 
 namespace StanScripts
 {
+    // TODO: add logging
     public class LoadModules
     {
         private readonly IModuleRepository _moduleRepository;
@@ -34,29 +36,39 @@ namespace StanScripts
             Console.WriteLine($"{nameof(moduleShortnameIndex)}: {moduleShortnameIndex} | {nameof(moduleFullnameIndex)}: {moduleFullnameIndex}");
 
             IList<Module> currentModules = new List<Module>();
+            // TODO: filter module duplicates (check long name)
             while (!reader.EndOfStream)
             {
                 string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
-                string moduleShortname = values[moduleShortnameIndex].Trim();
-                if (!StudentUtil.IsStudentEmailFormatValid(moduleShortname))
+                string moduleOccassionNumber = values[moduleShortnameIndex].Trim();
+                if (!ModuleUtil.IsModuleOccasionNumberValid(moduleOccassionNumber))
                 {
-                    Console.Error.WriteLine($"Module format is wrong! No changes made! Fix it and retry the whole file. Module: {moduleShortname}");
+                    string errorMessage = $"Module format is wrong! No changes made! Fix it and retry the whole file. Module: {moduleOccassionNumber}";
+
+                    if (String.IsNullOrEmpty(moduleOccassionNumber))
+                    {
+                        errorMessage += " | Since this module name is empty, you may have an empty line at the end of your file.";
+                    }
+                    Console.Error.WriteLine(errorMessage);
                     return;
                 }
 
+                string moduleShortname = ModuleUtil.ExtractModuleShortname(moduleOccassionNumber);
                 string moduleFullname = values[moduleFullnameIndex];
 
-                Module module = new Module();
+                // TODO: use injection
+                IDiscordCategoryRepository discordCategoryRepository = new DiscordCategoryRepository();
+                Module module = new Module(moduleShortname, moduleFullname, discordCategoryRepository.GetCategoryWithChannelCapacity());
                 currentModules.Add(module);
                 Console.WriteLine(module);
             }
 
-            //_moduleRepository.InsertMultiple(currentModules);
+            _moduleRepository.InsertMultiple(currentModules);
 
             if (ShouldOldModulesBeRemoved())
             {
-                //_moduleRepository.RemoveOld(currentModules);
+                _moduleRepository.RemoveOld(currentModules);
             }
         }
 

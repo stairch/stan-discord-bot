@@ -5,6 +5,9 @@ namespace StanDatabase
 {
     public class DbStan : LinqToDB.Data.DataConnection
     {
+        // TODO: load this from settings file
+        private const string connectionString = "Server=localhost;Port=3306;Database=standb;Uid=root;Pwd=12345678;charset=utf8;";
+
         public ITable<DiscordAccountModule> AccountModule => this.GetTable<DiscordAccountModule>();
 
         public ITable<DiscordAccountDiscordRole> AccountRole => this.GetTable<DiscordAccountDiscordRole>();
@@ -23,7 +26,8 @@ namespace StanDatabase
 
         // TODO: check for singleton
         public DbStan()
-            : base(StanSettings.DatabaseName)
+            // possible providers list: https://github.com/linq2db/linq2db/blob/master/Source/LinqToDB/ProviderName.cs
+            : base("MySql", connectionString)
         {
         }
     }

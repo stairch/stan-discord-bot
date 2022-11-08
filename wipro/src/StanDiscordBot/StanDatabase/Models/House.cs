@@ -16,28 +16,5 @@ namespace StanDatabase.Models
 
         [Association(ThisKey = nameof(FkDiscordRoleId), OtherKey = nameof(Models.DiscordRole.DiscordRoleId))]
         public DiscordRole DiscordRole { get; set; }
-
-        public static int GetHouseIdByName(string houseName)
-        {
-            // TODO
-            return 1;
-        }
-
-        public static House GetHouseById(int houseId)
-        {
-            // TODO
-            return new House();
-        }
-
-        public static House GetHouseByName(string houseName)
-        {
-            return GetHouseById(GetHouseIdByName(houseName));
-        }
-
-        public static bool IsHouseNameValid(string houseName)
-        {
-            // TODO: check in DB
-            return true;
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using StanDatabase;
+using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 using StanDatabase.Util;
@@ -46,8 +47,11 @@ namespace StanScripts
                     return;
                 }
 
+                // TODO: make private field and inject
+                IHouseRepository houseRepository = new HouseRepository();
+
                 string houseName = values[houseIndex];
-                if (!House.IsHouseNameValid(houseName))
+                if (!houseRepository.IsHouseNameValid(houseName))
                 {
                     Console.Error.WriteLine($"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}");
                     return;
@@ -59,9 +63,15 @@ namespace StanScripts
                     return;
                 }
 
+                //Student currentStudent = new Student(
+                //    email,
+                //    House.GetHouseIdByName(values[houseIndex]),
+                //    true,
+                //    semester
+                //);
                 Student currentStudent = new Student(
                     email,
-                    House.GetHouseIdByName(values[houseIndex]),
+                    houseRepository.GetHouseByName(values[houseIndex]),
                     true,
                     semester
                 );
@@ -69,11 +79,11 @@ namespace StanScripts
                 Console.WriteLine(currentStudent);
             }
 
-            //_studentRepository.InsertMultiple(currentStudents);
+            _studentRepository.InsertMultiple(currentStudents);
 
             if (ShouldOldStudentsBeMarkedAsExstudents())
             {
-                //_studentRepository.DeactivateOldStudents(currentStudents);
+                _studentRepository.DeactivateOldStudents(currentStudents);
             }
         }
 

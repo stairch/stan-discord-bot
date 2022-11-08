@@ -27,10 +27,11 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public bool IsDiscordAdmin { get; set; }
 
-        public Student(string studentEmail, int houseId, bool stillStudying, int semester)
+        public Student(string studentEmail, House house, bool stillStudying, int semester)
         {
             StudentEmail = studentEmail;
-            House = House.GetHouseById(houseId);
+            House = house;
+            FkHouseId = house.HouseId;
             StillStudying = stillStudying;
             Semester = semester;
         }

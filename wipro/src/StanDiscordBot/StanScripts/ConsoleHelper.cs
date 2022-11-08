@@ -12,7 +12,7 @@ namespace StanScript
             do
             {
                 Console.WriteLine(question);
-                answer = Console.ReadLine().ToLower();
+                answer = Console.ReadLine().Trim().ToLower();
                 if (answer != YesAnswer && answer != NoAnswer)
                 {
                     Console.Error.WriteLine("Unknown input! Try again.");
