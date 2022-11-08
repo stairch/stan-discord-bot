@@ -1,6 +1,4 @@
-﻿using LinqToDB.Mapping;
-
-namespace StanDatabase
+﻿namespace StanDatabase
 {
     public static class StanSettings
     {
@@ -8,6 +6,7 @@ namespace StanDatabase
 
         // database configuration
         public static string DatabaseName = "StanDB";
+        public static string ConnectionString = "Server=localhost;Port=3306;Database=standb;Uid=root;Pwd=12345678;charset=utf8;";
 
         // CSV configuration
         public static char Separator = ',';
