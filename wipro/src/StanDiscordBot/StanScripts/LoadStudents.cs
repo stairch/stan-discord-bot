@@ -9,13 +9,19 @@ namespace StanScripts
 {
     public class LoadStudents
     {
+        public const string COMMAND_NAME = "loadStudents";
+
         private readonly IStudentRepository _studentRepository;
 
-        public LoadStudents(IStudentRepository studentRepository)
+        private readonly IHouseRepository _houseRepository;
+
+        public LoadStudents(IStudentRepository studentRepository, IHouseRepository houseRepository)
         {
             _studentRepository = studentRepository;
+            _houseRepository = houseRepository;
         }
 
+        // TODO: add logger
         public void LoadStudentsFromFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -47,11 +53,8 @@ namespace StanScripts
                     return;
                 }
 
-                // TODO: make private field and inject
-                IHouseRepository houseRepository = new HouseRepository();
-
                 string houseName = values[houseIndex];
-                if (!houseRepository.IsHouseNameValid(houseName))
+                if (!_houseRepository.IsHouseNameValid(houseName))
                 {
                     Console.Error.WriteLine($"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}");
                     return;
@@ -71,7 +74,7 @@ namespace StanScripts
                 //);
                 Student currentStudent = new Student(
                     email,
-                    houseRepository.GetHouseByName(values[houseIndex]),
+                    _houseRepository.GetHouseByName(values[houseIndex]),
                     true,
                     semester
                 );

@@ -11,6 +11,10 @@
     "StanScripts (Students)": {
       "commandName": "Project",
       "commandLineArgs": "loadStudents Y:\\studium\\sem6\\wipro\\ListeStudierendeHS22.csv"
+    },
+    "StanScripts (help)": {
+      "commandName": "Project",
+      "commandLineArgs": "help"
     }
   }
 }
