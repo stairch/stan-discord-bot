@@ -12,13 +12,16 @@ namespace StanScript
             do
             {
                 Console.WriteLine(question);
-                answer = Console.ReadLine().Trim().ToLower();
-                if (answer != YesAnswer && answer != NoAnswer)
+                answer = Console.ReadLine();
+                if (answer != null)
                 {
-                    Console.Error.WriteLine("Unknown input! Try again.");
+                    answer = answer.Trim().ToLower();
+                    if (answer != YesAnswer && answer != NoAnswer)
+                    {
+                        Console.Error.WriteLine("Unknown input! Try again.");
+                    }
                 }
-            } while (answer != YesAnswer && answer != NoAnswer);
-
+            } while (answer == null || (answer != YesAnswer && answer != NoAnswer));
             return answer == YesAnswer;
         }
     }
