@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
+using StanBot.Services.MailService;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Repositories;
 using EventHandler = StanBot.Core.Events.EventHandler;
@@ -40,6 +41,7 @@ namespace StanBot
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddSingleton<VerificationCodeManager>()
+                    .AddScoped<IMailService, MailService>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()

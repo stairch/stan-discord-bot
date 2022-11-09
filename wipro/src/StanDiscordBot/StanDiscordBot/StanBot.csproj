@@ -10,7 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.8.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.47.0" />
   </ItemGroup>
 
   <ItemGroup>

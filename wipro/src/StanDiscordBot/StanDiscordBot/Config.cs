@@ -34,5 +34,13 @@ namespace StanBot
         public string DiscordApplicationToken { get; set; }
 
         public string Prefix { get; set; }
+
+        public string FromEmailAddress { get; set; }
+
+        public string FromEmailName { get; set; }
+
+        public string AppId { get; set; }
+
+        public string[] Scopes { get; set; }
     }
 }
