@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS StanDB;
 CREATE DATABASE StanDB;
 USE StanDB;
 
@@ -46,10 +47,10 @@ CREATE TABLE DiscordAccounts (
     DiscordAccountId INT AUTO_INCREMENT NOT NULL,
     Username VARCHAR(255),
     AccountId INT,
-    ActivationCode VARCHAR(255),
     VerifiedDate DATETIME,
-    RegisterDate DATETIME,
-    PRIMARY KEY (DiscordAccountId)
+	FkStudentId INT,
+    PRIMARY KEY (DiscordAccountId),
+	FOREIGN KEY (FkStudentId) REFERENCES Students(StudentId)
 );
 
 CREATE TABLE DiscordAccountsModules (
@@ -70,20 +71,22 @@ CREATE TABLE DiscordAccountsDiscordRoles (
 );
 
 -- Add houses
+-- Roles must have the same names as the ones created in Discord
 INSERT INTO DiscordRoles (DiscordRoleName)
 VALUES
-    ("HouseGrey"),
-    ("HouseYellow"),
-    ("HouseBlue"),
-    ("HousePurple"),
-    ("HouseOrange"),
-    ("HouseRed");
+	("student"),
+    ("House_Grey"),
+    ("House_Yellow"),
+    ("House_Blue"),
+    ("House_Purple"),
+    ("House_Orange"),
+    ("House_Red");
 
 INSERT INTO Houses (HouseName, FkDiscordRoleId)
 VALUES
-    ("GREY", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HouseGrey")),
-    ("Yellow", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HouseYellow")),
-    ("BLUE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HouseBlue")),
-    ("PURPLE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HousePurple")),
-    ("ORANGE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HouseOrange")),
-    ("RED", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "HouseRed"));
+    ("GREY", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Grey")),
+    ("Yellow", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Yellow")),
+    ("BLUE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Blue")),
+    ("PURPLE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Purple")),
+    ("ORANGE", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Orange")),
+    ("RED", (SELECT DiscordRoleId FROM DiscordRoles WHERE DiscordRoleName = "House_Red"));
