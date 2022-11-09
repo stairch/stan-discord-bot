@@ -11,16 +11,16 @@ namespace StanBot.Core.Events.Messages
     {
         private readonly Regex _regex;
         private readonly IStudentRepository _studentRepository;
-        private readonly IDiscordAccountRepository _discordAccountRepository;
+        private readonly VerificationCodeManager _verificationCodeManager;
 
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
         public Type ChannelType { get; }
 
-        public EMailMessageReceivedEvent(IStudentRepository studentRepository, IDiscordAccountRepository discordAccountRepository)
+        public EMailMessageReceivedEvent(IStudentRepository studentRepository, VerificationCodeManager verificationCodeManager)
         {
             _regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
             _studentRepository = studentRepository;
-            _discordAccountRepository = discordAccountRepository;
+            _verificationCodeManager = verificationCodeManager;
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketDMChannel);
@@ -48,26 +48,14 @@ namespace StanBot.Core.Events.Messages
                         );
                     return;
                 }
-
-                // TODO: generate Verification Code
-
-                // Save new DiscordAccount linked to Student
-                DiscordAccount discordAccount = new DiscordAccount(
-                    message.Author.Username,
-                    message.Author.DiscriminatorValue,
-                    123456,
-                    student.StudentId
-                    );
-
-                int accountId = _discordAccountRepository.Insert(discordAccount);
             } 
             catch (LinqToDBException exception)
             {
                 // Send Mail to Admin, because of connection problems
                 Console.WriteLine(exception.Message);
             }*/
-            
 
+            int verificationCode = _verificationCodeManager.CreateCodeForUser(message.Author.Id, message.Content);
 
             // TODO: send Email to user.
 
