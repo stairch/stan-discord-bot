@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{longtable}
 \usepackage{times}
+\usepackage{pdflscape}
 \usepackage[style=verbose-ibid,backend=bibtex]{biblatex}
 
 \hypersetup{
@@ -161,7 +162,7 @@ Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
 Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
 wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
 
-\subsubsection{Discord Einschr\"ankungen}
+\subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
 
 % https://netcord.site/new-discord-channel-creation-ratelimit/
 % https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit
@@ -558,9 +559,14 @@ Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren
 \newline
 \todo{Bild von Discord und Channels anzeigen}
 
-\subsubsection*{Ablauf Athentifizierung}
+\subsubsection*{Ablauf Authentifizierung}
 \todo{Nicolas}
-\todo{Bild Ablaufdiagramm Authentifizierung}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/Authentifizierungsprozess_Bot_alt.png}
+    \caption{Authentifizierungsprozess Bot alt}
+    \label{fig:Authentifizierungsprozess_Bot_alt}
+\end{figure}
 
 
 \subsubsection*{Ablauf Modul-Channel Einschreibung}
@@ -631,7 +637,7 @@ Dies könnte nicht vertrauenswürdig wirken bei Studenten.
 Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nun weiterhin verwendet wird.
 
 \subsubsection*{Wechsel zu Community Server}
-
+\todo{Yannis}
 Entscheid Anbindung an Datenbank
 - Einfachere Verwaltung von Studenten und Modulen
 - Einfachere Kontrolle und Steuerung von Stair
@@ -1002,7 +1008,27 @@ mit dem Aufsetzten der Linux Umgebung befasst.
 \subsubsection{Entity Relationship Diagramm}
 Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden, 
 welche Daten im System wichtig sind und wie diese gespeichert werden.
-
+Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
+Das ERD kann später in ein Datenbank Schema übertragen werden.
+Die einzelnen Tabellen sind wie folgt beschrieben.
+\todo{Einfügen ER-Diagramm}
+\newline
+Bei der Datenspeicherung wird eine Unterteilung zwischen dem Studenten und seinem Discord Account vorgenommen.
+Dies erlaubt es, eine saubere Trennung zwischen den richtigen Studenten und ihrem Online erscheinen auf Discord zu gewährleisten.
+(Seperation of Concerns (SOC)).
+Die Studentendaten, wie Name, Vorname, E-Mail Adresse und Hauszuteilung, werden von der Hochschul-Administration zur Verfügung gestellt und können als Liste eingelesen werden.
+Dabei werden die Tabellen \textit{Student} und \textit{House} aufgefüllt und die Zuordnung gemacht.
+Implementiert wird die Funktionalität in diesem Sprint 1 (\nameref{tab: UserStories}).
+\newline
+Der \textit{DiscordAccount} wird bei der Authentifikation dem Studenten zugeordnet.
+Über die Tabelle \textit{AccountRole}, werden nach dem Authentifizierungsprozess dem Studenten, die richtigen Rollen zugeordnet.
+\newline
+Die Tabelle \textit{Module} wird auch über eine, von der Hochschul-Administration, zur Verfügung gestellte Liste befüllt.
+Wenn nun der Student sich im Discord beim Bot für ein Modul anmeldet, wird die Zuordnung von Modul und DiscordAccount vorgenommen.
+Der richtige Student, bzw. seine Daten, haben mit dieser Zuteilung nichts zu tun.
+\newline
+Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord möglich.
+Beschrieben wird dieses Problem im Kapitel \nameref{discord_einschraenkungen}.
 
 \subsubsection{Studentenerfassung}
 \todo{Yannis}
