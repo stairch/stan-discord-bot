@@ -12,6 +12,55 @@
 \usepackage{times}
 \usepackage{pdflscape}
 \usepackage[style=verbose-ibid,backend=bibtex]{biblatex}
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset
+{
+    frame=none,
+    basicstyle={\small\ttfamily},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    numbers=none, %Nummerierung
+    numberstyle=\tiny\color{gray},
+    showstringspaces=false,
+    breaklines=true,
+    aboveskip=3mm,
+    belowskip=3mm,
+    columns=flexible,
+    breakatwhitespace=true
+}
+
+\lstdefinelanguage{csharp}
+{
+    language=[Sharp]C,
+    keywordstyle=\color{blue},
+    tabsize=3,
+    morekeywords={partial, var, value, get, set}
+}
+
+\lstdefinelanguage{json}
+{
+    stepnumber=1,
+    numbersep=8pt,
+    string=[s]{"}{"},
+    comment=[l]{:\ "},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{numb}0}}}{1}
+         {1}{{{\color{numb}1}}}{1}
+         {2}{{{\color{numb}2}}}{1}
+         {3}{{{\color{numb}3}}}{1}
+         {4}{{{\color{numb}4}}}{1}
+         {5}{{{\color{numb}5}}}{1}
+         {6}{{{\color{numb}6}}}{1}
+         {7}{{{\color{numb}7}}}{1}
+         {8}{{{\color{numb}8}}}{1}
+         {9}{{{\color{numb}9}}}{1}
+}
 
 \hypersetup{
     colorlinks=true,
@@ -1022,6 +1071,24 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 \end{longtable}
 \clearpage
 
+\subsection{Konfigurationsmanagement C\# Solution}
+\todo{Nicolas}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{20em}|l|}
+        \hline
+        \rowcolor[gray]{.9} Name & Beschreibung & Version \\
+        \hline
+        .NET Core & Core Library für C\# Projekte.
+        Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 6.0.0 \\
+        \hline
+    \end{tabular}
+    \caption{Konfigurationsmanagement}
+    \label{tab: Konfigurationsmanagement}
+\end{table}
+\todo{Welches Projekt enthält welche Libraries}
+
 \subsection{Sprint 1}
 Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie folgt aus.
 \begin{figure}[h]
@@ -1060,9 +1127,197 @@ Der richtige Student, bzw. seine Daten, haben mit dieser Zuteilung nichts zu tun
 Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord möglich.
 Beschrieben wird dieses Problem im Kapitel \nameref{discord_einschraenkungen}.
 
+\subsection{Aufsetzten Solution}
+Die C\# Solution wird in drei Projekte aufgeteilt, welche jeweils andere Verantwortlichkeiten haben.
+\begin{itemize}
+    \item StanBot
+    \item StanDatabase
+    \item StanScripts
+\end{itemize}
+
+In dem \textbf{StanBot} Projekt wird der Discord Bot erstellt und alle Funktionalität liegen,
+die mit dem Bot zusammenhängt.\\
+In dem \textbf{StanDatabase} Projekt wird die Datenbank Anbindung verwaltet.
+Darin werden die Tabellen der Datenbank auf zugeweisene Klassen gemappt.
+Mithilfe der Library LinQ2DB werden die Tabellen der Datenbank, dann über diese Klassen verwaltet.
+Datenbank Operationen sollen nur in diesem Projekt erfolgen. 
+Die anderen Projekte sollen keinen direkten Zugriff auf die Datenbank haben.\\
+Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, 
+die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
+Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden,
+sowie für die Statistiken.
+
+\subsubsection{Repository Pattern für die Daten}
+Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
+Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.\\
+Das Repository Pattern ist dazu da, die Create, Read, Update und Delete (CRUD) Funktionen, 
+welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{}
+%https://offering.solutions/blog/articles/2014/10/06/asp.net-repository-pattern-und-unit-of-work/#:~:text=Repositories%3A,die%20CRUD%2DOperationen%20ausf%C3%BChren%20kann.
+Es sieht vor, dass jedes Objekt genau eine Schnittstelle hat, über die Veränderung daran vorgenommen werden können.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth,height=5cm]{img/Repository_Pattern.png}
+    \caption{Darstellung Repository Pattern}
+    \label{fig:repository_pattern}
+\end{figure}
+%https://www.google.ch/url?sa=i&url=https%3A%2F%2Fmedium.com%2Fcorebuild-software%2Fandroid-repository-pattern-using-rx-room-bac6c65d7385&psig=AOvVaw3r0fNPN8XItp0pPq7KFvUP&ust=1668526531304000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMiumpaDrvsCFQAAAAAdAAAAABAD
+
+Wie in der Darstellung zu erkennen, gibt es für andere Klassen nur noch einen Zugriffspunkt für das gewünschte Datenobjekt.
+\newline
+Ein weiterer Vorteil dieses Patterns ist die vereinfachte Testbarkeit.
+Da das Repository selbst eine Schnittstelle, also ein Interface ist, kann es meherere Implementationen davon geben.
+Für die richtige Applikation kann nun eine Implementation erstellt werden, die wirklich Daten auf der Datenbank verändert,
+und für das Testen kann eine Implementation erstellen werden, die nur Mock Daten enthält.\\
+Mithilfe von Dependency Injection kann nun jeweils die gewünschte Implementation für das Repository übergeben werden.
+
+\begin{lstlisting}[language=csharp]
+// IHouseRepository
+public interface IHouseRepository
+{
+    House GetHouseByName(string houseName);
+    bool IsHouseNameValid(string houseName);
+}
+
+
+// HouseRepositoryImpl
+public class HouseRepository : IHouseRepository
+{
+    public House GetHouseByName(string houseName)
+    {
+        using (var db = new DbStan()) { ... }
+    }
+
+    public bool IsHouseNameValid(string houseName)
+    {
+        using (var db = new DbStan()) { ... }
+    }
+}
+
+// LoadStudentScript
+public class LoadStudents
+{
+    private readonly IHouseRepository _houseRepository;
+    public LoadStudents(IHouseRepository houseRepository)
+    {
+        _houseRepository = houseRepository;
+    }
+
+    public void LoadStudentsFromFile(string filePath)
+    {
+        ...
+        _houseRepository.GetHouseByName(values[houseIndex]);
+        ...
+    }
+}
+
+// Program
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        LoadStudents loadStudents = new LoadStudents(new HouseRepository());
+        loadStudents.LoadStudentsFromFile(args[1]);
+    }
+}
+\end{lstlisting}
+
 \subsubsection{Studentenerfassung}
 \todo{Yannis}
 
+\subsubsection{Aufsetzten der Linux Umgebung}
+\todo{Yannis}
+
+\newpage
+\subsection{Sprint 2}
+In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt und dem Erstellen des Discord Bots.
+
+\subsubsection{Modulerfassung}
+\todo{Yannis}
+
+\subsubsection{Aufsetzten Discord Bot}
+\todo{Discord Developer Page: Applikationen im Web.}
+
+\subsubsection{Stan Bot Architektur}
+Grundlegend geht es bei der Bot Architektur um die Kommunikation mit der DiscordClient Klasse.
+Diese dient als Client-Komponente des Bots und man kann sich dort auf alle Events abonnieren, die Discord anbietet.\\
+
+\subsubsection*{Services und Dependency Injection}
+In der Main-Methode der Applikation wird ein Host Environment für die Applikation erstellt.
+Dieses Environment braucht man, damit der Bot später als Deamon auf der Linux Umgebung im Hintergrund laufen kann.
+Des weiteren bietet es noch Funktionen zur Dependency Injection an.
+Alle Klassen können dort als Singleton, Scoped oder Transient registriert werden.
+Aus der Microsoft .NET Dokumentation:
+\textit{
+\begin{itemize}
+    \item Transient-Vorgänge sind immer unterschiedliche, und mit jedem Abruf des Diensts wird eine neue Instanz erstellt.
+    \item Scoped-Vorgänge ändern sich nur durch einen neuen Bereich, die Instanz ist jedoch innerhalb eines Bereichs immer gleich.
+    \item Singleton-Vorgänge sind immer gleich, und eine neue Instanz wird nur einmal erstellt. \autocite{}
+\end{itemize}
+}
+%https://learn.microsoft.com/de-de/dotnet/core/extensions/dependency-injection-usage#conclusion
+
+\begin{lstlisting}[language=csharp]
+// Program.cs
+using IHost host = Host.CreateDefaultBuilder()
+            .ConfigureServices((_, services) => services
+                .AddSingleton(new DiscordSocketClient())
+                .AddSingleton<EventHandler>()
+                .AddScoped<IStudentRepository, StudentRepository>()
+            .Build();
+\end{lstlisting}
+
+In der Bot Klasse kann nun mithilfe eines Providers des Host Environments, die Instanz des gebrauchten Services geholt werden.
+
+\begin{lstlisting}[language=csharp]
+// Bot.cs
+using IServiceScope serviceScope = _hostEnvironment.Services.CreateScope();
+IServiceProvider provider = serviceScope.ServiceProvider;
+_discordSocketClient = provider.GetRequiredService<DiscordSocketClient>();
+\end{lstlisting}
+
+Die Klasse kann aber auch direkt in einen Konstruktor \textit{Injected} werden.
+Auf diese Weise hat man an einer Stelle die Kontrolle über alle verfügbaren Klassen und Instanzen.
+\begin{lstlisting}[language=csharp]
+// EventHandler.cs
+public class EventHandler
+{
+    private readonly DiscordSocketClient _discordSocketClient;
+    public EventHandler(DiscordSocketClient discordSocketClient)
+    {
+        _discordSocketClient = discordSocketClient;
+    }
+}
+\end{lstlisting}
+
+\subsubsection*{Laden der Config}
+Beim Starten des Discord Bots muss eine Konfiguration mit spezifischen \textbf{DiscordApplicationToken} mitgegeben werden.
+Dieses Application Token ist wie der Private Key der Applikation und sollte nicht veröffentlicht werden.
+Um diese und weitere sensible Informationen einlesen zu können, wird die Config Klasse erstellt.\\
+Diese enthält alle Felder der Settingsdatei und dient als Zugriffspunkt für die sensiblen Informationen.
+Sie liest mit einem einfachen JSON-Parser die Settings Datei ein und setzt ihre Attribute.
+
+Die Settings Datei heisst \textit{stan.json}
+\begin{lstlisting}[language=json]
+{
+    "DisordApplicationToken": "XXXX-XXXXX-XXXXXXXXXXXX",
+    "Prefix": "!"
+}
+\end{lstlisting}
+
+\subsubsection{Kommunikation mit Discord}
+
+\newpage
+\subsection{Sprint 3}
+
+\subsubsection{Command Service Architektur}
+\todo{Nicolas}
+
+\subsubsection{show/hide <module> Command}
+\todo{Yannis}
+
+\subsubsection{E-Mail Service}
+\todo{Nicolas}
 
 \newpage
 \section{Evaluation und Validation}
