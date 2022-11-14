@@ -101,9 +101,9 @@ Der Stan-Bot hat keine Bugs, jedoch gibt es hin und wieder unklarheiten bei den 
 weshalb diese nachfragen in den Hilf-Channels auf dem Discord Server.
 In der neuen Version sollten die nächsten Schritte und Abläufe für die Studenten verdeutlicht werden.
 \newline
-Die Lösung soll vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
+Die beiden bisherigen Lösungen sollen vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
 Auch hat die jetztige Lösung einige Einschränkungen.
-Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal freigegeben werden.
+Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal an Studenten freigegeben werden.
 Die Module sind dabei auch ungleichmässig verteilt.
 So gibt zum Beispiel die Rolle Security 14 Module auf einmal frei, die Rolle PREN hingegen nur vier Module und die Rolle AD nur ein einziges Modul.
 Hierbei sind vor allem die grössten Zusammenfassungen ein Problem, da dann Studierende mit zu vielen Nachrichten belästigt werden.
@@ -114,7 +114,7 @@ und datenbasierte Entscheidungen treffen, sowie Werbung bei den Studentengruppen
 \newline
 Neu soll eine Fehlererkennung eingeführt werden.
 Bisher wurde kein Admin informiert bei Problemen.
-Dies führte zu länger anhaltenden Problemen als nötig.
+Dies führte zu länger anhaltenden Fehlern als nötig.
 Mit einer automatischen Erkennung, zum Beispiel von der nicht-erreichbarkeit des Mail-Servers, Datenbank oder Discord-Servers könnte ein Admin umgehend informiert werden um Massnahmen zu treffen.
 Hierzu würde der jeweils andere Kommunikationskanal genutzt werden, also bei einem Fehler mit Discord wird per E-Mail informiert und umgekehrt.
 Es kann auch auftreten, dass eine Verbindung zu der Datenbank möglich ist, jedoch können keine Daten gespeichert werden.
@@ -125,7 +125,7 @@ Ein weiterer Fall wäre wenn jemand versucht mit einer ungültigen E-Mail sich a
 Hierbei wird unterschieden zwischen nicht erfasster Studenten Mail und einer nicht-studenten Mail.
 \todo{Format Studenten Mail irgendwo einfügen}
 Mit Hilfe einer Logging Library sollen Fehler nachvollziehbar bleiben.
-Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden bis auf die unterteilung der verschiedenen Log Levels
+Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden
 und ein lokales Speichern der Log Messages ist ausreichend.
 
 \newpage
@@ -174,25 +174,55 @@ wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_di
 \subsubsection*{Slack}
 
 Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
-Dabei liegt der Fokus der Anwendung auch stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord mehr fokusiert.
-% TODO: add source
+Dies ist auch gut auf der Homepage des jeweiligen Unternehmens zu erkennen.
+So erwähnt Discord zum Beispiel: "\textit{STELL DIR EINEN ORT VOR, …
+… an dem du Teil eines Schulklubs, einer Gaming-Gruppe oder einer weltweiten Kunst-Community sein kannst. Ein Ort, an dem du einfach Zeit mit Freunden verbringen kannst. Ein Ort, an dem es leicht ist, sich jederzeit zu treffen und zu unterhalten.}" \todo{source: www.discord.com}
+wo hingegen Slack folgendes schreibt: "\textit{Great teamwork starts with a digital HQ
+With all your people, tools and communication in one place, you can work faster and more flexibly than ever before.}" \todo{Source: slack.com}
+Auch der Fokus der Anwendung liegt stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord widerum mehr fokusiert.
+Da STAIR und der Discord Server auch für die Freizeit gedacht sind, macht es mehr Sinn auf ein Freizeit Tool zu setzen.
+\todo{add source}
 
 \subsubsection*{Skype}
-
-\todo{Yannis}
+Skype ist eine ältere und sehr verbreitete Sprachchat Lösungen mit 100 Millionen aktiven Nutzern jeden Monat.
+\todo{source: https://techcrunch.com/2020/03/30/microsoft-teams-is-coming-to-consumers-but-skype-is-here-to-stay/}
+Skype ist jedoch auch sehr eingeschränkt, was die Features angeht.
+So sind keine echten Communities möglich und Sprachchat ist nur per Anruf möglich.
+So können neue Nutzer also nicht einfach zu einem Sprachchat hinzukommen.
+Richtige Communities sind ebenfalls nicht vorhanden.
+\todo{source: https://www.gamingscan.com/discord-vs-skype-for-gaming/}
+Diese fehlenden Features machen das Programm ungeeignet als Alternative.
+\todo{Source:}
 
 \subsubsection*{TeamSpeak}
 
-TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen aufzusetzen.
+TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen auf dem eigenen Server aufzusetzen.
 Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und klar nicht der Fokus der Anwendung.
 % TODO: check this statement
 Da Textchat der stärkere Fokus ist für den Austausch den STAIR anbieten will,
 ist dies wohl keine geeignete Lösung.
 
+\subsubsection*{Matrix}
+
+Matrix wurde 2019 veröffentlicht und ist eine Open Source Alternative zu Discord.
+Hierbei kommt Matrix dem Discord mit der Bedienung sehr nahe.
+Ein starker Fokus liegt auf der Privatsphäre der Nutzer.
+So ist man unabhängig von den Entwicklern und kann den Matrix Server auf dem eigenen Server aufsetzen.
+Die Software bringt jedoch auch seine Nachteile mit sich.
+So ist die Verbreitung noch relativ klein und hat wenig Nutzer.
+Mit 17 Millionen Nutzer \todo{source: https://matrix.org/faq/} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinten nach. \todo{source: https://www.businessofapps.com/data/discord-statistics/}
+So müssten viele Studierende zuerst einen Account erstellen und sich einen Matrix aussschliesslich für den STAIR Server herunterladen. Dies wäre eine zusätzliche Hürde.
+Auch wäre das betreiben des Matrix Servers umständlicher, da die Updates neu manuell installiert werden müssen anstatt dies von Discord machen zu lassen.
+Auch wäre unklar, ob das Enterprise Lab eine solche Applikation zulassen würde, da dies einiges an Bandbreite kosten würde, was Discord zurzeit übernimmt für STAIR.
+
+Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann. \todo{source: https://matrix.org/clients}
+So sollte jeder Nutzer etwas passendes finden.
+Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
+
 \subsubsection*{Warum Discord?}
 Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt.
 Für dieses Projekt ist Discord verbindlich festgelegt.
-Stair kommuniziert schon lange über die Plattform und es hat sich eine grosse Community aufgebaut.
+STAIR kommuniziert schon lange über die Plattform und es hat sich eine grosse Community mit knapp 700 Studierenden und Exstudierenden aufgebaut.
 Discord erlaubt grosse Freiheiten in der Erstellung von Servern und Channels, deren Bearbeitung und der Freigabe unter den Mitgliedern.
 Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist es sehr verbreitet bei jungen Leuten aller Ethnien und Gruppierungen.
 
@@ -228,12 +258,12 @@ Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohn
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
 
 \subsection{Teststrategie}\label{Teststrategie}
-In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
-Ein genauerer Beschrieb dazu ist im Kapitel \nameref{Vorgehensmodell} zu finden. 
-Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und 
+In diesem Projekt wird die abzugebende Software iterativ entwickelt.
+Ein genauerer Beschrieb dazu ist im Kapitel \nameref{Vorgehensmodell} zu finden.
+Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und
 während jeder Phase die Funktionalität sicher zu stellen.
 \newline
-Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
+Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet.
 Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{noauthor_arrangeactassert_nodate}
 Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
 \newline
@@ -415,7 +445,7 @@ Im Risikomanagement unterscheidet man zwischen \textbf{Produktrisiken} und \text
 Produktrisiken werden direkt als Arbeitspakete im Projekt verbaut.
 Dabei wird geschaut, welche Gefahren für Mensch und Umwelt während der ganzen Umsetzung und Betreibung auftreten können.
 \newline
-Die Projektrisiken werden im Projektmanagement behandelt. 
+Die Projektrisiken werden im Projektmanagement behandelt.
 Dabei wird geschaut, welche Probleme mich daran hindern könnten ein Projekt erfolgreich abzuschliessen.
 Dies könnten sein:
 \begin{itemize}
@@ -441,14 +471,14 @@ Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \na
     \hline
     \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
     \hline
-    R1 & Verbindung zwischen Bot und Discord bricht ab. & 
+    R1 & Verbindung zwischen Bot und Discord bricht ab. &
     Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
     Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. & 
+    Dadurch können keine Daten und Befehle ausgetauscht werden. &
     Möglich & Hoch & 6 \\
     \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird, 
-    enthält irgendwelche Escape-Characters. 
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
+    enthält irgendwelche Escape-Characters.
     Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
     Unwahrscheinlich & Kritisch & 4 \\
     \hline
@@ -473,19 +503,19 @@ Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
 Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
 \begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
     \hline
-    \rot{ID} & \rot{Risiko} & \rot{Massnahmen} & 
-    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} & 
-    \rot{\shortstack[l]{Schadensausmass\\(neu)}} & 
+    \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
+    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} &
+    \rot{\shortstack[l]{Schadensausmass\\(neu)}} &
     \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
     \hline
-    R1 & Verbindung zwischen Bot und Discord bricht ab. & 
+    R1 & Verbindung zwischen Bot und Discord bricht ab. &
     Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
     Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. & 
+    Dadurch können keine Daten und Befehle ausgetauscht werden. &
     Möglich & Hoch & 6 \\
     \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird, 
-    enthält irgendwelche Escape-Characters. 
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
+    enthält irgendwelche Escape-Characters.
     Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
     Unwahrscheinlich & Kritisch & 4 \\
     \hline
@@ -523,7 +553,7 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
 Als erster Schritt wird eine Analyse des bestehenden Bots und seiner Funktion im Discord durchgef\"uhrt.
 
 \subsubsection{Aufbau Discord}
-Der Discord Server "Stair" wird von Stair verwaltet und ist ein online Treffpunkt f\"ur alle Studenten des Departements Informatik.
+Der Discord Server "STAIR" wird von STAIR verwaltet und ist ein online Treffpunkt f\"ur alle Studenten des Departements Informatik.
 Beim erstmaligen Eintretten in den Server hat man noch keine Berechtigung und es wird deshalb noch nichts, ausser dem Help Channel
 angezeigt. Man bekommt vom Bot Stan, beim Eintretten auf den Server, eine Nachricht mit einer Anleitung. Darin ist beschrieben, wie
 man sich authentifizieren kann. Bei der Authentifizierung wird vom Bot geschaut ob es sich um eine Studenten E-Mail Adresse handelt.
@@ -534,7 +564,7 @@ die verschiedenen Grundchannels, wie Gaming, Administration, General, Studying, 
 In diesen Channels kann man sich mit seinen Mitstudierenden Sprachlich oder per Text \"uber alle Themen austauschen.
 \newline
 
-Der Stair Discord-Server bietet auch Informationen und Unterst\"utzung f\"ur alle Module an. Dabei hat jedes Modul einen eigenen Channel.
+Der STAIR Discord-Server bietet auch Informationen und Unterst\"utzung f\"ur alle Module an. Dabei hat jedes Modul einen eigenen Channel.
 Dort k\"onnen sich Studierende gezielt \"uber ein Modul austauschen, Fragen stellen oder Informationen mitteilen.
 Am Anfang wird gar nichts angezeigt. Man muss sich spezifisch f\"ur die Module registrieren um diese angezeigt zu bekommen. Dies verhindert
 
@@ -546,10 +576,10 @@ Am Anfang wird gar nichts angezeigt. Man muss sich spezifisch f\"ur die Module r
 Die Commands \textit{show <module>} und \textit{hide <module>} erlauben es, den Channel hinzuzuf\"ugen oder zu entfernen.
 \newline
 
-Neu gibt es auch das Konzept von verschiedenen H\"ausern bei Stair. Jeder Student wird dabei einem Haus zugeteilt. Die Zuteilung l\"auft
+Neu gibt es auch das Konzept von verschiedenen H\"ausern bei STAIR. Jeder Student wird dabei einem Haus zugeteilt. Die Zuteilung l\"auft
 dabei \"uber das Sekretariat der Hochschule. Es wird geschaut, dass in jedem Studiengang in jedem Startsemester, die Studenten gleichm\"assig
 auf die H\"auser verteilt werden.
-Es gibt die H\"auser Blue, Purple, Red, Orange, Yellow und Grey. \"uber das Semester hinweg organisiert Stair verschiedene Events, bei denen
+Es gibt die H\"auser Blue, Purple, Red, Orange, Yellow und Grey. \"uber das Semester hinweg organisiert STAIR verschiedene Events, bei denen
 man Punkte f\"ur sein Haus sammeln kann. Am Ende jedes Jahres, also Ende Fr\"uhlingssemster, wird das Haus, welches am meisten Punkte
 gesammelt hat, als Gewinner gelobt.
 
@@ -640,7 +670,7 @@ Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nu
 \todo{Yannis}
 Entscheid Anbindung an Datenbank
 - Einfachere Verwaltung von Studenten und Modulen
-- Einfachere Kontrolle und Steuerung von Stair
+- Einfachere Kontrolle und Steuerung von STAIR
 - Erweiterbarkeit und Weeiterentwicklung
 - Anbindung von anderen Tools/Programmen an Datenbank (Statistik/Zukunft)
 
@@ -685,11 +715,11 @@ Für das Projekt werden folgende Epics definiert.
         5 & Die Adminsitration kann jedes Semster die neuen Studierenden hinzufügen.
         Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. & A \\
         \hline
-        6 & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über
+        6 & Die Administration von STAIR kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über
         den Discord erstellen. & B \\
         \hline
         7 & Fehlereingaben in dem Modulregistrierungschannel oder interne Fehler vom Bot, sollen direkt automatisch
-        an einen hinterlegten Mitarbeiter von Stair gemeldet werden & C \\
+        an einen hinterlegten Mitarbeiter von STAIR gemeldet werden & C \\
         \hline
     \end{tabular}
     \caption{Epics}
@@ -701,11 +731,11 @@ Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Baust
 Dieser Prozess wird auch \textbf{Story-Splitting} genannt
 User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
 "Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>." \\
-Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder 
+Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder
 infrastrukturelle User-Stories so gebildet werden.
 
 In der Strintplannung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert.
-Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und 
+Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und
 können auch als Test während der Entwicklung gebraucht werden.
 Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
 
@@ -719,14 +749,14 @@ Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. 
     \item \textbf{T}estable     klare Akzeptanzkriterien
 \end{itemize}
 
-Beim Story-Splitting werden folgende User-Stories für das Projekt definiert. 
+Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
 
 \begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
     \hline
     \rowcolor[gray]{.9} ID & Beschreibung & Akzeptanzkriterien & Prio & Weight & Sprint \\
     \hline
     1 & Als Bot möchte ich den Benutzer beim ersten Betreten des Server authentifizieren können,
-    um ihm die ihm zugeteilten Rollen zuweisen zu können. & 
+    um ihm die ihm zugeteilten Rollen zuweisen zu können. &
     \tabitem Der Nutzer bekommt beim ersten Betreten des Servers eine Nachricht vom Bot mit Informationen. & A & 12 & 2 \\*
     & & \tabitem Der Student bekommt nach der Anmeldung die Rolle Student zugeteilt und wird dem richtigen Haus-Channel zugewiesen. & & & \\
     \hline
@@ -737,30 +767,30 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
      & & \tabitem In der E-Mail steht ein zufällig generierter 6-stelliger Code. & & & \\*
      & & \tabitem Der Bot kann den Code verifizieren, nachdem der Student die E-Mail erhalten hat. & & & \\
     \hline
-    3 & Als Stair Administrator möchte ich neue Studenten einfach erfassen können,
-    um sie dem System bekannt zu machen und die Administration zu vereinfachen. & 
+    3 & Als STAIR Administrator möchte ich neue Studenten einfach erfassen können,
+    um sie dem System bekannt zu machen und die Administration zu vereinfachen. &
     \tabitem Neue Studenten können mit ihren zugeteilten Häusern als Liste eingelesen werden & B & 9 & 1 \\*
      & & \tabitem Die neu erfassten Studenten werden im System eingetragen und können für die Authentifizierung verwendet werden. & & & \\
     \hline
     4 & Als Student möchte ich mich für neue Modul-Channels an und abmelden können,
-    um mich mit anderen Studenten austauschen zu können. & 
+    um mich mit anderen Studenten austauschen zu können. &
     \tabitem Es stehen Befehle im \textbf{Registrierungs-Channel} zur Verfügung, um sich bei Modulen an- und abzumelden. & A & 12 & 3 \\*
      & & \tabitem Der Bot weist den Studenten, bei einer Anmeldung, dem Modul als Mitglied hinzu. & & & \\*
-     & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste, 
-     so dass der Channel für den Studenten nicht mehr sichtbar ist. & & & \\ 
+     & & \tabitem Der Bot löscht den Studenten, bei einer Abmeldung, aus der Mitgliederliste,
+     so dass der Channel für den Studenten nicht mehr sichtbar ist. & & & \\
     \hline
-    5 & Als Stair Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
+    5 & Als STAIR Administrator möchte ich Modullisten mit den verfügbaren Modulen, einfach in das System eintragen zu können,
     um sie für den Bot nutzbar zu machen. &
     \tabitem Pro Semester können Modullisten automatisch eingelesen werden. & B & 8 & 2 \\*
      & & \tabitem Neue Module werden automatisch hinzugefügt, und solche, welche nicht mehr Unterrichtet werden, werden gelöscht. & & & \\*
      & & \tabitem Die Module stehen nach dem einlesen direkt bereit, zur Channel-Erstellung durch den Bot. & & & \\
     \hline
-    6 & Als Stair Administrator möchte ich Statistiken aus dem System auslesen können,
-    um sie für Marketing oder andere Zwecke gebrauchen zu können. & 
+    6 & Als STAIR Administrator möchte ich Statistiken aus dem System auslesen können,
+    um sie für Marketing oder andere Zwecke gebrauchen zu können. &
     \tabitem Es stehen ein paar vorgefertigte Auslesemöglichkeiten bereit, um sie für den Administrator nutzbar zu machen & C & 9 & 4 \\
     \hline
-    7 & Als Stair Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
-    um Gegenmassnahmen ergreifen zu können. & 
+    7 & Als STAIR Administrator möchte ich sofort benachrichtigt werden, falls mit dem System ewtwas nicht stimmt,
+    um Gegenmassnahmen ergreifen zu können. &
     \tabitem Der Administrator wird benachrichtigt, wenn der Bot zu Discord oder zur Datenbank keine Verbindung mehr hat & C & 5 & 5 \\*
      & & \tabitem Der Administrator wird benachrichtigt wenn der E-Mail Versand zur Authentifikation nicht mehr funktioniert. & & & \\
     \hline
@@ -805,7 +835,7 @@ Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
 \end{itemize}
 
 \subsubsection{Testdrehbuch}\label{Testdrehbuch}
-Wie im Kapitel \nameref{Teststrategie} erwähnt, werden im Folgenden die einzelnen Systemtests beschrieben. 
+Wie im Kapitel \nameref{Teststrategie} erwähnt, werden im Folgenden die einzelnen Systemtests beschrieben.
 Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
 \newline
 Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
@@ -819,15 +849,15 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
     \hline
     \textbf{Epic / Anforderung} & \#1 \\
-     & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt. 
-     Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentifizierungsprozess. 
-     Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und 
+     & Der Nutzer wird beim erstmaligen Betreten des Discord-Servers vom Bot benachrichtigt.
+     Dieser gibt ihm Grundlegende Informationen zum Server und dem Authentifizierungsprozess.
+     Zu diesem Zeitpunkt hat der Student noch keine Berechtigungen auf dem Server und
      hat nur Zugriff auf den Channel "Help". \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Bereitstellen eines Discord Accounts, welcher noch nicht auf dem Stair-Discord Server angemeldet ist.
-        \item Dem Stair Discord Server beitreten. \url{https://discord.com/invite/Tp7XgzZ}
+        \item Bereitstellen eines Discord Accounts, welcher noch nicht auf dem STAIR-Discord Server angemeldet ist.
+        \item Dem STAIR Discord Server beitreten. \url{https://discord.com/invite/Tp7XgzZ}
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Sobald man dem Server beigetreten ist, bekommt man vom Stan Bot eine private Nachricht.
@@ -845,7 +875,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Epic / Anforderung} & \#2 \\*
      & Der Bot soll den Nutzer authentifizieren und mit der Studenten-Rolle versehen können. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
         \item Der Student hat eine Nachricht von Stan als Direkt Nachricht erhalten.
         \item Der Student schickt dem Bot seine E-Mail Adresse nach dem Muster \textit{<name.vorname>@stud.hslu.ch} .
@@ -866,10 +896,10 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \multicolumn{2}{|l|}{\textbf{Testfall \#3}} \\
     \hline
     \textbf{Epic / Anforderung} & \#2 \\*
-     & Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und 
+     & Er kann dabei zwischen den E-Mails von Nicht-Student und Student unterscheiden und
      auf unvorhergesehene Interaktionen, von Seiten des Benutzers, reagieren können. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
         \item Ein Nicht-Student schickt dem Bot eine E-Mail, welche sich vom Muster \textit{<name.vorname>@stud.hslu.ch} unterscheidet.
     \end{enumerate}\\
@@ -882,21 +912,21 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
 \begin{longtable}[h]{|p{15em}|p{25em}|}
     \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Stair Administartor kann eine Liste mit Studenten in das System einlesen.}} \\
+    \multicolumn{2}{|l|}{\textbf{Ein STAIR Administartor kann eine Liste mit Studenten in das System einlesen.}} \\
     \hline
     \multicolumn{2}{|l|}{\textbf{Testfall \#4}} \\
     \hline
     \textbf{Epic / Anforderung} & \#5 \\*
-     & Die Adminsitration kann jedes Semester die neuen Studierenden hinzufügen. 
+     & Die Adminsitration kann jedes Semester die neuen Studierenden hinzufügen.
      Diese werden beim potentiellen Authentifizieren direkt in Ihre zugeteilten Häuser-Channels zugewiesen. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der Stair Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
+        \item Der STAIR Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
         \item Er kann die Liste als Parameter an ein "LoadStudent" Script übergeben.
     \end{enumerate}\\
     \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt. 
+    \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt.
     Studenten, welche das letzte Semester bestanden haben und nicht mehr auf der Liste vorhanden sind, werden als Ex-Studenten markiert.\\
     \hline
     \caption{Testdrehbuch - Testfall \#4}
@@ -904,23 +934,23 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
 \begin{longtable}[h]{|p{15em}|p{25em}|}
     \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Stair Administrator kann eine Liste mit Modulen in das System einlesen.}} \\
+    \multicolumn{2}{|l|}{\textbf{Ein STAIR Administrator kann eine Liste mit Modulen in das System einlesen.}} \\
     \hline
     \multicolumn{2}{|l|}{\textbf{Testfall \#5}} \\
     \hline
     \textbf{Epic / Anforderung} & \#4 \\*
-     & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können. 
-     Die neuen oder nicht mehr verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht. 
+     & Die Administration des Discord Servers soll einfach neue Modullisten in das System laden können.
+     Die neuen oder nicht mehr verfügbaren Module werden erkannt und entsprechend hinzugefügt oder gelöscht.
      An dem Verhalten des Benutzers soll sich nichts ändern. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der Stair Administrator muss sich eine Liste mit allen verfügbaren Modulen des Departements Informatik von der Hochschul-Administration besorgen. 
+        \item Der STAIR Administrator muss sich eine Liste mit allen verfügbaren Modulen des Departements Informatik von der Hochschul-Administration besorgen.
         \item Er kann die Liste als Parameter an ein "LoadModules" Script übergeben.
     \end{enumerate}\\
     \hline
-    \textbf{Erwartetes Ergebnis / Verhalten} & Alle Module sollen in das System eingelesen werden und 
-    die entsprechenden Datenbankeinträge werden erstellt. 
+    \textbf{Erwartetes Ergebnis / Verhalten} & Alle Module sollen in das System eingelesen werden und
+    die entsprechenden Datenbankeinträge werden erstellt.
     Neue Module werden automatisch hinzugefügt.
     Module, welche nicht mehr auf der Liste vorhanden sind, werden gelöscht. \\
     \hline
@@ -934,12 +964,12 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \multicolumn{2}{|l|}{\textbf{Testfall \#6}} \\
     \hline
     \textbf{Epic / Anforderung} & \#3 \\*
-     & Ein Student kann sich beim Bot für ein Modul anmelden. 
+     & Ein Student kann sich beim Bot für ein Modul anmelden.
      Dieser schaltet den Channel für den Studenten frei, so, dass er darin mit anderen Studierenden kommunizieren kann. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der Student geht auf den Registrierungs-Channel. 
+        \item Der Student geht auf den Registrierungs-Channel.
         \item Er schreibt \textit{show <module>} in den Chat. (Also z.B. \textit{show ISF})
     \end{enumerate}\\
     \hline
@@ -958,9 +988,9 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Epic / Anforderung} & \#3 \\*
      & Falls das Modul für den Studenten nicht mehr relevant ist, kann er es beim Bot wieder abmelden. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der Student geht auf den Registrierungs-Channel. 
+        \item Der Student geht auf den Registrierungs-Channel.
         \item Er schreibt \textit{hide <module>} in den Chat. (Also z.B. \textit{hide ISF})
     \end{enumerate}\\
     \hline
@@ -972,16 +1002,16 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
 \begin{longtable}[h]{|p{15em}|p{25em}|}
     \hline
-    \multicolumn{2}{|l|}{\textbf{Ein Stair Administrator kann über ein Script Statistiken auslesen.}} \\
+    \multicolumn{2}{|l|}{\textbf{Ein STAIR Administrator kann über ein Script Statistiken auslesen.}} \\
     \hline
     \multicolumn{2}{|l|}{\textbf{Testfall \#8}} \\
     \hline
     \textbf{Epic / Anforderung} & \#6 \\*
-     & Die Administration von Stair kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über den Discord erstellen. \\
+     & Die Administration von x kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über den Discord erstellen. \\
     \hline
-    \textbf{Durchführung} & 
+    \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der Stair Administrator kann sich mit dem Script "Statistics" über die verschiedenen Statistiken informieren.
+        \item Der STAIR Administrator kann sich mit dem Script "Statistics" über die verschiedenen Statistiken informieren.
         \item Er kann einen Befehl auf diesem Script ausführen.
     \end{enumerate}\\
     \hline
@@ -1002,11 +1032,11 @@ Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie f
     \label{fig:start_sprint_one}
 \end{figure}
 
-In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und 
+In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und
 mit dem Aufsetzten der Linux Umgebung befasst.
 
 \subsubsection{Entity Relationship Diagramm}
-Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden, 
+Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden,
 welche Daten im System wichtig sind und wie diese gespeichert werden.
 Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
 Das ERD kann später in ein Datenbank Schema übertragen werden.
@@ -1033,6 +1063,7 @@ Beschrieben wird dieses Problem im Kapitel \nameref{discord_einschraenkungen}.
 \subsubsection{Studentenerfassung}
 \todo{Yannis}
 
+
 \newpage
 \section{Evaluation und Validation}
 
@@ -1050,7 +1081,7 @@ Beschrieben wird dieses Problem im Kapitel \nameref{discord_einschraenkungen}.
 
 \subsection{Sprintreviews}\label{Sprintreviews}
 In diesem Kapitel werden die einzelnen Sprintreviews augelistet.
-Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und 
+Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und
 einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
 
 \subsubsection{Sprint 1}
@@ -1087,7 +1118,7 @@ Massnahmen:
 \end{itemize}
 
 \subsubsection{Sprint 2}
-Same for Sprint 2
+\todo{Same for Sprint 2}
 \newpage
 
 \section{Glossar}
@@ -1103,5 +1134,58 @@ Same for Sprint 2
 
 \section{Literaturverzeichnis}
 \printbibliography
+
+\section{Bedienungsanleitung}
+
+\subsection{Aufsetzen des Servers}
+
+Der Stan Discord Bot kann auf verschiedenen Betriebssystemen genützt werden.
+In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
+
+\begin{enumerate}
+    \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
+    \item Verbinde zum Server über SSH
+        \begin{verbatim}
+            $ ssh localadmin@stair-bot-lnx.el.eee.intern
+        \end{verbatim}
+    \item Führe Updates durch
+        \begin{verbatim}
+            # sudo apt update
+            $ apt list --upgradable
+            # sudo apt upgrade -y
+            # sudo apt autoremove
+        \end{verbatim}
+    \item Installiere MySQL
+        \begin{verbatim}
+            # sudo apt install mysql-server
+            # sudo systemctl start mysql.service
+        \end{verbatim}
+    \item Installiere .NET 6
+        \begin{verbatim}
+            # wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+            # sudo dpkg -i packages-microsoft-prod.deb
+            $ rm packages-microsoft-prod.deb
+            # sudo apt update
+            # sudo apt install -y dotnet-sdk-6.0
+        \end{verbatim}
+    \item Lade den Code auf den Server \todo{complete tutorial}
+        \begin{verbatim}
+            # 
+        \end{verbatim}
+    \item Erstelle die Datenbank
+        \begin{verbatim}
+            # 
+        \end{verbatim}
+    \item Starte die Software \todo{complete tutorial}
+        \begin{verbatim}
+            # sudo apt update
+            # sudo apt upgrade -y
+        \end{verbatim}
+\end{enumerate}
+
+\subsection{Unterhalt}
+
+Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
+\todo{Write tutorial}
 
 \end{document}
