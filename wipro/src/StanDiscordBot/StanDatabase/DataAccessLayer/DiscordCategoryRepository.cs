@@ -6,17 +6,21 @@ namespace StanDatabase.DataAccessLayer
 {
     public class DiscordCategoryRepository : IDiscordCategoryRepository
     {
-        private int channelLimitPerCategory = 50;
+        private const int CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD = 50;
+
+
 
         public DiscordCategory GetCategoryWithChannelCapacity()
         {
             using (var db = new DbStan())
             {
+                // TODO: rewrite this.
+                // this can't be done since modules aren't added in the meantime
                 List<DiscordCategory> discordCategories = db.Module.Select(m => m.DiscordCategory).ToList();
                 discordCategories.AddRange(db.DiscordCategory);
                 discordCategories = discordCategories
                     .Where(dc => discordCategories
-                        .Count(d => d.Equals(dc)) < channelLimitPerCategory + 1)
+                        .Count(d => d.Equals(dc)) < CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD + 1)
                     .Distinct()
                     .ToList();
                 DiscordCategory discordCategory = discordCategories.FirstOrDefault();
