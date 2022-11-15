@@ -26,8 +26,8 @@ namespace StanBot
             provider.GetRequiredService<LogService>();
             await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
 
-            if (string.IsNullOrWhiteSpace(Config.Get().DiscordApplicationToken)) return;
-            await _discordSocketClient.LoginAsync(TokenType.Bot, Config.Get().DiscordApplicationToken);
+            if (string.IsNullOrWhiteSpace(StanBotConfigLoader.Get().DiscordApplicationToken)) return;
+            await _discordSocketClient.LoginAsync(TokenType.Bot, StanBotConfigLoader.Get().DiscordApplicationToken);
             await _discordSocketClient.StartAsync();
 
             await Task.Delay(-1);

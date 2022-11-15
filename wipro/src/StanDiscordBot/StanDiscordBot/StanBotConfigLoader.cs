@@ -2,14 +2,15 @@
 
 namespace StanBot
 {
-    public class Config
+    public class StanBotConfigLoader
     {
-        private const string CONFIG_FILE = "stan.json";
+        // TODO: add logger
+        private const string CONFIG_FILE = "stanBotConfig.json";
         private static BotConfig _botConfig;
 
         public static void LoadConfig()
         {
-            string jsonString = File.ReadAllText("./" + CONFIG_FILE);
+            string jsonString = File.ReadAllText($"./{CONFIG_FILE}");
 
             try
             {
@@ -17,8 +18,8 @@ namespace StanBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Json deserialization failed!");
-                Console.WriteLine(ex.Message);
+                Console.Error.WriteLine("JSON deserialization failed!");
+                Console.Error.WriteLine(ex.Message);
                 throw;
             }
         }

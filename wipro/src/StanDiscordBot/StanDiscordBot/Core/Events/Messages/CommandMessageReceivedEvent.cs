@@ -20,7 +20,7 @@ namespace StanBot.Core.Events.Messages
             _discordSocketClient = discordSocketClient;
             _commandService = commandService;
             _serviceProvider = serviceProvider;
-            _regex = new Regex(Config.Get().Prefix + "(\\S*)", RegexOptions.IgnoreCase);
+            _regex = new Regex(StanBotConfigLoader.Get().Prefix + "(\\S*)", RegexOptions.IgnoreCase);
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketTextChannel);
@@ -34,12 +34,12 @@ namespace StanBot.Core.Events.Messages
         public async Task ProcessMessage(SocketUserMessage message)
         {
             int argPos = 0;
-            if (!(message.HasStringPrefix(Config.Get().Prefix, ref argPos) || message.HasMentionPrefix(_discordSocketClient.CurrentUser, ref argPos))) return;
+            if (!(message.HasStringPrefix(StanBotConfigLoader.Get().Prefix, ref argPos) || message.HasMentionPrefix(_discordSocketClient.CurrentUser, ref argPos))) return;
 
             Console.WriteLine("Message with command prefix received.");
             var context = new SocketCommandContext(_discordSocketClient, message);
             var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
-            
+
             if (!result.IsSuccess && result.Error == CommandError.UnknownCommand)
             {
                 Console.Error.WriteLine(result.Error);

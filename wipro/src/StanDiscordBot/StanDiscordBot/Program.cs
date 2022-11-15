@@ -19,7 +19,7 @@ namespace StanBot
 
         public async Task MainAsync()
         {
-            Config.LoadConfig();
+            StanBotConfigLoader.LoadConfig();
 
             using IHost host = Host.CreateDefaultBuilder()
                 .ConfigureServices((_, services) => services
