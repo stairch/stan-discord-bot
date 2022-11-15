@@ -7,7 +7,7 @@ namespace StanScripts
     {
         public const string HELP_COMMAND_NAME = "help";
 
-        private static Logger _logger;
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         ///
@@ -18,7 +18,6 @@ namespace StanScripts
         /// </param>
         public static void Main(string[] args)
         {
-            _logger = LogManager.GetCurrentClassLogger();
             if (args.Length == 0)
             {
                 _logger.Info("No arguments given.");

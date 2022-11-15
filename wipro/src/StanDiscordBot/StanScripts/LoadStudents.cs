@@ -1,4 +1,5 @@
-﻿using StanDatabase;
+﻿using NLog;
+using StanDatabase;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
@@ -10,6 +11,8 @@ namespace StanScripts
     public class LoadStudents
     {
         public const string COMMAND_NAME = "loadStudents";
+
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly IStudentRepository _studentRepository;
 
@@ -26,7 +29,9 @@ namespace StanScripts
         {
             if (!File.Exists(filePath))
             {
-                Console.Error.WriteLine("Error: File not found! Check your path.");
+                string errorMessage = "Error: File not found! Check your path.";
+                _logger.Error(errorMessage);
+                Console.Error.WriteLine(errorMessage);
                 return;
             }
 
@@ -35,11 +40,13 @@ namespace StanScripts
             IList<string> columnNames = CsvHelper.GetCsvValuesOnNextLine(reader).ToList();
             Console.WriteLine($"Columns in file: {String.Join(", ", columnNames)}");
 
-            int emailIndex = columnNames.IndexOf(StanSettings.EmailColumnNameInCsv);
-            int houseIndex = columnNames.IndexOf(StanSettings.HouseColumnNameInCsv);
-            int semesterIndex = columnNames.IndexOf(StanSettings.SemesterColumnNameInCsv);
+            int emailIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().EmailColumnNameInCsv);
+            int houseIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().HouseColumnNameInCsv);
+            int semesterIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().SemesterColumnNameInCsv);
 
-            Console.WriteLine($"{nameof(emailIndex)}: {emailIndex} | {nameof(houseIndex)}: {houseIndex} | {nameof(semesterIndex)}: {semesterIndex}");
+            string logMessage = $"{nameof(emailIndex)}: {emailIndex} | {nameof(houseIndex)}: {houseIndex} | {nameof(semesterIndex)}: {semesterIndex}";
+            Console.WriteLine(logMessage);
+            _logger.Info(logMessage);
 
             IList<Student> currentStudents = new List<Student>();
             while (!reader.EndOfStream)
@@ -49,20 +56,26 @@ namespace StanScripts
                 string email = values[emailIndex].Trim();
                 if (!StudentUtil.IsStudentEmailFormatValid(email))
                 {
-                    Console.Error.WriteLine($"Student email format is wrong! No changes made! Fix it and retry the whole file. Email: {email}");
+                    string errorMessage = $"Student email format is wrong! No changes made! Fix it and retry the whole file. Email: {email}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
                 string houseName = values[houseIndex];
                 if (!_houseRepository.IsHouseNameValid(houseName))
                 {
-                    Console.Error.WriteLine($"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}");
+                    string errorMessage = $"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
                 if (!int.TryParse(values[semesterIndex], out int semester))
                 {
-                    Console.Error.WriteLine($"Semester is not a number! No changes made! Fix it and retry the whole file. Semester: {values[semesterIndex]}");
+                    string errorMessage = $"Semester is not a number! No changes made! Fix it and retry the whole file. Semester: {values[semesterIndex]}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
@@ -79,9 +92,9 @@ namespace StanScripts
                     semester
                 );
                 currentStudents.Add(currentStudent);
-                Console.WriteLine(currentStudent);
             }
 
+            _logger.Info("Loaded all students (not added to DB yet).");
             _studentRepository.InsertMultiple(currentStudents);
 
             if (ShouldOldStudentsBeMarkedAsExstudents())
