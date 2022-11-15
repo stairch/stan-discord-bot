@@ -11,12 +11,27 @@ namespace StanBot
 
         public static void LoadConfig()
         {
-            string jsonString = File.ReadAllText($"./{CONFIG_FILE}");
+            _logger.Info($"Execute {nameof(LoadConfig)}");
+            string jsonString;
+            try
+            {
+                jsonString = File.ReadAllText($"./{CONFIG_FILE}");
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Couldn't read config file!\n{ex.Message}";
+                _logger.Error(errorMessage);
+                Console.Error.WriteLine(errorMessage);
+                throw;
+            }
 
             try
             {
-                _logger.Info($"Execute {nameof(LoadConfig)}");
-                _botConfig = JsonSerializer.Deserialize<BotConfig>(jsonString);
+                var options = new JsonSerializerOptions
+                {
+                    ReadCommentHandling = JsonCommentHandling.Skip
+                };
+                _botConfig = JsonSerializer.Deserialize<BotConfig>(jsonString, options);
             }
             catch (Exception ex)
             {

@@ -14,8 +14,8 @@ namespace StanDatabase
 
         public string SemesterColumnNameInCsv { get; set; }
 
-        public string ModuleShortnameInCsv { get; set; }
+        public string ModuleShortnameColumnNameInCsv { get; set; }
 
-        public string ModuleFullnameInCsv { get; set; }
+        public string ModuleFullnameColumnNameInCsv { get; set; }
     }
 }
