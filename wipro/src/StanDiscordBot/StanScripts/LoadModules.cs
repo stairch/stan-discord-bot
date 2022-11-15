@@ -15,12 +15,9 @@ namespace StanScripts
 
         private readonly IModuleRepository _moduleRepository;
 
-        private readonly IDiscordCategoryRepository _discordCategoryRepository;
-
-        public LoadModules(IModuleRepository moduleRepository, IDiscordCategoryRepository discordCategoryRepository)
+        public LoadModules(IModuleRepository moduleRepository)
         {
             _moduleRepository = moduleRepository;
-            _discordCategoryRepository = discordCategoryRepository;
         }
 
         public void LoadModulesFromFile(String filePath)
@@ -40,18 +37,17 @@ namespace StanScripts
             _logger.Info(columnInfo);
             Console.WriteLine(columnInfo);
 
-            int moduleShortnameIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleShortnameInCsv);
-            int moduleFullnameIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleFullnameInCsv);
+            int moduleShortnameColumnIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleShortnameColumnNameInCsv);
+            int moduleFullnameColumnIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleFullnameColumnNameInCsv);
 
-            _logger.Info($"{nameof(moduleShortnameIndex)}: {moduleShortnameIndex} | {nameof(moduleFullnameIndex)}: {moduleFullnameIndex}");
+            _logger.Info($"{nameof(moduleShortnameColumnIndex)}: {moduleShortnameColumnIndex} | {nameof(moduleFullnameColumnIndex)}: {moduleFullnameColumnIndex}");
 
             IList<Module> currentModules = new List<Module>();
-            // TODO: filter module duplicates (check long name)
             while (!reader.EndOfStream)
             {
                 string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
-                string moduleOccassionNumber = values[moduleShortnameIndex].Trim();
+                string moduleOccassionNumber = values[moduleShortnameColumnIndex];
                 if (!ModuleUtil.IsModuleOccasionNumberValid(moduleOccassionNumber))
                 {
                     string errorMessage = $"Module format is wrong! No changes made! Fix it and retry the whole file. Module: {moduleOccassionNumber}";
@@ -65,13 +61,16 @@ namespace StanScripts
                     return;
                 }
 
+                moduleOccassionNumber = moduleOccassionNumber.Trim();
                 string moduleShortname = ModuleUtil.ExtractModuleShortname(moduleOccassionNumber);
-                string moduleFullname = values[moduleFullnameIndex];
+                string moduleFullname = values[moduleFullnameColumnIndex].Trim();
 
-                Module module = new Module(moduleShortname, moduleFullname, _discordCategoryRepository.GetCategoryWithChannelCapacity());
+                Module module = new Module(moduleShortname, moduleFullname);
                 currentModules.Add(module);
                 Console.WriteLine(module);
             }
+
+            currentModules = currentModules.DistinctBy(m => m.ChannelName).ToList();
 
             _moduleRepository.InsertMultiple(currentModules);
 
