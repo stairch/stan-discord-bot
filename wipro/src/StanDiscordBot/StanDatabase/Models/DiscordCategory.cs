@@ -1,4 +1,4 @@
-﻿using LinqToDB.Mapping;
+using LinqToDB.Mapping;
 
 namespace StanDatabase.Models
 {
@@ -13,7 +13,7 @@ namespace StanDatabase.Models
 
         public DiscordCategory(string discordCategoryName)
         {
-            DiscordCategoryName = discordCategoryName;
+            this.DiscordCategoryName = discordCategoryName;
         }
 
         public override string ToString()

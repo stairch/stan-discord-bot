@@ -45,8 +45,6 @@ namespace StanDatabaseTest.Util
             Assert.AreEqual(expected, ModuleUtil.ExtractModuleShortname(shortname));
         }
 
-
-
         [TestMethod]
         public void TestExtractModuleShortnameMultipleCourses()
         {

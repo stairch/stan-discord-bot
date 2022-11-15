@@ -16,5 +16,14 @@ namespace StanDatabase.Models
 
         [Association(ThisKey = nameof(FkDiscordRoleId), OtherKey = nameof(Models.DiscordRole.DiscordRoleId))]
         public DiscordRole DiscordRole { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}[" +
+                $"{nameof(HouseId)}: {HouseId}, " +
+                $"{nameof(Name)}: {Name}, " +
+                $"{nameof(FkDiscordRoleId)}: {FkDiscordRoleId}" +
+                $"]";
+        }
     }
 }

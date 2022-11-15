@@ -51,7 +51,10 @@ namespace StanScripts
             {
                 if (args.Length == 2)
                 {
-                    LoadModules loadModules = new LoadModules(new ModuleRepository(), new DiscordCategoryRepository());
+                    // TODO: remove this
+                    Console.WriteLine(new HouseRepository().GetHouseByName("GREY").ToString());
+                    Console.WriteLine(new DiscordCategoryRepository().GetCategoryWithChannelCapacity().ToString());
+                    LoadModules loadModules = new LoadModules(new ModuleRepository(new DiscordCategoryRepository()));
                     loadModules.LoadModulesFromFile(args[1]);
                 }
                 else

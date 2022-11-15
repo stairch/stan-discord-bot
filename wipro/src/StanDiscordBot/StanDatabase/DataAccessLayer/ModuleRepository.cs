@@ -6,17 +6,33 @@ namespace StanDatabase.DataAccessLayer
 {
     public class ModuleRepository : IModuleRepository
     {
+        private readonly IDiscordCategoryRepository _discordCategoryRepository;
+
+        public ModuleRepository(IDiscordCategoryRepository discordCategoryRepository)
+        {
+            _discordCategoryRepository = discordCategoryRepository;
+        }
+
         public void InsertMultiple(IList<Module> modules)
         {
-            using (var db = new DbStan())
+            foreach (Module module in modules)
             {
-                foreach (Module module in modules)
+                bool moduleDoesntExistYet;
+                using (var db = new DbStan())
                 {
-                    if (!db.Module.Any(m => m.ChannelName == module.ChannelName))
+                    moduleDoesntExistYet = !db.Module.Any(m => m.ChannelName == module.ChannelName);
+                }
+                if (moduleDoesntExistYet)
+                {
+                    module.DiscordCategory = _discordCategoryRepository.GetCategoryWithChannelCapacity();
+                    using (var db = new DbStan())
                     {
                         db.Insert(module);
                     }
-                    else
+                }
+                else
+                {
+                    using (var db = new DbStan())
                     {
                         db.Module
                             .Where(m => m.ChannelName == module.ChannelName)
@@ -43,9 +59,9 @@ namespace StanDatabase.DataAccessLayer
                 {
                     // TODO: set inactive
                     //db.Module
-                            //.Where(m => m.ChannelName == oldModule.ChannelName)
-                            //.Set(m => m.active, false)
-                            //.Update();
+                    //.Where(m => m.ChannelName == oldModule.ChannelName)
+                    //.Set(m => m.active, false)
+                    //.Update();
                     // TODO: how to update discord role on server from here?
                 }
             }

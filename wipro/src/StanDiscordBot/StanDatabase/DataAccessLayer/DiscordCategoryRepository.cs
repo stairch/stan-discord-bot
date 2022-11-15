@@ -8,35 +8,25 @@ namespace StanDatabase.DataAccessLayer
     {
         private const int CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD = 50;
 
-
-
         public DiscordCategory GetCategoryWithChannelCapacity()
         {
             using (var db = new DbStan())
             {
-                // TODO: rewrite this.
-                // this can't be done since modules aren't added in the meantime
-                List<DiscordCategory> discordCategories = db.Module.Select(m => m.DiscordCategory).ToList();
-                discordCategories.AddRange(db.DiscordCategory);
-                discordCategories = discordCategories
-                    .Where(dc => discordCategories
-                        .Count(d => d.Equals(dc)) < CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD + 1)
-                    .Distinct()
-                    .ToList();
+                // TODO
+                List<DiscordCategory> discordCategories = db.DiscordCategory.ToList();
+                //discordCategories.AddRange(db.Module.Select(m => m.DiscordCategory).ToList());
+                //discordCategories = discordCategories
+                //    .Where(dc => discordCategories
+                //        .Count(d => d.Equals(dc)) < CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD + 1)
+                //    .Distinct()
+                //    .ToList();
                 DiscordCategory discordCategory = discordCategories.FirstOrDefault();
                 // add new category when none are available
                 if (discordCategory == null)
                 {
-                    discordCategory = new DiscordCategory(CreateNewCategoryName());
-                    db.Insert(discordCategory);
-                    discordCategory = db.DiscordCategory.Single(dc => dc.DiscordCategoryName.Equals(discordCategory.DiscordCategoryName));
-                }
-
-                // TODO: check why this is necessary (see comment below)
-                if (discordCategory.DiscordCategoryId == 0)
-                {
-                    discordCategory.DiscordCategoryId = db.DiscordCategory.First(dc => dc.DiscordCategoryName.Equals(discordCategory.DiscordCategoryName)).DiscordCategoryId;
-                    discordCategory = GetCategoryById(1);
+                    discordCategory = new DiscordCategory(CreateNewCategoryName(db));
+                    // https://github.com/linq2db/linq2db/issues/661
+                    discordCategory.DiscordCategoryId = Convert.ToInt32(db.InsertWithIdentity(discordCategory));
                 }
 
                 return discordCategory;
@@ -54,19 +44,16 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        private string CreateNewCategoryName()
+        private string CreateNewCategoryName(DbStan db)
         {
-            using (var db = new DbStan())
+            string newCategoryName;
+            int i = 0;
+            do
             {
-                string newCategoryName;
-                int i = 0;
-                do
-                {
-                    i++;
-                    newCategoryName = $"MODULE CHANNELS {i}";
-                } while (db.DiscordCategory.Any(dc => dc.DiscordCategoryName.Equals(newCategoryName)));
-                return newCategoryName;
-            }
+                i++;
+                newCategoryName = $"MODULE CHANNELS {i}";
+            } while (db.DiscordCategory.Any(dc => dc.DiscordCategoryName.Equals(newCategoryName)));
+            return newCategoryName;
         }
     }
 }
