@@ -8,7 +8,7 @@ namespace StanScripts
         {
             string line = reader.ReadLine();
             line = line.Trim();
-            string[] values = line.Split(StanSettings.Separator);
+            string[] values = line.Split(StanDatabaseConfigLoader.Get().Separator);
             return values;
         }
     }

@@ -1,6 +1,5 @@
 ﻿using NLog;
 using StanDatabase;
-using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 using StanDatabase.Util;
@@ -41,8 +40,8 @@ namespace StanScripts
             _logger.Info(columnInfo);
             Console.WriteLine(columnInfo);
 
-            int moduleShortnameIndex = columnNames.IndexOf(StanSettings.ModuleShortnameInCsv);
-            int moduleFullnameIndex = columnNames.IndexOf(StanSettings.ModuleFullnameInCsv);
+            int moduleShortnameIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleShortnameInCsv);
+            int moduleFullnameIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().ModuleFullnameInCsv);
 
             _logger.Info($"{nameof(moduleShortnameIndex)}: {moduleShortnameIndex} | {nameof(moduleFullnameIndex)}: {moduleFullnameIndex}");
 

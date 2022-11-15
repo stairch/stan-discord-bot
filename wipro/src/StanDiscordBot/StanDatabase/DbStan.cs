@@ -24,7 +24,7 @@ namespace StanDatabase
         // TODO: check for singleton
         public DbStan()
             // possible providers list: https://github.com/linq2db/linq2db/blob/master/Source/LinqToDB/ProviderName.cs
-            : base("MySql", StanSettings.ConnectionString)
+            : base("MySql", StanDatabaseConfigLoader.Get().ConnectionString)
         {
         }
     }
