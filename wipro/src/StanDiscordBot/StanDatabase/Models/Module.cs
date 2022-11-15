@@ -5,7 +5,6 @@ namespace StanDatabase.Models
     [Table(Name = "Modules")]
     public class Module
     {
-
         [PrimaryKey, Identity]
         public int ModuleId { get; set; }
 

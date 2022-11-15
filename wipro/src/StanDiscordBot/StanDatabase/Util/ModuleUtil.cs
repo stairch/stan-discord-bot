@@ -21,35 +21,25 @@ namespace StanDatabase.Util
         /// <returns></returns>
         public static string ExtractModuleShortname(string occasionNumber)
         {
-            if (occasionNumber.Contains("ISA_") || occasionNumber.Contains("_ISA"))
+            List<string> subName = occasionNumber.Split('.')[1].Split('_').ToList();
+            // Can't remove them always since then the index of the element would change
+            if (subName[1] == "EVA" || subName[1] == "ISA")
             {
-                string shortName = occasionNumber.Split('.')[1];
-                string[] subName = shortName.Split('_');
-                int indexOfIsaInName = Array.IndexOf(subName, "ISA");
-                if (indexOfIsaInName == subName.Length - 1)
-                {
-                    shortName = subName.ElementAt(indexOfIsaInName - 1);
-                }
-                else
-                {
-                    shortName = subName.ElementAt(indexOfIsaInName + 1);
-                }
-                return shortName;
+                subName.RemoveAt(1);
+            }
+
+            if (subName.Count == 1)
+            {
+                return subName[0];
+            }
+            // source: https://stackoverflow.com/questions/7461080/fastest-way-to-check-if-string-contains-only-digits-in-c-sharp
+            else if (!subName[1].All(char.IsDigit))
+            {
+                return subName[1];
             }
             else
             {
-                List<string> subName = occasionNumber.Split('.')[1].Split('_').ToList();
-                subName.Remove("EVA");
-                subName.Remove("ISA");
-                // source: https://stackoverflow.com/questions/7461080/fastest-way-to-check-if-string-contains-only-digits-in-c-sharp
-                if (!subName[1].All(char.IsDigit))
-                {
-                    return subName[1];
-                }
-                else
-                {
-                    return subName[2];
-                }
+                return subName[2];
             }
         }
     }

@@ -83,6 +83,14 @@ namespace StanDatabaseTest.Util
         }
 
         [TestMethod]
+        public void TestExtractModuleShortnameIsaAtEnd2()
+        {
+            string shortname = "I.MFD_ISA.22";
+            string expected = "MFD";
+            Assert.AreEqual(expected, ModuleUtil.ExtractModuleShortname(shortname));
+        }
+
+        [TestMethod]
         public void TestExtractModuleShortnameIsaAtStart()
         {
             string shortname = "I.ISA_IGL.17";
