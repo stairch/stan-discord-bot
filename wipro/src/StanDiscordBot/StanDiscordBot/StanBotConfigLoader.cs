@@ -1,10 +1,11 @@
-﻿using System.Text.Json;
+﻿using NLog;
+using System.Text.Json;
 
 namespace StanBot
 {
     public class StanBotConfigLoader
     {
-        // TODO: add logger
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private const string CONFIG_FILE = "stanBotConfig.json";
         private static BotConfig _botConfig;
 
@@ -14,12 +15,14 @@ namespace StanBot
 
             try
             {
+                _logger.Info($"Execute {nameof(LoadConfig)}");
                 _botConfig = JsonSerializer.Deserialize<BotConfig>(jsonString);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("JSON deserialization failed!");
-                Console.Error.WriteLine(ex.Message);
+                string errorMessage = $"JSON deserialization failed!\n{ex.Message}";
+                _logger.Error(errorMessage);
+                Console.Error.WriteLine(errorMessage);
                 throw;
             }
         }
