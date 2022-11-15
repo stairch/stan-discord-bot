@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="linq2db.MySql" Version="4.3.0" />
+    <PackageReference Include="NLog" Version="5.0.5" />
+  </ItemGroup>
+
   </ItemGroup>
 
 </Project>
