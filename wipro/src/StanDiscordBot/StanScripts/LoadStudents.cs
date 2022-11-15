@@ -12,7 +12,7 @@ namespace StanScripts
     {
         public const string COMMAND_NAME = "loadStudents";
 
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly IStudentRepository _studentRepository;
 
@@ -24,7 +24,6 @@ namespace StanScripts
             _houseRepository = houseRepository;
         }
 
-        // TODO: add logger
         public void LoadStudentsFromFile(string filePath)
         {
             if (!File.Exists(filePath))
@@ -38,7 +37,9 @@ namespace StanScripts
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
 
             IList<string> columnNames = CsvHelper.GetCsvValuesOnNextLine(reader).ToList();
-            Console.WriteLine($"Columns in file: {String.Join(", ", columnNames)}");
+            string columnsLogMessage = $"Columns in file: {String.Join(", ", columnNames)}";
+            _logger.Info(columnsLogMessage);
+            Console.WriteLine(columnsLogMessage);
 
             int emailIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().EmailColumnNameInCsv);
             int houseIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().HouseColumnNameInCsv);
