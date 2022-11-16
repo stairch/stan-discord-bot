@@ -26,11 +26,11 @@ namespace StanBot
 
             provider.GetRequiredService<LogService>();
             await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
-            await provider.GetRequiredService<IMailService>().InitializeAsync(
-                Config.Get().FromEmailAddress, 
-                Config.Get().FromEmailName,
-                Config.Get().AppId,
-                Config.Get().Scopes);
+            //await provider.GetRequiredService<IMailService>().InitializeAsync(
+            //    Config.Get().FromEmailAddress, 
+            //    Config.Get().FromEmailName,
+            //    Config.Get().AppId,
+            //    Config.Get().Scopes);
 
             if (string.IsNullOrWhiteSpace(Config.Get().DiscordApplicationToken)) return;
             await _discordSocketClient.LoginAsync(TokenType.Bot, Config.Get().DiscordApplicationToken);
