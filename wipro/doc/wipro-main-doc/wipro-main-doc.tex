@@ -1146,6 +1146,7 @@ Das \textbf{StanScripts} Projekt wird alle Scripte enthalten,
 die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
 Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden,
 sowie für die Statistiken.
+\todo{Test Projekte hinzufügen}
 
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
@@ -1228,6 +1229,10 @@ public static class Program
 \subsubsection{Aufsetzten der Linux Umgebung}
 \todo{Yannis}
 
+\subsubsection{Verbinden der Datenbank mit Linq2DB}
+\todo{Yannis}
+
+
 \newpage
 \subsection{Sprint 2}
 In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt und dem Erstellen des Discord Bots.
@@ -1306,6 +1311,52 @@ Die Settings Datei heisst \textit{stan.json}
 \end{lstlisting}
 
 \subsubsection{Kommunikation mit Discord}
+Die DiscordNet Library für C\# implementiert die \textit{DiscordSocketClient} Klasse.
+Mit dieser Klasse ist es möglich den Discord Bot zu starten und sich auf Ereignisse zu abonnieren.
+Der Bot kann dabei auf dem Server, je nach Berechtigung, fast alle Ereignisse abfangen, die getriggert werden.
+Das sind nicht nur Ereignisse, die den Bot direkt betreffen, sondern auch allgemeine Sachen, 
+wie schreiben in einen Chat oder dem Beitreten eines Sprachchannels.\\
+Die Anzahl der Ereignisse, welche abgefangen werden können, hängt ab von der Einstellung der \textit{GatewayIntents} ab.
+Diese und andere Konfigurationen können bei dem Erstellen des Bots angegeben werden.
+
+\begin{lstlisting}[language=csharp]
+// Program.cs
+.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
+    {
+        GatewayIntents = GatewayIntents.All,
+        AlwaysDownloadUsers = true,
+        LogLevel = LogSeverity.Debug
+    }))
+\end{lstlisting}
+
+Allerdings genügt diese Einstellung alleine noch nicht.
+Um Textnachrichten abzufangen, muss bei der Discord Developer Applikation noch ein spezieller Hacken gesetzt werden.
+\todo{Einfügen des Bildes der Discord Developer Einstellungen}
+\newline
+Nun können verschiedene Events beim DiscordClient abonniert werden.
+
+\begin{lstlisting}[language=csharp]
+// EventHandler.cs
+_discordSocketClient.UserJoined += _onUserJoinedEvent.OnUserJoined;
+_discordSocketClient.MessageReceived += _messageHandler.OnMessageReceived;
+\end{lstlisting}
+
+Es wird für jeden Event eine eigene Klasse erstellt.
+So können diese schön gekapselt und seperat behandelt werden.\\
+Wie man im Code sehen kann, gibt es für den DiscordSocketClient nur ein MessageReceived Event.
+Dieses Event unterilt noch nicht ob es sich um eine allgemeine Nachricht im Chat handelt, 
+eine Direkte Nachricht an den Bot oder einen Befehl.
+Um jetzt nicht alle Nachrichten in einer Klasse bearbeiten zu müssen, wird auf die Hilfe von Interfaces zurückgegriffen.
+\newline
+\todo{Einfügen Diagramm für Message Handling}
+
+Alle Nachrichten werden an die \textit{MessageHandler} Klasse weitergeleitet.
+Dort wird eine Vorselektion gemacht, ob es sich bei den eintreffenden Nachrichten um System Messages handlet, oder um andere Bot Nachrichten.
+Wird diese Vorselektion nicht gemacht, kann es sein das es zu einer Endlos-Schleife führt, 
+da der Bot auch seine eigenen geschriebenen Nachrichten in der \textit{MessageReceived} Methode empfängt.\\
+Im Anschluss wird jede Implementation der \textit{IMessageReceiver} Klasse durchgegangen und überprüft,
+ob die MessageSource korrekt ist und die \textit{IsMatch} Methode true zurückgibt.
+Nur wenn beide Anforderungen erfüllt sind, wird die Nachricht an die jeweilige Message Receiver Implementation weitergeleitet.
 
 \newpage
 \subsection{Sprint 3}
@@ -1371,9 +1422,81 @@ Massnahmen:
 \begin{itemize}
     \item Datenbank Schema muss manuell erstellt werden.
 \end{itemize}
+\newpage
 
 \subsubsection{Sprint 2}
-\todo{Same for Sprint 2}
+\subsubsection*{Sprintziel}
+Modulerfassung ist implementiert und die Kommunikation mit Discord und dem Bot funktioniert.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Keine.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+2%22}
+\newline
+Geschätzer Aufwand: 15h
+\newline
+Effektiver Aufwand: 16 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Kommunikation mit Discord und dem Bot konnte sichergestellt werden.
+    \item Ein Help und ein Ping Befehl konnten zum Testen implementiert werden.
+    \item Der Bot schreibt einen Benutzer direkt an, sobald dieser den Server betritt.
+    \item Die Modulerfassung alleine funktioniert.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei der Modulerfassung können die Kategorien noch nicht richtig erstellt werden und zugewiesen werden.
+    Die ID der neu erstellten Kategorie wird nicht richtig zurückgegeben.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Kleines Test Projekt erstellen und weiter versuchen. Auf Logik-Fehler nochmal kontrollieren.
+\end{itemize}
+\newpage
+
+\subsubsection{Sprint 3}
+\subsubsection*{Sprintziel}
+Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    Prioritäten müssen gesetzt werden.
+    Kann sein, dass sich Issues nach hinten verschieben.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\newline
+Geschätzer Aufwand: 10h
+\newline
+Effektiver Aufwand: 9 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
+    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
+    Das Device kann somit noch nicht hinzugefügt werden.
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Prioritäten setzten was die Modulerfassung anbelangt.
+    \item Möglichst zeitnah mit dem neuen Issue beginnen.
+\end{itemize}
 \newpage
 
 \section{Glossar}
