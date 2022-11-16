@@ -42,10 +42,7 @@ namespace StanBot
             }
         }
 
-        public static BotConfig Get()
-        {
-            return _botConfig;
-        }
+        public static BotConfig Config { get { return _botConfig; } }
     }
 
     public struct BotConfig
