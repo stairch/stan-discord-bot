@@ -1,18 +1,70 @@
-﻿using StanDatabase.Models;
+﻿using LinqToDB;
+using StanDatabase.Models;
 using StanDatabase.Repositories;
 
 namespace StanDatabase.DataAccessLayer
 {
     public class ModuleRepository : IModuleRepository
     {
+        private readonly IDiscordCategoryRepository _discordCategoryRepository;
+
+        public ModuleRepository(IDiscordCategoryRepository discordCategoryRepository)
+        {
+            _discordCategoryRepository = discordCategoryRepository;
+        }
+
         public void InsertMultiple(IList<Module> modules)
         {
-            throw new NotImplementedException();
+            foreach (Module module in modules)
+            {
+                bool moduleDoesntExistYet;
+                using (var db = new DbStan())
+                {
+                    moduleDoesntExistYet = !db.Module.Any(m => m.ChannelName == module.ChannelName);
+                }
+                if (moduleDoesntExistYet)
+                {
+                    module.DiscordCategory = _discordCategoryRepository.GetCategoryWithChannelCapacity();
+                    using (var db = new DbStan())
+                    {
+                        db.Insert(module);
+                    }
+                }
+                else
+                {
+                    using (var db = new DbStan())
+                    {
+                        db.Module
+                            .Where(m => m.ChannelName == module.ChannelName)
+                            .Set(m => m.FullModuleName, module.FullModuleName)
+                            .Update();
+                    }
+                }
+            }
         }
 
         public void RemoveOld(IList<Module> modules)
         {
-            throw new NotImplementedException();
+            using (var db = new DbStan())
+            {
+                IList<string> currentModuleChannels = modules
+                    .Select(cmc => cmc.ChannelName)
+                    .ToList();
+
+                IList<Module> oldModuleChannels = db.Module
+                    .Where(omc => currentModuleChannels.Contains(omc.ChannelName))
+                    .ToList();
+
+                foreach (Module oldModule in oldModuleChannels)
+                {
+                    // TODO: set inactive
+                    //db.Module
+                    //.Where(m => m.ChannelName == oldModule.ChannelName)
+                    //.Set(m => m.active, false)
+                    //.Update();
+                    // TODO: how to update discord role on server from here?
+                }
+            }
         }
     }
 }

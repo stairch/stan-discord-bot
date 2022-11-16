@@ -4,13 +4,12 @@ using LinqToDB;
 using StanBot.Services.MailService;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
-using System.Text.RegularExpressions;
+using StanDatabase.Util;
 
 namespace StanBot.Core.Events.Messages
 {
     internal class EMailMessageReceivedEvent : IMessageReceiver
     {
-        private readonly Regex _regex;
         private readonly IStudentRepository _studentRepository;
         private readonly VerificationCodeManager _verificationCodeManager;
         private readonly IMailService _mailService;
@@ -20,18 +19,12 @@ namespace StanBot.Core.Events.Messages
 
         public EMailMessageReceivedEvent(IStudentRepository studentRepository, VerificationCodeManager verificationCodeManager, IMailService mailService)
         {
-            _regex = new Regex("(\\S*@stud.hslu.ch)", RegexOptions.IgnoreCase);
             _studentRepository = studentRepository;
             _verificationCodeManager = verificationCodeManager;
             _mailService = mailService;
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketDMChannel);
-        }
-        public bool IsMatch(SocketMessage message)
-        {
-            // Student.IsStudentEmailFormatValid(message.Content);
-            return _regex.IsMatch(message.Content) && message.Content.Count(c => (c == '@')) == 1;
         }
 
         public async Task ProcessMessage(SocketUserMessage message)
@@ -79,5 +72,9 @@ namespace StanBot.Core.Events.Messages
             await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
         }
 
+        public bool IsMatch(SocketMessage message)
+        {
+            return StudentUtil.IsStudentEmailFormatValid(message.Content);
+        }
     }
 }

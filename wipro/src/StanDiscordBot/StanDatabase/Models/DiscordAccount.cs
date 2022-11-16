@@ -23,22 +23,15 @@ namespace StanDatabase.Models
         [Association(ThisKey = nameof(FkStudentId), OtherKey = nameof(Models.Student.StudentId))]
         public Student Student { get; set; }
 
-        [Column, NotNull]
-        public int ActivationCode { get; set; }
-
         [Column]
         public DateTime VerifiedDate { get; set; }
 
-        [Column]
-        public DateTime RegisterDate { get; set; }
-
-        public DiscordAccount(string username, int accountId, int activationCode, int fkStudentId)
+        public DiscordAccount(string username, int accountId, int fkStudentId, DateTime verifiedDate)
         {
             Username = username;
             AccountId = accountId;
-            ActivationCode = activationCode;
-            RegisterDate = DateTime.Now;
             FkStudentId = fkStudentId;
+            VerifiedDate = verifiedDate;
         }
 
         public override string ToString()
@@ -48,9 +41,7 @@ namespace StanDatabase.Models
                 $"{nameof(Username)}: {Username}, " +
                 $"{nameof(AccountId)}: {AccountId}, " +
                 $"{nameof(FkStudentId)}: {FkStudentId}, " +
-                $"{nameof(ActivationCode)}: {ActivationCode}" +
                 $"{nameof(VerifiedDate)}: {VerifiedDate}" +
-                $"{nameof(RegisterDate)}: {RegisterDate}" +
                 $"]";
         }
     }

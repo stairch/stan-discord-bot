@@ -17,7 +17,7 @@ namespace StanBot.Core.Commands
         [Summary("Displays all of the bot's commands, or displays info about specific command.")]
         public async Task Help([Remainder] string command = "")
         {
-            string prefix = Config.Get().Prefix;
+            string prefix = StanBotConfigLoader.Config.Prefix;
             if (command == "")
             {
                 var embed = new EmbedBuilder()

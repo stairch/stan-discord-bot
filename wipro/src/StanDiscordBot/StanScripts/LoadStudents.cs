@@ -1,37 +1,52 @@
-﻿using StanDatabase;
+﻿using NLog;
+using StanDatabase;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
+using StanDatabase.Util;
 using StanScript;
 
 namespace StanScripts
 {
     public class LoadStudents
     {
+        public const string COMMAND_NAME = "loadStudents";
+
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IStudentRepository _studentRepository;
 
-        public LoadStudents(IStudentRepository studentRepository)
+        private readonly IHouseRepository _houseRepository;
+
+        public LoadStudents(IStudentRepository studentRepository, IHouseRepository houseRepository)
         {
             _studentRepository = studentRepository;
+            _houseRepository = houseRepository;
         }
 
         public void LoadStudentsFromFile(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                Console.Error.WriteLine("Error: File not found! Check your path.");
+                string errorMessage = "Error: File not found! Check your path.";
+                _logger.Error(errorMessage);
+                Console.Error.WriteLine(errorMessage);
                 return;
             }
 
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
 
             IList<string> columnNames = CsvHelper.GetCsvValuesOnNextLine(reader).ToList();
-            Console.WriteLine($"Columns in file: {String.Join(", ", columnNames)}");
+            string columnsLogMessage = $"Columns in file: {String.Join(", ", columnNames)}";
+            _logger.Info(columnsLogMessage);
+            Console.WriteLine(columnsLogMessage);
 
-            int emailIndex = columnNames.IndexOf(StanSettings.EmailColumnNameInCsv);
-            int houseIndex = columnNames.IndexOf(StanSettings.HouseColumnNameInCsv);
-            int semesterIndex = columnNames.IndexOf(StanSettings.SemesterColumnNameInCsv);
+            int emailIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().EmailColumnNameInCsv);
+            int houseIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().HouseColumnNameInCsv);
+            int semesterIndex = columnNames.IndexOf(StanDatabaseConfigLoader.Get().SemesterColumnNameInCsv);
 
-            Console.WriteLine($"{nameof(emailIndex)}: {emailIndex} | {nameof(houseIndex)}: {houseIndex} | {nameof(semesterIndex)}: {semesterIndex}");
+            string logMessage = $"{nameof(emailIndex)}: {emailIndex} | {nameof(houseIndex)}: {houseIndex} | {nameof(semesterIndex)}: {semesterIndex}";
+            Console.WriteLine(logMessage);
+            _logger.Info(logMessage);
 
             IList<Student> currentStudents = new List<Student>();
             while (!reader.EndOfStream)
@@ -39,47 +54,59 @@ namespace StanScripts
                 string[] values = CsvHelper.GetCsvValuesOnNextLine(reader);
 
                 string email = values[emailIndex].Trim();
-                if (!Student.IsStudentEmailFormatValid(email))
+                if (!StudentUtil.IsStudentEmailFormatValid(email))
                 {
-                    Console.Error.WriteLine($"Student email format is wrong! No changes made! Fix it and retry the whole file. Email: {email}");
+                    string errorMessage = $"Student email format is wrong! No changes made! Fix it and retry the whole file. Email: {email}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
                 string houseName = values[houseIndex];
-                if (!House.IsHouseNameValid(houseName))
+                if (!_houseRepository.IsHouseNameValid(houseName))
                 {
-                    Console.Error.WriteLine($"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}");
+                    string errorMessage = $"House name doesn't exist! No changes made! Fix it and retry the whole file. House name: {houseName}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
                 if (!int.TryParse(values[semesterIndex], out int semester))
                 {
-                    Console.Error.WriteLine($"Semester is not a number! No changes made! Fix it and retry the whole file. Semester: {values[semesterIndex]}");
+                    string errorMessage = $"Semester is not a number! No changes made! Fix it and retry the whole file. Semester: {values[semesterIndex]}";
+                    Console.Error.WriteLine(errorMessage);
+                    _logger.Error(errorMessage);
                     return;
                 }
 
+                //Student currentStudent = new Student(
+                //    email,
+                //    House.GetHouseIdByName(values[houseIndex]),
+                //    true,
+                //    semester
+                //);
                 Student currentStudent = new Student(
                     email,
-                    House.GetHouseIdByName(values[houseIndex]),
+                    _houseRepository.GetHouseByName(values[houseIndex]),
                     true,
                     semester
                 );
                 currentStudents.Add(currentStudent);
-                Console.WriteLine(currentStudent);
             }
 
-            //_studentRepository.InsertMultiple(currentStudents);
+            _logger.Info("Loaded all students (not added to DB yet).");
+            _studentRepository.InsertMultiple(currentStudents);
 
             if (ShouldOldStudentsBeMarkedAsExstudents())
             {
-                //_studentRepository.DeactivateOldStudents(currentStudents);
+                _studentRepository.DeactivateOldStudents(currentStudents);
             }
         }
 
         private bool ShouldOldStudentsBeMarkedAsExstudents()
         {
             string question = $"Are students that are not in this list exstudents? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
-                $"Answering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
+                $"\nAnswering with {ConsoleHelper.YesAnswer} sets {nameof(Student.StillStudying)} to false on the other students";
             return ConsoleHelper.YesNoQuestion(question);
         }
     }

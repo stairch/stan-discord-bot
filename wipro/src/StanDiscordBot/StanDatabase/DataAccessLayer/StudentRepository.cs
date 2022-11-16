@@ -22,7 +22,7 @@ namespace StanDatabase.DataAccessLayer
                             .Where(s => s.StudentEmail == student.StudentEmail)
                             .Set(s => s.Semester, student.Semester)
                             .Set(s => s.StillStudying, student.StillStudying)
-                            .Set(s => s.House, student.House)
+                            .Set(s => s.FkHouseId, student.FkHouseId)
                             .Update();
                     }
                 }
@@ -52,17 +52,12 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public Student? FindWithEmail(string email)
+        public Student FindWithEmail(string email)
         {
             using (var db = new DbStan())
             {
-                var student = from s in db.Student
-                              where s.StudentEmail == email
-                              select s;
-
-                if (student.Count() == 0) return null;
-
-                return student.First();
+                Student student = db.Student.SingleOrDefault(s => s.StudentEmail == email);
+                return student;
             }
         }
     }
