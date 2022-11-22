@@ -60,5 +60,13 @@ namespace StanDatabase.DataAccessLayer
                 return student;
             }
         }
+
+        public List<Student> GetCurrentStudents()
+        {
+            using (var db = new DbStan())
+            {
+                return db.Student.Where(s => s.StillStudying).ToList();
+            }
+        }
     }
 }

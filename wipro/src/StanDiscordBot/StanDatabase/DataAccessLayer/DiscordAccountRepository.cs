@@ -23,5 +23,36 @@ namespace StanDatabase.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public bool IsAdmin(string username)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .Where(da => da.Username.Equals(username))
+                    .Single()
+                    .Student
+                    .IsDiscordAdmin;
+            }
+        }
+
+        public bool IsStudent(string username)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
+        public bool IsExstudent(string username)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
+        public House GetHouseFromStudent(string username)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
     }
 }
