@@ -435,8 +435,6 @@ Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als Meilenst
     \caption{Rahmenplan}
     \label{fig:Rahmenplan}
 \end{figure}
-\todo{Hinzufügen von Meilenstein am Anfang von Projekt}
-\todo{Datum bei Projektstart stimmt nicht}
 Es wurde entschieden eine Intialisierungsphase von 3 Wochen zu planen, da die Analyse der bestehenden Software in dieser Phase stattfindet.
 Am Schluss bleibt noch eine Woche für die Einführungsphase und das Erstellen der Anleitung.
 Für die Realisierungsphase bleiben 9 Wochen Zeit, die in Sprints eingeteilt werden können.
@@ -633,24 +631,38 @@ man Punkte f\"ur sein Haus sammeln kann. Am Ende jedes Jahres, also Ende Fr\"uhl
 gesammelt hat, als Gewinner gelobt.
 
 Der Discord-Server bietet die Platform um sein Haus zu mobilisieren oder die neuesten Ergebnisse den Studenten zu verk\"unden.
-Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren zugeh\"origen Channels hinzugef\"ugt.
-\newline
-\newline
-\todo{Bild von Discord und Channels anzeigen}
-
-\subsubsection*{Ablauf Authentifizierung}
-\todo{Nicolas}
-\begin{figure}[h]
+Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren zugeh\"origen Channels hinzugef\"ugt. \\
+Im folgenden Bild sieht man eine Übersicht über alle Discord Channels und Kategroien, wie sie momentan bestehen.
+\newpage
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=1.0\textwidth]{img/Authentifizierungsprozess_Bot_alt.png}
-    \caption{Authentifizierungsprozess Bot alt}
-    \label{fig:Authentifizierungsprozess_Bot_alt}
+    \includegraphics[width=1.0\textwidth,height=10cm]{img/Stair_Discord_Channels.jpg}
+    \caption{Stair Discord Channels Alt}
+    \label{fig:stair_old_discord_channels}
 \end{figure}
 
+\subsubsection*{Ablauf Authentifizierung \& Modulanmeldung}
+In den folgenden zwei Seiten wird der Authentifizierungsprozess und der Modulanmeldungsprozess als Ablaufdiagramm beschrieben.
+Dieser Ablauf wird zum jetzigen Zeitpunkt durchgeführt.
+\todo{Noch mehr schreiben}
 
-\subsubsection*{Ablauf Modul-Channel Einschreibung}
-\todo{Bild Ablaufdiagramm Modul}
-
+\begin{landscape}
+    \begin{figure}[ht]
+        \centering
+        \hspace*{-4.1cm}
+        \includegraphics[width=1.9\textwidth]{img/Authentifizierungsprozess_Bot_alt.png}
+        \caption{Authentifizierungsprozess Bot alt}
+        \label{fig:Authentifizierungsprozess_Bot_alt}
+    \end{figure}
+    \clearpage
+    \begin{figure}[ht]
+        \centering
+        \hspace*{-4.1cm}
+        \includegraphics[width=1.9\textwidth]{img/Modulanmeldungsprozess_Bot_alt.png}
+        \caption{Modulanmeldungsprozess Bot alt}
+        \label{fig:Modulanmeldungsprozess_Bot_alt}
+    \end{figure}
+\end{landscape}
 
 \subsubsection{Funktionsweise Bot}
 Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
@@ -658,7 +670,19 @@ Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
 \subsubsection*{Konfigurationsmanagement alter Bot}
 In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizierung und den eingesetzten Libraries.
 \todo{Tabelle mit Spezifikationen vom System. (Versionen, Libraries)}
-\newline
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{20em}|l|}
+        \hline
+        \rowcolor[gray]{.9} Name & Beschreibung & Version \\
+        \hline
+        .NET Core & Core Library für C\# Projekte.
+        Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 4.0.0 \\
+        \hline
+    \end{tabular}
+    \caption{Konfigurationsmanagement}
+    \label{tab: Konfigurationsmanagement}
+\end{table}
 
 
 Das Programm, welches den Bot zur Verfügung stellt, ist nicht gross. Es beinhaltet im Groben einen Client Socket der
@@ -670,7 +694,13 @@ Das Programm ist in zwei Packages aufgeteilt.
     \item StanBot.Service
 \end{itemize}
 
-\todo{Bild Klassendiagramm Bot}
+\begin{figure}[h]
+    \centering
+    \hspace*{-1.5cm}
+    \includegraphics[width=1.2\textwidth]{img/Klassendiagramm_Bot_alt.png}
+    \caption{Klassendiagramm Bot alt}
+    \label{fig:Klassendiagramm_Bot_alt}
+\end{figure}
 
 \subsubsection{Ausführung Bot}
 
