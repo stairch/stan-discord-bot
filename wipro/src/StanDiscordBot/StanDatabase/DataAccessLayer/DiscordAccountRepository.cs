@@ -14,14 +14,20 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public int Update(DiscordAccount discordAccount)
+        public bool DoesDiscordAccountExist(int discriminatorValue, string username)
         {
-            throw new NotImplementedException();
+            using(var db = new DbStan())
+            {
+                return db.DiscordAccount.Any(da => da.AccountId == discriminatorValue && da.Username == username);
+            }
         }
 
-        public int Delete(int discordAccountId)
+        public DiscordAccount? GetAccount(int discriminaterValue, string username)
         {
-            throw new NotImplementedException();
+            using(var db = new DbStan())
+            {
+                return db.DiscordAccount.SingleOrDefault(da => da.AccountId == discriminaterValue && da.Username == username);
+            }
         }
     }
 }

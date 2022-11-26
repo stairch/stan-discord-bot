@@ -38,8 +38,8 @@ namespace StanBot.Core.Events.Messages
                 if (student == null)
                 {
                     await message.Channel.SendMessageAsync(
-                        $"Ein Student mit der E-Mail Addresse {message.Content} existiert nicht."
-                        + "Kontrollieren Sie auf mögliche Tippfehler oder kontaktieren Sie einen Administrator.\n\r\n\r"
+                        $"Ein Student mit der E-Mail Addresse {message.Content} existiert nicht. "
+                        + "Kontrolliere auf mögliche Tippfehler oder kontaktiere einen Administrator.\n\r\n\r"
                         + $"A student with the email address {message.Content} does not exist. Check for possible typos or contact an administrator."
                         );
                     return;

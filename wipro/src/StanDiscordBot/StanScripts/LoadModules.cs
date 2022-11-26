@@ -70,7 +70,6 @@ namespace StanScripts
                 module.FullModuleName = moduleFullname;
 
                 currentModules.Add(module);
-                Console.WriteLine(module);
             }
 
             currentModules = currentModules.DistinctBy(m => m.ChannelName).ToList();

@@ -6,8 +6,8 @@ namespace StanDatabase.Repositories
     {
         int Insert (DiscordAccount discordAccount);
 
-        int Update (DiscordAccount discordAccount);
+        DiscordAccount? GetAccount(int discriminaterValue, string username);
 
-        int Delete (int discordAccountId);
+        bool DoesDiscordAccountExist(int discriminatorValue, string username);
     }
 }
