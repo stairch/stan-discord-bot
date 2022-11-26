@@ -13,6 +13,8 @@ namespace StanBot.Core.Events.Messages
         private readonly IDiscordAccountRepository _discordAccountRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountDiscordRoleRepository _discordAccountDiscordRoleRepository;
+        private readonly IDiscordRoleRepository _discordRoleRepository;
+        private readonly IHouseRepository _houseRepository;
         private readonly VerificationCodeManager _verificationCodeManager;
 
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
@@ -22,13 +24,17 @@ namespace StanBot.Core.Events.Messages
             VerificationCodeManager verificationCodeManager, 
             IDiscordAccountRepository discordAccountRepository, 
             IStudentRepository studentRepository,
-            IDiscordAccountDiscordRoleRepository discordAccountDiscordRoleRepository)
+            IDiscordAccountDiscordRoleRepository discordAccountDiscordRoleRepository,
+            IDiscordRoleRepository discordRoleRepository,
+            IHouseRepository houseRepository)
         {
-            _regex = new Regex("^\\d{6}");
+            _regex = new Regex("^[0-9]{6}$");
             _discordAccountRepository = discordAccountRepository;
             _studentRepository = studentRepository;
             _verificationCodeManager = verificationCodeManager;
             _discordAccountDiscordRoleRepository = discordAccountDiscordRoleRepository;
+            _discordRoleRepository = discordRoleRepository;
+            _houseRepository = houseRepository;
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketDMChannel);
@@ -57,7 +63,7 @@ namespace StanBot.Core.Events.Messages
 
             string email = _verificationCodeManager.getEmaiForUser(verificationCode, messageAuthor.Id);
             List<string> roles = new List<string>();
-            /*try
+            try
             {
                 Student? student = _studentRepository.FindWithEmail(email);
                 if (string.IsNullOrEmpty(email) || student == null)
@@ -72,17 +78,26 @@ namespace StanBot.Core.Events.Messages
                 }
 
                 // Save new DiscordAccount linked to Student
-                DiscordAccount discordAccount = new DiscordAccount(
+                DiscordAccount discordAccount = DiscordAccount.CreateNew(
                     message.Author.Username,
                     message.Author.DiscriminatorValue,
-                    student.StudentId
+                    student
                     );
 
-                int accountId = _discordAccountRepository.Insert(discordAccount);
+                discordAccount.DiscordAccountId = _discordAccountRepository.Insert(discordAccount);
 
-                // TODO: link discord account and roles
+                // Get HouseRole from student
+                DiscordRole houseRole = _houseRepository.getRoleForHouse(student.House);
+                // get student role
+                DiscordRole studentRole = _discordRoleRepository.GetRoleByName("student");
 
-                roles = _discordAccountDiscordRoleRepository.getRolesForAccount(accountId);
+                DiscordAccountDiscordRole houseRoleLink = DiscordAccountDiscordRole.CreateNew(discordAccount, houseRole);
+                DiscordAccountDiscordRole studentRoleLink = DiscordAccountDiscordRole.CreateNew(discordAccount, studentRole);
+
+                _discordAccountDiscordRoleRepository.Insert(houseRoleLink);
+                _discordAccountDiscordRoleRepository.Insert(studentRoleLink);
+
+                roles = _discordAccountDiscordRoleRepository.getRolesForAccount(discordAccount.DiscordAccountId);
             }
             catch (LinqToDBException exception)
             {
@@ -95,7 +110,7 @@ namespace StanBot.Core.Events.Messages
                     "As it looks, there was a mistake on my side during the enrollment. Please contact an administrator."
                     );
                 return;
-            }*/
+            }
 
             SocketGuild socketGuild = messageAuthor.MutualGuilds.Single(guild => guild.CurrentUser != null && guild.CurrentUser.Guild.Id == guild.Id);
             SocketGuildUser socketGuildUser = socketGuild.Users.Single(guildUser => guildUser.Id == messageAuthor.Id);

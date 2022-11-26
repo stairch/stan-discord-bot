@@ -5,9 +5,9 @@ namespace StanDatabase
 {
     public class DbStan : LinqToDB.Data.DataConnection
     {
-        public ITable<DiscordAccountModule> AccountModule => this.GetTable<DiscordAccountModule>();
+        public ITable<DiscordAccountModule> DiscordAccountModule => this.GetTable<DiscordAccountModule>();
 
-        public ITable<DiscordAccountDiscordRole> AccountRole => this.GetTable<DiscordAccountDiscordRole>();
+        public ITable<DiscordAccountDiscordRole> DiscordAccountDiscordRole => this.GetTable<DiscordAccountDiscordRole>();
 
         public ITable<DiscordAccount> DiscordAccount => this.GetTable<DiscordAccount>();
 
@@ -24,7 +24,7 @@ namespace StanDatabase
         // TODO: check for singleton
         public DbStan()
             // possible providers list: https://github.com/linq2db/linq2db/blob/master/Source/LinqToDB/ProviderName.cs
-            : base("MySql", StanDatabaseConfigLoader.Get().ConnectionString)
+            : base(ProviderName.MySql, StanDatabaseConfigLoader.Get().ConnectionString)
         {
         }
     }

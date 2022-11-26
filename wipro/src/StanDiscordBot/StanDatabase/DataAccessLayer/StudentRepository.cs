@@ -52,12 +52,11 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public Student FindWithEmail(string email)
+        public Student? FindWithEmail(string email)
         {
             using (var db = new DbStan())
             {
-                Student student = db.Student.SingleOrDefault(s => s.StudentEmail == email);
-                return student;
+                return db.Student.LoadWith(h => h.House).SingleOrDefault(s => s.StudentEmail == email);
             }
         }
     }

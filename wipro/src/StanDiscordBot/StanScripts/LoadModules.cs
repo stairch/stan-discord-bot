@@ -65,7 +65,10 @@ namespace StanScripts
                 string moduleShortname = ModuleUtil.ExtractModuleShortname(moduleOccassionNumber);
                 string moduleFullname = values[moduleFullnameColumnIndex].Trim();
 
-                Module module = new Module(moduleShortname, moduleFullname);
+                Module module = new Module();
+                module.ChannelName = moduleShortname;
+                module.FullModuleName = moduleFullname;
+
                 currentModules.Add(module);
                 Console.WriteLine(module);
             }

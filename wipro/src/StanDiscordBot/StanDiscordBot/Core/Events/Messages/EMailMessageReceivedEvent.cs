@@ -31,7 +31,7 @@ namespace StanBot.Core.Events.Messages
         {
             Console.WriteLine($"Authentication Message received: {message}");
 
-            /*try
+            try
             {
 
                 Student? student = _studentRepository.FindWithEmail(message.Content);
@@ -49,7 +49,7 @@ namespace StanBot.Core.Events.Messages
             {
                 // Send Mail to Admin, because of connection problems
                 Console.WriteLine(exception.Message);
-            }*/
+            }
 
             int verificationCode = _verificationCodeManager.CreateCodeForUser(message.Author.Id, message.Content);
 

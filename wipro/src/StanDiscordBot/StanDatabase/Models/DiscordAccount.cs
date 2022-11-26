@@ -26,12 +26,15 @@ namespace StanDatabase.Models
         [Column]
         public DateTime VerifiedDate { get; set; }
 
-        public DiscordAccount(string username, int accountId, int fkStudentId, DateTime verifiedDate)
+        public static DiscordAccount CreateNew(string username, int accountId, Student student)
         {
-            Username = username;
-            AccountId = accountId;
-            FkStudentId = fkStudentId;
-            VerifiedDate = verifiedDate;
+            DiscordAccount account = new DiscordAccount();
+            account.Username = username;
+            account.AccountId = accountId;
+            account.Student = student;
+            account.FkStudentId = student.StudentId;
+            account.VerifiedDate = DateTime.Now;
+            return account;
         }
 
         public override string ToString()

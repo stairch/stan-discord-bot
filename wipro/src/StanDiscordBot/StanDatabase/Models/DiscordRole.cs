@@ -9,6 +9,14 @@ namespace StanDatabase.Models
         public int DiscordRoleId { get; set; }
 
         [Column, NotNull]
-        public string RoleName { get; set; }
+        public string DiscordRoleName { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}[" +
+            $"{nameof(DiscordRoleId)}: {DiscordRoleId}, " +
+                $"{nameof(DiscordRoleName)}: {DiscordRoleName}, " +
+                $"]";
+        }
     }
 }

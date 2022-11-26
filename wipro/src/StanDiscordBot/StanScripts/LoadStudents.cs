@@ -79,18 +79,11 @@ namespace StanScripts
                     return;
                 }
 
-                //Student currentStudent = new Student(
-                //    email,
-                //    House.GetHouseIdByName(values[houseIndex]),
-                //    true,
-                //    semester
-                //);
-                Student currentStudent = new Student(
+                Student currentStudent = Student.CreateNew(
                     email,
                     _houseRepository.GetHouseByName(values[houseIndex]),
                     true,
-                    semester
-                );
+                    semester);
                 currentStudents.Add(currentStudent);
             }
 

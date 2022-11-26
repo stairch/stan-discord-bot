@@ -1,5 +1,4 @@
-﻿
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +37,8 @@ namespace StanBot
                     .AddScoped<IStudentRepository, StudentRepository>()
                     .AddScoped<IDiscordAccountRepository, DiscordAccountRepository>()
                     .AddScoped<IDiscordAccountDiscordRoleRepository, DiscordAccountDiscordRoleRepository>()
+                    .AddScoped<IDiscordRoleRepository, DiscordRoleRepository>()
+                    .AddScoped<IHouseRepository, HouseRepository>()
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddSingleton<VerificationCodeManager>()

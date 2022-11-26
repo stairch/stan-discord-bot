@@ -27,13 +27,15 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public bool IsDiscordAdmin { get; set; }
 
-        public Student(string studentEmail, House house, bool stillStudying, int semester)
+        public static Student CreateNew(string studentEmail, House house, bool stillStudying, int semester)
         {
-            StudentEmail = studentEmail;
-            House = house;
-            FkHouseId = house.HouseId;
-            StillStudying = stillStudying;
-            Semester = semester;
+            Student student = new Student();
+            student.StudentEmail = studentEmail;
+            student.House = house;
+            student.FkHouseId = house.HouseId;
+            student.StillStudying = stillStudying;
+            student.Semester = semester;
+            return student;
         }
 
         public override string ToString()
