@@ -292,7 +292,18 @@ Beschrieb ER-Diagramm
 
 \subsubsection{C\# und .NET Framework}
 
-\todo{Alternativen besprechen. Was gibt es sonst noch für Möglichkeiten.
+Es wurde entschieden weiterhin mit C# zu arbeiten.
+Dies wurde auch für die bereits existierende Version verwendet.
+Discord Libraries sind jedoch auch in anderen programmiersprachen verfügbar.
+Discord selbst führt eine Liste zu den verfügbaren Libraries und deren unterstützten Programmiersprachen, welche von der Community entwickelt wurden.\autocite{noauthor_discord_2022-1}
+Bei Besprechungen mit den Stakeholdern wurde kein Grund gesehen auf etwas anderes umzusteigen, vor allem da durch das existierende Projekte eine gewisse Machbarkeit für einen Teil der Features bereits bewiesen wurde.
+Durch die neuen .NET Versionen wird es nun auch möglich den C# Code auf andere Platformen als nur Windows zu exportieren.
+Hierfür wurde früher Project Mono gebraucht oder .NET Core.
+Die beiden Projekte wurden mit dem .NET Framework zusammengeführt zu der .NET 5 Version.\autocite{schwichtenberg_net_2019}
+Im November 2022 ist die neue .NET 7 Version herausgekommen.
+Da .NET 6 am aktuellsten war zum Startzeitpunkt des WIPRO Projektes, die .NET 6 Version eine LTS Version ist und damit länger als .NET 7 unterstützt wird und in der Praxis stärker getestet ist, wird die WIPRO mit .NET 6 zuende geführt.\autocite{noauthor_net_2022}
+Zur Entwicklungszeit der alten Stan Discord Bot Version wurde noch auf .NET Framework gesetzt, weshalb der Bot auch noch nicht auf Linux lauffähig ist.
+Dies war jedoch der Wunsch von STAIR für zukünftige Projekte.
 
 \todo{siehe Kapitel "Geplante Änderungen}
 
@@ -301,8 +312,7 @@ Beschrieb ER-Diagramm
 Als Datenbank wurde MySQL ausgewählt.
 MSSQL hat die beste Unterstützung in C\# jedoch ist diese Kostenpflichtig.
 Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert.
-Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen.
-%\todo{source https://www.microsoft.com/en-us/sql-server/sql-server-2017#OneGDCWeb-Banner-c3psyqy}
+Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen und Kosten.\autocite{noauthor_sql_nodate}
 
 % https://www.nuget.org/packages/linq2db.MySql/
 % http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
@@ -727,16 +737,15 @@ Da die Projekte jedoch sich von einander stark unterscheiden wurde entschieden m
 
 \todo{replace .NET Standard with .NET Framework version}
 \todo{Add sources}
-Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core mit 3.1 mit veralteten Libraries genützt wurden.
+Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core 3.1 mit veralteten Libraries genützt wurden.
 Diese werden nicht mehr unterstützt und sollten ersetzt werden.
 Hierbei wird .NET 6 mit C\# verwendet.
 So kann man Teile des Codes wiederverwenden.
-Die neueren .NET Versionen sind Cross-Platform fähig und können damit nun auch auf Linux verwendet werden. \todo{source}
-Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul dazu und ist ähnlich zu Java,
+Die neueren .NET Versionen sind Cross-Platform fähig und können damit nun auch auf Linux verwendet werden.\autocite{de_george_installieren_nodate}
+Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{how to add pdf??? it's not in export} und die Sprache ist ähnlich zu Java,
 welche grundsätzlich an der Hochschule verwendet wird. \todo{source}
-
-\todo{ist "wir" okay hier?}
-Aus persönlicher Erfahrung finden wir, dass Java häufiger zu Problemen führt als C\#.
+\todo{ist persönliche Meinung okay hier?}
+das WIPRO Team war zusätzlich bereits vertraut mit der C\# Sprache und hat diese als angenehm empfunden, was die Entscheidung zusätzlich unterstützte.
 
 \subsubsection*{Entscheid Login Funktionsweise}
 \todo{source}
@@ -748,24 +757,35 @@ Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nu
 
 \subsubsection*{Wechsel zu Community Server}
 \todo{Yannis}
-Entscheid Anbindung an Datenbank
-- Einfachere Verwaltung von Studenten und Modulen
-- Einfachere Kontrolle und Steuerung von STAIR
-- Erweiterbarkeit und Weeiterentwicklung
-- Anbindung von anderen Tools/Programmen an Datenbank (Statistik/Zukunft)
 
-\subsubsection*{eigener Bot entwickeln}
+\subsubsection*{Entscheid zur Anbindung an eine Datenbank}
+
+Eine Datenbank bringt einige Vorteile.
+Speziell relevant sind folgende Punkte für dieses Projekt:
+\begin{itemize}
+    \item Eine Datenbank ermöglicht eine automatische Zuweisung von Studenten zu ihren Häusern.
+    \item Sie ermöglicht das automatische markieren von Exstudierenden.
+    \item Sie bietet die grösste Erweiterbarkeit für die Zukunft.
+    \item Modul-Channels welche zur Zeit nicht gebruacht werden, könnten theoretisch auf Discord gelöscht werden und neu erstellt werden, wenn diese gebraucht werden.
+    \item Bei Problemen kann schnell herausgefunden werden, welche genau Person betroffen ist und kann sich auch über alternative Kommunikationswege, wie E-Mail, mit der Person in Kontakt setzen.
+    \item Studenten können über ihre E-Mail permanent gebannt werden, ohne dass sie sich mit neuen Discord Accounts wieder anmelden können.
+\end{itemize}
+
+Eine Datei wäre ebenfalls möglich zur Datenspeicherung.
+Diese hätte jedoch weniger Performance und würde keine Checks durchführen beim Speichern der Daten.
+Das Auslesen von gefilterten Daten gestaltet sich ebenfalls einfacher.\autocite{castro_why_2020}
+Da bei diesem Projekt wichtig ist, dass die Daten korrekt im Schmea gespeichert werden und die Anpassbarkeit der Datenbank keinen Fokus bekommen hat, wurde eine SQL basierte Datenbank bevorzugt gegenüber von NoSQL Datenbanken.
+Als gewählte Technologie hat sich MySQL durch seine grosse Verbreitung sehr gut angeboten.
+Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie beschrieben.\autocite{noauthor_db-engines_2022}
+
+\subsubsection*{Entscheidung einen eigenen Bot zu entwickeln}
 Zusammen mit STAIR wurde entschieden, wieder eine eigensentwickelte Lösung zu wählen.
 Dies hat verschiedene Vorteile.
 Als erstes ist damit gleich auch der Datenschutz gewährleistet.
 Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vorhanden.
-
-Entscheid schreiben eines eigenen Bots
-- Bestehender Bot
-- Datenschutz
-- Kontrolle und Handlungsspielraum
-- Statistiken
-- Keine ungewollten Features
+Die einzigen Limitierungen sind vom API von Discord und von technischen Know-How der betreuenden Entwicklern.
+Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten.
+Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
 
 \subsection{Initialisierungsphase}
 Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
@@ -1261,38 +1281,16 @@ public static class Program
 
 \subsubsection{Studentenerfassung}
 
-Die Studenten werden über ein Vordefiniertes CSV File geladen.
+Die Studenten werden über ein vordefiniertes CSV File geladen.
 Hier wird ein Beispiel dieser Datei gezeigt:
 
-% \begin{table}[h]
-%     \centering
-%     \begin{tabular}{|l|l|l|}
-%         \hline
-%         \rowcolor[gray]{.9} MS & Datum & Artefakte \\
-%         \hline
-%         1 & 19.09.2022 & \tabitem Aufgabenstellung \\
-%         \hline
-%         2 & 09.10.2022 & \tabitem Architekturdokument \\
-%          & & \tabitem Analyse \\
-%          & & \tabitem Testkonzept \\
-%          & & \tabitem Sprintplannung 1 \\
-%         \hline
-%         3 & 13.11.2022 & \tabitem Software-Release 0.5 \\
-%          & & \tabitem Sprintplannung 4 \\
-%         \hline
-%         4 & 12.12.2022 & \tabitem Software-Release 1.0 \\
-%          & & \tabitem Dokumentation Realisierung \\
-%         \hline
-%         5 & 18.12.2022 & \tabitem Bedienungsanleitung \\
-%         \hline
-%     \end{tabular}
-%     \caption{Meilensteine}
-%     \label{tab: Meilensteine}
-% \end{table}
+\todo{Add CSV data here}
 
 \todo{Yannis}
 
 \subsubsection{Aufsetzten der Linux Umgebung}
+
+Das Aufsetzen
 
 \todo{Yannis}
 
@@ -1445,6 +1443,12 @@ Massnahmen:
 \newpage
 
 \section{Glossar}
+
+API
+
+CSV
+
+
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
