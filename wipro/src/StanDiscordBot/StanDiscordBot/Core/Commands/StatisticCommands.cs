@@ -1,5 +1,4 @@
-﻿using Discord;
-using Discord.Commands;
+﻿using Discord.Commands;
 using Discord.Interactions;
 using ScottPlot.Plottable;
 using StanDatabase.Repositories;
@@ -10,10 +9,14 @@ namespace StanBot.Core.Commands
     public class StatisticCommands : ModuleBase<SocketCommandContext>
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly IDiscordAccountRepository _discordAccountRepository;
 
-        StatisticCommands(IStudentRepository studentRepository) 
+        StatisticCommands(
+            IStudentRepository studentRepository,
+            IDiscordAccountRepository discordAccountRepository) 
         {
             _studentRepository = studentRepository;
+            _discordAccountRepository = discordAccountRepository;
 
             // Creates image directory for plots, if it doesnt exist yet
             if (!Directory.Exists("img"))
@@ -50,6 +53,9 @@ namespace StanBot.Core.Commands
             var plt = new ScottPlot.Plot(600, 400);
             plt.AddBarSeries(bars);
             plt.XTicks(labels);
+            plt.Title("Students per House");
+            plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
+            plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
             plt.SetAxisLimits(yMin: 0);
 
             await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
@@ -85,9 +91,49 @@ namespace StanBot.Core.Commands
             var plt = new ScottPlot.Plot(600, 400);
             plt.AddBarSeries(bars);
             plt.XTicks(labels);
+            plt.Title("Students per Semester");
+            plt.XLabel(nameof(StudentsPerSemesterDTO.Semester));
+            plt.YLabel(nameof(StudentsPerSemesterDTO.StudentsCount));
             plt.SetAxisLimits(yMin: 0);
 
             await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerSemester.png"));
+        }
+
+        [Command("accountsPerSemester", true)]
+        [RequireRole("stair")]
+        [RequireRole("administrator")]
+        [Discord.Commands.Summary("Plots number of students per house.")]
+        public async Task AccountsPerSemester()
+        {
+            List<DiscordAccountsPerSemesterDTO> list = _discordAccountRepository.NumberOfDiscordAccountsPerSemester();
+
+            List<Bar> bars = new();
+            string[] labels = new string[list.Count];
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Bar bar = new()
+                {
+                    Value = list[i].AccountsCount,
+                    Position = i,
+                    Label = list[i].AccountsCount.ToString(),
+                    FillColor = ScottPlot.Palette.Category10.GetColor(i),
+                    LineWidth = 2,
+                };
+                bars.Add(bar);
+
+                labels[i] = list[i].Semester.ToString();
+            }
+
+            var plt = new ScottPlot.Plot(600, 400);
+            plt.AddBarSeries(bars);
+            plt.XTicks(labels);
+            plt.Title("Discord Accounts per Semester");
+            plt.XLabel(nameof(DiscordAccountsPerSemesterDTO.Semester));
+            plt.YLabel(nameof(DiscordAccountsPerSemesterDTO.AccountsCount));
+            plt.SetAxisLimits(yMin: 0);
+
+            await Context.Channel.SendFileAsync(plt.SaveFig("img/accountsPerSemester.png"));
         }
     }
 }
