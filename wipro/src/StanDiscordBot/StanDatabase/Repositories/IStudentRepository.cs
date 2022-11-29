@@ -19,5 +19,11 @@ namespace StanDatabase.Repositories
         /// <param name="email"></param>
         /// <returns>Returns the student found or null otherwise.</returns>
         Student? FindWithEmail(string email);
+
+        /// <summary>
+        /// Gets the students, which are still studying.
+        /// </summary>
+        /// <returns></returns>
+        List<Student> GetCurrentStudents();
     }
 }

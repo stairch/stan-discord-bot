@@ -5,19 +5,13 @@ using NLog;
 using StanBot.Services;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
+using StanDatabase.Repositories;
 
 namespace StanBot.Core.Commands
 {
     public class UpdateStudentsCommand : ModuleBase<SocketCommandContext>
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
-
-        private readonly CommandService _commandService;
-
-        public UpdateStudentsCommand(CommandService commandService)
-        {
-            _commandService = commandService;
-        }
 
         [Command("updateStudents", true)]
         [RequireRole("stair")]
@@ -28,14 +22,14 @@ namespace StanBot.Core.Commands
         {
             _logger.Info($"UpdateStudents command received. Author: {Context.User} | Message: {command}");
 
-            DiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
+            IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
             //string author = message.Author.Username;
             //if (discordAccountRepository.IsAdmin(author))
             if (true) // TODO
             {
                 try
                 {
-                    StudentRepository studentRepository = new StudentRepository();
+                    IStudentRepository studentRepository = new StudentRepository();
                     HouseRepository houseRepository = new HouseRepository();
                     List<Student> currentStudents = studentRepository.GetCurrentStudents();
                     IList<SocketGuildUser> currentStudentsOnDiscord = Context.Guild.Users.ToList();
@@ -44,7 +38,7 @@ namespace StanBot.Core.Commands
                     foreach (SocketGuildUser socketGuildUser in currentStudentsOnDiscord)
                     {
                         _logger.Debug($"Successfully updated students and their rights.");
-                        if (discordAccountRepository.IsStudent(socketGuildUser.Username))
+                        if (discordAccountRepository.IsStillStudying(socketGuildUser.Username))
                         {
                             // TODO: make role names configurable
                             roleService.AddRole(Context, socketGuildUser, "student");

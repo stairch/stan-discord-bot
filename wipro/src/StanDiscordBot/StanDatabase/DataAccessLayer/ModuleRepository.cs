@@ -66,5 +66,13 @@ namespace StanDatabase.DataAccessLayer
                 }
             }
         }
+
+        public bool DoesModuleExist(string moduleName)
+        {
+            using (var db = new DbStan())
+            {
+                return db.Module.SingleOrDefault(m => m.ChannelName.Equals(moduleName)) != null;
+            }
+        }
     }
 }

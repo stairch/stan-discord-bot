@@ -16,11 +16,13 @@ namespace StanDatabase.DataAccessLayer
 
         public int Update(DiscordAccount discordAccount)
         {
+            // TODO
             throw new NotImplementedException();
         }
 
         public int Delete(int discordAccountId)
         {
+            // TODO
             throw new NotImplementedException();
         }
 
@@ -30,29 +32,69 @@ namespace StanDatabase.DataAccessLayer
             {
                 return db.DiscordAccount
                     .LoadWith(da => da.Student)
-                    .Where(da => da.Username.Equals(username))
-                    .Single()
+                    .Single(da => da.Username.Equals(username))
                     .Student
                     .IsDiscordAdmin;
             }
         }
 
-        public bool IsStudent(string username)
+        public bool IsStillStudying(string username)
         {
-            // TODO
-            throw new NotImplementedException();
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return discordAccount
+                        .Student
+                        .StillStudying;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public bool IsExstudent(string username)
         {
-            // TODO
-            throw new NotImplementedException();
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return !discordAccount
+                        .Student
+                        .StillStudying;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public House GetHouseFromStudent(string username)
         {
-            // TODO
-            throw new NotImplementedException();
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .LoadWith(da => da.Student.House)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return discordAccount.Student.House;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

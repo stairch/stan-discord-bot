@@ -5,12 +5,6 @@ namespace StanBot.Core.Commands
 {
     public class UpdateModulesCommand : ModuleBase<SocketCommandContext>
     {
-        private readonly CommandService _commandService;
-
-        public UpdateModulesCommand(CommandService commandService)
-        {
-            _commandService = commandService;
-        }
 
         [Command("updateModules", true)]
         // TODO: go to DB to check permissions

@@ -7,5 +7,7 @@ namespace StanDatabase.Repositories
         void InsertMultiple(IList<Module> modules);
 
         void RemoveOld(IList<Module> modules);
+
+        bool DoesModuleExist(string moduleName);
     }
 }

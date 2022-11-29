@@ -20,10 +20,16 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public bool StillStudying { get; set; }
 
-        // can be null because new ex students on the server don't have a semester
+        /// <summary>
+        /// can be null because new ex students on the server don't have a semester
+        /// </summary>
         [Column]
         public int Semester { get; set; }
 
+        /// <summary>
+        /// Needed but not for Discord permissions (use roles on Discord server for this instead).
+        /// Instead it is used to inform the student about issues with the Stan Discord bot per email.
+        /// </summary>
         [Column, NotNull]
         public bool IsDiscordAdmin { get; set; }
 

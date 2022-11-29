@@ -9,5 +9,13 @@ namespace StanDatabase.Repositories
         int Update (DiscordAccount discordAccount);
 
         int Delete (int discordAccountId);
+
+        bool IsAdmin(string username);
+
+        bool IsStillStudying(string username);
+
+        bool IsExstudent(string username);
+
+        House GetHouseFromStudent(string username);
     }
 }
