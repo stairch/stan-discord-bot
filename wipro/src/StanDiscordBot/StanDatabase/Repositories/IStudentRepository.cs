@@ -26,5 +26,11 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <returns>List of StudentsPerHouseDTO.</returns>
         public List<StudentsPerHouseDTO> NumberOfStudentsPerHouse();
+
+        /// <summary>
+        /// Returns the number of students for each semester.
+        /// </summary>
+        /// <returns>List of StudentsPerSemesterDTO.</returns>
+        public List<StudentsPerSemesterDTO> NumberOfStudentsPerSemester();
     }
 }

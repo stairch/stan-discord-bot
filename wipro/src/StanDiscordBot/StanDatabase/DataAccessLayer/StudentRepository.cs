@@ -76,5 +76,20 @@ namespace StanDatabase.DataAccessLayer
                 return query.ToList();
             }
         }
+
+        public List<StudentsPerSemesterDTO> NumberOfStudentsPerSemester()
+        {
+            using (var db = new DbStan())
+            {
+                var query = from s in db.Student
+                            group s by s.Semester into g
+                            select new StudentsPerSemesterDTO
+                            {
+                                Semester = g.Key,
+                                StudentsCount = g.Count()
+                            };
+                return query.ToList();
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace StanBot.Core.Commands
         {
             _studentRepository = studentRepository;
 
-            // Creates image directory if it doesnt exist yet
+            // Creates image directory for plots, if it doesnt exist yet
             if (!Directory.Exists("img"))
                 Directory.CreateDirectory("img");
         }
@@ -29,7 +29,7 @@ namespace StanBot.Core.Commands
 
             List<StudentsPerHouseDTO> list = _studentRepository.NumberOfStudentsPerHouse();
 
-            string[] houses = new string[list.Count()];
+            string[] labels = new string[list.Count()];
             List<Bar> bars = new();
 
             for (int i = 0; i < list.Count; i++)
@@ -44,15 +44,50 @@ namespace StanBot.Core.Commands
                 };
                 bars.Add(bar);
 
-                houses[i] = list[i].HouseName;
+                labels[i] = list[i].HouseName;
             }
 
             var plt = new ScottPlot.Plot(600, 400);
             plt.AddBarSeries(bars);
-            plt.XTicks(houses);
+            plt.XTicks(labels);
             plt.SetAxisLimits(yMin: 0);
 
             await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
+        }
+
+        [Command("studentsPerSemester", true)]
+        [RequireRole("stair")]
+        [RequireRole("administrator")]
+        [Discord.Commands.Summary("Plots number of students per house.")]
+        public async Task StudentsPerSemester()
+        {
+
+            List<StudentsPerSemesterDTO> list = _studentRepository.NumberOfStudentsPerSemester();
+
+            List<Bar> bars = new();
+            string[] labels = new string[list.Count];
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Bar bar = new()
+                {
+                    Value = list[i].StudentsCount,
+                    Position = i,
+                    Label = list[i].StudentsCount.ToString(),
+                    FillColor = ScottPlot.Palette.Category10.GetColor(i),
+                    LineWidth = 2,
+                };
+                bars.Add(bar);
+
+                labels[i] = list[i].Semester.ToString();
+            }
+
+            var plt = new ScottPlot.Plot(600, 400);
+            plt.AddBarSeries(bars);
+            plt.XTicks(labels);
+            plt.SetAxisLimits(yMin: 0);
+
+            await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerSemester.png"));
         }
     }
 }
