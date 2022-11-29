@@ -10,13 +10,16 @@ namespace StanBot.Core.Commands
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountRepository _discordAccountRepository;
+        private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
 
         StatisticCommands(
             IStudentRepository studentRepository,
-            IDiscordAccountRepository discordAccountRepository) 
+            IDiscordAccountRepository discordAccountRepository,
+            IDiscordAccountModuleRepository discordAccountModuleRepository) 
         {
             _studentRepository = studentRepository;
             _discordAccountRepository = discordAccountRepository;
+            _discordAccountModuleRepository = discordAccountModuleRepository;
 
             // Creates image directory for plots, if it doesnt exist yet
             if (!Directory.Exists("img"))
@@ -64,7 +67,7 @@ namespace StanBot.Core.Commands
         [Command("studentsPerSemester", true)]
         [RequireRole("stair")]
         [RequireRole("administrator")]
-        [Discord.Commands.Summary("Plots number of students per house.")]
+        [Discord.Commands.Summary("Plots number of students per semester.")]
         public async Task StudentsPerSemester()
         {
 
@@ -102,7 +105,7 @@ namespace StanBot.Core.Commands
         [Command("accountsPerSemester", true)]
         [RequireRole("stair")]
         [RequireRole("administrator")]
-        [Discord.Commands.Summary("Plots number of students per house.")]
+        [Discord.Commands.Summary("Plots number of discord accounts registered, per semester.")]
         public async Task AccountsPerSemester()
         {
             List<DiscordAccountsPerSemesterDTO> list = _discordAccountRepository.NumberOfDiscordAccountsPerSemester();
@@ -134,6 +137,32 @@ namespace StanBot.Core.Commands
             plt.SetAxisLimits(yMin: 0);
 
             await Context.Channel.SendFileAsync(plt.SaveFig("img/accountsPerSemester.png"));
+        }
+
+        [Command("membersPerModule", true)]
+        [RequireRole("stair")]
+        [RequireRole("administrator")]
+        [Discord.Commands.Summary("Plots number of members for the top n modules.")]
+        public async Task MembersPerModule(int numberOfModules = 10)
+        {
+            List<MembersPerModuleDTO> list = _discordAccountModuleRepository.NumberOfMembersPerModule(numberOfModules);
+
+            string[] moduleName = new string[list.Count];
+            double[] memberCount = new double[list.Count];
+
+            for(int i = 0; i < list.Count; i++)
+            {
+                moduleName[i] = list[i].ModuleName;
+                memberCount[i] = list[i].MemberCount;
+            }
+
+            var plt = new ScottPlot.Plot(600, 400);
+            var pie = plt.AddPie(memberCount);
+            pie.SliceLabels = moduleName;
+            pie.ShowValues = true;
+            plt.Legend();
+
+            await Context.Channel.SendFileAsync(plt.SaveFig("img/membersPerModule.png"));
         }
     }
 }
