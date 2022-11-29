@@ -247,7 +247,7 @@ Diese fehlenden Features machen das Programm ungeeignet als Alternative.
 
 TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen auf dem eigenen Server aufzusetzen.
 Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und klar nicht der Fokus der Anwendung.
-% TODO: check this statement
+\todo{check following statement}
 Da Textchat der stärkere Fokus ist für den Austausch den STAIR anbieten will,
 ist dies wohl keine geeignete Lösung.
 
@@ -758,7 +758,7 @@ Entscheid Anbindung an Datenbank
 Zusammen mit STAIR wurde entschieden, wieder eine eigensentwickelte Lösung zu wählen.
 Dies hat verschiedene Vorteile.
 Als erstes ist damit gleich auch der Datenschutz gewährleistet.
-Auch sind so keine künstliche Limitierungen eines externen 
+Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vorhanden.
 
 Entscheid schreiben eines eigenen Bots
 - Bestehender Bot
@@ -1260,9 +1260,40 @@ public static class Program
 \end{lstlisting}
 
 \subsubsection{Studentenerfassung}
+
+Die Studenten werden über ein Vordefiniertes CSV File geladen.
+Hier wird ein Beispiel dieser Datei gezeigt:
+
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{|l|l|l|}
+%         \hline
+%         \rowcolor[gray]{.9} MS & Datum & Artefakte \\
+%         \hline
+%         1 & 19.09.2022 & \tabitem Aufgabenstellung \\
+%         \hline
+%         2 & 09.10.2022 & \tabitem Architekturdokument \\
+%          & & \tabitem Analyse \\
+%          & & \tabitem Testkonzept \\
+%          & & \tabitem Sprintplannung 1 \\
+%         \hline
+%         3 & 13.11.2022 & \tabitem Software-Release 0.5 \\
+%          & & \tabitem Sprintplannung 4 \\
+%         \hline
+%         4 & 12.12.2022 & \tabitem Software-Release 1.0 \\
+%          & & \tabitem Dokumentation Realisierung \\
+%         \hline
+%         5 & 18.12.2022 & \tabitem Bedienungsanleitung \\
+%         \hline
+%     \end{tabular}
+%     \caption{Meilensteine}
+%     \label{tab: Meilensteine}
+% \end{table}
+
 \todo{Yannis}
 
 \subsubsection{Aufsetzten der Linux Umgebung}
+
 \todo{Yannis}
 
 \newpage
@@ -1434,6 +1465,8 @@ Massnahmen:
 Der Stan Discord Bot kann auf verschiedenen Betriebssystemen genützt werden.
 In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
 
+\todo{Complete tutorial}
+
 \begin{enumerate}
     \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
     \item Verbinde zum Server über SSH
@@ -1460,7 +1493,7 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
             # sudo apt update
             # sudo apt install -y dotnet-sdk-6.0
         \end{verbatim}
-    \item Lade den Code auf den Server \todo{complete tutorial}
+    \item Lade den Code auf den Server
         \begin{verbatim}
             # 
         \end{verbatim}
@@ -1468,7 +1501,7 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
         \begin{verbatim}
             # 
         \end{verbatim}
-    \item Starte die Software \todo{complete tutorial}
+    \item Starte die Software
         \begin{verbatim}
             # sudo apt update
             # sudo apt upgrade -y
