@@ -1265,13 +1265,24 @@ public static class Program
 
 \newpage
 \subsection{Sprint 2}
-In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt und dem Erstellen des Discord Bots.
+In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt, 
+dem Erstellen des Discord Bots und der ersten Kommunikation damit.
 
 \subsubsection{Modulerfassung}
 \todo{Yannis}
 
 \subsubsection{Aufsetzten Discord Bot}
+Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
+Dort kann man den Namen des Bots angeben und erhält ein Application Token.
+Dieses dient wie als Private Key der Applikation und wird verwendet um sich im COde mit dem Bot zu verbinden.
+Weiter müssen auf der Platform noch die Berechtigungen des Bots spezialisiert werden.
+Diese müssen gut überlegt sein, da man nur für spezifizierte Events Callbacks im Code bekommt.
+\newline
+Wenn man die gewünschten Berechtigungen markiert hat, erhält man eine URL.
+Diese kann man direkt im Browser eingeben, um den Bot einem Server zuzuordnen.
+Damit das gelingt, muss der Nutzer auf dem Server die Berechtigung zum Bots hinzufügen besitzen. 
 \todo{Discord Developer Page: Applikationen im Web.}
+\todo{Bild Zuweisung von Bot zum Server}
 
 \subsubsection{Stan Bot Architektur}
 Grundlegend geht es bei der Bot Architektur um die Kommunikation mit der DiscordClient Klasse.
@@ -1374,25 +1385,148 @@ _discordSocketClient.MessageReceived += _messageHandler.OnMessageReceived;
 Es wird für jeden Event eine eigene Klasse erstellt.
 So können diese schön gekapselt und seperat behandelt werden.\\
 Wie man im Code sehen kann, gibt es für den DiscordSocketClient nur ein MessageReceived Event.
-Dieses Event unterilt noch nicht ob es sich um eine allgemeine Nachricht im Chat handelt, 
+Dieses Event entscheidet noch nicht, ob es sich um eine allgemeine Nachricht im Chat handelt, 
 eine Direkte Nachricht an den Bot oder einen Befehl.
 Um jetzt nicht alle Nachrichten in einer Klasse bearbeiten zu müssen, wird auf die Hilfe von Interfaces zurückgegriffen.
 \newline
 \todo{Einfügen Diagramm für Message Handling}
 
 Alle Nachrichten werden an die \textit{MessageHandler} Klasse weitergeleitet.
-Dort wird eine Vorselektion gemacht, ob es sich bei den eintreffenden Nachrichten um System Messages handlet, oder um andere Bot Nachrichten.
+Dort wird eine Vorselektion gemacht, ob es sich bei den eintreffenden Nachrichten um System Messages handelt, oder um andere Bot Nachrichten.
 Wird diese Vorselektion nicht gemacht, kann es sein das es zu einer Endlos-Schleife führt, 
 da der Bot auch seine eigenen geschriebenen Nachrichten in der \textit{MessageReceived} Methode empfängt.\\
 Im Anschluss wird jede Implementation der \textit{IMessageReceiver} Klasse durchgegangen und überprüft,
 ob die MessageSource korrekt ist und die \textit{IsMatch} Methode true zurückgibt.
 Nur wenn beide Anforderungen erfüllt sind, wird die Nachricht an die jeweilige Message Receiver Implementation weitergeleitet.
 
+\subsubsection*{Das EmailMessageReceivedEvent}
+Die \textit{EmailMessageReceivedEvent}-Klasse implementiert das \textit{IMessageReceived}-Interface 
+und ist somit ein Empfänger des MessageReceived Events von Discord.
+In der \textit{EmailMessageReceivedEvent} Klasse wird eine Nachricht als Direct Message erwartet. 
+Sie soll die Form \textit{<vorname.name>@stud.hslu.ch} oder \textit{<vorname.name>@hslu.ch} haben. 
+Alle Nachrichten, die nicht diesem Muster entsprechen werden nicht behandelt. 
+Dies erlaubt es nur Mitarbeitern oder Studenten der Hochschule sich im Discord Server zu authentifizieren.\\\\
+Sobald die Nachricht diesem Muster entspricht, wird sie der \textit{ProcessMessage} Methode übergeben. 
+Dort wird zuerst in der Datenbank überprüft ob der Nutzer vorhanden ist. 
+Falls nicht, wird eine Fehlermeldung an den Nutzer zurückgegeben. 
+Wenn alles stimmt, wird ein Code für die Verifikation generiert.\\ 
+Bei der Generierung des Codes wird eine zufällige 6 stellige Zahl erstellt und diese, zusammen mit der Discord Author Id, in einer Liste gespeichert. 
+Solange der Server online ist, werden offene Authentifikation in dieser Liste persisitiert. 
+Falls der Server aus einem unerklärlichen Grund heruntergefahren wird, oder die Applikation neu gestartet wird, 
+muss der Authentifizierungsprozess von neuem begonnen werden.
+Dies wird allerdings in Kauf genommen, da noch nichts von Bedeutung für den Benutzer oder den Server passiert ist.\\\\
+Sobald der Code generiert wurde, wird dieser, zusammen mit einer Nachricht, dem Benutzer an die angegebene E-Mail Adresse gesendet 
+und eine Nachricht an den Benutzer zurückgegeben.\\
+Damit ist dieser Schritt abgeschlossen.
+\todo{Könnte noch Ablaufdiagramm eingefügt werden.}
+
+\subsubsection*{Das VerificationCodeMessageReceivedEvent}
+Die \textit{VerificationCodeMessageReceivedEvent}-Klasse implementiert auch das \textit{IMessageReceived}-Interface.
+Damit eine Nachricht an diese Klasse weitergeleitet wird, muss es auch eine Direct Message an den Bot sein, 
+swoie eine 6-stellige Zahl. 
+Diese Überprüfung wird mit dem Regex-String "\textbf{\^[0-9]\{6\}\$}" erreicht.
+Wenn die Nachricht dem korrekten Muster entspricht, wird in der Liste im VerificationCodeManager überprüft, 
+ob eine offene Authentifizierung von diesem Nutzer mit diesem Code existiert.
+Falls dies nicht der Fall ist, wird eine Fehlermeldung an den Nutzer zurückgegeben.\\\\
+Wenn der Code korrekt ist. wird in der Datenbank ein neuer \textbf{DiscordAccount} erstellt.
+Dieser wird mit dem zugehörigen Studenten, mithilfe der E-Mail, verbunden.
+Des Weiteren wird in der Zwischentabelle \textbf{DiscordAccountDiscordRole} die Verbindung zu den Rollen erstellt.
+Für neu authentifizierte Studenten wird die Rolle \textbf{student} und die richtige Haus-Rolle zugewiesen.\\\\
+Sobald die Manipulationen auf der Datenbank abgeschlossen sind, werden die Änderungen auch auf den Discord übertragen.
+Also der Student bekommt dort vom Bot die Rollen zugewiesen.
+Damit hat er jetzt vollen Zugang zum STAIR-Server.\\\\
+Im Falle, dass der Benutzer sich schon einmal auf dem STAIR Server authentifiziert hat, 
+aber aus irgendeinem Grund den Server verlassen hat, muss er sich noch einmal authentifizieren.
+Allerdings werden keine Datenbankmanipulationen gemacht, sondern die Rollen, welcher er ja schon besitzt, zurückgegeben.
+\todo{Könnte noch Ablaufdiagramm eingefügt werden}
+
 \newpage
 \subsection{Sprint 3}
+In diesem Kapitel wird sich mit der Command Service Architektur von Discord auseinandergesetzt.
+Des weiteren wird die Implementation der show- und hide Module- Commands genauer erklärt.
 
 \subsubsection{Command Service Architektur}
-\todo{Nicolas}
+Der Command Service wird von Discord verwendet, um Befehle an den Bot zu schicken.
+Der Service wird unabhängig neben dem Discord Client gestartet aber nimmt diesen, beim Ausführen der Commands als Kontext entgegen.
+
+\subsubsection*{Starten des Command Service}
+Der Command Service wird wie folgt dem Hosting Environment hinzugefügt.
+
+\begin{lstlisting}[language=csharp]
+// Program.cs
+
+.AddSingleton(new CommandService(new CommandServiceConfig
+    {
+        DefaultRunMode = RunMode.Async,
+        LogLevel = LogSeverity.Debug
+    }))
+\end{lstlisting}
+
+Beim Starten des Event Handlers wird der Command Service initialisiert.
+Durch die Methode \textbf{AddModulesAsync} geht der Command Service automatisch durch die ganze Projektstruktur durch und 
+sucht nach Klassen, welche von \textit{ModuleBase<SocketCommandContext>} erben. 
+Diese fügt er dann dem Context, in dem der Bot läuft, hinzu.
+
+\begin{lstlisting}[language=csharp]
+// EventHandler.cs
+
+await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
+\end{lstlisting}
+
+\subsubsection*{Der CommandMessageReceivedEvent}
+Die Befehle, welche der Benutzer schicken kann, werden als normale Nachrichten verarbeitet.
+Dies bedeutet, dass sie auch durch die \textbf{MessageReceived} Methode abgefangen werden.
+In der \textit{CommandMessageReceivedEvent}-Klasse werden alle Nachrichten mit dem Command-Prefix verarbeitet.
+Dieser ist in der Config Datei hinterlegt und kann geändert werden.
+Für das Projekt wird der Prefix \textbf{!} verwendet.
+Falls eine Nachricht mit diesem Prefix eintrifft wird mit folgender Anweisung versucht diesen Befehl auszuführen.
+
+\begin{lstlisting}[language=csharp]
+// CommandMessageReceivedEvent.cs
+
+var context = new SocketCommandContext(_discordSocketClient, message);
+var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
+\end{lstlisting}
+
+Nun schaut der Command Service durch alle Commands durch, 
+welche er im vorherigen Schritt mit der \textbf{AddModulesAsync} Methode hinzugefügt hat.
+Falls er diesen Command nicht erfolgreich ausführen konnte, gibt er eine Fehlermeldung zurück, 
+die wiederum in geigneter Form den Benutzer mitgeteilt wird.
+
+\subsubsection*{Command-Klassen erklärt}
+Die Command Klassen erben, wie im vorherigen Kapitel erklärt, von \textbf{ModuleBase<SocketCommandContext>}.
+Dudurch werden alle Methoden, welche in der Klasse mit einem \textbf{[Command()]} Attribut versehen sind,
+dem Command Service hinzugefügt.
+
+\begin{lstlisting}[language=csharp]
+// Miscellaneous.cs
+
+public class Miscellaneous : ModuleBase<SocketCommandContext>
+{
+    [Command("ping")]
+    [Alias("latency")]
+    [Summary("Displays the bot's current latency")]
+    public Task PingCommand() => ReplyAsync($"Pong! The bot's latency is {Context.Client.Latency} ms.");
+}
+\end{lstlisting}
+
+Der Text, welcher im Command-Attribut steht, ist der Befehl, den der Benutzer im Discord ausführen muss.
+Im obigen Beispiel wäre dies: \textbf{!ping}.\\
+Je nach Anwendungsfall können noch weitere Attribute ergänzt werden.
+So wird oben ein Alias und eine Beschreibung hinzugefügt.
+Es können aber auch Berechtigungsfragen schon mit diesen Rollen abgeklärt werden.
+Zum Beispiel gibt es ein \textbf{[RequireRole()]} - Attribut, welches eine bestimmte Rolle zum Ausführen des Commands vorgibt.
+Befehle können auch Argumente entgegennehmen.
+Diese werden einfach als Argumente im Methodenkopf angegeben.
+Falls mehrere Parameter verwendet werden müssen, muss das Attribute \textbf{[Remainder]} hinzugefügt werden.
+Dies verhindert, dass nur das letzte Argument an den Bot übertragen wird.\\\\
+Der \textbf{Context} wird von ModuleBase geerbt.
+Dadurch können der Channel oder der Benutzer, der den Befehl geschickt hat, abgefragt werden.
+Dies erweisst sich nützlich, wenn gewisse Befehle nur in gewissen Channeln abgesetzt werden dürfen.\\\\
+Für den Anfang wurde ein \textbf{!ping} Befehl und ein \textbf{!help <command>} Befehl hinzugefügt.
+Der ping-Befehl gibt die aktuelle Antwortzeit des Bots zurück.
+Beim help-Befehl werden alle Commands, welche registriert sind, aufgelistet.
+Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um detailiertere Informationen zu einem Befehl zu erhalten.
 
 \subsubsection{show/hide <module> Command}
 \todo{Yannis}
@@ -1401,11 +1535,26 @@ Nur wenn beide Anforderungen erfüllt sind, wird die Nachricht an die jeweilige 
 \todo{Nicolas}
 
 \newpage
+\subsection{Sprint 4}
+
+\subsubsection{Statistiken}
+\todo{Nicolas}
+
+\newpage
+\subsection{Sprint 5}
+
+
+\newpage
+\subsection{Bedienungsanleitung Server}
+
+\newpage
 \section{Evaluation und Validation}
 
 \todo{schreiben}
 
 \subsection{Fehlererkennung}
+
+\subsection{Tests}
 
 \section{Ausblick}
 
