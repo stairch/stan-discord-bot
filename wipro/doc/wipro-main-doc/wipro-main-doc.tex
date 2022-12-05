@@ -292,12 +292,12 @@ Beschrieb ER-Diagramm
 
 \subsubsection{C\# und .NET Framework}
 
-Es wurde entschieden weiterhin mit C# zu arbeiten.
+Es wurde entschieden weiterhin mit C\# zu arbeiten.
 Dies wurde auch für die bereits existierende Version verwendet.
 Discord Libraries sind jedoch auch in anderen programmiersprachen verfügbar.
 Discord selbst führt eine Liste zu den verfügbaren Libraries und deren unterstützten Programmiersprachen, welche von der Community entwickelt wurden.\autocite{noauthor_discord_2022-1}
 Bei Besprechungen mit den Stakeholdern wurde kein Grund gesehen auf etwas anderes umzusteigen, vor allem da durch das existierende Projekte eine gewisse Machbarkeit für einen Teil der Features bereits bewiesen wurde.
-Durch die neuen .NET Versionen wird es nun auch möglich den C# Code auf andere Platformen als nur Windows zu exportieren.
+Durch die neuen .NET Versionen wird es nun auch möglich den C\# Code auf andere Platformen als nur Windows zu exportieren.
 Hierfür wurde früher Project Mono gebraucht oder .NET Core.
 Die beiden Projekte wurden mit dem .NET Framework zusammengeführt zu der .NET 5 Version.\autocite{schwichtenberg_net_2019}
 Im November 2022 ist die neue .NET 7 Version herausgekommen.
@@ -523,28 +523,7 @@ Der Prozess dabei ist folgender:
 \end{enumerate}
 \noindent
 In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten.
-Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.
-
-\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
-    \hline
-    \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
-    \hline
-    R1 & Verbindung zwischen Bot und Discord bricht ab. &
-    Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
-    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. &
-    Möglich & Hoch & 6 \\
-    \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
-    enthält irgendwelche Escape-Characters.
-    Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
-    Unwahrscheinlich & Kritisch & 4 \\
-    \hline
-\end{longtable}
-
-% Library nicht alle Funktionen die benötigt werden
-% Fehlermeldungen an Admin weiterleiten
-% Absturz des Servers Enterprise Lab
+Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.\\\\
 
 \begin{tabular}[h]{ll}
     \textbf{Eintrittswahrscheinlichkeit} & \textbf{Schadensausmass} \\
@@ -553,30 +532,67 @@ Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \na
     \tabitem Wahrscheinlich (3) & \tabitem Hoch (3) \\
     \tabitem Sehr wahrscheinlich (4) & \tabitem Kritisch (4) \\
 \end{tabular}
-
 \clearpage
-\subsubsection{Massnahmen}
-\noindent
-Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
-Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
-\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
+
+\begin{longtable}[ht]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
     \hline
-    \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
-    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} &
-    \rot{\shortstack[l]{Schadensausmass\\(neu)}} &
-    \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
+    \rowcolor[gray]{.9} \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
     \hline
     R1 & Verbindung zwischen Bot und Discord bricht ab. &
     Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
-    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. &
-    Möglich & Hoch & 6 \\
+    Dies tritt ein, wenn der Bot keine Verbindung zum Internet mehr hat. Dadurch können keine Daten und Befehle ausgetauscht werden. &
+    Wahrscheinlich & Hoch & 9 \\
     \hline
     R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
     enthält irgendwelche Escape-Characters.
     Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
     Unwahrscheinlich & Kritisch & 4 \\
     \hline
+    R3 & Discord Bot kann die vielen Benutzer/Nachrichten nicht bewältigen & Der Discord Bot kann die
+    vielen einkommenden Nachrichten nicht bewältigen. Dies führt zu langen Antwortzeiten oder Fehlermeldungen beim Bot. &
+    Möglich & Hoch &  6 \\
+    \hline
+    R4 & Berechtigungen für den Bot werden zu offen gesetzt. & Beim Erstellen des Bots oder beim Abfangen der Nachrichten werden
+    die Berechtigungen für den Discord Bot zu offen gesetzt. Dies erlaubt es im, allenfalls unerwünschte Aktionen auf 
+    dem Server auszuführen. &
+    Wahrscheinlich & Hoch & 9 \\
+    \hline
+    \caption{Risiken Beschreibung}
+    \label{tab: risk-description}
+\end{longtable}
+
+\clearpage
+\subsubsection{Massnahmen}
+\noindent
+Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
+Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
+\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{2em}|}
+    \hline
+    \rowcolor[gray]{.9} \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
+    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} &
+    \rot{\shortstack[l]{Schadensausmass\\(neu)}} &
+    \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
+    \hline
+    R1 & Verbindung zwischen Bot und Discord bricht ab. & Bei Verbindungsabbrüchen oder sonstigen Fehlermeldungen wird eine
+    Nachricht an den Administrator des Discord Bots gesendet. Dieser kann sich dann direkt dem Problem annehmen.
+    Weiter wird automatisch ein Neuverbindungsversuch gestartet. &
+    Möglich & Mittel & 4 \\
+    \hline
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die CSV Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
+    in das System gespeist wird. So können unerwartete Charaktere direkt markiert und ausgeschlossen werden. &
+    Unwahrscheinlich & Mittel & 2 \\
+    \hline
+    R3 & Discord Bot kann die vielen Benutzer/Nachrichten nicht bewältigen & Der Dirscord Bot muss vor dem Einsetzten in das 
+    produktive System auf Client Auslastung getestet werden. So können unangeneme Überraschungen verhindert werden. &
+    Unwahrscheinlich & Mittel &  2 \\
+    \hline
+    R4 & Berechtigungen für den Bot werden zu offen gesetzt. & Beim Erstellen des Bots oder beim Abfangen der Nachrichten werden alle 
+    Berechtigungen am Anfang deaktiviert. Per Auschlussverfahren werden Sie wieder aktiviert. So wird gewährleistet, dass nur benötigte
+    Berechtigungen gesetzt sind. &
+    Unwahrscheinlich & Gering & 1 \\
+    \hline
+    \caption{Risiken Massnahmen}
+    \label{tab: risk-measures}
 \end{longtable}
 
 \subsubsection{Risikomatrix}
@@ -595,14 +611,17 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
         \hline
         Sehr wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} & \cellcolor{red!50} \\[10pt]
         \hline
-        Wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} \\[10pt]
+        Wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{yellow!50}& \cellcolor{orange!50}(R1, R2) & \cellcolor{red!50} \\[10pt]
         \hline
-        Möglich & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} \\[10pt]
+        Möglich & \cellcolor{green!50} & \cellcolor{yellow!50}R1 & \cellcolor{yellow!50}(R3, R4) & \cellcolor{orange!50} \\[10pt]
         \hline
-        Unwahrscheinlich & \cellcolor{green!50} & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} \\[10pt]
+        Unwahrscheinlich & \cellcolor{green!50}R4 & \cellcolor{green!50}R2, R3 & \cellcolor{yellow!50} & \cellcolor{yellow!50} \\[10pt]
         \hline
     \end{tabular}
+    \caption{Risikomatrix}
+    \label{tab: Riskmatrix}
 \end{table}
+\todo{Risikobereitschaftslinie irgendwie einzeichnen.}
 
 \clearpage
 \section{Realisierung}
@@ -776,7 +795,7 @@ Diese hätte jedoch weniger Performance und würde keine Checks durchführen bei
 Das Auslesen von gefilterten Daten gestaltet sich ebenfalls einfacher.\autocite{castro_why_2020}
 Da bei diesem Projekt wichtig ist, dass die Daten korrekt im Schmea gespeichert werden und die Anpassbarkeit der Datenbank keinen Fokus bekommen hat, wurde eine SQL basierte Datenbank bevorzugt gegenüber von NoSQL Datenbanken.
 Als gewählte Technologie hat sich MySQL durch seine grosse Verbreitung sehr gut angeboten.
-Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie beschrieben.\autocite{noauthor_db-engines_2022}
+Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie\\beschrieben.\autocite{noauthor_db-engines_2022}
 
 \subsubsection*{Entscheidung einen eigenen Bot zu entwickeln}
 Zusammen mit STAIR wurde entschieden, wieder eine eigensentwickelte Lösung zu wählen.
@@ -786,7 +805,7 @@ Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vo
 Die einzigen Limitierungen sind vom API von Discord und von technischen Know-How der betreuenden Entwicklern.
 Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten.
 Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
-
+\newpage
 \subsection{Initialisierungsphase}
 Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
 Diese werden für die Realisierungsphase in Epics umgewandelt.
@@ -903,6 +922,7 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
     \caption{User-Stories}
     \label{tab: UserStories}
 \end{longtable}
+
 \subsubsection*{Sprintplanung}
 \begin{table}[h]
     \centering
@@ -947,7 +967,7 @@ Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
 Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
 Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
-\begin{longtable}[h]{|p{15em}|p{25em}|}
+\begin{longtable}[ht]{|p{15em}|p{25em}|}
     \hline
     \multicolumn{2}{|l|}{\textbf{Betritt ein neuer Student den Discord-Server, bekommt er direkt eine Nachricht.}} \\*
     \multicolumn{2}{|l|}{\textbf{vom Stan Bot.}} \\
@@ -1146,6 +1166,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 \end{table}
 \todo{Welches Projekt enthält welche Libraries}
 
+\newpage
 \subsection{Sprint 1}
 Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie folgt aus.
 \begin{figure}[h]
@@ -1568,7 +1589,32 @@ Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um
 \todo{Yannis}
 
 \subsubsection{E-Mail Service}
-\todo{Nicolas}
+Der E-Mail Service wird im Authentifizierungsprozess benötigt.
+Der Benutzer bekommt damit eine E-Mail mit dem Verifizierungscode auf die angegebene Studentenadresse gesendet.
+Diesen Code muss er an den Bot zurücksenden um die Authentifizierung abzuschliessen.\\\\
+Dieser E-Mail Service wird aus dem alten Bot übernommen.
+Dies aus dem Grund, da er funktioniert und die Infrastruktur schon besteht.
+Es besteht kein Grund diesen zu ersetzten.\\\\
+Um Mails aus einer Applikation verschicken zu können, müssen diese über einen Account auf einem Mail Server verschickt werden.
+Man muss sich also auf einen Mail Server verbinden, um dort mit einem registrierten E-Mail Account die Mail versenden zu können.
+Um dieses Problem zu lösen, wird mit den Angeboten von Microsoft gearbeitet.\\
+Als Mail Server wird Outlook verwendet.
+Dies aus dem Grund, da alle Studenten ein Microsoft Konto besitzen und ihre E-Mails über Outlook verwalten.
+Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
+Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord Bot Applikation funktioniert.
+
+\subsubsection*{Mircosoft Identity}
+%https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+%https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
+
+
+\subsubsection*{Azure Applikation}
+
+\subsubsection*{Microsoft Graph}
+
+\subsubsection*{Der Mail Service}
+
+\todo{Hinzufügen Diagramm E-Mail Infrastruktur}
 
 \newpage
 \subsection{Sprint 4}
@@ -1578,10 +1624,27 @@ Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um
 
 \newpage
 \subsection{Sprint 5}
+\subsubsection{Stan Logo}
+\todo{Nicolas}
 
+\subsubsection{Bot als Deamon}
+\todo{Nicolas}
+
+\newpage
+\subsection{Deployment des Bots auf den Linux Server}
+\todo{Yannis}
+
+\newpage
+\subsection{Testsdurchführung}
+\todo{Nicolas}
+
+\newpage
+\subsection{Einführung des neuen Bots}
+\todo{Yannis}
 
 \newpage
 \subsection{Bedienungsanleitung Server}
+\todo{Yannis}
 
 \newpage
 \section{Evaluation und Validation}
@@ -1589,8 +1652,6 @@ Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um
 \todo{schreiben}
 
 \subsection{Fehlererkennung}
-
-\subsection{Tests}
 
 \section{Ausblick}
 
