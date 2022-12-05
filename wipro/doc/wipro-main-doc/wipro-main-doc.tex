@@ -64,11 +64,11 @@
 
 \hypersetup{
     colorlinks=true,
-    linkcolor=black,
+    linkcolor=darkgray,
     filecolor=magenta,
     urlcolor=blue
 }
-% changes font
+\urlstyle{same}
 
 \bibliography{wipro-main-doc}
 \graphicspath{ {images/} }
@@ -509,7 +509,7 @@ Dies könnten sein:
 \begin{itemize}
     \item technische Risiken
     \item Implementierungsrisiken
-    \item wirtschaftliche, industrielle und Geschäftsrisiken \autocite{} % PMB Risikomanagement p8-10
+    \item wirtschaftliche, industrielle und Geschäftsrisiken
 \end{itemize}
 \noindent
 Das Ziel des Risikomanagements ist es, Risiken frühzeitig zu erkennen und entsprechende Massnahmen zu ergreifen.
@@ -519,7 +519,7 @@ Der Prozess dabei ist folgender:
     \item Analysieren
     \item Priorisieren
     \item Massnahmen erarbeiten
-    \item Überwachen \autocite{} % PMB Risikomanagement p16
+    \item Überwachen \autocite[p.~8-16]{peter_sollberger_risikomanagement_2021}
 \end{enumerate}
 \noindent
 In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten.
@@ -710,8 +710,8 @@ In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizie
         Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 4.0.0 \\
         \hline
     \end{tabular}
-    \caption{Konfigurationsmanagement}
-    \label{tab: Konfigurationsmanagement}
+    \caption{Konfigurationsmanagement Bot alt}
+    \label{tab: Konfigurationsmanagement-Bot-alt}
 \end{table}
 
 
@@ -1186,8 +1186,15 @@ welche Daten im System wichtig sind und wie diese gespeichert werden.
 Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
 Das ERD kann später in ein Datenbank Schema übertragen werden.
 Die einzelnen Tabellen sind wie folgt beschrieben.
-\todo{Einfügen ER-Diagramm}
-\newline
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/ER-Diagramm.png}
+    \caption{Entity Relationship Diagram}
+    \label{fig:ER-Diagram}
+\end{figure}
+
+(Ein grosses Bild des Diagramms findet sich im Anhang auf Seite \pageref*{fig:ER-Diagram-big})\\
 Bei der Datenspeicherung wird eine Unterteilung zwischen dem Studenten und seinem Discord Account vorgenommen.
 Dies erlaubt es, eine saubere Trennung zwischen den richtigen Studenten und ihrem Online erscheinen auf Discord zu gewährleisten.
 (Seperation of Concerns (SOC)).
@@ -1222,16 +1229,14 @@ Datenbank Operationen sollen nur in diesem Projekt erfolgen.
 Die anderen Projekte sollen keinen direkten Zugriff auf die Datenbank haben.\\
 Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, 
 die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
-Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden,
-sowie für die Statistiken.
+Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.
 \todo{Test Projekte hinzufügen}
 
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
 Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.\\
 Das Repository Pattern ist dazu da, die Create, Read, Update und Delete (CRUD) Funktionen, 
-welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{}
-%https://offering.solutions/blog/articles/2014/10/06/asp.net-repository-pattern-und-unit-of-work/#:~:text=Repositories%3A,die%20CRUD%2DOperationen%20ausf%C3%BChren%20kann.
+welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{gosebrink_aspnet_2014}
 Es sieht vor, dass jedes Objekt genau eine Schnittstelle hat, über die Veränderung daran vorgenommen werden können.
 
 \begin{figure}[h]
@@ -1355,10 +1360,9 @@ Aus der Microsoft .NET Dokumentation:
 \begin{itemize}
     \item Transient-Vorgänge sind immer unterschiedliche, und mit jedem Abruf des Diensts wird eine neue Instanz erstellt.
     \item Scoped-Vorgänge ändern sich nur durch einen neuen Bereich, die Instanz ist jedoch innerhalb eines Bereichs immer gleich.
-    \item Singleton-Vorgänge sind immer gleich, und eine neue Instanz wird nur einmal erstellt. \autocite{}
+    \item Singleton-Vorgänge sind immer gleich, und eine neue Instanz wird nur einmal erstellt. \autocite{ievangelist_verwenden_nodate}
 \end{itemize}
 }
-%https://learn.microsoft.com/de-de/dotnet/core/extensions/dependency-injection-usage#conclusion
 
 \begin{lstlisting}[language=csharp]
 // Program.cs
@@ -1443,14 +1447,12 @@ Es wird für jeden Event eine eigene Klasse erstellt.
 So können diese schön gekapselt und seperat behandelt werden.\\
 Wie man im Code sehen kann, gibt es für den DiscordSocketClient nur ein MessageReceived Event.
 Dieses Event entscheidet noch nicht, ob es sich um eine allgemeine Nachricht im Chat handelt, 
-eine Direkte Nachricht an den Bot oder einen Befehl.
-Um jetzt nicht alle Nachrichten in einer Klasse bearbeiten zu müssen, wird auf die Hilfe von Interfaces zurückgegriffen.
-\newline
-\todo{Einfügen Diagramm für Message Handling}
-
+eine Direkte Nachricht an den Bot oder einen Befehl.\\\\
+Im Anhang auf Seite \pageref*{fig:message-handling} findet man das Klassendiagramm zum Thema Message Handling.\\\\
+Um jetzt nicht alle Nachrichten in einer Klasse bearbeiten zu müssen, wird auf die Hilfe von Interfaces zurückgegriffen.\\
 Alle Nachrichten werden an die \textit{MessageHandler} Klasse weitergeleitet.
 Dort wird eine Vorselektion gemacht, ob es sich bei den eintreffenden Nachrichten um System Messages handelt, oder um andere Bot Nachrichten.
-Wird diese Vorselektion nicht gemacht, kann es sein das es zu einer Endlos-Schleife führt, 
+Wird diese Vorselektion nicht gemacht, kann es sein, dass es zu einer Endlos-Schleife führt, 
 da der Bot auch seine eigenen geschriebenen Nachrichten in der \textit{MessageReceived} Methode empfängt.\\
 Im Anschluss wird jede Implementation der \textit{IMessageReceiver} Klasse durchgegangen und überprüft,
 ob die MessageSource korrekt ist und die \textit{IsMatch} Methode true zurückgibt.
@@ -1773,8 +1775,28 @@ Massnahmen:
     \item Prioritäten setzten was die Modulerfassung anbelangt.
     \item Möglichst zeitnah mit dem neuen Issue beginnen.
 \end{itemize}
-\newpage
 
+\subsection{Diagramme}
+\begin{landscape}
+    \begin{figure}[hb]
+        \centering
+        \hspace*{-4.5cm}
+        \includegraphics[width=1.6\textwidth]{img/ER-Diagramm.png}
+        \caption{Entity Relationship Diagram Gross}
+        \label{fig:ER-Diagram-big}
+    \end{figure}
+\end{landscape}
+
+\begin{figure}[ht]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/MessageHandling.png}
+    \caption{Message Handling}
+    \label{fig:message-handling}
+\end{figure}
+\clearpage
+
+\newpage
 \section{Glossar}
 
 API
