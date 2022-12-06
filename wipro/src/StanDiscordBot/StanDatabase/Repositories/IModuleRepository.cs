@@ -9,5 +9,7 @@ namespace StanDatabase.Repositories
         void RemoveOld(IList<Module> modules);
 
         bool DoesModuleExist(string moduleName);
+
+        Module GetModuleByName(string moduleName);
     }
 }

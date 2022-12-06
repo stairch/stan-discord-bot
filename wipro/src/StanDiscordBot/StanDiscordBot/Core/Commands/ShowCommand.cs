@@ -3,6 +3,7 @@ using Discord.Interactions;
 using NLog;
 using StanBot.Services;
 using StanDatabase.DataAccessLayer;
+using StanDatabase.Models;
 using StanDatabase.Repositories;
 
 namespace StanBot.Core.Commands
@@ -17,20 +18,21 @@ namespace StanBot.Core.Commands
         {
             await ReplyAsync($"moduleName: {moduleName}");
             IModuleRepository moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
+            IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
             if (moduleRepository.DoesModuleExist(moduleName))
             {
                 await ReplyAsync($"moduleName: {Context.Message}");
                 ModuleChannelService moduleChannelService = new ModuleChannelService();
                 if (moduleChannelService.DoesModuleChannelExist(moduleName))
                 {
-                    // TODO: add link in DB
                     IStudentRepository studentRepository = new StudentRepository();
-                    // TODO
-                    //studentRepository.AddModuleToUser();
-                    // TODO: give access on Discord
-                    //moduleChannelService.GiveUserAccessToModule(Context.User, moduleName);
+                    DiscordAccount discordAccount = discordAccountRepository.GetDiscordAccountByName(Context.User.Username);
+                    Module module = moduleRepository.GetModuleByName(moduleName);
+                    studentRepository.AddModuleToUser(discordAccount, module);
+                    moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
                     await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
-                    // TODO: remove message
+                    Thread.Sleep(5000);
+                    // TODO: delete message
                 }
                 else
                 {

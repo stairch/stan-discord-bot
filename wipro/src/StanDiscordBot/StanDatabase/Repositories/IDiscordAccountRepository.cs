@@ -17,5 +17,7 @@ namespace StanDatabase.Repositories
         bool IsExstudent(string username);
 
         House GetHouseFromStudent(string username);
+
+        DiscordAccount GetDiscordAccountByName(string username);
     }
 }

@@ -1,11 +1,32 @@
-﻿namespace StanBot.Services
+﻿using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using StanDatabase.Models;
+
+namespace StanBot.Services
 {
     public class ModuleChannelService
     {
-        public void GiveUserAccessToModule(string user, string moduleName)
+        /// <summary>
+        /// Adds user access to module channel on Discord server.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="user"></param>
+        /// <param name="module"></param>
+        /// <returns>Returns true when it worked.</returns>
+        public bool GiveUserAccessToModule(SocketCommandContext context, SocketUser user, Module module)
         {
-            // TODO
-
+            SocketGuildChannel socketGuildChannel = context.Guild.Channels
+                .SingleOrDefault(c => c.Name.ToLower().Equals(
+                    module.ChannelName.ToLower()
+                )
+            );
+            if (socketGuildChannel != null)
+            {
+                socketGuildChannel.AddPermissionOverwriteAsync(user, OverwritePermissions.InheritAll);
+                return true;
+            }
+            return false;
         }
 
         public void RemoveUserAccessToModule(string user, string moduleName)

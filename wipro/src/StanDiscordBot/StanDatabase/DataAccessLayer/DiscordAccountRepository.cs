@@ -96,5 +96,13 @@ namespace StanDatabase.DataAccessLayer
                 }
             }
         }
+
+        public DiscordAccount GetDiscordAccountByName(string username)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordAccount.Single(da => da.Username.Equals(username));
+            }
+        }
     }
 }
