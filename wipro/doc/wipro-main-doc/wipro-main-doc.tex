@@ -1594,9 +1594,14 @@ Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um
 Der E-Mail Service wird im Authentifizierungsprozess benötigt.
 Der Benutzer bekommt damit eine E-Mail mit dem Verifizierungscode auf die angegebene Studentenadresse gesendet.
 Diesen Code muss er an den Bot zurücksenden um die Authentifizierung abzuschliessen.\\\\
-Dieser E-Mail Service wird aus dem alten Bot übernommen.
-Dies aus dem Grund, da er funktioniert und die Infrastruktur schon besteht.
-Es besteht kein Grund diesen zu ersetzten.\\\\
+Es wurde über verschiedene Lösungen zu diesem Problem diskutiert.
+So könnte man zum Beispiel einen eigenen Mail Server hosten und die Mails über diesen verschicken.
+Eine weitere Möglichkeit bestand in der Nutzung des Hochschul-Enterprise-Labs.
+Diese bieten einen Mail Dienst an, mit dem man für private Applikationen Mails versenden kann.
+Oder man benutzt die bestehende Lösung des alten Stan Bots.\\
+Für dieses Projekt wurde entschieden, die bestehende Lösung weiter zu benutzen.
+Dies aus dem Grund, da der Mail Service etabliert ist und funktioniert und die Infrastruktur schon besteht.
+Für das Team bestand kein Grund diesen zu ersetzten.\\\\
 Um Mails aus einer Applikation verschicken zu können, müssen diese über einen Account auf einem Mail Server verschickt werden.
 Man muss sich also auf einen Mail Server verbinden, um dort mit einem registrierten E-Mail Account die Mail versenden zu können.
 Um dieses Problem zu lösen, wird mit den Angeboten von Microsoft gearbeitet.\\
@@ -1607,14 +1612,28 @@ Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord B
 
 \subsubsection*{Mircosoft Identity}
 %https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
-%https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
-
+Die Microsoft Identity Platform erlaubt es Entwicklern einen Authentifizierungsmechanismus in ihre Applikation einzubauen.
+Für Besitzer eines Microsoft Azure Administator Kontos oder Office 365 ist die Lösung kostenlos und da auch STAIR einen Office 365 Account hat,
+bietet sich diese Lösung an.
+Die Microsoft Identity Platform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, bzw. diesen nutzen.
+Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
+Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{}
+%https://www.youtube.com/watch?v=sn9HWh-rg9o&ab_channel=MicrosoftAzure
 
 \subsubsection*{Azure Applikation}
 
 \subsubsection*{Microsoft Graph}
 
 \subsubsection*{Der Mail Service}
+Für den Discord Bot wurde von Microsoft Identity die Microsoft Authentication Library (MSAL) benutzt. \autocite{}
+%https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
+Dort wird das Gerät auf dem die Applikation läuft, beim Starten einmalig authentifiziert und man erhält ein Acces Token zurück.
+Dieses kann nun der Klasse \textbf{GraphServiceClient} übergeben werden.
+Der GraphServiceClient ist Teil von Microsoft Graph und erlaubt es nun über Ihre API Endpunkte aufzurufen.
+So kann eine Post Request auf den Endpunkt \textit{https://graph.microsoft.com/v1.0/me/sendMail} gesendet werden.
+Da der GraphServiceClient mit dem richtigen Microsoft Konto authentifiziert ist, 
+werden nun die E-Mails direkt über das richtige Outlook Konto weitergeleitet.
+
 
 \todo{Hinzufügen Diagramm E-Mail Infrastruktur}
 
@@ -1622,7 +1641,205 @@ Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord B
 \subsection{Sprint 4}
 
 \subsubsection{Statistiken}
-\todo{Nicolas}
+In den Anforderungen wurde gewünscht, dass man als STAIR Mitglied mithilfe der Datenbank verschiedene Statistiken auslesen kann.
+Die Art, wie man diese Statistiken erhält, konnte selbst entschieden werden.
+Das Team hat entschieden, diese über Bot Commands zu erstellen.
+Mit den Commands ist es möglich, Befehle für den Bot zu übergeben.
+Da dieser über das Repository Pattern Zugriff auf die Datenbank hat, kann er die gewünschten Queries absetzten.\\
+Eine weitere Möglichkeit wäre gewesen,  Statistiken mithilfe von Scripts abzufragen.
+Mit dieser Methode müsste man sich allerdings auf den Server im Enterprise Lab verbinden, die Scripts heraussuchen und diese dort ausführen.
+Dies wurde als nicht leicht erweiterbar und benutzerfreundlich eingestuft und aus diesem Grund verworfen.\\\\
+Für dieses Projekt wurden 4 verschiedene Statistiken implementiert.
+Weitere können aber einfach hinzugefügt werden.\\
+Die 4 Statistiken sind:
+\begin{itemize}
+    \item Anzahl Studenten Pro Haus
+    \item Anzahl Studenten pro Semester
+    \item Anzahl registrierter Discord Accounts mit Studenten aus jeweiligem Semester
+    \item Anzahl Mitglieder pro Modul-Channel
+\end{itemize}
+Die Befehle werden in Discord wie folgt abgesetzt:
+\begin{itemize}
+    \item \textbf{!studentsPerHouse}
+    \item \textbf{!studentsPerSemester}
+    \item \textbf{!accountsPerSemester}
+    \item \textbf{!membersPerModule}
+\end{itemize}
+Die Abfragen werden in den weiteren Kapiteln noch genauer beschrieben.
+
+\subsubsection*{Aufruf Berechtigungen}
+Es sollen nur Administratoren und STAIR Mitglieder diese Commands einsehen und ausführen können.
+Dazu wurde bei den Commands das Attribute [RequireRole("stair")] und [RequireRole("administrator")] gebraucht.
+Dieses kontrolliert, ob es sich bei beim Aufrufer um einen Benutzer mit den Rollen "stair" oder "administrator" handelt.
+
+\subsubsection*{Plotting Library}
+Damit Statistiken einfacher verständlich und aussagekräftig sind, verwendet man Diagramme (engl. Plots).
+Plotting Libraries gibt es viele, doch es wurde sich für das kostenlose OpenSource Projekt ScottPlott entschieden.
+ScottPlot ist für .NET entwickelt und liefert viele verschiedene Chart-Möglichkeiten, die einfach erstellt und bearbeitet werden können, mit.
+Die Verwendung ähnelt sehr der Library Matplotlib und ist dadurch für Personen, die sich schon mit Statistiken im Programmieren beschäftigt haben, einfach zu lernen.
+Sie bieten alle bekannten Diagramm-Arten an und erlauben es auch interaktive Plots zu erstellen. \autocite{}
+%https://scottplot.net/
+
+\newpage
+\subsubsection*{Statistik: Students per house}
+In dieser Statistik werden die Anzahl Studenten pro Haus zurückgegeben.
+Grundlage dafür bietet folgende SQL Query:
+
+\begin{lstlisting}[language=SQL]
+SELECT HouseName, Count(s.StudentId) AS StudentCount
+FROM students AS s
+INNER JOIN houses AS h ON s.FkHouseId=h.HouseId
+GROUP BY h.HouseName;
+\end{lstlisting}
+
+Übersetzt in eine Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// StudentRepository.cs
+
+from s in db.Student
+join h in db.House on s.FkHouseId equals h.HouseId
+group s by h.Name into g
+select new StudentsPerHouseDTO
+{
+    HouseName = g.Key,
+    StudentsCount = g.Count()
+};
+\end{lstlisting}
+
+Dargestellt wird diese Abfrage in einem Bar-Plot, wobei die x-Achse die verschiedenen Häuser sind und die y-Achse die Anzahl Studenten in einem Haus.
+Die einzelnen Bars werden nach den Farben des Hauses dynamisch eingefärbt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/studentsPerHouse.png}
+    \caption{Students per house}
+    \label{fig:students-per-house}
+\end{figure}
+
+\newpage
+\subsubsection*{Statistik: Students per semester}
+In dieser Statistik werden die Anzahl Studenten in den verschiedenen Semestern zurückgegeben.
+Die Anzahl der Semester wird bestimmt, durch die registrierten Studenten, in der Liste der Hochschul Administration.\\
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT Semester, Count(s.StudentId) AS StudentCount
+FROM students AS s
+GROUP BY s.Semester;
+\end{lstlisting}
+
+Übersetzt als Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// StudentRepository.cs
+
+from s in db.Student
+group s by s.Semester into g
+select new StudentsPerSemesterDTO
+{
+    Semester = g.Key,
+    StudentsCount = g.Count()
+};
+\end{lstlisting}
+
+Die Abfrage wird als Bar-Plot dargestellt. 
+Auf der x-Achse befinden sich die verschiedenen Semester und auf der y-Achse die Anzahl der sich darin befindenden Studenten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/studentsPerSemester.png}
+    \caption{Students per semester}
+    \label{fig:students-per-semester}
+\end{figure}
+
+\newpage
+\subsubsection*{Statistik: Accounts per semester}
+In dieser Statistik kann die Anzahl, der sich im STAIR Discord Server authentifizierten Personen, abgefragt werden.
+Gruppiert wird dabei wieder nach dem Semester in dem sich der Student befindet.
+So kann herausgefunden werden, in welchen Semestern sich die Discord Benutzer durchschnittlich befinden.
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT s.Semester, Count(ac.FkStudentId)
+FROM discordaccounts AS ac
+RIGHT JOIN students AS s ON ac.FkStudentId=s.StudentId
+GROUP BY s.Semester;
+\end{lstlisting}
+
+Diese Query ist etwas schwieriger in Linq zu übersetzten, da es so etwas wie \textbf{RIGHT JOIN} in Linq nicht gibt.
+Stattdessen müssen die Aufrufe der Tabellen in der Query vertauscht werden.
+Also die Tabelle, welche man mit \textbf{RIGHT JOIN} ganz anzeigen möchte, muss zuerst selektiert werden.
+Im Anschluss wird dann die andere gejoint.\\
+Damit auch leere Felder anzeigt werden, also z.B. Semester in denen es keine registrierten Studenten hat, 
+muss der Befehl \textit{DefaultIfEmpty()} auf der gejointen Gruppe aufgerufen werden.
+
+\begin{lstlisting}[language=SQL]
+// DiscordAccountRepository.cs
+
+from s in db.Student
+join dc in db.DiscordAccount on s.StudentId equals dc.FkStudentId into joinGroup
+from gr in joinGroup.DefaultIfEmpty()
+group gr by s.Semester into g
+select new DiscordAccountsPerSemesterDTO
+{
+    Semester = g.Key,
+    AccountsCount = g.Count(stud => stud.FkStudentId != null)
+};
+\end{lstlisting}
+
+Diese Abfrage wird, gleich wie die vorherige, auch als Bar-Plot dargestellt. 
+Auf der x-Achse befinden sich die verschiedenen Semester und auf der y-Achse die Anzahl der authentifizierten Studenten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/accountsPerSemester.png}
+    \caption{Accounts per semester}
+    \label{fig:accounts-per-semester}
+\end{figure}
+
+\clearpage
+\subsubsection*{Statistik: Members per module}
+In dieser Statistik können die meist abonnierten Modul Channels abgefragt werden.
+Es wird also nach den meisten Mitgliedern sortiert. 
+Die Anzahl der Module, die im Chart angezeigt werden sollen, ist über einen Parameter nach dem Befehl einstellbar.
+Standardmässig ist die Anzahl Module auf 10 eingestellt.\\
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT m.ChannelName, Count(am.FkDiscordAccountId) AS MemberCount
+FROM discordaccountsmodules AS am 
+INNER JOIN modules AS m ON am.FkModuleId=m.ModuleId
+GROUP BY m.ChannelName
+ORDER BY MemberCount DESC;
+\end{lstlisting}
+
+Übersetzt als Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// DiscordAccountModuleRepository.cs
+
+from am in db.DiscordAccountModule
+join m in db.Module on am.FkModuleId equals m.ModuleId
+group m by m.ChannelName into g
+orderby g.Count() descending
+select new MembersPerModuleDTO
+{
+    ModuleName = g.Key,
+    MemberCount = g.Count()
+};
+\end{lstlisting}
+
+Diese Abfrage wird als Kuchen-Diagramm dargestellt. So können die Proportionen der einzelnen Module besser erahnt werden.
+Die Anzahl der Mitglieder dieser Channels, wird in den Kuchenstücken angezeigt.
+Die Legende rechts bietet eine Übersicht der dargestellten Module.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/membersPerModule.png}
+    \caption{Members per module}
+    \label{fig:members-per-module}
+\end{figure}
 
 \newpage
 \subsection{Sprint 5}
