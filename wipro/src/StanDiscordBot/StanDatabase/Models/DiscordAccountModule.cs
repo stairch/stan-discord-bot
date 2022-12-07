@@ -14,7 +14,7 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public int FkDiscordAccountId { get; set; }
 
-        [Association(ThisKey = nameof(FkDiscordAccountId), OtherKey = nameof(Models.DiscordAccount.AccountId))]
+        [Association(ThisKey = nameof(FkDiscordAccountId), OtherKey = nameof(Models.DiscordAccount.DiscordAccountId))]
         public DiscordAccount DiscordAccount { get; set; }
 
         [Column, NotNull]

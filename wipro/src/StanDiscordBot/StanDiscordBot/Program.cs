@@ -1,5 +1,4 @@
-﻿
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
+using StanBot.Services.MailService;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Repositories;
 using EventHandler = StanBot.Core.Events.EventHandler;
@@ -36,8 +36,14 @@ namespace StanBot
                     }))
                     .AddScoped<IStudentRepository, StudentRepository>()
                     .AddScoped<IDiscordAccountRepository, DiscordAccountRepository>()
+                    .AddScoped<IDiscordAccountDiscordRoleRepository, DiscordAccountDiscordRoleRepository>()
+                    .AddScoped<IDiscordRoleRepository, DiscordRoleRepository>()
+                    .AddScoped<IHouseRepository, HouseRepository>()
+                    .AddScoped<IDiscordAccountModuleRepository, DiscordAccountModuleRepository>()
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
+                    .AddSingleton<VerificationCodeManager>()
+                    .AddScoped<IMailService, MailService>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()

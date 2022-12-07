@@ -1,4 +1,5 @@
-﻿using StanDatabase.Models;
+using StanDatabase.Models;
+using StanDatabase.DTOs;
 
 namespace StanDatabase.Repositories
 {
@@ -21,6 +22,17 @@ namespace StanDatabase.Repositories
         Student? FindWithEmail(string email);
 
         /// <summary>
+        /// Returns the number of students for each house.
+        /// </summary>
+        /// <returns>List of StudentsPerHouseDTO.</returns>
+        public List<StudentsPerHouseDTO> NumberOfStudentsPerHouse();
+
+        /// <summary>
+        /// Returns the number of students for each semester.
+        /// </summary>
+        /// <returns>List of StudentsPerSemesterDTO.</returns>
+        public List<StudentsPerSemesterDTO> NumberOfStudentsPerSemester();
+
         /// Gets the students, which are still studying.
         /// </summary>
         /// <returns></returns>

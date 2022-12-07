@@ -3,6 +3,7 @@ using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using StanBot.Services;
 using Microsoft.Extensions.Hosting;
+using StanBot.Services.MailService;
 using EventHandler = StanBot.Core.Events.EventHandler;
 
 namespace StanBot
@@ -25,6 +26,11 @@ namespace StanBot
 
             provider.GetRequiredService<LogService>();
             await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
+            //await provider.GetRequiredService<IMailService>().InitializeAsync(
+            //    StanBotConfigLoader.Config.FromEmailAddress, 
+            //    StanBotConfigLoader.Config.FromEmailName,
+            //    StanBotConfigLoader.Config.AppId,
+            //    StanBotConfigLoader.Config.Scopes);
 
             if (string.IsNullOrWhiteSpace(StanBotConfigLoader.Config.DiscordApplicationToken)) return;
             await _discordSocketClient.LoginAsync(TokenType.Bot, StanBotConfigLoader.Config.DiscordApplicationToken);

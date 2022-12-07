@@ -36,7 +36,7 @@ CREATE TABLE Students (
     StudentId INT AUTO_INCREMENT NOT NULL,
     StudentEmail VARCHAR(255) NOT NULL,
     StillStudying BOOL NOT NULL,
-    SEMESTER TINYINT NOT NULL,
+    Semester TINYINT NOT NULL,
     FkHouseId INT NOT NULL,
     IsDiscordAdmin BOOL NOT NULL,
     PRIMARY KEY (StudentId),
@@ -66,6 +66,7 @@ CREATE TABLE DiscordAccountsModules (
 CREATE TABLE DiscordAccountsDiscordRoles (
     FkDiscordAccountId INT NOT NULL,
     FkDiscordRoleId INT NOT NULL,
+	PRIMARY KEY (FkDiscordAccountId, FkDiscordRoleId),
     FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
     FOREIGN KEY (FkDiscordRoleId) REFERENCES DiscordRoles(DiscordRoleId)
 );

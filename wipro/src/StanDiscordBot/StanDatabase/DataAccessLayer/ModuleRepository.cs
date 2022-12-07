@@ -15,24 +15,21 @@ namespace StanDatabase.DataAccessLayer
 
         public void InsertMultiple(IList<Module> modules)
         {
-            foreach (Module module in modules)
+            using (var db = new DbStan())
             {
-                bool moduleDoesntExistYet;
-                using (var db = new DbStan())
+
+                foreach (Module module in modules)
                 {
-                    moduleDoesntExistYet = !db.Module.Any(m => m.ChannelName == module.ChannelName);
-                }
-                if (moduleDoesntExistYet)
-                {
-                    module.DiscordCategory = _discordCategoryRepository.GetCategoryWithChannelCapacity();
-                    using (var db = new DbStan())
-                    {
+                    bool moduleDoesntExistYet = !db.Module.Any(m => m.ChannelName == module.ChannelName);
+                    if (moduleDoesntExistYet)
+                    { 
+                        DiscordCategory category = _discordCategoryRepository.GetCategoryWithChannelCapacity();
+                        module.FkDiscordCategoryId = category.DiscordCategoryId;
+                        module.DiscordCategory = category;
                         db.Insert(module);
+
                     }
-                }
-                else
-                {
-                    using (var db = new DbStan())
+                    else
                     {
                         db.Module
                             .Where(m => m.ChannelName == module.ChannelName)
