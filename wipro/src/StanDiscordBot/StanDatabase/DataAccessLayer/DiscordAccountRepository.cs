@@ -126,5 +126,10 @@ namespace StanDatabase.DataAccessLayer
                 return db.DiscordAccount.Single(da => da.Username.Equals(username));
             }
         }
+
+        public int Delete(int discordAccountId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
