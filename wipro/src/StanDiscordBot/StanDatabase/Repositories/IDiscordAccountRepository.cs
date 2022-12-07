@@ -1,4 +1,4 @@
-﻿using StanDatabase.DTOs;
+using StanDatabase.DTOs;
 using StanDatabase.Models;
 
 namespace StanDatabase.Repositories
@@ -12,5 +12,17 @@ namespace StanDatabase.Repositories
         bool DoesDiscordAccountExist(int discriminatorValue, string username);
 
         List<DiscordAccountsPerSemesterDTO> NumberOfDiscordAccountsPerSemester();
+
+        int Delete (int discordAccountId);
+
+        bool IsAdmin(string username);
+
+        bool IsStillStudying(string username);
+
+        bool IsExstudent(string username);
+
+        House GetHouseFromStudent(string username);
+
+        DiscordAccount GetDiscordAccountByName(string username);
     }
 }

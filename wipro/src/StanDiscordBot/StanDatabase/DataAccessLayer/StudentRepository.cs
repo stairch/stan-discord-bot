@@ -91,5 +91,29 @@ namespace StanDatabase.DataAccessLayer
                 return query.ToList();
             }
         }
+
+        public List<Student> GetCurrentStudents()
+        {
+            using (var db = new DbStan())
+            {
+                return db.Student.Where(s => s.StillStudying).ToList();
+            }
+        }
+
+        public void AddModuleToUser(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                db.Insert(
+                    new DiscordAccountModule(
+                        DateTime.Now,
+                        discordAccount.DiscordAccountId,
+                        discordAccount,
+                        module.ModuleId,
+                        module
+                    )
+                );
+            }
+        }
     }
 }

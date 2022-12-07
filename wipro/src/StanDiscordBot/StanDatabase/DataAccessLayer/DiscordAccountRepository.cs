@@ -1,4 +1,4 @@
-﻿using LinqToDB;
+using LinqToDB;
 using StanDatabase.DTOs;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
@@ -45,6 +45,85 @@ namespace StanDatabase.DataAccessLayer
                                 AccountsCount = g.Count(stud => stud.FkStudentId != null)
                             };
                 return query.ToList();
+            }
+        }
+
+        public bool IsAdmin(string username)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .Single(da => da.Username.Equals(username))
+                    .Student
+                    .IsDiscordAdmin;
+            }
+        }
+
+        public bool IsStillStudying(string username)
+        {
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return discordAccount
+                        .Student
+                        .StillStudying;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool IsExstudent(string username)
+        {
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return !discordAccount
+                        .Student
+                        .StillStudying;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public House GetHouseFromStudent(string username)
+        {
+            using (var db = new DbStan())
+            {
+                DiscordAccount? discordAccount = db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .LoadWith(da => da.Student.House)
+                    .SingleOrDefault(da => da.Username.Equals(username));
+                if (discordAccount != null)
+                {
+                    return discordAccount.Student.House;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DiscordAccount GetDiscordAccountByName(string username)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordAccount.Single(da => da.Username.Equals(username));
             }
         }
     }

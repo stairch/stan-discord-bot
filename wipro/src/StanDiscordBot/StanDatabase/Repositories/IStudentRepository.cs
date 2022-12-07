@@ -1,4 +1,4 @@
-﻿using StanDatabase.Models;
+using StanDatabase.Models;
 using StanDatabase.DTOs;
 
 namespace StanDatabase.Repositories
@@ -32,5 +32,12 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <returns>List of StudentsPerSemesterDTO.</returns>
         public List<StudentsPerSemesterDTO> NumberOfStudentsPerSemester();
+
+        /// Gets the students, which are still studying.
+        /// </summary>
+        /// <returns></returns>
+        List<Student> GetCurrentStudents();
+
+        void AddModuleToUser(DiscordAccount discordAccount, Module module);
     }
 }

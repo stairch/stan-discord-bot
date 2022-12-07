@@ -14,6 +14,12 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
+        public IEnumerable<string> GetHouseDiscordRoles()
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
         public bool IsHouseNameValid(string houseName)
         {
             using (var db = new DbStan())
