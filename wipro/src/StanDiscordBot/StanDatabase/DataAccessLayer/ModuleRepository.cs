@@ -72,13 +72,13 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public Module GetModuleByName(string moduleName)
+        public Module? GetModuleByName(string moduleName)
         {
             using (var db = new DbStan())
             {
                 return db.Module
                     .LoadWith(m => m.DiscordCategory)
-                    .Single(m => m.ChannelName.Equals(moduleName));
+                    .SingleOrDefault(m => m.ChannelName.Equals(moduleName));
             }
         }
     }

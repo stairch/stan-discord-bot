@@ -24,27 +24,11 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        private DiscordAccountRepository discordAccountRepository;
-
-        private ModuleRepository moduleRepository;
-
-        public DiscordAccountModuleRepository(
-            DiscordAccountRepository discordAccountRepository,
-            ModuleRepository moduleRepository)
-        {
-            this.discordAccountRepository = discordAccountRepository;
-            this.moduleRepository = moduleRepository;
-        }
-
-        public void AddModuleToUser(string user, string moduleName)
+        public int Insert(DiscordAccountModule discordAccountModule)
         {
             using (var db = new DbStan())
             {
-                // TODO /////////////////////////
-                //DiscordAccount discordAccount = discordAccountRepository.
-                //DiscordAccountModule discordAccountModule = new DiscordAccountModule(DateTime.Now, );
-                // TODO: set module and account
-                //discordAccountModule.AccountModuleId = db.Insert(discordAccountModule);
+                return db.InsertWithInt32Identity(discordAccountModule);
             }
         }
     }

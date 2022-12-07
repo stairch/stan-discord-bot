@@ -10,6 +10,6 @@ namespace StanDatabase.Repositories
 
         bool DoesModuleExist(string moduleName);
 
-        Module GetModuleByName(string moduleName);
+        Module? GetModuleByName(string moduleName);
     }
 }

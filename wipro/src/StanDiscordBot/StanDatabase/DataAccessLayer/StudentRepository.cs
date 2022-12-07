@@ -99,21 +99,5 @@ namespace StanDatabase.DataAccessLayer
                 return db.Student.Where(s => s.StillStudying).ToList();
             }
         }
-
-        public void AddModuleToUser(DiscordAccount discordAccount, Module module)
-        {
-            using (var db = new DbStan())
-            {
-                db.Insert(
-                    new DiscordAccountModule(
-                        DateTime.Now,
-                        discordAccount.DiscordAccountId,
-                        discordAccount,
-                        module.ModuleId,
-                        module
-                    )
-                );
-            }
-        }
     }
 }

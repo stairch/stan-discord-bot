@@ -37,7 +37,5 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <returns></returns>
         List<Student> GetCurrentStudents();
-
-        void AddModuleToUser(DiscordAccount discordAccount, Module module);
     }
 }

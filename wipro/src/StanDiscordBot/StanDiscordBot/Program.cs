@@ -43,6 +43,8 @@ namespace StanBot
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddSingleton<VerificationCodeManager>()
+                    .AddSingleton<ModuleChannelService>()
+                    .AddSingleton<RoleService>()
                     .AddSingleton<IMailService, MailService>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()

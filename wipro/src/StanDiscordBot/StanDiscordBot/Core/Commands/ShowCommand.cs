@@ -2,7 +2,6 @@
 using Discord.Interactions;
 using NLog;
 using StanBot.Services;
-using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
@@ -11,27 +10,45 @@ namespace StanBot.Core.Commands
     public class ShowCommand : ModuleBase<SocketCommandContext>
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ModuleChannelService _moduleChannelService;
+
+        private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
+        private readonly IModuleRepository _moduleRepository;
+        private readonly IDiscordAccountRepository _discordAccountRepository;
+
+        public ShowCommand(
+            IDiscordAccountModuleRepository discordAccountModuleRepository,
+            IModuleRepository moduleRepository,
+            IDiscordAccountRepository discordAccountRepository,
+            ModuleChannelService moduleChannelService) 
+        { 
+            _discordAccountModuleRepository = discordAccountModuleRepository;
+            _moduleRepository = moduleRepository;
+            _discordAccountRepository = discordAccountRepository;
+            _moduleChannelService = moduleChannelService;
+        }
 
         [Command("Show", false)]
         [RequireRole("student")]
         public async Task ShowModuleCommand([Remainder] string moduleName = "")
         {
             await ReplyAsync($"moduleName: {moduleName}");
-            IModuleRepository moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
-            IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
-            if (moduleRepository.DoesModuleExist(moduleName))
+            if (_moduleRepository.DoesModuleExist(moduleName))
             {
                 await ReplyAsync($"moduleName: {Context.Message}");
-                ModuleChannelService moduleChannelService = new ModuleChannelService();
-                if (moduleChannelService.DoesModuleChannelExist(moduleName))
+                if (_moduleChannelService.DoesModuleChannelExist(moduleName))
                 {
-                    IStudentRepository studentRepository = new StudentRepository();
-                    DiscordAccount discordAccount = discordAccountRepository.GetDiscordAccountByName(Context.User.Username);
-                    Module module = moduleRepository.GetModuleByName(moduleName);
-                    studentRepository.AddModuleToUser(discordAccount, module);
-                    moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
-                    await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
-                    Thread.Sleep(5000);
+                    DiscordAccount? discordAccount = _discordAccountRepository.GetAccount(Context.User.DiscriminatorValue, Context.User.Username);
+                    Module? module = _moduleRepository.GetModuleByName(moduleName);
+
+                    if(discordAccount != null && module != null)
+                    {
+                        _discordAccountModuleRepository.Insert(DiscordAccountModule.CreateNew(discordAccount, module));
+                        _moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
+                        await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
+                        Thread.Sleep(5000);
+                    }
+
                     // TODO: delete message
                 }
                 else

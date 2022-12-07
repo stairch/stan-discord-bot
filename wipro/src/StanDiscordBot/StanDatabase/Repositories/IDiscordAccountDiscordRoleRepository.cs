@@ -6,6 +6,12 @@ namespace StanDatabase.Repositories
     {
         public int Insert(DiscordAccountDiscordRole discordAccountDiscordRole);
 
-        List<string> getRolesForAccount(int discordAccountId);
+        List<DiscordRole> GetRolesForAccount(int discordAccountId);
+
+        void ChangeStillStudyingRole(int discordAccountId, int oldRoleId, DiscordRole newRole);
+
+        DiscordRole? GetHouseRoleForAccount(int discordAccountId);
+
+        void Delete(int discordAccountId, int discordRoleId);
     }
 }
