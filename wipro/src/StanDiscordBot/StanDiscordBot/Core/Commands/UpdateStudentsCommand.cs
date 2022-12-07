@@ -3,7 +3,6 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using NLog;
 using StanBot.Services;
-using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
