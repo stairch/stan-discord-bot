@@ -93,5 +93,10 @@ namespace StanDatabase.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public int Delete(int discordAccountId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
