@@ -49,7 +49,7 @@ namespace StanBot.Services
             if (message.Exception is CommandException command)
             {
                 // Don't risk blocking the logging task by awaiting a message send; ratelimits!?
-                var _ = command.Context.Channel.SendMessageAsync($"Error: {command.Message}");
+                var _ = command.Context.Channel.SendMessageAsync($"Error: {command.Message}\nBitte kontaktiere einen Administrator.");
             }
 
             _commandsLogger.Log(

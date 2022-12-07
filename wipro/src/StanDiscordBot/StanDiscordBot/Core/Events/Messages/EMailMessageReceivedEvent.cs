@@ -67,7 +67,7 @@ namespace StanBot.Core.Events.Messages
                                  + $"Liebe Grüsse/Kind regards\n"
                                  + $"Stan";
 
-            //await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
+            await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
 
             await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
         }

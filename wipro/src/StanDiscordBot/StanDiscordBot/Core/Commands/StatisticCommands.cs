@@ -161,6 +161,7 @@ namespace StanBot.Core.Commands
             pie.SliceLabels = moduleName;
             pie.ShowValues = true;
             plt.Legend();
+            plt.Title($"Members per Module Top {numberOfModules}");
 
             await Context.Channel.SendFileAsync(plt.SaveFig("img/membersPerModule.png"));
         }
