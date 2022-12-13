@@ -39,5 +39,7 @@ namespace StanDatabase.Repositories
         List<Student> GetCurrentStudents();
 
         void AddModuleToUser(DiscordAccount discordAccount, Module module);
+
+        void RemoveUserFromModule(DiscordAccount discordAccount, Module module);
     }
 }

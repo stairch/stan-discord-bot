@@ -13,7 +13,7 @@ namespace StanBot.Services.MailService
         {
             _fromMailAddress = fromMailAddress;
             _fromName = fromName;
-            
+
             DeviceCodeAuthProvider authProvider = new DeviceCodeAuthProvider(appId, scopes);
             await authProvider.GetAccessToken();
 

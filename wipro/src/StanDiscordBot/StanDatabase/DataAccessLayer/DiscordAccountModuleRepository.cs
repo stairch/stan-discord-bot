@@ -1,12 +1,29 @@
 using LinqToDB;
 using StanDatabase.DTOs;
-using StanDatabase.Models;
 using StanDatabase.Repositories;
 
 namespace StanDatabase.DataAccessLayer
 {
     public class DiscordAccountModuleRepository : IDiscordAccountModuleRepository
     {
+        private DiscordAccountRepository discordAccountRepository;
+
+        private ModuleRepository moduleRepository;
+
+        public DiscordAccountModuleRepository(
+            DiscordAccountRepository discordAccountRepository,
+            ModuleRepository moduleRepository)
+        {
+            this.discordAccountRepository = discordAccountRepository;
+            this.moduleRepository = moduleRepository;
+        }
+
+        public DiscordAccountModuleRepository()
+        {
+            this.discordAccountRepository = new DiscordAccountRepository();
+            this.moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
+        }
+
         public List<MembersPerModuleDTO> NumberOfMembersPerModule(int limit = 10)
         {
             using (var db = new DbStan())
@@ -22,18 +39,6 @@ namespace StanDatabase.DataAccessLayer
                             };
                 return query.Take(limit).ToList();
             }
-        }
-
-        private DiscordAccountRepository discordAccountRepository;
-
-        private ModuleRepository moduleRepository;
-
-        public DiscordAccountModuleRepository(
-            DiscordAccountRepository discordAccountRepository,
-            ModuleRepository moduleRepository)
-        {
-            this.discordAccountRepository = discordAccountRepository;
-            this.moduleRepository = moduleRepository;
         }
 
         public void AddModuleToUser(string user, string moduleName)

@@ -100,19 +100,52 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
         public void AddModuleToUser(DiscordAccount discordAccount, Module module)
         {
             using (var db = new DbStan())
             {
-                db.Insert(
-                    new DiscordAccountModule(
-                        DateTime.Now,
-                        discordAccount.DiscordAccountId,
-                        discordAccount,
-                        module.ModuleId,
-                        module
-                    )
-                );
+                if (!db.DiscordAccountModule.Any(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module)))
+                {
+                    db.Insert(
+                        new DiscordAccountModule(
+                            DateTime.Now,
+                            discordAccount.DiscordAccountId,
+                            discordAccount,
+                            module.ModuleId,
+                            module
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
+        public void RemoveUserFromModule(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                db.DiscordAccountModule.Delete(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module));
+                //if ()
+                //{
+                //    db.Delete(
+                //        new DiscordAccountModule(
+                //            DateTime.Now,
+                //            discordAccount.DiscordAccountId,
+                //            discordAccount,
+                //            module.ModuleId,
+                //            module
+                //        )
+                //    );
+                //}
             }
         }
     }

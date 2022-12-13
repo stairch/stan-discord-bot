@@ -22,7 +22,7 @@ namespace StanDatabase.DataAccessLayer
                 {
                     bool moduleDoesntExistYet = !db.Module.Any(m => m.ChannelName == module.ChannelName);
                     if (moduleDoesntExistYet)
-                    { 
+                    {
                         DiscordCategory category = _discordCategoryRepository.GetCategoryWithChannelCapacity();
                         module.FkDiscordCategoryId = category.DiscordCategoryId;
                         module.DiscordCategory = category;

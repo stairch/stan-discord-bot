@@ -29,16 +29,24 @@ namespace StanBot.Services
             return false;
         }
 
-        public void RemoveUserAccessToModule(string user, string moduleName)
+        public bool RemoveUserAccessToModule(SocketCommandContext context, SocketUser user, Module module)
         {
-            // TODO
-
+            SocketGuildChannel socketGuildChannel = context.Guild.Channels
+                .SingleOrDefault(c => c.Name.ToLower().Equals(
+                    module.ChannelName.ToLower()
+                )
+            );
+            if (socketGuildChannel != null)
+            {
+                socketGuildChannel.RemovePermissionOverwriteAsync(user);
+                return true;
+            }
+            return false;
         }
 
-        public bool DoesModuleChannelExist(string moduleName)
+        public bool DoesModuleChannelExist(SocketCommandContext context, string moduleName)
         {
-            // TODO
-            return false;
+            return context.Guild.Channels.FirstOrDefault(c => c.Name.ToLower().Equals(moduleName.ToLower())) != null;
         }
 
         public void CreateModuleChannel(string moduleName)

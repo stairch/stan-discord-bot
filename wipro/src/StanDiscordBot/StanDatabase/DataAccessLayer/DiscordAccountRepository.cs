@@ -123,7 +123,7 @@ namespace StanDatabase.DataAccessLayer
         {
             using (var db = new DbStan())
             {
-                return db.DiscordAccount.Single(da => da.Username.Equals(username));
+                return db.DiscordAccount.SingleOrDefault(da => da.Username.Equals(username));
             }
         }
 

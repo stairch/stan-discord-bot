@@ -51,7 +51,7 @@ namespace StanBot.Core.Commands
                         }
                         foreach (String houseRoleName in houseRepository.GetHouseDiscordRoles())
                         {
-                            if (discordAccountRepository.GetHouseFromStudent(socketGuildUser.Username).DiscordRole.RoleName.Equals(houseRoleName))
+                            if (discordAccountRepository.GetHouseFromStudent(socketGuildUser.Username).DiscordRole.DiscordRoleName.Equals(houseRoleName))
                             {
                                 roleService.AddRole(Context, socketGuildUser, houseRoleName);
                             }
