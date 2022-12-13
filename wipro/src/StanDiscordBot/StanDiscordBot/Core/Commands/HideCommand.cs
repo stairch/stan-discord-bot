@@ -30,7 +30,7 @@ namespace StanBot.Core.Commands
                     Module module = moduleRepository.GetModuleByName(moduleName);
                     if (moduleChannelService.DoesModuleChannelExist(Context, moduleName))
                     {
-                        DiscordAccount discordAccount = discordAccountRepository.GetDiscordAccountByName(Context.User.Username);
+                        DiscordAccount discordAccount = discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
 
                         if (discordAccount != null)
                         {
