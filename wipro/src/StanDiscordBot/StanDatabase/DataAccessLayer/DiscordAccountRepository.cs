@@ -27,7 +27,9 @@ namespace StanDatabase.DataAccessLayer
         {
             using(var db = new DbStan())
             {
-                return db.DiscordAccount.SingleOrDefault(da => da.AccountId == discriminaterValue && da.Username == username);
+                return db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .SingleOrDefault(da => da.AccountId == discriminaterValue && da.Username == username);
             }
         }
 
@@ -60,43 +62,11 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public bool IsStillStudying(string username)
+        public bool IsStillStudying(DiscordAccount discordAccount)
         {
             using (var db = new DbStan())
             {
-                DiscordAccount? discordAccount = db.DiscordAccount
-                    .LoadWith(da => da.Student)
-                    .SingleOrDefault(da => da.Username.Equals(username));
-                if (discordAccount != null)
-                {
-                    return discordAccount
-                        .Student
-                        .StillStudying;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        public bool IsExstudent(string username)
-        {
-            using (var db = new DbStan())
-            {
-                DiscordAccount? discordAccount = db.DiscordAccount
-                    .LoadWith(da => da.Student)
-                    .SingleOrDefault(da => da.Username.Equals(username));
-                if (discordAccount != null)
-                {
-                    return !discordAccount
-                        .Student
-                        .StillStudying;
-                }
-                else
-                {
-                    return false;
-                }
+                return discordAccount.Student.StillStudying;
             }
         }
 
@@ -119,17 +89,12 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public DiscordAccount GetDiscordAccountByName(string username)
+        public int Delete(int discordAccountId)
         {
             using (var db = new DbStan())
             {
-                return db.DiscordAccount.SingleOrDefault(da => da.Username.Equals(username));
+                throw new NotImplementedException();
             }
-        }
-
-        public int Delete(int discordAccountId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

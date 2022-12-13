@@ -62,7 +62,7 @@ namespace StanBot.Core.Events.Messages
             }
 
             string email = _verificationCodeManager.getEmaiForUser(verificationCode, messageAuthor.Id);
-            List<string> roles = new List<string>();
+            List<DiscordRole> roles = new List<DiscordRole>();
             try
             {
                 Student? student = _studentRepository.FindWithEmail(email);
@@ -82,7 +82,7 @@ namespace StanBot.Core.Events.Messages
                 {
                     // if account already exists, just get roles and assign them
                     DiscordAccount discordAccount = _discordAccountRepository.GetAccount(messageAuthor.DiscriminatorValue, messageAuthor.Username)!;
-                    roles = _discordAccountDiscordRoleRepository.getRolesForAccount(discordAccount.DiscordAccountId);
+                    roles = _discordAccountDiscordRoleRepository.GetRolesForAccount(discordAccount.DiscordAccountId);
                     Console.WriteLine("Account already existed");
                 } 
                 else
@@ -108,9 +108,9 @@ namespace StanBot.Core.Events.Messages
             // assign roles to discord user
             SocketGuild socketGuild = messageAuthor.MutualGuilds.Single(guild => guild.CurrentUser != null && guild.CurrentUser.Guild.Id == guild.Id);
             SocketGuildUser socketGuildUser = socketGuild.Users.Single(guildUser => guildUser.Id == messageAuthor.Id);
-            foreach (string role in roles)
+            foreach (DiscordRole role in roles)
             {
-                SocketRole socketRole = socketGuild.Roles.Single(r => r.Name.Equals(role));
+                SocketRole socketRole = socketGuild.Roles.Single(r => r.Name.Equals(role.DiscordRoleName));
                 await socketGuildUser.AddRoleAsync(socketRole);
             }
 
@@ -118,7 +118,7 @@ namespace StanBot.Core.Events.Messages
             _verificationCodeManager.RemoveCodeForUser(messageAuthor.Id);
         }
 
-        private List<string> CreateDiscordAccountAndLinkRoles(SocketUser author, Student student)
+        private List<DiscordRole> CreateDiscordAccountAndLinkRoles(SocketUser author, Student student)
         {
             // Save new DiscordAccount linked to Student
             DiscordAccount discordAccount = DiscordAccount.CreateNew(
@@ -140,7 +140,7 @@ namespace StanBot.Core.Events.Messages
             _discordAccountDiscordRoleRepository.Insert(houseRoleLink);
             _discordAccountDiscordRoleRepository.Insert(studentRoleLink);
 
-            return _discordAccountDiscordRoleRepository.getRolesForAccount(discordAccount.DiscordAccountId);
+            return _discordAccountDiscordRoleRepository.GetRolesForAccount(discordAccount.DiscordAccountId);
         }
     }
 }

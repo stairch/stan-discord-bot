@@ -1,4 +1,5 @@
 using StanDatabase.DTOs;
+using StanDatabase.Models;
 
 namespace StanDatabase.Repositories
 {
@@ -11,7 +12,7 @@ namespace StanDatabase.Repositories
         /// <param name="limit">Top <paramref name="limit"/> modules will be returned</param>
         /// <returns>List of MembersPerModuleDTO.</returns>
         List<MembersPerModuleDTO> NumberOfMembersPerModule(int limit = 10);
-        
-        void AddModuleToUser(string user, string moduleName);
+
+        public int Insert(DiscordAccountModule discordAccountModule);
     }
 }

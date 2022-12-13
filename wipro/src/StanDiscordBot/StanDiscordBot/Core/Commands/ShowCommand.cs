@@ -14,6 +14,23 @@ namespace StanBot.Core.Commands
     public class ShowCommand : ModuleBase<SocketCommandContext>
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ModuleChannelService _moduleChannelService;
+
+        private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
+        private readonly IModuleRepository _moduleRepository;
+        private readonly IDiscordAccountRepository _discordAccountRepository;
+
+        public ShowCommand(
+            IDiscordAccountModuleRepository discordAccountModuleRepository,
+            IModuleRepository moduleRepository,
+            IDiscordAccountRepository discordAccountRepository,
+            ModuleChannelService moduleChannelService)
+        {
+            _discordAccountModuleRepository = discordAccountModuleRepository;
+            _moduleRepository = moduleRepository;
+            _discordAccountRepository = discordAccountRepository;
+            _moduleChannelService = moduleChannelService;
+        }
 
         private IMailService _mailService = new MailService();
 
@@ -62,7 +79,7 @@ namespace StanBot.Core.Commands
 
                     if (moduleChannelService.DoesModuleChannelExist(Context, moduleName))
                     {
-                        DiscordAccount discordAccount = discordAccountRepository.GetDiscordAccountByName(Context.User.Username);
+                        DiscordAccount discordAccount = discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
 
                         if (discordAccount != null)
                         {

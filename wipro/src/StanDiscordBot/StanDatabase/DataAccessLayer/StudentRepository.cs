@@ -112,11 +112,8 @@ namespace StanDatabase.DataAccessLayer
                 if (!db.DiscordAccountModule.Any(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module)))
                 {
                     db.Insert(
-                        new DiscordAccountModule(
-                            DateTime.Now,
-                            discordAccount.DiscordAccountId,
+                        DiscordAccountModule.CreateNew(
                             discordAccount,
-                            module.ModuleId,
                             module
                         )
                     );

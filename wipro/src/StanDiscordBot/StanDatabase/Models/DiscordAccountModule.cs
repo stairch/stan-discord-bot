@@ -23,13 +23,15 @@ namespace StanDatabase.Models
         [Association(ThisKey = nameof(FkModuleId), OtherKey = nameof(Models.Module.ModuleId))]
         public Module Module { get; set; }
 
-        public DiscordAccountModule(DateTime creationDate, int fkDiscordAccountId, DiscordAccount discordAccount, int fkModuleId, Module module)
+        public static DiscordAccountModule CreateNew(DiscordAccount discordAccount, Module module)
         {
-            CreationDate = creationDate;
-            FkDiscordAccountId = fkDiscordAccountId;
-            DiscordAccount = discordAccount;
-            FkModuleId = fkModuleId;
-            Module = module;
+            DiscordAccountModule accountModule = new DiscordAccountModule();
+            accountModule.DiscordAccount = discordAccount;
+            accountModule.FkDiscordAccountId = discordAccount.DiscordAccountId;
+            accountModule.Module = module;
+            accountModule.FkModuleId = module.ModuleId;
+            accountModule.CreationDate = DateTime.Now;
+            return accountModule;
         }
     }
 }

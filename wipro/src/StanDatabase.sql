@@ -76,6 +76,7 @@ CREATE TABLE DiscordAccountsDiscordRoles (
 INSERT INTO DiscordRoles (DiscordRoleName)
 VALUES
 	("student"),
+    ("exstudent"),
     ("House_Grey"),
     ("House_Yellow"),
     ("House_Blue"),

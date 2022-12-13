@@ -1,5 +1,6 @@
 using LinqToDB;
 using StanDatabase.DTOs;
+using StanDatabase.Models;
 using StanDatabase.Repositories;
 
 namespace StanDatabase.DataAccessLayer
@@ -41,15 +42,11 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public void AddModuleToUser(string user, string moduleName)
+        public int Insert(DiscordAccountModule discordAccountModule)
         {
             using (var db = new DbStan())
             {
-                // TODO /////////////////////////
-                //DiscordAccount discordAccount = discordAccountRepository.
-                //DiscordAccountModule discordAccountModule = new DiscordAccountModule(DateTime.Now, );
-                // TODO: set module and account
-                //discordAccountModule.AccountModuleId = db.Insert(discordAccountModule);
+                return db.InsertWithInt32Identity(discordAccountModule);
             }
         }
     }

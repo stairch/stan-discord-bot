@@ -3,7 +3,6 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using NLog;
 using StanBot.Services;
-using StanDatabase.DataAccessLayer;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
@@ -11,7 +10,24 @@ namespace StanBot.Core.Commands
 {
     public class UpdateStudentsCommand : ModuleBase<SocketCommandContext>
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly RoleService _roleService;
+
+        private readonly IDiscordAccountRepository _discordAccountRepository;
+        private readonly IDiscordAccountDiscordRoleRepository _discordAccountDiscordRoleRepository;
+        private readonly IDiscordRoleRepository _discordRoleRepository;
+
+        public UpdateStudentsCommand(
+            IDiscordAccountRepository discordAccountRepository,
+            IDiscordAccountDiscordRoleRepository discordAccountDiscordRoleRepository,
+            IDiscordRoleRepository discordRoleRepository,
+            RoleService roleService)
+        {
+            _discordAccountRepository = discordAccountRepository;
+            _discordAccountDiscordRoleRepository = discordAccountDiscordRoleRepository;
+            _discordRoleRepository = discordRoleRepository;
+            _roleService = roleService;
+        }
 
         [Command("updateStudents", true)]
         [RequireRole("stair")]
@@ -22,47 +38,54 @@ namespace StanBot.Core.Commands
         {
             _logger.Info($"UpdateStudents command received. Author: {Context.User} | Message: {command}");
 
-            IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
             //string author = message.Author.Username;
             //if (discordAccountRepository.IsAdmin(author))
             if (true) // TODO
             {
                 try
                 {
-                    IStudentRepository studentRepository = new StudentRepository();
-                    HouseRepository houseRepository = new HouseRepository();
-                    List<Student> currentStudents = studentRepository.GetCurrentStudents();
                     IList<SocketGuildUser> currentStudentsOnDiscord = Context.Guild.Users.ToList();
-                    RoleService roleService = new RoleService();
+                    IList<SocketGuildUser> notAuthenticatedUsers = new List<SocketGuildUser>();
 
                     foreach (SocketGuildUser socketGuildUser in currentStudentsOnDiscord)
                     {
-                        _logger.Debug($"Successfully updated students and their rights.");
-                        if (discordAccountRepository.IsStillStudying(socketGuildUser.Username))
+                        if(_discordAccountRepository.DoesDiscordAccountExist(socketGuildUser.DiscriminatorValue, socketGuildUser.Username))
                         {
-                            // TODO: make role names configurable
-                            roleService.AddRole(Context, socketGuildUser, "student");
-                            roleService.RemoveRole(Context, socketGuildUser, "exstudent");
-                        }
-                        else if (discordAccountRepository.IsExstudent(socketGuildUser.Username))
-                        {
-                            roleService.AddRole(Context, socketGuildUser, "exstudent");
-                            roleService.RemoveRole(Context, socketGuildUser, "student");
-                        }
-                        foreach (String houseRoleName in houseRepository.GetHouseDiscordRoles())
-                        {
-                            if (discordAccountRepository.GetHouseFromStudent(socketGuildUser.Username).DiscordRole.DiscordRoleName.Equals(houseRoleName))
+                            DiscordAccount discordAccount = _discordAccountRepository.GetAccount(socketGuildUser.DiscriminatorValue, socketGuildUser.Username)!;
+                            DiscordRole studentRole = _discordRoleRepository.GetRoleByName("student");
+                            DiscordRole exStudentRole = _discordRoleRepository.GetRoleByName("exstudent");
+
+                            if(_discordAccountRepository.IsStillStudying(discordAccount))
                             {
-                                roleService.AddRole(Context, socketGuildUser, houseRoleName);
-                            }
-                            else
+                                // Change Role in Database from exstudent to student
+                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.AccountId, exStudentRole.DiscordRoleId, studentRole);
+
+                                // Change Role in Discord
+                                _roleService.AddRole(Context, socketGuildUser, "student");
+                                _roleService.RemoveRole(Context, socketGuildUser, "exstudent");
+                            } else
                             {
-                                roleService.RemoveRole(Context, socketGuildUser, houseRoleName);
+                                // Change Role in Database from student to exstudent
+                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.AccountId, studentRole.DiscordRoleId, exStudentRole);
+                                DiscordRole houseRole = _discordAccountDiscordRoleRepository.GetHouseRoleForAccount(discordAccount.AccountId)!;
+
+
+                                // Change Role in Discord
+                                _roleService.AddRole(Context, socketGuildUser, "exstudent");
+                                _roleService.RemoveRole(Context, socketGuildUser, "student");
+                                // Remove House Role in Discord
+                                _roleService.RemoveRole(Context, socketGuildUser, houseRole.DiscordRoleName);
                             }
+                        }
+                        else
+                        {
+                            // Discord Account does not exists.
+                            // Need to be registered to receive the student role
+                            notAuthenticatedUsers.Add(socketGuildUser);
                         }
                     }
-                    _logger.Info($"Successfully updated students and their rights.");
-                    await ReplyAsync("Loaded new students and updated their roles.");
+                    _logger.Info($"Successfully updated students and their rights.\nThey were {notAuthenticatedUsers.Count} users who are not authenticated and could not be updated!");
+                    await ReplyAsync($"Loaded new students and updated their roles.\nThey were {notAuthenticatedUsers.Count} users who are not authenticated and could not be updated!");
                 }
                 catch (Exception ex)
                 {
