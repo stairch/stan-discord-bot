@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using LinqToDB;
 using NLog;
+using StanBot.Services.ErrorNotificactionService;
 using StanBot.Services.MailService;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
@@ -13,6 +13,8 @@ namespace StanBot.Core.Events.Messages
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly DatabaseErrorNotificationService _errorNotificationService;
+
         private readonly IStudentRepository _studentRepository;
         private readonly VerificationCodeManager _verificationCodeManager;
         private readonly IMailService _mailService;
@@ -20,8 +22,13 @@ namespace StanBot.Core.Events.Messages
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
         public Type ChannelType { get; }
 
-        public EMailMessageReceivedEvent(IStudentRepository studentRepository, VerificationCodeManager verificationCodeManager, IMailService mailService)
+        public EMailMessageReceivedEvent(
+            IStudentRepository studentRepository, 
+            VerificationCodeManager verificationCodeManager, 
+            IMailService mailService,
+            DatabaseErrorNotificationService errorNotificationService)
         {
+            _errorNotificationService = errorNotificationService;
             _studentRepository = studentRepository;
             _verificationCodeManager = verificationCodeManager;
             _mailService = mailService;
@@ -49,10 +56,16 @@ namespace StanBot.Core.Events.Messages
                     return;
                 }
             } 
-            catch (LinqToDBException exception)
+            catch (Exception exception)
             {
                 // Send Mail to Admin, because of connection problems
-                _logger.Error($"There was an Error, due to a database exception in the Email Message Received Event. Stacktrace: {exception.Message}");
+                _errorNotificationService.SendDatabaseErrorToAdmins(exception, "EmailMessageReceivedEvent");
+                _logger.Error($"There was an Error, due to a database exception. Admin has been contacted. Stacktrace: {exception.Message}");
+
+                await message.Channel.SendMessageAsync("Es gab einen Fehler bei der Abfrage deiner E-Mail. Ein Administrator wurde schon kontaktiert. " +
+                    "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
+                    "There was an error retrieving your email. An administrator has already been contacted. Please be patient and try again later.");
+                return;
             }
 
             int verificationCode = _verificationCodeManager.CreateCodeForUser(message.Author.Id, message.Content);
@@ -71,10 +84,19 @@ namespace StanBot.Core.Events.Messages
                                  + $"Liebe Grüsse/Kind regards\n"
                                  + $"Stan";
 
-            await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
+            try
+            {
+                await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
 
-            await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
-            _logger.Info($"Successfully send Email to {message.Content} with Verification Code {verificationCode}");
+                await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
+                _logger.Info($"Successfully send Email to {message.Content} with Verification Code {verificationCode}");
+            } 
+            catch
+            {
+                await message.Channel.SendMessageAsync($"Es gab ein Fehler beim Senden der E-Mail. Der Administrator wurde schon kontaktiert. " +
+                    "Habe ein wenig Geduld und versuche es später noch einmal.\n\r" +
+                    "There was an error sending the email. The administrator has already been contacted. Have a little patience and try again later.");
+            }
         }
 
         public bool IsMatch(SocketMessage message)

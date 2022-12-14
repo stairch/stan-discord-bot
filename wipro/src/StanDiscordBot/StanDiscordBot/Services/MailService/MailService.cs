@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using NLog;
+using StanBot.Services.ErrorNotificactionService;
 
 namespace StanBot.Services.MailService
 {
@@ -7,10 +8,16 @@ namespace StanBot.Services.MailService
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly MailErrorNotificationService _errorNotificationService;
+
         private string _fromMailAddress;
         private string _fromName;
-
         private GraphServiceClient _graphServiceClient;
+
+        public MailService(MailErrorNotificationService errorNotificationService)
+        {
+            _errorNotificationService = errorNotificationService;
+        }
 
         public async Task InitializeAsync(string fromMailAddress, string fromName, string appId, string[] scopes)
         {
@@ -23,7 +30,7 @@ namespace StanBot.Services.MailService
             _graphServiceClient = new GraphServiceClient(authProvider);
         }
 
-        public async Task SendMailToAsync(string mailAdress, string subject, string messageBody)
+        public async Task SendMailToAsync(string mailAdress, string subject, string messageBody, int importance = 1)
         {
             try
             {
@@ -33,7 +40,8 @@ namespace StanBot.Services.MailService
                     Body = new ItemBody { ContentType = BodyType.Text, Content = messageBody },
                     ToRecipients = new List<Recipient> { new Recipient { EmailAddress = new EmailAddress { Address = mailAdress } } },
                     Sender = new Recipient { EmailAddress = new EmailAddress { Address = _fromMailAddress, Name = _fromName } },
-                    From = new Recipient { EmailAddress = new EmailAddress { Address = _fromMailAddress, Name = _fromName } }
+                    From = new Recipient { EmailAddress = new EmailAddress { Address = _fromMailAddress, Name = _fromName } },
+                    Importance = (Importance) importance
                 };
 
                 await _graphServiceClient.Me.SendMail(message).Request().PostAsync();
@@ -41,7 +49,9 @@ namespace StanBot.Services.MailService
             }
             catch (Exception ex)
             {
+                _errorNotificationService.SendMailErrorToAdmins(ex, "MailService");
                 _logger.Error($"Could not send E-Mail. Stracktrace: {ex.Message}");
+                throw;
             }
         }
     }

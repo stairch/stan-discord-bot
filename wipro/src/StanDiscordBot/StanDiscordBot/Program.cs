@@ -9,6 +9,7 @@ using NLog.Extensions.Logging;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
+using StanBot.Services.ErrorNotificactionService;
 using StanBot.Services.MailService;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Repositories;
@@ -50,7 +51,9 @@ namespace StanBot
                     .AddSingleton<VerificationCodeManager>()
                     .AddSingleton<ModuleChannelService>()
                     .AddSingleton<RoleService>()
+                    .AddSingleton<MailErrorNotificationService>()
                     .AddSingleton<IMailService, MailService>()
+                    .AddSingleton<DatabaseErrorNotificationService>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()

@@ -37,5 +37,18 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <returns></returns>
         List<Student> GetCurrentStudents();
+
+        /// <summary>
+        /// Sets the isDiscordAdmin field for the given student.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="isAdmin"></param>
+        void SetStudentIsAdmin(Student student, bool isAdmin);
+
+        /// <summary>
+        /// Returns all Students, which are marked as DiscordAdmins.
+        /// </summary>
+        /// <returns></returns>
+        IList<Student> GetAllDiscordAdmins();
     }
 }

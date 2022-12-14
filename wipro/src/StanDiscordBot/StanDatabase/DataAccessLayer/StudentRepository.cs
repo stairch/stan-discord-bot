@@ -48,7 +48,7 @@ namespace StanDatabase.DataAccessLayer
                             .Where(s => s.StudentEmail == oldStudent.StudentEmail)
                             .Set(s => s.StillStudying, false)
                             .Update();
-                    // TODO: how to update discord role on server from here?
+                    // Discord Roles on the Server will be updated through the UpdateStudentsCommand
                 }
             }
         }
@@ -97,6 +97,27 @@ namespace StanDatabase.DataAccessLayer
             using (var db = new DbStan())
             {
                 return db.Student.Where(s => s.StillStudying).ToList();
+            }
+        }
+
+        public void SetStudentIsAdmin(Student student, bool isAdmin)
+        {
+            using (var db = new DbStan())
+            {
+                db.Student
+                    .Where(s => s.StudentEmail == student.StudentEmail)
+                    .Set(s => s.IsDiscordAdmin, isAdmin)
+                    .Update();
+            }
+        }
+
+        public IList<Student> GetAllDiscordAdmins()
+        {
+            using (var db = new DbStan())
+            {
+                return db.Student
+                    .Where(s => s.IsDiscordAdmin == true)
+                    .ToList();
             }
         }
     }

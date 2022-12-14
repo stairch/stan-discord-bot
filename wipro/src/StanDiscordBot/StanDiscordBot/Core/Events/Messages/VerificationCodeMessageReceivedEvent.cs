@@ -3,8 +3,8 @@ using Discord;
 using System.Text.RegularExpressions;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
-using LinqToDB;
 using NLog;
+using StanBot.Services.ErrorNotificactionService;
 
 namespace StanBot.Core.Events.Messages
 {
@@ -12,18 +12,22 @@ namespace StanBot.Core.Events.Messages
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly Regex _regex;
+        private readonly DatabaseErrorNotificationService _databaseErrorNotificationService;
+
         private readonly IDiscordAccountRepository _discordAccountRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountDiscordRoleRepository _discordAccountDiscordRoleRepository;
         private readonly IDiscordRoleRepository _discordRoleRepository;
         private readonly IHouseRepository _houseRepository;
+        
         private readonly VerificationCodeManager _verificationCodeManager;
+        private readonly Regex _regex;
 
         public IEnumerable<MessageSource> AllowedMessageSources { get; }
         public Type ChannelType { get; }
 
         public VerificationCodeMessageReceivedEvent(
+            DatabaseErrorNotificationService databaseErrorNotificationService,
             VerificationCodeManager verificationCodeManager, 
             IDiscordAccountRepository discordAccountRepository, 
             IStudentRepository studentRepository,
@@ -32,6 +36,7 @@ namespace StanBot.Core.Events.Messages
             IHouseRepository houseRepository)
         {
             _regex = new Regex("^[0-9]{6}$");
+            _databaseErrorNotificationService = databaseErrorNotificationService;
             _discordAccountRepository = discordAccountRepository;
             _studentRepository = studentRepository;
             _verificationCodeManager = verificationCodeManager;
@@ -98,9 +103,10 @@ namespace StanBot.Core.Events.Messages
                     _logger.Info($"Create new DiscordAccount for {messageAuthor.Username}#{messageAuthor.DiscriminatorValue} with Email {student.StudentEmail}");
                 }
             }
-            catch (LinqToDBException exception)
+            catch (Exception exception)
             {
                 // Send Mail to Admin, because of database problems
+                _databaseErrorNotificationService.SendDatabaseErrorToAdmins(exception, "VerificationMessageReceivedEvent");
                 _logger.Error($"Could not create or receive DiscordAccount. Stracktrace: {exception.Message}");
 
                 await message.Channel.SendMessageAsync(
