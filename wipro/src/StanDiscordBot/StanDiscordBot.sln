@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StanDatabase", "StanDatabas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StanScripts", "StanScripts\StanScripts.csproj", "{4C77F7C7-7C71-4337-9B6F-CA5C25FBE2AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StanDatabaseTest", "StanDatabaseTest\StanDatabaseTest.csproj", "{6BBB3A73-1FA5-49C3-85BC-6A33C1630C54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StanDatabaseTest", "StanDatabaseTest\StanDatabaseTest.csproj", "{6BBB3A73-1FA5-49C3-85BC-6A33C1630C54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{1ED2B8F1-8B82-4C01-9410-E2FE598937C3}"
+	ProjectSection(SolutionItems) = preProject
+		NLog.config = NLog.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

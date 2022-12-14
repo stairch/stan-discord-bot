@@ -5,11 +5,14 @@ using StanBot.Services;
 using Microsoft.Extensions.Hosting;
 using StanBot.Services.MailService;
 using EventHandler = StanBot.Core.Events.EventHandler;
+using NLog;
 
 namespace StanBot
 {
     public class Bot
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private DiscordSocketClient _discordSocketClient;
         private IHost _hostEnvironment;
 
@@ -20,6 +23,7 @@ namespace StanBot
 
         public async Task StartAsync()
         {
+            _logger.Info("Start Bot");
             using IServiceScope serviceScope = _hostEnvironment.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
             _discordSocketClient = provider.GetRequiredService<DiscordSocketClient>();

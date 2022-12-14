@@ -4,11 +4,14 @@ using System.Text.RegularExpressions;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 using LinqToDB;
+using NLog;
 
 namespace StanBot.Core.Events.Messages
 {
     public class VerificationCodeMessageReceivedEvent : IMessageReceiver
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly Regex _regex;
         private readonly IDiscordAccountRepository _discordAccountRepository;
         private readonly IStudentRepository _studentRepository;
@@ -46,7 +49,8 @@ namespace StanBot.Core.Events.Messages
 
         public async Task ProcessMessage(SocketUserMessage message)
         {
-            Console.WriteLine($"Verification Code received: {message}");
+            _logger.Debug($"Verification Code message received: {message}");
+
             int verificationCode = Convert.ToInt32(message.Content);
             SocketUser messageAuthor = message.Author;
             bool isCodeCorrect = _verificationCodeManager.IsCodeCorrectForUser(verificationCode, messageAuthor.Id);
@@ -58,6 +62,7 @@ namespace StanBot.Core.Events.Messages
                     "Code geschickt hast. Falls Ja, gib mir nochmals deine Mail Adresse, dann schicke ich dir ein neues Mail.\n\r" +
                     "Hmmm... It looks like that's the wrong code. Please make sure that you entered the code correctly. If you did, " +
                     "send me your mail address again and I'll send you another mail with a new verification code.");
+                _logger.Info($"Verification Code did not match with author. Code: {verificationCode} | Author: {messageAuthor.Username}#{messageAuthor.DiscriminatorValue}");
                 return;
             }
 
@@ -74,6 +79,7 @@ namespace StanBot.Core.Events.Messages
                         "und wiederhole den Vorgang.\n\r" +
                         "Hmmm... It looks like your email, Discord account and code don't match. " +
                         "Please check if you are logged in with the same Discord account when you sent me the email and repeat the process..");
+                    _logger.Info($"Verification Code did not match with email. Code: {verificationCode} | Email: {email}");
                     return;
                 }
 
@@ -83,24 +89,25 @@ namespace StanBot.Core.Events.Messages
                     // if account already exists, just get roles and assign them
                     DiscordAccount discordAccount = _discordAccountRepository.GetAccount(messageAuthor.DiscriminatorValue, messageAuthor.Username)!;
                     roles = _discordAccountDiscordRoleRepository.GetRolesForAccount(discordAccount.DiscordAccountId);
-                    Console.WriteLine("Account already existed");
+                    _logger.Debug("Don't create new DiscordAccount. Account already exists");
                 } 
                 else
                 {
                     // if account does not exists, create it, link with roles and assign them
                     roles = CreateDiscordAccountAndLinkRoles(messageAuthor, student);
-                    Console.WriteLine("Create new account");
+                    _logger.Info($"Create new DiscordAccount for {messageAuthor.Username}#{messageAuthor.DiscriminatorValue} with Email {student.StudentEmail}");
                 }
             }
             catch (LinqToDBException exception)
             {
                 // Send Mail to Admin, because of database problems
-                Console.WriteLine(exception.Message);
+                _logger.Error($"Could not create or receive DiscordAccount. Stracktrace: {exception.Message}");
 
                 await message.Channel.SendMessageAsync(
                     "So wie es aussieht, ist bei der Einschreibung von meiner Seite ein Fehler unterlaufen. " +
-                    "Bitte kontaktiere einen Administrator.\n\r" +
-                    "As it looks, there was a mistake on my side during the enrollment. Please contact an administrator."
+                    "Der Administrator wurde schon kontaktiert. Bitte habe ein wenig Geduld.\n\r" +
+                    "As it looks, there was a mistake on my side during the enrollment. " +
+                    "The administrator has already been contacted. Please have a little patience."
                     );
                 return;
             }
@@ -116,6 +123,7 @@ namespace StanBot.Core.Events.Messages
 
             await message.Channel.SendMessageAsync("Danke vielmals. Du bist nun verifiziert als Student.\n\rThank you very much. You're now verified as a student.");
             _verificationCodeManager.RemoveCodeForUser(messageAuthor.Id);
+            _logger.Info($"Successfully verified Student with DiscordAccount {messageAuthor.Username} and assigned Roles: {roles}");
         }
 
         private List<DiscordRole> CreateDiscordAccountAndLinkRoles(SocketUser author, Student student)

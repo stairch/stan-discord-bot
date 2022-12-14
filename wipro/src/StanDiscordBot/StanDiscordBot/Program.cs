@@ -3,6 +3,9 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
@@ -40,6 +43,8 @@ namespace StanBot
                     .AddScoped<IDiscordRoleRepository, DiscordRoleRepository>()
                     .AddScoped<IHouseRepository, HouseRepository>()
                     .AddScoped<IDiscordAccountModuleRepository, DiscordAccountModuleRepository>()
+                    .AddScoped<IModuleRepository, ModuleRepository>()
+                    .AddScoped<IDiscordCategoryRepository, DiscordCategoryRepository>()
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddSingleton<VerificationCodeManager>()
@@ -50,7 +55,13 @@ namespace StanBot
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()
                     .AddScoped<OnUserJoinedEvent>()
-                    .AddLogging()
+                    .AddLogging(loggingBuilder =>
+                    {
+                        // configure logging with NLog
+                        loggingBuilder.ClearProviders();
+                        loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                        loggingBuilder.AddNLog();
+                    })
                     .AddSingleton<LogService>())
                 .Build();
 

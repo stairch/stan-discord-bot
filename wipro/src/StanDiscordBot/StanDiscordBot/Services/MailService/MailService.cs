@@ -1,9 +1,12 @@
 ﻿using Microsoft.Graph;
+using NLog;
 
 namespace StanBot.Services.MailService
 {
     public class MailService : IMailService
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private string _fromMailAddress;
         private string _fromName;
 
@@ -34,10 +37,11 @@ namespace StanBot.Services.MailService
                 };
 
                 await _graphServiceClient.Me.SendMail(message).Request().PostAsync();
+                _logger.Info($"E-mail successfully send to {mailAdress}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Could not send E-Mail.\n{ex}");
+                _logger.Error($"Could not send E-Mail. Stracktrace: {ex.Message}");
             }
         }
     }

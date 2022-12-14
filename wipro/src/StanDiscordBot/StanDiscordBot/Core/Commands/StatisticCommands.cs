@@ -3,11 +3,14 @@ using Discord.Interactions;
 using ScottPlot.Plottable;
 using StanDatabase.Repositories;
 using StanDatabase.DTOs;
+using NLog;
 
 namespace StanBot.Core.Commands
 {
     public class StatisticCommands : ModuleBase<SocketCommandContext>
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountRepository _discordAccountRepository;
         private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
@@ -32,6 +35,7 @@ namespace StanBot.Core.Commands
         [Discord.Commands.Summary("Plots number of students per house.")]
         public async Task StudentsPerHouse()
         {
+            _logger.Info($"Received statistic command !studentsPerHouse from {Context.Message.Author.Username}.");
 
             List<StudentsPerHouseDTO> list = _studentRepository.NumberOfStudentsPerHouse();
 
@@ -70,7 +74,8 @@ namespace StanBot.Core.Commands
         [Discord.Commands.Summary("Plots number of students per semester.")]
         public async Task StudentsPerSemester()
         {
-
+            _logger.Info($"Received statistic command !studentsPerSemester from {Context.Message.Author.Username}.");
+            
             List<StudentsPerSemesterDTO> list = _studentRepository.NumberOfStudentsPerSemester();
 
             List<Bar> bars = new();
@@ -108,6 +113,8 @@ namespace StanBot.Core.Commands
         [Discord.Commands.Summary("Plots number of discord accounts registered, per semester.")]
         public async Task AccountsPerSemester()
         {
+            _logger.Info($"Received statistic command !accountsPerSemester from {Context.Message.Author.Username}.");
+
             List<DiscordAccountsPerSemesterDTO> list = _discordAccountRepository.NumberOfDiscordAccountsPerSemester();
 
             List<Bar> bars = new();
@@ -145,6 +152,8 @@ namespace StanBot.Core.Commands
         [Discord.Commands.Summary("Plots number of members for the top n modules.")]
         public async Task MembersPerModule(int numberOfModules = 10)
         {
+            _logger.Info($"Received statistic command !memebersPerModule from {Context.Message.Author.Username}.");
+
             List<MembersPerModuleDTO> list = _discordAccountModuleRepository.NumberOfMembersPerModule(numberOfModules);
 
             string[] moduleName = new string[list.Count];

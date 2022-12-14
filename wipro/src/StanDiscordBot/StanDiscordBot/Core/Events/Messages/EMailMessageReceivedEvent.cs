@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using LinqToDB;
+using NLog;
 using StanBot.Services.MailService;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
@@ -10,6 +11,8 @@ namespace StanBot.Core.Events.Messages
 {
     internal class EMailMessageReceivedEvent : IMessageReceiver
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IStudentRepository _studentRepository;
         private readonly VerificationCodeManager _verificationCodeManager;
         private readonly IMailService _mailService;
@@ -29,7 +32,7 @@ namespace StanBot.Core.Events.Messages
 
         public async Task ProcessMessage(SocketUserMessage message)
         {
-            Console.WriteLine($"Authentication Message received: {message}");
+            _logger.Debug($"Authentication Message received: {message} | From: {message.Author}");
 
             try
             {
@@ -42,13 +45,14 @@ namespace StanBot.Core.Events.Messages
                         + "Kontrolliere auf mögliche Tippfehler oder kontaktiere einen Administrator.\n\r\n\r"
                         + $"A student with the email address {message.Content} does not exist. Check for possible typos or contact an administrator."
                         );
+                    _logger.Info($"Could not find a student with Email: {message.Content}");
                     return;
                 }
             } 
             catch (LinqToDBException exception)
             {
                 // Send Mail to Admin, because of connection problems
-                Console.WriteLine(exception.Message);
+                _logger.Error($"There was an Error, due to a database exception in the Email Message Received Event. Stacktrace: {exception.Message}");
             }
 
             int verificationCode = _verificationCodeManager.CreateCodeForUser(message.Author.Id, message.Content);
@@ -70,6 +74,7 @@ namespace StanBot.Core.Events.Messages
             await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
 
             await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
+            _logger.Info($"Successfully send Email to {message.Content} with Verification Code {verificationCode}");
         }
 
         public bool IsMatch(SocketMessage message)

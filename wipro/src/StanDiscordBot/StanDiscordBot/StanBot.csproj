@@ -11,8 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.8.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Graph" Version="4.47.0" />
-    <PackageReference Include="NLog" Version="5.0.5" />
+    <PackageReference Include="Microsoft.Graph" Version="4.48.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.0" />
     <PackageReference Include="ScottPlot" Version="4.1.59" />
   </ItemGroup>
 

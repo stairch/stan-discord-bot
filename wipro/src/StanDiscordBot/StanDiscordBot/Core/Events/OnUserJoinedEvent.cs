@@ -1,10 +1,13 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using NLog;
 
 namespace StanBot.Core.Events
 {
     public class OnUserJoinedEvent
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public async Task OnUserJoined(SocketGuildUser socketGuildUser)
         {
             await socketGuildUser.SendMessageAsync(
@@ -30,6 +33,8 @@ namespace StanBot.Core.Events
                 + "\t2) Common sense is assumed\n\r"
                 + "\tWe assume that the rules above suffice.\n"
                 + "\tShould it be necessary to adapt the rules, you accept these by remaining on the server. Such a change will be published in #stair-announcements.");
+
+            _logger.Info($"Received OnUserJoined Event. Send message to user {socketGuildUser.Username}#{socketGuildUser.DiscriminatorValue}");
         }
     }
 }
