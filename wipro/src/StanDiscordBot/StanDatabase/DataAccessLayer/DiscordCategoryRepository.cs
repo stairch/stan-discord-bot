@@ -8,6 +8,14 @@ namespace StanDatabase.DataAccessLayer
     {
         private const int CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD = 50;
 
+        public bool DoesCategoryExist(string name)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordCategory.Any(dc => dc.DiscordCategoryName.Equals(name));
+            }
+        }
+
         public DiscordCategory GetCategoryWithChannelCapacity()
         {
             using (var db = new DbStan())
@@ -15,7 +23,7 @@ namespace StanDatabase.DataAccessLayer
                 var latestCategoryQuery =   from dc in db.DiscordCategory
                                             orderby dc.DiscordCategoryId descending
                                             select dc;
-                
+
                 DiscordCategory? discordCategory = latestCategoryQuery.FirstOrDefault();
                 // add new category when none are available
                 if (discordCategory == null)

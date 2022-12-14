@@ -7,13 +7,13 @@ namespace StanDatabase.DataAccessLayer
 {
     public class DiscordAccountModuleRepository : IDiscordAccountModuleRepository
     {
-        private DiscordAccountRepository _discordAccountRepository;
+        private IDiscordAccountRepository _discordAccountRepository;
 
-        private ModuleRepository _moduleRepository;
+        private IModuleRepository _moduleRepository;
 
         public DiscordAccountModuleRepository(
-            DiscordAccountRepository discordAccountRepository,
-            ModuleRepository moduleRepository)
+            IDiscordAccountRepository discordAccountRepository,
+            IModuleRepository moduleRepository)
         {
             _discordAccountRepository = discordAccountRepository;
             _moduleRepository = moduleRepository;
