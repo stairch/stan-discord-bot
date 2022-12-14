@@ -64,11 +64,11 @@
 
 \hypersetup{
     colorlinks=true,
-    linkcolor=black,
+    linkcolor=darkgray,
     filecolor=magenta,
     urlcolor=blue
 }
-% changes font
+\urlstyle{same}
 
 \bibliography{wipro-main-doc}
 \graphicspath{ {images/} }
@@ -292,12 +292,12 @@ Beschrieb ER-Diagramm
 
 \subsubsection{C\# und .NET Framework}
 
-Es wurde entschieden weiterhin mit C# zu arbeiten.
+Es wurde entschieden weiterhin mit C\# zu arbeiten.
 Dies wurde auch für die bereits existierende Version verwendet.
 Discord Libraries sind jedoch auch in anderen programmiersprachen verfügbar.
 Discord selbst führt eine Liste zu den verfügbaren Libraries und deren unterstützten Programmiersprachen, welche von der Community entwickelt wurden.\autocite{noauthor_discord_2022-1}
 Bei Besprechungen mit den Stakeholdern wurde kein Grund gesehen auf etwas anderes umzusteigen, vor allem da durch das existierende Projekte eine gewisse Machbarkeit für einen Teil der Features bereits bewiesen wurde.
-Durch die neuen .NET Versionen wird es nun auch möglich den C# Code auf andere Platformen als nur Windows zu exportieren.
+Durch die neuen .NET Versionen wird es nun auch möglich den C\# Code auf andere Platformen als nur Windows zu exportieren.
 Hierfür wurde früher Project Mono gebraucht oder .NET Core.
 Die beiden Projekte wurden mit dem .NET Framework zusammengeführt zu der .NET 5 Version.\autocite{schwichtenberg_net_2019}
 Im November 2022 ist die neue .NET 7 Version herausgekommen.
@@ -509,7 +509,7 @@ Dies könnten sein:
 \begin{itemize}
     \item technische Risiken
     \item Implementierungsrisiken
-    \item wirtschaftliche, industrielle und Geschäftsrisiken \autocite{} % PMB Risikomanagement p8-10
+    \item wirtschaftliche, industrielle und Geschäftsrisiken
 \end{itemize}
 \noindent
 Das Ziel des Risikomanagements ist es, Risiken frühzeitig zu erkennen und entsprechende Massnahmen zu ergreifen.
@@ -519,32 +519,11 @@ Der Prozess dabei ist folgender:
     \item Analysieren
     \item Priorisieren
     \item Massnahmen erarbeiten
-    \item Überwachen \autocite{} % PMB Risikomanagement p16
+    \item Überwachen \autocite[p.~8-16]{peter_sollberger_risikomanagement_2021}
 \end{enumerate}
 \noindent
 In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten.
-Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.
-
-\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
-    \hline
-    \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
-    \hline
-    R1 & Verbindung zwischen Bot und Discord bricht ab. &
-    Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
-    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. &
-    Möglich & Hoch & 6 \\
-    \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
-    enthält irgendwelche Escape-Characters.
-    Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
-    Unwahrscheinlich & Kritisch & 4 \\
-    \hline
-\end{longtable}
-
-% Library nicht alle Funktionen die benötigt werden
-% Fehlermeldungen an Admin weiterleiten
-% Absturz des Servers Enterprise Lab
+Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.\\\\
 
 \begin{tabular}[h]{ll}
     \textbf{Eintrittswahrscheinlichkeit} & \textbf{Schadensausmass} \\
@@ -553,30 +532,67 @@ Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \na
     \tabitem Wahrscheinlich (3) & \tabitem Hoch (3) \\
     \tabitem Sehr wahrscheinlich (4) & \tabitem Kritisch (4) \\
 \end{tabular}
-
 \clearpage
-\subsubsection{Massnahmen}
-\noindent
-Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
-Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
-\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
+
+\begin{longtable}[ht]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{1em}|}
     \hline
-    \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
-    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} &
-    \rot{\shortstack[l]{Schadensausmass\\(neu)}} &
-    \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
+    \rowcolor[gray]{.9} \rot{ID} & \rot{Risiko} & \rot{Beschreibung} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{Schadensausmass} & \rot{Risikoskala} \\*
     \hline
     R1 & Verbindung zwischen Bot und Discord bricht ab. &
     Die Verbindung zwischen dem Server (Discord) und dem Client (Bot) ist nicht mehr gewährleistet.
-    Dies tritt ein, wenn der Server auf dem der Bot läuft, keine Verbindung zum Internet mehr hat.
-    Dadurch können keine Daten und Befehle ausgetauscht werden. &
-    Möglich & Hoch & 6 \\
+    Dies tritt ein, wenn der Bot keine Verbindung zum Internet mehr hat. Dadurch können keine Daten und Befehle ausgetauscht werden. &
+    Wahrscheinlich & Hoch & 9 \\
     \hline
     R2 & Das Einlesen der Listen zerstört die Datenbank & Die Studenten- oder Modulliste, welche in das System eingelesen wird,
     enthält irgendwelche Escape-Characters.
     Dadurch könnte es beim Eintragen in die Datenbank zu Problemen kommen und diese im schlimmsten Fall zerstören. &
     Unwahrscheinlich & Kritisch & 4 \\
     \hline
+    R3 & Discord Bot kann die vielen Benutzer/Nachrichten nicht bewältigen & Der Discord Bot kann die
+    vielen einkommenden Nachrichten nicht bewältigen. Dies führt zu langen Antwortzeiten oder Fehlermeldungen beim Bot. &
+    Möglich & Hoch &  6 \\
+    \hline
+    R4 & Berechtigungen für den Bot werden zu offen gesetzt. & Beim Erstellen des Bots oder beim Abfangen der Nachrichten werden
+    die Berechtigungen für den Discord Bot zu offen gesetzt. Dies erlaubt es im, allenfalls unerwünschte Aktionen auf 
+    dem Server auszuführen. &
+    Wahrscheinlich & Hoch & 9 \\
+    \hline
+    \caption{Risiken Beschreibung}
+    \label{tab: risk-description}
+\end{longtable}
+
+\clearpage
+\subsubsection{Massnahmen}
+\noindent
+Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
+Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
+\begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{2em}|}
+    \hline
+    \rowcolor[gray]{.9} \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
+    \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit\\(neu)}} &
+    \rot{\shortstack[l]{Schadensausmass\\(neu)}} &
+    \rot{\shortstack[l]{Risikoskala\\(neu)}} \\
+    \hline
+    R1 & Verbindung zwischen Bot und Discord bricht ab. & Bei Verbindungsabbrüchen oder sonstigen Fehlermeldungen wird eine
+    Nachricht an den Administrator des Discord Bots gesendet. Dieser kann sich dann direkt dem Problem annehmen.
+    Weiter wird automatisch ein Neuverbindungsversuch gestartet. &
+    Möglich & Mittel & 4 \\
+    \hline
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die CSV Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
+    in das System gespeist wird. So können unerwartete Charaktere direkt markiert und ausgeschlossen werden. &
+    Unwahrscheinlich & Mittel & 2 \\
+    \hline
+    R3 & Discord Bot kann die vielen Benutzer/Nachrichten nicht bewältigen & Der Dirscord Bot muss vor dem Einsetzten in das 
+    produktive System auf Client Auslastung getestet werden. So können unangeneme Überraschungen verhindert werden. &
+    Unwahrscheinlich & Mittel &  2 \\
+    \hline
+    R4 & Berechtigungen für den Bot werden zu offen gesetzt. & Beim Erstellen des Bots oder beim Abfangen der Nachrichten werden alle 
+    Berechtigungen am Anfang deaktiviert. Per Auschlussverfahren werden Sie wieder aktiviert. So wird gewährleistet, dass nur benötigte
+    Berechtigungen gesetzt sind. &
+    Unwahrscheinlich & Gering & 1 \\
+    \hline
+    \caption{Risiken Massnahmen}
+    \label{tab: risk-measures}
 \end{longtable}
 
 \subsubsection{Risikomatrix}
@@ -595,14 +611,17 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
         \hline
         Sehr wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} & \cellcolor{red!50} \\[10pt]
         \hline
-        Wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} & \cellcolor{red!50} \\[10pt]
+        Wahrscheinlich & \cellcolor{yellow!50} & \cellcolor{yellow!50}& \cellcolor{orange!50}(R1, R2) & \cellcolor{red!50} \\[10pt]
         \hline
-        Möglich & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} & \cellcolor{orange!50} \\[10pt]
+        Möglich & \cellcolor{green!50} & \cellcolor{yellow!50}R1 & \cellcolor{yellow!50}(R3, R4) & \cellcolor{orange!50} \\[10pt]
         \hline
-        Unwahrscheinlich & \cellcolor{green!50} & \cellcolor{green!50} & \cellcolor{yellow!50} & \cellcolor{yellow!50} \\[10pt]
+        Unwahrscheinlich & \cellcolor{green!50}R4 & \cellcolor{green!50}R2, R3 & \cellcolor{yellow!50} & \cellcolor{yellow!50} \\[10pt]
         \hline
     \end{tabular}
+    \caption{Risikomatrix}
+    \label{tab: Riskmatrix}
 \end{table}
+\todo{Risikobereitschaftslinie irgendwie einzeichnen.}
 
 \clearpage
 \section{Realisierung}
@@ -691,8 +710,8 @@ In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizie
         Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 4.0.0 \\
         \hline
     \end{tabular}
-    \caption{Konfigurationsmanagement}
-    \label{tab: Konfigurationsmanagement}
+    \caption{Konfigurationsmanagement Bot alt}
+    \label{tab: Konfigurationsmanagement-Bot-alt}
 \end{table}
 
 
@@ -776,7 +795,7 @@ Diese hätte jedoch weniger Performance und würde keine Checks durchführen bei
 Das Auslesen von gefilterten Daten gestaltet sich ebenfalls einfacher.\autocite{castro_why_2020}
 Da bei diesem Projekt wichtig ist, dass die Daten korrekt im Schmea gespeichert werden und die Anpassbarkeit der Datenbank keinen Fokus bekommen hat, wurde eine SQL basierte Datenbank bevorzugt gegenüber von NoSQL Datenbanken.
 Als gewählte Technologie hat sich MySQL durch seine grosse Verbreitung sehr gut angeboten.
-Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie beschrieben.\autocite{noauthor_db-engines_2022}
+Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie\\beschrieben.\autocite{noauthor_db-engines_2022}
 
 \subsubsection*{Entscheidung einen eigenen Bot zu entwickeln}
 Zusammen mit STAIR wurde entschieden, wieder eine eigensentwickelte Lösung zu wählen.
@@ -786,7 +805,7 @@ Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vo
 Die einzigen Limitierungen sind vom API von Discord und von technischen Know-How der betreuenden Entwicklern.
 Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten.
 Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
-
+\newpage
 \subsection{Initialisierungsphase}
 Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
 Diese werden für die Realisierungsphase in Epics umgewandelt.
@@ -903,6 +922,7 @@ Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
     \caption{User-Stories}
     \label{tab: UserStories}
 \end{longtable}
+
 \subsubsection*{Sprintplanung}
 \begin{table}[h]
     \centering
@@ -947,7 +967,7 @@ Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
 Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
 Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
-\begin{longtable}[h]{|p{15em}|p{25em}|}
+\begin{longtable}[ht]{|p{15em}|p{25em}|}
     \hline
     \multicolumn{2}{|l|}{\textbf{Betritt ein neuer Student den Discord-Server, bekommt er direkt eine Nachricht.}} \\*
     \multicolumn{2}{|l|}{\textbf{vom Stan Bot.}} \\
@@ -1146,6 +1166,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 \end{table}
 \todo{Welches Projekt enthält welche Libraries}
 
+\newpage
 \subsection{Sprint 1}
 Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie folgt aus.
 \begin{figure}[h]
@@ -1165,8 +1186,15 @@ welche Daten im System wichtig sind und wie diese gespeichert werden.
 Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
 Das ERD kann später in ein Datenbank Schema übertragen werden.
 Die einzelnen Tabellen sind wie folgt beschrieben.
-\todo{Einfügen ER-Diagramm}
-\newline
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/ER-Diagramm.png}
+    \caption{Entity Relationship Diagram}
+    \label{fig:ER-Diagram}
+\end{figure}
+
+(Ein grosses Bild des Diagramms findet sich im Anhang auf Seite \pageref*{fig:ER-Diagram-big})\\
 Bei der Datenspeicherung wird eine Unterteilung zwischen dem Studenten und seinem Discord Account vorgenommen.
 Dies erlaubt es, eine saubere Trennung zwischen den richtigen Studenten und ihrem Online erscheinen auf Discord zu gewährleisten.
 (Seperation of Concerns (SOC)).
@@ -1201,15 +1229,14 @@ Datenbank Operationen sollen nur in diesem Projekt erfolgen.
 Die anderen Projekte sollen keinen direkten Zugriff auf die Datenbank haben.\\
 Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, 
 die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
-Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden,
-sowie für die Statistiken.
+Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.
+\todo{Test Projekte hinzufügen}
 
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
 Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.\\
 Das Repository Pattern ist dazu da, die Create, Read, Update und Delete (CRUD) Funktionen, 
-welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{}
-%https://offering.solutions/blog/articles/2014/10/06/asp.net-repository-pattern-und-unit-of-work/#:~:text=Repositories%3A,die%20CRUD%2DOperationen%20ausf%C3%BChren%20kann.
+welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{gosebrink_aspnet_2014}
 Es sieht vor, dass jedes Objekt genau eine Schnittstelle hat, über die Veränderung daran vorgenommen werden können.
 
 \begin{figure}[h]
@@ -1301,15 +1328,30 @@ Diese musste
 
 \todo{Yannis}
 
+\subsubsection{Verbinden der Datenbank mit Linq2DB}
+\todo{Yannis}
+
+
 \newpage
 \subsection{Sprint 2}
-In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt und dem Erstellen des Discord Bots.
+In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt, 
+dem Erstellen des Discord Bots und der ersten Kommunikation damit.
 
 \subsubsection{Modulerfassung}
 \todo{Yannis}
 
 \subsubsection{Aufsetzten Discord Bot}
+Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
+Dort kann man den Namen des Bots angeben und erhält ein Application Token.
+Dieses dient wie als Private Key der Applikation und wird verwendet um sich im COde mit dem Bot zu verbinden.
+Weiter müssen auf der Platform noch die Berechtigungen des Bots spezialisiert werden.
+Diese müssen gut überlegt sein, da man nur für spezifizierte Events Callbacks im Code bekommt.
+\newline
+Wenn man die gewünschten Berechtigungen markiert hat, erhält man eine URL.
+Diese kann man direkt im Browser eingeben, um den Bot einem Server zuzuordnen.
+Damit das gelingt, muss der Nutzer auf dem Server die Berechtigung zum Bots hinzufügen besitzen. 
 \todo{Discord Developer Page: Applikationen im Web.}
+\todo{Bild Zuweisung von Bot zum Server}
 
 \subsubsection{Stan Bot Architektur}
 Grundlegend geht es bei der Bot Architektur um die Kommunikation mit der DiscordClient Klasse.
@@ -1325,10 +1367,9 @@ Aus der Microsoft .NET Dokumentation:
 \begin{itemize}
     \item Transient-Vorgänge sind immer unterschiedliche, und mit jedem Abruf des Diensts wird eine neue Instanz erstellt.
     \item Scoped-Vorgänge ändern sich nur durch einen neuen Bereich, die Instanz ist jedoch innerhalb eines Bereichs immer gleich.
-    \item Singleton-Vorgänge sind immer gleich, und eine neue Instanz wird nur einmal erstellt. \autocite{}
+    \item Singleton-Vorgänge sind immer gleich, und eine neue Instanz wird nur einmal erstellt. \autocite{ievangelist_verwenden_nodate}
 \end{itemize}
 }
-%https://learn.microsoft.com/de-de/dotnet/core/extensions/dependency-injection-usage#conclusion
 
 \begin{lstlisting}[language=csharp]
 // Program.cs
@@ -1379,12 +1420,179 @@ Die Settings Datei heisst \textit{stan.json}
 \end{lstlisting}
 
 \subsubsection{Kommunikation mit Discord}
+Die DiscordNet Library für C\# implementiert die \textit{DiscordSocketClient} Klasse.
+Mit dieser Klasse ist es möglich den Discord Bot zu starten und sich auf Ereignisse zu abonnieren.
+Der Bot kann dabei auf dem Server, je nach Berechtigung, fast alle Ereignisse abfangen, die getriggert werden.
+Das sind nicht nur Ereignisse, die den Bot direkt betreffen, sondern auch allgemeine Sachen, 
+wie schreiben in einen Chat oder dem Beitreten eines Sprachchannels.\\
+Die Anzahl der Ereignisse, welche abgefangen werden können, hängt ab von der Einstellung der \textit{GatewayIntents} ab.
+Diese und andere Konfigurationen können bei dem Erstellen des Bots angegeben werden.
+
+\begin{lstlisting}[language=csharp]
+// Program.cs
+.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
+    {
+        GatewayIntents = GatewayIntents.All,
+        AlwaysDownloadUsers = true,
+        LogLevel = LogSeverity.Debug
+    }))
+\end{lstlisting}
+
+Allerdings genügt diese Einstellung alleine noch nicht.
+Um Textnachrichten abzufangen, muss bei der Discord Developer Applikation noch ein spezieller Hacken gesetzt werden.
+\todo{Einfügen des Bildes der Discord Developer Einstellungen}
+\newline
+Nun können verschiedene Events beim DiscordClient abonniert werden.
+
+\begin{lstlisting}[language=csharp]
+// EventHandler.cs
+_discordSocketClient.UserJoined += _onUserJoinedEvent.OnUserJoined;
+_discordSocketClient.MessageReceived += _messageHandler.OnMessageReceived;
+\end{lstlisting}
+
+Es wird für jeden Event eine eigene Klasse erstellt.
+So können diese schön gekapselt und seperat behandelt werden.\\
+Wie man im Code sehen kann, gibt es für den DiscordSocketClient nur ein MessageReceived Event.
+Dieses Event entscheidet noch nicht, ob es sich um eine allgemeine Nachricht im Chat handelt, 
+eine Direkte Nachricht an den Bot oder einen Befehl.\\\\
+Im Anhang auf Seite \pageref*{fig:message-handling} findet man das Klassendiagramm zum Thema Message Handling.\\\\
+Um jetzt nicht alle Nachrichten in einer Klasse bearbeiten zu müssen, wird auf die Hilfe von Interfaces zurückgegriffen.\\
+Alle Nachrichten werden an die \textit{MessageHandler} Klasse weitergeleitet.
+Dort wird eine Vorselektion gemacht, ob es sich bei den eintreffenden Nachrichten um System Messages handelt, oder um andere Bot Nachrichten.
+Wird diese Vorselektion nicht gemacht, kann es sein, dass es zu einer Endlos-Schleife führt, 
+da der Bot auch seine eigenen geschriebenen Nachrichten in der \textit{MessageReceived} Methode empfängt.\\
+Im Anschluss wird jede Implementation der \textit{IMessageReceiver} Klasse durchgegangen und überprüft,
+ob die MessageSource korrekt ist und die \textit{IsMatch} Methode true zurückgibt.
+Nur wenn beide Anforderungen erfüllt sind, wird die Nachricht an die jeweilige Message Receiver Implementation weitergeleitet.
+
+\subsubsection*{Das EmailMessageReceivedEvent}
+Die \textit{EmailMessageReceivedEvent}-Klasse implementiert das \textit{IMessageReceived}-Interface 
+und ist somit ein Empfänger des MessageReceived Events von Discord.
+In der \textit{EmailMessageReceivedEvent} Klasse wird eine Nachricht als Direct Message erwartet. 
+Sie soll die Form \textit{<vorname.name>@stud.hslu.ch} oder \textit{<vorname.name>@hslu.ch} haben. 
+Alle Nachrichten, die nicht diesem Muster entsprechen werden nicht behandelt. 
+Dies erlaubt es nur Mitarbeitern oder Studenten der Hochschule sich im Discord Server zu authentifizieren.\\\\
+Sobald die Nachricht diesem Muster entspricht, wird sie der \textit{ProcessMessage} Methode übergeben. 
+Dort wird zuerst in der Datenbank überprüft ob der Nutzer vorhanden ist. 
+Falls nicht, wird eine Fehlermeldung an den Nutzer zurückgegeben. 
+Wenn alles stimmt, wird ein Code für die Verifikation generiert.\\ 
+Bei der Generierung des Codes wird eine zufällige 6 stellige Zahl erstellt und diese, zusammen mit der Discord Author Id, in einer Liste gespeichert. 
+Solange der Server online ist, werden offene Authentifikation in dieser Liste persisitiert. 
+Falls der Server aus einem unerklärlichen Grund heruntergefahren wird, oder die Applikation neu gestartet wird, 
+muss der Authentifizierungsprozess von neuem begonnen werden.
+Dies wird allerdings in Kauf genommen, da noch nichts von Bedeutung für den Benutzer oder den Server passiert ist.\\\\
+Sobald der Code generiert wurde, wird dieser, zusammen mit einer Nachricht, dem Benutzer an die angegebene E-Mail Adresse gesendet 
+und eine Nachricht an den Benutzer zurückgegeben.\\
+Damit ist dieser Schritt abgeschlossen.
+\todo{Könnte noch Ablaufdiagramm eingefügt werden.}
+
+\subsubsection*{Das VerificationCodeMessageReceivedEvent}
+Die \textit{VerificationCodeMessageReceivedEvent}-Klasse implementiert auch das \textit{IMessageReceived}-Interface.
+Damit eine Nachricht an diese Klasse weitergeleitet wird, muss es auch eine Direct Message an den Bot sein, 
+swoie eine 6-stellige Zahl. 
+Diese Überprüfung wird mit dem Regex-String "\textbf{\^[0-9]\{6\}\$}" erreicht.
+Wenn die Nachricht dem korrekten Muster entspricht, wird in der Liste im VerificationCodeManager überprüft, 
+ob eine offene Authentifizierung von diesem Nutzer mit diesem Code existiert.
+Falls dies nicht der Fall ist, wird eine Fehlermeldung an den Nutzer zurückgegeben.\\\\
+Wenn der Code korrekt ist. wird in der Datenbank ein neuer \textbf{DiscordAccount} erstellt.
+Dieser wird mit dem zugehörigen Studenten, mithilfe der E-Mail, verbunden.
+Des Weiteren wird in der Zwischentabelle \textbf{DiscordAccountDiscordRole} die Verbindung zu den Rollen erstellt.
+Für neu authentifizierte Studenten wird die Rolle \textbf{student} und die richtige Haus-Rolle zugewiesen.\\\\
+Sobald die Manipulationen auf der Datenbank abgeschlossen sind, werden die Änderungen auch auf den Discord übertragen.
+Also der Student bekommt dort vom Bot die Rollen zugewiesen.
+Damit hat er jetzt vollen Zugang zum STAIR-Server.\\\\
+Im Falle, dass der Benutzer sich schon einmal auf dem STAIR Server authentifiziert hat, 
+aber aus irgendeinem Grund den Server verlassen hat, muss er sich noch einmal authentifizieren.
+Allerdings werden keine Datenbankmanipulationen gemacht, sondern die Rollen, welcher er ja schon besitzt, zurückgegeben.
+\todo{Könnte noch Ablaufdiagramm eingefügt werden}
 
 \newpage
 \subsection{Sprint 3}
+In diesem Kapitel wird sich mit der Command Service Architektur von Discord auseinandergesetzt.
+Des weiteren wird die Implementation der show- und hide Module- Commands genauer erklärt.
 
 \subsubsection{Command Service Architektur}
-\todo{Nicolas}
+Der Command Service wird von Discord verwendet, um Befehle an den Bot zu schicken.
+Der Service wird unabhängig neben dem Discord Client gestartet aber nimmt diesen, beim Ausführen der Commands als Kontext entgegen.
+
+\subsubsection*{Starten des Command Service}
+Der Command Service wird wie folgt dem Hosting Environment hinzugefügt.
+
+\begin{lstlisting}[language=csharp]
+// Program.cs
+
+.AddSingleton(new CommandService(new CommandServiceConfig
+    {
+        DefaultRunMode = RunMode.Async,
+        LogLevel = LogSeverity.Debug
+    }))
+\end{lstlisting}
+
+Beim Starten des Event Handlers wird der Command Service initialisiert.
+Durch die Methode \textbf{AddModulesAsync} geht der Command Service automatisch durch die ganze Projektstruktur durch und 
+sucht nach Klassen, welche von \textit{ModuleBase<SocketCommandContext>} erben. 
+Diese fügt er dann dem Context, in dem der Bot läuft, hinzu.
+
+\begin{lstlisting}[language=csharp]
+// EventHandler.cs
+
+await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
+\end{lstlisting}
+
+\subsubsection*{Der CommandMessageReceivedEvent}
+Die Befehle, welche der Benutzer schicken kann, werden als normale Nachrichten verarbeitet.
+Dies bedeutet, dass sie auch durch die \textbf{MessageReceived} Methode abgefangen werden.
+In der \textit{CommandMessageReceivedEvent}-Klasse werden alle Nachrichten mit dem Command-Prefix verarbeitet.
+Dieser ist in der Config Datei hinterlegt und kann geändert werden.
+Für das Projekt wird der Prefix \textbf{!} verwendet.
+Falls eine Nachricht mit diesem Prefix eintrifft wird mit folgender Anweisung versucht diesen Befehl auszuführen.
+
+\begin{lstlisting}[language=csharp]
+// CommandMessageReceivedEvent.cs
+
+var context = new SocketCommandContext(_discordSocketClient, message);
+var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
+\end{lstlisting}
+
+Nun schaut der Command Service durch alle Commands durch, 
+welche er im vorherigen Schritt mit der \textbf{AddModulesAsync} Methode hinzugefügt hat.
+Falls er diesen Command nicht erfolgreich ausführen konnte, gibt er eine Fehlermeldung zurück, 
+die wiederum in geigneter Form den Benutzer mitgeteilt wird.
+
+\subsubsection*{Command-Klassen erklärt}
+Die Command Klassen erben, wie im vorherigen Kapitel erklärt, von \textbf{ModuleBase<SocketCommandContext>}.
+Dudurch werden alle Methoden, welche in der Klasse mit einem \textbf{[Command()]} Attribut versehen sind,
+dem Command Service hinzugefügt.
+
+\begin{lstlisting}[language=csharp]
+// Miscellaneous.cs
+
+public class Miscellaneous : ModuleBase<SocketCommandContext>
+{
+    [Command("ping")]
+    [Alias("latency")]
+    [Summary("Displays the bot's current latency")]
+    public Task PingCommand() => ReplyAsync($"Pong! The bot's latency is {Context.Client.Latency} ms.");
+}
+\end{lstlisting}
+
+Der Text, welcher im Command-Attribut steht, ist der Befehl, den der Benutzer im Discord ausführen muss.
+Im obigen Beispiel wäre dies: \textbf{!ping}.\\
+Je nach Anwendungsfall können noch weitere Attribute ergänzt werden.
+So wird oben ein Alias und eine Beschreibung hinzugefügt.
+Es können aber auch Berechtigungsfragen schon mit diesen Rollen abgeklärt werden.
+Zum Beispiel gibt es ein \textbf{[RequireRole()]} - Attribut, welches eine bestimmte Rolle zum Ausführen des Commands vorgibt.
+Befehle können auch Argumente entgegennehmen.
+Diese werden einfach als Argumente im Methodenkopf angegeben.
+Falls mehrere Parameter verwendet werden müssen, muss das Attribute \textbf{[Remainder]} hinzugefügt werden.
+Dies verhindert, dass nur das letzte Argument an den Bot übertragen wird.\\\\
+Der \textbf{Context} wird von ModuleBase geerbt.
+Dadurch können der Channel oder der Benutzer, der den Befehl geschickt hat, abgefragt werden.
+Dies erweisst sich nützlich, wenn gewisse Befehle nur in gewissen Channeln abgesetzt werden dürfen.\\\\
+Für den Anfang wurde ein \textbf{!ping} Befehl und ein \textbf{!help <command>} Befehl hinzugefügt.
+Der ping-Befehl gibt die aktuelle Antwortzeit des Bots zurück.
+Beim help-Befehl werden alle Commands, welche registriert sind, aufgelistet.
+Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um detailiertere Informationen zu einem Befehl zu erhalten.
 
 \subsubsection{show/hide <module> Command}
 
@@ -1420,7 +1628,301 @@ Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Te
 \todo{add image of mycampus calendar}
 
 \subsubsection{E-Mail Service}
+Der E-Mail Service wird im Authentifizierungsprozess benötigt.
+Der Benutzer bekommt damit eine E-Mail mit dem Verifizierungscode auf die angegebene Studentenadresse gesendet.
+Diesen Code muss er an den Bot zurücksenden um die Authentifizierung abzuschliessen.\\\\
+Es wurde über verschiedene Lösungen zu diesem Problem diskutiert.
+So könnte man zum Beispiel einen eigenen Mail Server hosten und die Mails über diesen verschicken.
+Eine weitere Möglichkeit bestand in der Nutzung des Hochschul-Enterprise-Labs.
+Diese bieten einen Mail Dienst an, mit dem man für private Applikationen Mails versenden kann.
+Oder man benutzt die bestehende Lösung des alten Stan Bots.\\
+Für dieses Projekt wurde entschieden, die bestehende Lösung weiter zu benutzen.
+Dies aus dem Grund, da der Mail Service etabliert ist und funktioniert und die Infrastruktur schon besteht.
+Für das Team bestand kein Grund diesen zu ersetzten.\\\\
+Um Mails aus einer Applikation verschicken zu können, müssen diese über einen Account auf einem Mail Server verschickt werden.
+Man muss sich also auf einen Mail Server verbinden, um dort mit einem registrierten E-Mail Account die Mail versenden zu können.
+Um dieses Problem zu lösen, wird mit den Angeboten von Microsoft gearbeitet.\\
+Als Mail Server wird Outlook verwendet.
+Dies aus dem Grund, da alle Studenten ein Microsoft Konto besitzen und ihre E-Mails über Outlook verwalten.
+Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
+Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord Bot Applikation funktioniert.
+
+\subsubsection*{Mircosoft Identity}
+%https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+Die Microsoft Identity Platform erlaubt es Entwicklern einen Authentifizierungsmechanismus in ihre Applikation einzubauen.
+Für Besitzer eines Microsoft Azure Administator Kontos oder Office 365 ist die Lösung kostenlos und da auch STAIR einen Office 365 Account hat,
+bietet sich diese Lösung an.
+Die Microsoft Identity Platform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, bzw. diesen nutzen.
+Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
+Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{}
+%https://www.youtube.com/watch?v=sn9HWh-rg9o&ab_channel=MicrosoftAzure
+
+\subsubsection*{Azure Applikation}
+
+\subsubsection*{Microsoft Graph}
+
+\subsubsection*{Der Mail Service}
+Für den Discord Bot wurde von Microsoft Identity die Microsoft Authentication Library (MSAL) benutzt. \autocite{}
+%https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
+Dort wird das Gerät auf dem die Applikation läuft, beim Starten einmalig authentifiziert und man erhält ein Acces Token zurück.
+Dieses kann nun der Klasse \textbf{GraphServiceClient} übergeben werden.
+Der GraphServiceClient ist Teil von Microsoft Graph und erlaubt es nun über Ihre API Endpunkte aufzurufen.
+So kann eine Post Request auf den Endpunkt \textit{https://graph.microsoft.com/v1.0/me/sendMail} gesendet werden.
+Da der GraphServiceClient mit dem richtigen Microsoft Konto authentifiziert ist, 
+werden nun die E-Mails direkt über das richtige Outlook Konto weitergeleitet.
+
+
+\todo{Hinzufügen Diagramm E-Mail Infrastruktur}
+
+\newpage
+\subsection{Sprint 4}
+In diesem Sprint werden die Statistiken für die STAIR Administration und ihrer Mitglieder implementiert.
+
+\subsubsection{Statistiken}
+In den Anforderungen wurde gewünscht, dass man als STAIR Mitglied mithilfe der Datenbank verschiedene Statistiken auslesen kann.
+Die Art, wie man diese Statistiken erhält, konnte selbst entschieden werden.
+Das Team hat entschieden, diese über Bot Commands zu erstellen.
+Mit den Commands ist es möglich, Befehle für den Bot zu übergeben.
+Da dieser über das Repository Pattern Zugriff auf die Datenbank hat, kann er die gewünschten Queries absetzten.\\
+Eine weitere Möglichkeit wäre gewesen,  Statistiken mithilfe von Scripts abzufragen.
+Mit dieser Methode müsste man sich allerdings auf den Server im Enterprise Lab verbinden, die Scripts heraussuchen und diese dort ausführen.
+Dies wurde als nicht leicht erweiterbar und benutzerfreundlich eingestuft und aus diesem Grund verworfen.\\\\
+Für dieses Projekt wurden 4 verschiedene Statistiken implementiert.
+Weitere können aber einfach hinzugefügt werden.\\
+Die 4 Statistiken sind:
+\begin{itemize}
+    \item Anzahl Studenten Pro Haus
+    \item Anzahl Studenten pro Semester
+    \item Anzahl registrierter Discord Accounts mit Studenten aus jeweiligem Semester
+    \item Anzahl Mitglieder pro Modul-Channel
+\end{itemize}
+Die Befehle werden in Discord wie folgt abgesetzt:
+\begin{itemize}
+    \item \textbf{!studentsPerHouse}
+    \item \textbf{!studentsPerSemester}
+    \item \textbf{!accountsPerSemester}
+    \item \textbf{!membersPerModule}
+\end{itemize}
+Die Abfragen werden in den weiteren Kapiteln noch genauer beschrieben.
+
+\subsubsection*{Aufruf Berechtigungen}
+Es sollen nur Administratoren und STAIR Mitglieder diese Commands einsehen und ausführen können.
+Dazu wurde bei den Commands das Attribute [RequireRole("stair")] und [RequireRole("administrator")] gebraucht.
+Dieses kontrolliert, ob es sich bei beim Aufrufer um einen Benutzer mit den Rollen "stair" oder "administrator" handelt.
+
+\subsubsection*{Plotting Library}
+Damit Statistiken einfacher verständlich und aussagekräftig sind, verwendet man Diagramme (engl. Plots).
+Plotting Libraries gibt es viele, doch es wurde sich für das kostenlose OpenSource Projekt ScottPlott entschieden.
+ScottPlot ist für .NET entwickelt und liefert viele verschiedene Chart-Möglichkeiten, die einfach erstellt und bearbeitet werden können, mit.
+Die Verwendung ähnelt sehr der Library Matplotlib und ist dadurch für Personen, die sich schon mit Statistiken im Programmieren beschäftigt haben, einfach zu lernen.
+Sie bieten alle bekannten Diagramm-Arten an und erlauben es auch interaktive Plots zu erstellen. \autocite{}
+%https://scottplot.net/
+
+\newpage
+\subsubsection*{Statistik: Students per house}
+In dieser Statistik werden die Anzahl Studenten pro Haus zurückgegeben.
+Grundlage dafür bietet folgende SQL Query:
+
+\begin{lstlisting}[language=SQL]
+SELECT HouseName, Count(s.StudentId) AS StudentCount
+FROM students AS s
+INNER JOIN houses AS h ON s.FkHouseId=h.HouseId
+GROUP BY h.HouseName;
+\end{lstlisting}
+
+Übersetzt in eine Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// StudentRepository.cs
+
+from s in db.Student
+join h in db.House on s.FkHouseId equals h.HouseId
+group s by h.Name into g
+select new StudentsPerHouseDTO
+{
+    HouseName = g.Key,
+    StudentsCount = g.Count()
+};
+\end{lstlisting}
+
+Dargestellt wird diese Abfrage in einem Bar-Plot, wobei die x-Achse die verschiedenen Häuser sind und die y-Achse die Anzahl Studenten in einem Haus.
+Die einzelnen Bars werden nach den Farben des Hauses dynamisch eingefärbt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/studentsPerHouse.png}
+    \caption{Students per house}
+    \label{fig:students-per-house}
+\end{figure}
+
+\newpage
+\subsubsection*{Statistik: Students per semester}
+In dieser Statistik werden die Anzahl Studenten in den verschiedenen Semestern zurückgegeben.
+Die Anzahl der Semester wird bestimmt, durch die registrierten Studenten, in der Liste der Hochschul Administration.\\
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT Semester, Count(s.StudentId) AS StudentCount
+FROM students AS s
+GROUP BY s.Semester;
+\end{lstlisting}
+
+Übersetzt als Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// StudentRepository.cs
+
+from s in db.Student
+group s by s.Semester into g
+select new StudentsPerSemesterDTO
+{
+    Semester = g.Key,
+    StudentsCount = g.Count()
+};
+\end{lstlisting}
+
+Die Abfrage wird als Bar-Plot dargestellt. 
+Auf der x-Achse befinden sich die verschiedenen Semester und auf der y-Achse die Anzahl der sich darin befindenden Studenten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/studentsPerSemester.png}
+    \caption{Students per semester}
+    \label{fig:students-per-semester}
+\end{figure}
+
+\newpage
+\subsubsection*{Statistik: Accounts per semester}
+In dieser Statistik kann die Anzahl, der sich im STAIR Discord Server authentifizierten Personen, abgefragt werden.
+Gruppiert wird dabei wieder nach dem Semester in dem sich der Student befindet.
+So kann herausgefunden werden, in welchen Semestern sich die Discord Benutzer durchschnittlich befinden.
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT s.Semester, Count(ac.FkStudentId)
+FROM discordaccounts AS ac
+RIGHT JOIN students AS s ON ac.FkStudentId=s.StudentId
+GROUP BY s.Semester;
+\end{lstlisting}
+
+Diese Query ist etwas schwieriger in Linq zu übersetzten, da es so etwas wie \textbf{RIGHT JOIN} in Linq nicht gibt.
+Stattdessen müssen die Aufrufe der Tabellen in der Query vertauscht werden.
+Also die Tabelle, welche man mit \textbf{RIGHT JOIN} ganz anzeigen möchte, muss zuerst selektiert werden.
+Im Anschluss wird dann die andere gejoint.\\
+Damit auch leere Felder anzeigt werden, also z.B. Semester in denen es keine registrierten Studenten hat, 
+muss der Befehl \textit{DefaultIfEmpty()} auf der gejointen Gruppe aufgerufen werden.
+
+\begin{lstlisting}[language=SQL]
+// DiscordAccountRepository.cs
+
+from s in db.Student
+join dc in db.DiscordAccount on s.StudentId equals dc.FkStudentId into joinGroup
+from gr in joinGroup.DefaultIfEmpty()
+group gr by s.Semester into g
+select new DiscordAccountsPerSemesterDTO
+{
+    Semester = g.Key,
+    AccountsCount = g.Count(stud => stud.FkStudentId != null)
+};
+\end{lstlisting}
+
+Diese Abfrage wird, gleich wie die vorherige, auch als Bar-Plot dargestellt. 
+Auf der x-Achse befinden sich die verschiedenen Semester und auf der y-Achse die Anzahl der authentifizierten Studenten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/accountsPerSemester.png}
+    \caption{Accounts per semester}
+    \label{fig:accounts-per-semester}
+\end{figure}
+
+\clearpage
+\subsubsection*{Statistik: Members per module}
+In dieser Statistik können die meist abonnierten Modul Channels abgefragt werden.
+Es wird also nach den meisten Mitgliedern sortiert. 
+Die Anzahl der Module, die im Chart angezeigt werden sollen, ist über einen Parameter nach dem Befehl einstellbar.
+Standardmässig ist die Anzahl Module auf 10 eingestellt.\\
+Die grundlegende SQL Query ist folgende:
+
+\begin{lstlisting}[language=SQL]
+SELECT m.ChannelName, Count(am.FkDiscordAccountId) AS MemberCount
+FROM discordaccountsmodules AS am 
+INNER JOIN modules AS m ON am.FkModuleId=m.ModuleId
+GROUP BY m.ChannelName
+ORDER BY MemberCount DESC;
+\end{lstlisting}
+
+Übersetzt als Linq Query ergibt sich folgendes.
+
+\begin{lstlisting}[language=SQL]
+// DiscordAccountModuleRepository.cs
+
+from am in db.DiscordAccountModule
+join m in db.Module on am.FkModuleId equals m.ModuleId
+group m by m.ChannelName into g
+orderby g.Count() descending
+select new MembersPerModuleDTO
+{
+    ModuleName = g.Key,
+    MemberCount = g.Count()
+};
+\end{lstlisting}
+
+Diese Abfrage wird als Kuchen-Diagramm dargestellt. So können die Proportionen der einzelnen Module besser erahnt werden.
+Die Anzahl der Mitglieder dieser Channels, wird in den Kuchenstücken angezeigt.
+Die Legende rechts bietet eine Übersicht der dargestellten Module.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/membersPerModule.png}
+    \caption{Members per module}
+    \label{fig:members-per-module}
+\end{figure}
+
+\newpage
+\subsection{Sprint 5}
+Im letzten Sprint wird der Bot startbereit gemacht, um ihn auf die produktive Umgebung zu deployen.
+Des weiteren erhält er ein Profilbild, welches ihn als Bot zu erkennen gibt.
+
+\subsubsection{Stan Logo}
+Damit der Bot ein sauberes Erscheinungsbild hat, wird für Ihn ein Logo erstellt.
+Da Stan schon als Maskottchen von STAIR etabliert ist, nämlich als kleiner Kaktus, 
+soll er noch mit einen spezifischen Discord Look ausgestattet werden.\\
+Die Designs werden bei STAIR über die Plattform \textbf{Canva} verwaltet und erstellt. \autocite{}
+% https://www.canva.com/de_de/
+Darin wurde auch das Discord Stan Logo geboren.
+
+\begin{figure}[h]
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.7\textwidth]{img/StanDiscordLogoSolo.png}
+    \end{minipage}
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.7\textwidth]{img/StanDiscordLogo.png}
+    \end{minipage}
+    \caption{Stan Discord Logo}
+    \label{fig:stan-discord-logo}
+\end{figure}
+
+Diese Bilder können nun als Profilbild des Bots dienen, sowie als Vermarktungslogo für den STAIR Discord.
+
+\subsubsection{Bot als Deamon}
 \todo{Nicolas}
+
+\newpage
+\subsection{Deployment des Bots auf den Linux Server}
+\todo{Yannis}
+
+\newpage
+\subsection{Testsdurchführung}
+\todo{Nicolas}
+
+\newpage
+\subsection{Einführung des neuen Bots}
+\todo{Yannis}
+
+\newpage
+\subsection{Bedienungsanleitung Server}
+\todo{Yannis}
 
 \newpage
 \section{Evaluation und Validation}
@@ -1438,7 +1940,7 @@ Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Te
 \section{Anh\"ange}
 
 \subsection{Sprintreviews}\label{Sprintreviews}
-In diesem Kapitel werden die einzelnen Sprintreviews augelistet.
+In diesem Kapitel werden die einzelnen Sprintreviews aufgelistet.
 Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und
 einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
 
@@ -1474,11 +1976,103 @@ Massnahmen:
 \begin{itemize}
     \item Datenbank Schema muss manuell erstellt werden.
 \end{itemize}
-
-\subsubsection{Sprint 2}
-\todo{Same for Sprint 2}
 \newpage
 
+\subsubsection{Sprint 2}
+\subsubsection*{Sprintziel}
+Modulerfassung ist implementiert und die Kommunikation mit Discord und dem Bot funktioniert.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Keine.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+2%22}
+\newline
+Geschätzer Aufwand: 15h
+\newline
+Effektiver Aufwand: 16 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Kommunikation mit Discord und dem Bot konnte sichergestellt werden.
+    \item Ein Help und ein Ping Befehl konnten zum Testen implementiert werden.
+    \item Der Bot schreibt einen Benutzer direkt an, sobald dieser den Server betritt.
+    \item Die Modulerfassung alleine funktioniert.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei der Modulerfassung können die Kategorien noch nicht richtig erstellt werden und zugewiesen werden.
+    Die ID der neu erstellten Kategorie wird nicht richtig zurückgegeben.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Kleines Test Projekt erstellen und weiter versuchen. Auf Logik-Fehler nochmal kontrollieren.
+\end{itemize}
+\newpage
+
+\subsubsection{Sprint 3}
+\subsubsection*{Sprintziel}
+Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    Prioritäten müssen gesetzt werden.
+    Kann sein, dass sich Issues nach hinten verschieben.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\newline
+Geschätzer Aufwand: 10h
+\newline
+Effektiver Aufwand: 9 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
+    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
+    Das Device kann somit noch nicht hinzugefügt werden.
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Prioritäten setzten was die Modulerfassung anbelangt.
+    \item Möglichst zeitnah mit dem neuen Issue beginnen.
+\end{itemize}
+
+\subsection{Diagramme}
+\begin{landscape}
+    \begin{figure}[hb]
+        \centering
+        \hspace*{-4.5cm}
+        \includegraphics[width=1.6\textwidth]{img/ER-Diagramm.png}
+        \caption{Entity Relationship Diagram Gross}
+        \label{fig:ER-Diagram-big}
+    \end{figure}
+\end{landscape}
+
+\begin{figure}[ht]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/MessageHandling.png}
+    \caption{Message Handling}
+    \label{fig:message-handling}
+\end{figure}
+\clearpage
+
+\newpage
 \section{Glossar}
 
 API
