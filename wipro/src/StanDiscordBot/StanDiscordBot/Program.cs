@@ -40,6 +40,8 @@ namespace StanBot
                     .AddScoped<IDiscordRoleRepository, DiscordRoleRepository>()
                     .AddScoped<IHouseRepository, HouseRepository>()
                     .AddScoped<IDiscordAccountModuleRepository, DiscordAccountModuleRepository>()
+                    .AddScoped<IModuleRepository, ModuleRepository>()
+                    .AddScoped<IDiscordCategoryRepository, DiscordCategoryRepository>()
                     .AddSingleton<EventHandler>()
                     .AddSingleton<MessageHandler>()
                     .AddSingleton<VerificationCodeManager>()

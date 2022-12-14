@@ -7,22 +7,16 @@ namespace StanDatabase.DataAccessLayer
 {
     public class DiscordAccountModuleRepository : IDiscordAccountModuleRepository
     {
-        private DiscordAccountRepository discordAccountRepository;
+        private DiscordAccountRepository _discordAccountRepository;
 
-        private ModuleRepository moduleRepository;
+        private ModuleRepository _moduleRepository;
 
         public DiscordAccountModuleRepository(
             DiscordAccountRepository discordAccountRepository,
             ModuleRepository moduleRepository)
         {
-            this.discordAccountRepository = discordAccountRepository;
-            this.moduleRepository = moduleRepository;
-        }
-
-        public DiscordAccountModuleRepository()
-        {
-            this.discordAccountRepository = new DiscordAccountRepository();
-            this.moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
+            _discordAccountRepository = discordAccountRepository;
+            _moduleRepository = moduleRepository;
         }
 
         public List<MembersPerModuleDTO> NumberOfMembersPerModule(int limit = 10)

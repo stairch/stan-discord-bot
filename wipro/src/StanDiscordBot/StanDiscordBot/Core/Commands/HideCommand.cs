@@ -1,11 +1,9 @@
 ﻿using Discord;
-using Discord.API;
 using Discord.Commands;
 using Discord.Interactions;
-using Discord.WebSocket;
 using NLog;
 using StanBot.Services;
-using StanDatabase.DataAccessLayer;
+using StanBot.Services.MailService;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
@@ -14,6 +12,30 @@ namespace StanBot.Core.Commands
     public class HideCommand : ModuleBase<SocketCommandContext>
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ModuleChannelService _moduleChannelService;
+
+        private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
+        private readonly IModuleRepository _moduleRepository;
+        private readonly IDiscordAccountRepository _discordAccountRepository;
+        private readonly IStudentRepository _studentRepository;
+
+        private readonly IMailService _mailService;
+
+        public HideCommand(
+            IDiscordAccountModuleRepository discordAccountModuleRepository,
+            IModuleRepository moduleRepository,
+            IDiscordAccountRepository discordAccountRepository,
+            IStudentRepository studentRepository,
+            ModuleChannelService moduleChannelService,
+            IMailService mailService)
+        {
+            _discordAccountModuleRepository = discordAccountModuleRepository;
+            _moduleRepository = moduleRepository;
+            _discordAccountRepository = discordAccountRepository;
+            _studentRepository = studentRepository;
+            _moduleChannelService = moduleChannelService;
+            _mailService = mailService;
+        }
 
         [Command("Hide", false)]
         [RequireRole("student")]
@@ -21,23 +43,18 @@ namespace StanBot.Core.Commands
         {
             if (Context.Channel.Name.ToLower().Equals("registering"))
             {
-                IModuleRepository moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
-                IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
-                if (moduleRepository.DoesModuleExist(moduleName))
+                if (_moduleRepository.DoesModuleExist(moduleName))
                 {
-                    ModuleChannelService moduleChannelService = new ModuleChannelService();
-
-                    Module module = moduleRepository.GetModuleByName(moduleName);
-                    if (moduleChannelService.DoesModuleChannelExist(Context, moduleName))
+                    Module module = _moduleRepository.GetModuleByName(moduleName);
+                    if (_moduleChannelService.DoesModuleChannelExist(Context, moduleName))
                     {
-                        DiscordAccount discordAccount = discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
+                        DiscordAccount discordAccount = _discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
 
                         if (discordAccount != null)
                         {
-                            IStudentRepository studentRepository = new StudentRepository();
-                            studentRepository.RemoveUserFromModule(discordAccount, module);
+                            _studentRepository.RemoveUserFromModule(discordAccount, module);
 
-                            moduleChannelService.RemoveUserAccessToModule(Context, Context.User, module);
+                            _moduleChannelService.RemoveUserAccessToModule(Context, Context.User, module);
 
                             IUserMessage reply = await ReplyAsync($"Success! You were removed from the module channel: {moduleName}");
                             Thread.Sleep(5000);

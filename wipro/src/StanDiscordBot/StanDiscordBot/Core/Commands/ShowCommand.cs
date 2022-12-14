@@ -19,20 +19,25 @@ namespace StanBot.Core.Commands
         private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IDiscordAccountRepository _discordAccountRepository;
+        private readonly IStudentRepository _studentRepository;
+
+        private readonly IMailService _mailService;
 
         public ShowCommand(
             IDiscordAccountModuleRepository discordAccountModuleRepository,
             IModuleRepository moduleRepository,
             IDiscordAccountRepository discordAccountRepository,
-            ModuleChannelService moduleChannelService)
+            IStudentRepository studentRepository,
+            ModuleChannelService moduleChannelService,
+            IMailService mailService)
         {
             _discordAccountModuleRepository = discordAccountModuleRepository;
             _moduleRepository = moduleRepository;
             _discordAccountRepository = discordAccountRepository;
+            _studentRepository = studentRepository;
             _moduleChannelService = moduleChannelService;
+            _mailService = mailService;
         }
-
-        private IMailService _mailService = new MailService();
 
         [Command("Show", false)]
         [RequireRole("student")]
@@ -40,14 +45,10 @@ namespace StanBot.Core.Commands
         {
             if (Context.Channel.Name.ToLower().Equals("registering"))
             {
-                IModuleRepository moduleRepository = new ModuleRepository(new DiscordCategoryRepository());
-                IDiscordAccountRepository discordAccountRepository = new DiscordAccountRepository();
-                if (moduleRepository.DoesModuleExist(moduleName))
+                if (_moduleRepository.DoesModuleExist(moduleName))
                 {
-                    ModuleChannelService moduleChannelService = new ModuleChannelService();
-
-                    Module module = moduleRepository.GetModuleByName(moduleName);
-                    if (!moduleChannelService.DoesModuleChannelExist(Context, module.ChannelName))
+                    Module module = _moduleRepository.GetModuleByName(moduleName);
+                    if (!_moduleChannelService.DoesModuleChannelExist(Context, module.ChannelName))
                     {
                         string logMessage = $"Creating text channel: {module.ChannelName}";
                         Console.WriteLine(logMessage);
@@ -62,31 +63,26 @@ namespace StanBot.Core.Commands
                             _logger.Info(categoryLogMessage);
                             categoryChannel = await Context.Guild.CreateCategoryChannelAsync(module.DiscordCategory.DiscordCategoryName);
                         }
-                        //categoryChannel = Context.Guild.CategoryChannels
-                        //    .SingleOrDefault(c => c.Name.Equals(module.DiscordCategory.DiscordCategoryName));
                         // create Discord channel if it didn't exist
                         // https://stackoverflow.com/questions/67729674/how-to-find-a-channel-by-name-and-create-it-if-it-does-not-exist-in-discord-net
                         var newChannel = await Context.Guild.CreateTextChannelAsync(module.ChannelName, tcp =>
                             {
                                 tcp.CategoryId = categoryChannel.Id;
-                                //tcp.PermissionOverwrites.Value = PermissionService.GetFullAdminPermissions();
                             }
                         );
                         // https://stackoverflow.com/questions/67775430/discord-net-bot-how-to-create-a-channel-that-only-administrator-roles-have-acce
-                        //await newChannel.AddPermissionOverwriteAsync(Context.Guild.EveryoneRole, new OverwritePermissions(0uL, ChannelPermissions.Text.RawValue));
                         await newChannel.AddPermissionOverwriteAsync(Context.Guild.EveryoneRole, OverwritePermissions.DenyAll(newChannel));
                     }
 
-                    if (moduleChannelService.DoesModuleChannelExist(Context, moduleName))
+                    if (_moduleChannelService.DoesModuleChannelExist(Context, moduleName))
                     {
-                        DiscordAccount discordAccount = discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
+                        DiscordAccount discordAccount = _discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
 
                         if (discordAccount != null)
                         {
-                            IStudentRepository studentRepository = new StudentRepository();
-                            studentRepository.AddModuleToUser(discordAccount, module);
+                            _studentRepository.AddModuleToUser(discordAccount, module);
 
-                            moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
+                            _moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
 
                             IUserMessage reply = await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
                             Thread.Sleep(5000);
