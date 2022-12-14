@@ -1288,9 +1288,16 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 \todo{Yannis}
 
+\begin{lstlisting}[language=csv]
+
+\end{lstlisting}
+
 \subsubsection{Aufsetzten der Linux Umgebung}
 
-Das Aufsetzen
+Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
+Diese musste 
+
+\todo{Siehe Kapitel Anleitung}
 
 \todo{Yannis}
 
@@ -1380,7 +1387,37 @@ Die Settings Datei heisst \textit{stan.json}
 \todo{Nicolas}
 
 \subsubsection{show/hide <module> Command}
+
+Die beiden Commands show und hide können von Studenten benutzt werden um sich selbst an einem Modul Discord Channel hinzuzufügen und sich dann über das Modul austauschen zu können.
+Der Name des Moduls muss hierfür spezifisch formatiert sein.
+Eine Anleitung hierzu wird dem Studenten auf dem Channel zum Anmelden bei den Modulen angezeigt.
+Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nicht untergeht.
+
+Der angegebene Modulname muss dem Kurznamen entsprechen.
+Gross und Kleinschreibung darf ignoriert werden, da im hintergrund dies einheitlich umgewandelt wird.
+Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Professoren, zu unterscheiden.
+Auch der Prefix und Suffix muss entfernt werden, welche den Studiengang, bzw. das Jahr und Semester beinhaltet.
+
+Beispiele:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|1|1|1|}
+        \hline
+        \rowcolor[gray]{.9} Angezeigt im MyCampus & Beispiel Befehl & Voller Modulname \\
+        \hline
+        I.BA_GAMEDEV.H2201 & show gamedev & Game Development
+        \hline
+        TODO
+    \end{tabular}
+    \caption{Show und Hide Command Beispiele}
+    \label{tab: Show und Hide Command Beispiele}
+\end{table}
+
+Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
+Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
 \todo{Yannis}
+\todo{add image of mycampus calendar}
 
 \subsubsection{E-Mail Service}
 \todo{Nicolas}
@@ -1448,7 +1485,9 @@ API
 
 CSV
 
+z.B.
 
+bzw.
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
