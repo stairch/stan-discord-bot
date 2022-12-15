@@ -1315,9 +1315,9 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 \todo{Yannis}
 
-\begin{lstlisting}[language=csv]
+%\begin{lstlisting}[language=csv]
 
-\end{lstlisting}
+%\end{lstlisting}
 
 \subsubsection{Aufsetzten der Linux Umgebung}
 
@@ -1329,8 +1329,15 @@ Diese musste
 \todo{Yannis}
 
 \subsubsection{Verbinden der Datenbank mit Linq2DB}
-\todo{Yannis}
 
+\todo{Yannis}
+Die Verbindung zur Datenbank funktioniert über einen Connection String.
+Dieser beinhaltet alle Daten für die Verbindung:
+
+\todo{add connection string | remove password}
+\begin{lstlisting}
+    
+\end{lstlisting}
 
 \newpage
 \subsection{Sprint 2}
@@ -1608,19 +1615,18 @@ Auch der Prefix und Suffix muss entfernt werden, welche den Studiengang, bzw. da
 
 Beispiele:
 
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|1|1|1|}
-        \hline
-        \rowcolor[gray]{.9} Angezeigt im MyCampus & Beispiel Befehl & Voller Modulname \\
-        \hline
-        I.BA_GAMEDEV.H2201 & show gamedev & Game Development
-        \hline
-        TODO
-    \end{tabular}
-    \caption{Show und Hide Command Beispiele}
-    \label{tab: Show und Hide Command Beispiele}
-\end{table}
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{|1|p{20em}|1|}
+%         \hline
+%         \rowcolor[gray]{.9} Angezeigt im MyCampus & Beispiel Befehl & Voller Modulname \\
+%         \hline
+%         I.BA_GAMEDEV.H2201 & show gamedev & Game Development \\
+%         \hline
+%     \end{tabular}
+%     \caption{Show und Hide Command Beispiele}
+%     \label{tab: Show und Hide Command Beispiele}
+% \end{table}
 
 Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
 Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
@@ -2149,5 +2155,70 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
 
 Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \todo{Write tutorial}
+
+\subsection{Besprechungsprotokolle}
+
+\subsubsection{Kick Off Meeting 23.09.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Markus Waldmann
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+    \item Martin Steiger
+    \item Estefania Otero
+\end{itemize}
+
+\subsubsection{Meeting mit STAIR 13.10.2022}
+
+\subsubsection{Meeting mit Herr Waldmann 14.10.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Markus Waldmann
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+\end{itemize}
+
+Besprochene Punkte:
+
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+\subsubsection{Meeting mit STAIR 02.11.2022}
+
+\subsubsection{Meeting mit Herr Waldmann 16.11.2022}
+
+
+\newpage
+\subsubsection{Meeting mit STAIR 15.12.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+    \item Martin Steiger
+\end{itemize}
+
+\subsubsection*{Besprochene Punkte}
+
+\begin{enumerate}
+    \item Zeigen vom aktuellem Stand des Bots
+    \item Erklärung der Umsetzung
+\end{enumerate}
+
+\subsubsection*{Entscheidungen}
+
+\begin{enumerate}
+    \item Bei der Authentifizierung soll eine vollständige Beispielmail dem User angezeigt werden um Missverständnisse zu verhindern.
+    \item Es soll eine Fehlermeldung angezeigt werden beim Authorisierungsprozess, wenn die Domain der E-Mail falsch ist.
+    \item Es soll eine Meldung dem Student angezeigt werden nach dem E-Mail verschicken, damit der Nutzer weiss, dass der Authentifizierungscode dem Stan geschickt werden muss.
+    \item Es soll die Anzahl Accounts pro House angezeigt werden in der Statistik.
+    \item Release soll zwischen den Semesterferien durchgeführt werden, damit es keine Probleme in der Prüfungsphase gibt.
+\end{enumerate}
 
 \end{document}
