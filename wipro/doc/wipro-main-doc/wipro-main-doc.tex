@@ -1327,15 +1327,29 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 \todo{Yannis}
 
+%\begin{lstlisting}[language=csv]
+
+%\end{lstlisting}
+
 \subsubsection{Aufsetzten der Linux Umgebung}
 
-Das Aufsetzen
+Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
+Diese musste 
+
+\todo{Siehe Kapitel Anleitung}
 
 \todo{Yannis}
 
 \subsubsection{Verbinden der Datenbank mit Linq2DB}
-\todo{Yannis}
 
+\todo{Yannis}
+Die Verbindung zur Datenbank funktioniert über einen Connection String.
+Dieser beinhaltet alle Daten für die Verbindung:
+
+\todo{add connection string | remove password}
+\begin{lstlisting}
+    
+\end{lstlisting}
 
 \newpage
 \subsection{Sprint 2}
@@ -1600,7 +1614,36 @@ Beim help-Befehl werden alle Commands, welche registriert sind, aufgelistet.
 Desweiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um detailiertere Informationen zu einem Befehl zu erhalten.
 
 \subsubsection{show/hide <module> Command}
+
+Die beiden Commands show und hide können von Studenten benutzt werden um sich selbst an einem Modul Discord Channel hinzuzufügen und sich dann über das Modul austauschen zu können.
+Der Name des Moduls muss hierfür spezifisch formatiert sein.
+Eine Anleitung hierzu wird dem Studenten auf dem Channel zum Anmelden bei den Modulen angezeigt.
+Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nicht untergeht.
+
+Der angegebene Modulname muss dem Kurznamen entsprechen.
+Gross und Kleinschreibung darf ignoriert werden, da im hintergrund dies einheitlich umgewandelt wird.
+Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Professoren, zu unterscheiden.
+Auch der Prefix und Suffix muss entfernt werden, welche den Studiengang, bzw. das Jahr und Semester beinhaltet.
+
+Beispiele:
+
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{|1|p{20em}|1|}
+%         \hline
+%         \rowcolor[gray]{.9} Angezeigt im MyCampus & Beispiel Befehl & Voller Modulname \\
+%         \hline
+%         I.BA_GAMEDEV.H2201 & show gamedev & Game Development \\
+%         \hline
+%     \end{tabular}
+%     \caption{Show und Hide Command Beispiele}
+%     \label{tab: Show und Hide Command Beispiele}
+% \end{table}
+
+Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
+Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
 \todo{Yannis}
+\todo{add image of mycampus calendar}
 
 \subsubsection{E-Mail Service}
 Der E-Mail Service wird im Authentifizierungsprozess benötigt.
@@ -2250,6 +2293,9 @@ CSV
 
 REST
 
+z.B.
+
+bzw.
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
@@ -2317,5 +2363,70 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
 
 Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \todo{Write tutorial}
+
+\subsection{Besprechungsprotokolle}
+
+\subsubsection{Kick Off Meeting 23.09.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Markus Waldmann
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+    \item Martin Steiger
+    \item Estefania Otero
+\end{itemize}
+
+\subsubsection{Meeting mit STAIR 13.10.2022}
+
+\subsubsection{Meeting mit Herr Waldmann 14.10.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Markus Waldmann
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+\end{itemize}
+
+Besprochene Punkte:
+
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+\subsubsection{Meeting mit STAIR 02.11.2022}
+
+\subsubsection{Meeting mit Herr Waldmann 16.11.2022}
+
+
+\newpage
+\subsubsection{Meeting mit STAIR 15.12.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Nicolas Wiedmer
+    \item Yannis Krämer
+    \item Martin Steiger
+\end{itemize}
+
+\subsubsection*{Besprochene Punkte}
+
+\begin{enumerate}
+    \item Zeigen vom aktuellem Stand des Bots
+    \item Erklärung der Umsetzung
+\end{enumerate}
+
+\subsubsection*{Entscheidungen}
+
+\begin{enumerate}
+    \item Bei der Authentifizierung soll eine vollständige Beispielmail dem User angezeigt werden um Missverständnisse zu verhindern.
+    \item Es soll eine Fehlermeldung angezeigt werden beim Authorisierungsprozess, wenn die Domain der E-Mail falsch ist.
+    \item Es soll eine Meldung dem Student angezeigt werden nach dem E-Mail verschicken, damit der Nutzer weiss, dass der Authentifizierungscode dem Stan geschickt werden muss.
+    \item Es soll die Anzahl Accounts pro House angezeigt werden in der Statistik.
+    \item Release soll zwischen den Semesterferien durchgeführt werden, damit es keine Probleme in der Prüfungsphase gibt.
+\end{enumerate}
 
 \end{document}
