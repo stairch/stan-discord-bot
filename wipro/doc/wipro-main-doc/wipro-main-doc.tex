@@ -62,6 +62,18 @@
          {9}{{{\color{numb}9}}}{1}
 }
 
+\lstdefinestyle{XML}
+{
+    morestring=[b]",
+    moredelim=[s][\bfseries\color{green}]{<}{\ },
+    moredelim=[s][\bfseries\color{green}]{</}{>},
+    moredelim=[l][\bfseries\color{green}]{/>},
+    moredelim=[l][\bfseries\color{green}]{>},
+    morecomment=[s]{<?}{?>},
+    morecomment=[s]{<!--}{-->},
+    identifierstyle=\color{blue}
+}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=darkgray,
@@ -1610,7 +1622,7 @@ Dies aus dem Grund, da alle Studenten ein Microsoft Konto besitzen und ihre E-Ma
 Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
 Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord Bot Applikation funktioniert.
 
-\subsubsection*{Mircosoft Identity}
+\subsubsection*{Mircosoft Identity \& Microsoft Azure}
 %https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
 Die Microsoft Identity Platform erlaubt es Entwicklern einen Authentifizierungsmechanismus in ihre Applikation einzubauen.
 Für Besitzer eines Microsoft Azure Administator Kontos oder Office 365 ist die Lösung kostenlos und da auch STAIR einen Office 365 Account hat,
@@ -1619,21 +1631,57 @@ Die Microsoft Identity Platform baut auf der OpenId Technologie auf und kann dam
 Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
 Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{}
 %https://www.youtube.com/watch?v=sn9HWh-rg9o&ab_channel=MicrosoftAzure
+Dies sieht man auf folgender Abbildung.
 
-\subsubsection*{Azure Applikation}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/azure_discord_app_blacked.png}
+    \caption{Azure Discord App Registration}
+    \label{fig:azure-discord-app-registration}
+\end{figure}
 
-\subsubsection*{Microsoft Graph}
-
-\subsubsection*{Der Mail Service}
+Wenn man die Authentifizierungsmöglichkeiten bei der registrierten App aktiviert, wird automatisch Microsoft Identity verwendet.\\\\
 Für den Discord Bot wurde von Microsoft Identity die Microsoft Authentication Library (MSAL) benutzt. \autocite{}
 %https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
-Dort wird das Gerät auf dem die Applikation läuft, beim Starten einmalig authentifiziert und man erhält ein Acces Token zurück.
-Dieses kann nun der Klasse \textbf{GraphServiceClient} übergeben werden.
-Der GraphServiceClient ist Teil von Microsoft Graph und erlaubt es nun über Ihre API Endpunkte aufzurufen.
+Diese ist Teil von Microsoft Identity.
+Damit kann man sich einen Client erstellen, mit dem man sich Authentifizieren kann.
+
+\begin{lstlisting}[language=csharp]
+// DeviceCodeAuthProvider.cs
+_msalClient = PublicClientApplicationBuilder
+                .Create(appId)
+                .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount, true)
+                .Build();
+\end{lstlisting}
+
+Dem \textit{PublicClientApplicationBuilder} kann man die Anwendungs-ID mitgeben, welche man auf der registrierten Azure Applikation auslesen kann.
+Im Anschluss wird ausgewählt, wie man sich identifizieren möchte.
+Microsoft Identity bietet dort die gängigen Authentifizierungsmöglichkeiten an.
+So kann man sich mit dem Microsoft Konto anmelden oder aber über Third-Party Anbindungen authentifizieren.
+Dies nennt Microsoft, Hybrid Identity. \autocite{}
+% https://learn.microsoft.com/en-us/azure/active-directory/hybrid/whatis-hybrid-identity
+Für den Discord Bot wird das Gerät, auf dem die Applikation läuft, beim Starten einmalig authentifiziert und man erhält ein Access Token zurück.
+Dieses wird im nächsten Schritt für die Kommunikation mit der Microsoft Graph API verwendet.
+
+\subsubsection*{Microsoft Graph}
+Microsft Graph ist eine REST Schnittstelle von Microsft, mit dazugehörigen Clientbibliotheken.
+Mit diesen kann man alle Microsoft Service ansprechen. \autocite{}
+%https://learn.microsoft.com/de-DE/graph/overview-major-services
+Diese REST Schnittstelle kann man aus der eigenen Applikation aufrufen, um zum Beispiel über die Azure Applikation eine E-Mail zu versenden.
+Microsoft Graph läuft in der Grundlage mit einem Authentifizierten Benutzer oder Gruppen.
+So kann man über die REST Schnittstelle, sich zu jeder seiner Microsoft Anwendungen, Daten beschaffen.\\\\
+Das Token, welches man von nach der Authentifikation mit Microsoft Identity erhält, kann nun der Klasse \textbf{GraphServiceClient} übergeben werden.
+Der GraphServiceClient ist Teil von Microsoft Graph und erlaubt es über die Graph API, REST Endpunkte aufzurufen.
 So kann eine Post Request auf den Endpunkt \textit{https://graph.microsoft.com/v1.0/me/sendMail} gesendet werden.
+In der Applikation würde der Request wie folgt aussehen.
+
+\begin{lstlisting}[language=csharp]
+// MailServicce.cs
+await _graphServiceClient.Me.SendMail(message).Request().PostAsync();
+\end{lstlisting}
+
 Da der GraphServiceClient mit dem richtigen Microsoft Konto authentifiziert ist, 
 werden nun die E-Mails direkt über das richtige Outlook Konto weitergeleitet.
-
 
 \todo{Hinzufügen Diagramm E-Mail Infrastruktur}
 
@@ -1841,11 +1889,51 @@ Die Legende rechts bietet eine Übersicht der dargestellten Module.
     \caption{Members per module}
     \label{fig:members-per-module}
 \end{figure}
+\clearpage
+
+\subsubsection{Logging}
+Für ein sauberes Entwickeln und einen sauberen operativen Einsatz gehört das Schreiben von Log-Einträgen dazu.
+Damit man nachvollziehen kann, welche Schritte der Bot unternommen hat, sowie bei Fehlern schneller darauf reagieren kann.\\
+Als Logging Framework wurde sich für NLog entschieden.\autocite{}
+%https://nlog-project.org/
+Dies aus dem Grund, da es das verbreiteste Logging Framework für .Net Applikationen ist und es einfach in das Microsoft Logging System integriert werden kann.
+Auch ist es Open Source und Frei für die Benutzung.
+Für eine saubere Ausführung benötigt NLog eine Konfigurationsdatei.
+In dieser kann das Logging Format angegeben werden, die Dateien in welche geloggt werden soll, sowie allfällige Farbeinstellungen für verschiedene Log-Levels.
+Die NLog.config Datei für dieses Projekt sieht folgendermassen aus.
+
+\begin{lstlisting}[language=XML]
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <targets>
+        <target name="coloredConsole" xsi:type="ColoredConsole" useDefaultRowHighlightingRules="false"
+        layout="${longdate}| ${pad:padding=5:inner=${level:uppercase=true}}| ${pad:padding=-50:inner=${logger}}| ${message:withexception=true}" >
+            <highlight-word condition="level == LogLevel.Debug" foregroundColor="Gray" text="DEBUG"/>
+            <highlight-word condition="level == LogLevel.Info" foregroundColor="Green" text="INFO" />
+            <highlight-word condition="level == LogLevel.Warn" foregroundColor="Yellow" text="WARN" />
+            <highlight-word condition="level == LogLevel.Error" foregroundColor="Red" text="ERROR"/>
+            <highlight-word condition="level == LogLevel.Fatal" foregroundColor="Red" text="FATAL" backgroundColor="White" />
+        </target>
+    </targets>
+
+    <rules>
+        <logger name="*" minlevel="Debug" writeTo="coloredConsole" />
+    </rules>
+</nlog>
+\end{lstlisting}
+
+Es wurde dabei entschieden nur in die Konsole zu loggen.
+Da der Server auf welchem der Bot läuft, wenn es gut läuft, nur einmal im Semester geöffnet werden muss,
+wird nicht unnötig Speicherplatz verbraucht.
+Die Log Daten kann man sich auch auf der Konsole anzeigen lassen.\\
+EIn Log Eintrag sieht dabei wie folgt aus:
+\todo{Log eintrag Beispiel anzeigen}
 
 \newpage
 \subsection{Sprint 5}
-Im letzten Sprint wird der Bot startbereit gemacht, um ihn auf die produktive Umgebung zu deployen.
-Des weiteren erhält er ein Profilbild, welches ihn als Bot zu erkennen gibt.
+Im letzten Sprint wird eine Fehler Mitteilung eingebaut, welche einen Admin bei einem Problem informiert.
+Auch wird der Bot startbereit gemacht, um ihn auf die produktive Umgebung zu deployen und ein Profilbild erstellt, 
+welches ihn als Bot zu erkennen gibt.
 
 \subsubsection{Stan Logo}
 Damit der Bot ein sauberes Erscheinungsbild hat, wird für Ihn ein Logo erstellt.
@@ -1867,6 +1955,45 @@ Darin wurde auch das Discord Stan Logo geboren.
 \end{figure}
 
 Diese Bilder können nun als Profilbild des Bots dienen, sowie als Vermarktungslogo für den STAIR Discord.
+
+\subsubsection{Fehler Mitteilung}
+Falls während der Laufzeit Fehler auftreten, also aus irgend einem Grund der E-Mail Service nicht mehr funktioniert, 
+oder die Datenbank abstürtzt, soll ein Administrator kontaktiert werden.
+Dieser Kontakt soll bei einem Datenbank Absturz über E-Mail erfolgen und bei einem E-Mail Service Absturz über eine private Nachricht auf Discord.\\
+Damit der Administrator bei einem Absturz nicht mit Nachrichten und E-Mails überhäuft wird, 
+wird der selbe Fehler maximal einmal alle 4 Stunden an den Adminsitrator gesendet.
+Das heisst, er bekommt nur einmal die Nachricht eines Absturzes und erst, wenn er das Problem nach 4 Stunden nicht gelöst hat, 
+bekommt er wieder eine Nachricht.\\\\
+Damit der Bot weiss, welche Personen als Administrator hinterlegt sind, 
+wird in der Datenbank in der Studenten Tabelle das Feld \textbf{IsDiscordAdmin} auf \textbf{True} gesetzt.
+Diese Zuweisung zum Discord Administrator kann per Command vorgenommen werden.
+Die Commands lauten:
+\begin{itemize}
+    \item \textbf{!addAdmin} <email-address>
+    \item \textbf{!removeAdmin} <email-address>
+\end{itemize}
+Damit bei einem Datenbank Absturz die Adminstratoren, trotzdem noch ausgelesen werden können, 
+werden diese E-Mail Adressen zusätzlich noch in eine Datei \textbf{discordAdmins.csv} gespeichert.
+Dies erfolgt auch bei der Ausführung der Commands.\\\\
+In den Nachrichten werden folgende Informationen mitgegeben.
+\begin{itemize}
+    \item Die Art der Nachricht. Also ob es sich um einen Datenbank Fehler oder um einen Fehler des E-Mail Service handelt.
+    \item Der Stacktrace der Exception.
+    \item Die Message der Exception.
+    \item Die Klasse, in welcher der Fehler geworfen wurde.
+\end{itemize}
+So eine Nachricht kann als E-Mail und als Discord Nachricht folgendermassen aussehen.
+\begin{figure}[h]
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=1\textwidth]{img/DatabaseErrorNotificationEmail.png}
+        \caption{Fehler Nachricht E-Mail}
+    \end{minipage}
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=1\textwidth]{img/MailErrorNotificationEmbed.png}
+        \caption{Fehler Nachricht Discord}
+    \end{minipage}
+    \label{fig:error-notifications}
+\end{figure}
 
 \subsubsection{Bot als Deamon}
 \todo{Nicolas}
@@ -2015,6 +2142,85 @@ Massnahmen:
     \item Möglichst zeitnah mit dem neuen Issue beginnen.
 \end{itemize}
 
+\subsubsection{Sprint 4}
+\subsubsection*{Sprintziel}
+Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabiles Logging Framework.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurde eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\newline
+Geschätzer Aufwand: 5h
+\newline
+Effektiver Aufwand: 6 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
+    Dort wurde für die erstellung von Models Konstruktoren eingesetzt.
+    Diese wurden allerdings vpn Linq2DB nicht richtig aufgerufen, bzw. befüllt.
+    Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
+    \item Die Statistiken konnten erfolgreich implementiert werden.
+    \item Es konnte ein stabiles Logging Frameworjk NLog in das System eingebunden werden.
+    \item Für den E-Mail Versand wurde der richtige Account von STAIR freigeschalten.
+    Dieser kann jetzt erfolgreich genutzt werden.
+    \item Der show und hide Command konnte erfolgreich umgesetzt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei den Commands gibt es ein RequireRole Attribut, welches man eigentlich verwenden kann um die Rolle des Aufrufenden Benutzers zu prüfen.
+    Dieses funktioniert allerdings nicht.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
+    Man kann z.B. nur von einem bestimmten Channel aus Commands versenden.
+\end{itemize}
+
+\subsubsection{Sprint 5}
+\subsubsection*{Sprintziel}
+Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    Prioritäten müssen gesetzt werden.
+    Kann sein, dass sich Issues nach hinten verschieben.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\newline
+Geschätzer Aufwand: 10h
+\newline
+Effektiver Aufwand: 9 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
+    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
+    Das Device kann somit noch nicht hinzugefügt werden.
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Prioritäten setzten was die Modulerfassung anbelangt.
+    \item Möglichst zeitnah mit dem neuen Issue beginnen.
+\end{itemize}
+
 \subsection{Diagramme}
 \begin{landscape}
     \begin{figure}[hb]
@@ -2042,6 +2248,7 @@ API
 
 CSV
 
+REST
 
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
