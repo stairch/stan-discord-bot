@@ -309,7 +309,7 @@ Im November 2022 ist die neue .NET 7 Version herausgekommen.
 Da .NET 6 am aktuellsten war zum Startzeitpunkt des WIPRO Projektes, die .NET 6 Version eine LTS Version ist und damit länger als .NET 7 unterstützt wird und in der Praxis stärker getestet ist, wird die WIPRO mit .NET 6 zuende geführt.\autocite{noauthor_net_2022}
 Zur Entwicklungszeit der alten Stan Discord Bot Version wurde noch auf .NET Framework gesetzt, weshalb der Bot auch noch nicht auf Linux lauffähig ist.
 Dies war jedoch der Wunsch von STAIR für zukünftige Projekte.
-Dies wird genauer im Kapitel \nameref{Geplante Änderungen} beschrieben.
+Dies wird genauer im Kapitel \nameref{geplanteAenderungen} beschrieben.
 
 \subsubsection{MySQL}
 
@@ -797,7 +797,7 @@ Die Konfiguration entspricht der eines Windows Services und läuft dementspreche
 \end{figure}
 \clearpage
 
-\subsubsection{Geplante Änderungen}
+\subsubsection{Geplante Änderungen}\label{geplanteAenderungen}
 
 \subsubsection*{Wechsel zu Linux Server}
 
@@ -1425,7 +1425,7 @@ Dieses muss deshalb mühsam herausgelesen werden aus dem Log Output.
 
 Die Verbindung zur Datenbank funktioniert über einen Connection String.
 Dieser beinhaltet die Adresse des Datenbank Servers, den dazugehörigen Port, den Datenbank Namen, den Benutzer, das Passwort, sowie das Encoding.
-Das genaue Format wird in der Anleitung im Kapitel \nameref{Konfiguration des StanBots} beschrieben.
+Das genaue Format wird in der Anleitung im Kapitel \nameref{konfigurationStanBot} beschrieben.
 
 \newpage
 \subsection{Sprint 2}
@@ -2446,7 +2446,7 @@ z.B.
 \printbibliography
 
 \newpage
-\section{Bedienungsanleitung}
+\section{Bedienungsanleitung}\label{Bedienungsanleitung}
 
 \subsection{Aufsetzen des Servers}
 
@@ -2496,7 +2496,7 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
         \end{verbatim}
 \end{enumerate}
 
-\subsection{Konfiguration des StanBots}
+\subsection{Konfiguration des StanBots}\label{konfigurationStanBot}
 
 Die Settings Datei heisst \textit{stan.json}
 \begin{lstlisting}[language=json]
