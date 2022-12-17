@@ -1,68 +1,52 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
 using Discord;
-using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace StanBot.Services
 {
     public class LogService
     {
+        private readonly Logger _discordLogger = LogManager.GetLogger("LogService.DiscordSocketClient");
+        private readonly Logger _commandServiceLogger = LogManager.GetLogger("LogService.CommandService");
+
         private readonly DiscordSocketClient _discordSocketClient;
         private readonly CommandService _commandService;
-        private readonly ILoggerFactory _loggerFactory;
-        private readonly ILogger _discordLogger;
-        private readonly ILogger _commandsLogger;
 
-        public LogService(DiscordSocketClient discord, CommandService commands, ILoggerFactory loggerFactory)
+        public LogService(DiscordSocketClient discordSocketClient, CommandService commandService)
         {
-            _discordSocketClient = discord;
-            _commandService = commands;
-
-            _loggerFactory = ConfigureLogging(loggerFactory);
-            _discordLogger = _loggerFactory.CreateLogger("discord");
-            _commandsLogger = _loggerFactory.CreateLogger("commands");
+            _discordSocketClient = discordSocketClient;
+            _commandService = commandService;
 
             _discordSocketClient.Log += LogDiscord;
             _commandService.Log += LogCommand;
-        }
-
-        private ILoggerFactory ConfigureLogging(ILoggerFactory factory)
-        {
-            Console.WriteLine("Create Logger Factory");
-            return LoggerFactory.Create(builder => builder.AddConsole());
         }
 
         private Task LogDiscord(LogMessage message)
         {
             _discordLogger.Log(
                 LogLevelFromSeverity(message.Severity),
-                0,
-                message,
-                message.Exception,
-                (_1, _2) => message.ToString(prependTimestamp: false));
+                message.ToString(prependTimestamp: false));
             return Task.CompletedTask;
         }
 
         private Task LogCommand(LogMessage message)
         {
-            // Return an error message for async commands
+            // Return an error message for async commandService
             if (message.Exception is CommandException command)
             {
                 // Don't risk blocking the logging task by awaiting a message send; ratelimits!?
-                var _ = command.Context.Channel.SendMessageAsync($"Error: {command.Message}");
+                var _ = command.Context.Channel.SendMessageAsync($"Error: {command.Message}\nBitte kontaktiere einen Administrator.");
             }
 
-            _commandsLogger.Log(
+            _commandServiceLogger.Log(
                 LogLevelFromSeverity(message.Severity),
-                0,
-                message,
-                message.Exception,
-                (_1, _2) => message.ToString(prependTimestamp: false));
+                message.ToString(prependTimestamp: false));
             return Task.CompletedTask;
         }
 
         private static LogLevel LogLevelFromSeverity(LogSeverity severity)
-            => (LogLevel)(Math.Abs((int)severity - 5));
+            => LogLevel.FromOrdinal(Math.Abs((int)severity - 5));
 
     }
 }

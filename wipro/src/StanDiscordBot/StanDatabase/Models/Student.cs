@@ -20,20 +20,28 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public bool StillStudying { get; set; }
 
-        // can be null because new ex students on the server don't have a semester
+        /// <summary>
+        /// can be null because new ex students on the server don't have a semester
+        /// </summary>
         [Column]
         public int Semester { get; set; }
 
+        /// <summary>
+        /// Needed but not for Discord permissions (use roles on Discord server for this instead).
+        /// Instead it is used to inform the student about issues with the Stan Discord bot per email.
+        /// </summary>
         [Column, NotNull]
         public bool IsDiscordAdmin { get; set; }
 
-        public Student(string studentEmail, House house, bool stillStudying, int semester)
+        public static Student CreateNew(string studentEmail, House house, bool stillStudying, int semester)
         {
-            StudentEmail = studentEmail;
-            House = house;
-            FkHouseId = house.HouseId;
-            StillStudying = stillStudying;
-            Semester = semester;
+            Student student = new Student();
+            student.StudentEmail = studentEmail;
+            student.House = house;
+            student.FkHouseId = house.HouseId;
+            student.StillStudying = stillStudying;
+            student.Semester = semester;
+            return student;
         }
 
         public override string ToString()

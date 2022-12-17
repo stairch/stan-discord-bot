@@ -2,11 +2,14 @@
 using Discord;
 using Discord.WebSocket;
 using System.Text.RegularExpressions;
+using NLog;
 
 namespace StanBot.Core.Events.Messages
 {
     public class CommandMessageReceivedEvent : IMessageReceiver
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly DiscordSocketClient _discordSocketClient;
         private readonly CommandService _commandService;
         private IServiceProvider _serviceProvider;
@@ -20,7 +23,7 @@ namespace StanBot.Core.Events.Messages
             _discordSocketClient = discordSocketClient;
             _commandService = commandService;
             _serviceProvider = serviceProvider;
-            _regex = new Regex(StanBotConfigLoader.Get().Prefix + "(\\S*)", RegexOptions.IgnoreCase);
+            _regex = new Regex(StanBotConfigLoader.Config.Prefix + "(\\S*)", RegexOptions.IgnoreCase);
 
             AllowedMessageSources = new List<MessageSource> { MessageSource.User };
             ChannelType = typeof(SocketTextChannel);
@@ -34,15 +37,15 @@ namespace StanBot.Core.Events.Messages
         public async Task ProcessMessage(SocketUserMessage message)
         {
             int argPos = 0;
-            if (!(message.HasStringPrefix(StanBotConfigLoader.Get().Prefix, ref argPos) || message.HasMentionPrefix(_discordSocketClient.CurrentUser, ref argPos))) return;
+            if (!(message.HasStringPrefix(StanBotConfigLoader.Config.Prefix, ref argPos) || message.HasMentionPrefix(_discordSocketClient.CurrentUser, ref argPos))) return;
 
-            Console.WriteLine("Message with command prefix received.");
+            _logger.Debug("Message with command prefix received");
             var context = new SocketCommandContext(_discordSocketClient, message);
             var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
 
-            if (!result.IsSuccess && result.Error == CommandError.UnknownCommand)
+            if (!result.IsSuccess || result.Error == CommandError.UnknownCommand)
             {
-                Console.Error.WriteLine(result.Error);
+                _logger.Warn($"The command send, could not be processed. Error: {result.Error}");
                 var embed = new EmbedBuilder();
 
                 if (result.ErrorReason == "The input text has too few parameters.")

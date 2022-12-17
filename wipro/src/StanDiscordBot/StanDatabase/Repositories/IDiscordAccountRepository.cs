@@ -1,4 +1,5 @@
-﻿using StanDatabase.Models;
+using StanDatabase.DTOs;
+using StanDatabase.Models;
 
 namespace StanDatabase.Repositories
 {
@@ -6,8 +7,20 @@ namespace StanDatabase.Repositories
     {
         int Insert (DiscordAccount discordAccount);
 
-        int Update (DiscordAccount discordAccount);
+        DiscordAccount? GetAccount(int discriminaterValue, string username);
+
+        bool DoesDiscordAccountExist(int discriminatorValue, string username);
+
+        List<DiscordAccountsPerSemesterDTO> NumberOfDiscordAccountsPerSemester();
 
         int Delete (int discordAccountId);
+
+        bool IsAdmin(string username);
+
+        bool IsStillStudying(DiscordAccount discordAccount);
+
+        House GetHouseFromStudent(string username);
+
+        List<DiscordAccount> GetAllDiscordAdminAccounts();
     }
 }

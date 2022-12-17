@@ -7,5 +7,7 @@ namespace StanDatabase.Repositories
         House GetHouseByName(string houseName);
 
         bool IsHouseNameValid(string houseName);
+
+        DiscordRole getRoleForHouse(House house);
     }
 }

@@ -1,0 +1,47 @@
+using LinqToDB;
+using StanDatabase.DTOs;
+using StanDatabase.Models;
+using StanDatabase.Repositories;
+
+namespace StanDatabase.DataAccessLayer
+{
+    public class DiscordAccountModuleRepository : IDiscordAccountModuleRepository
+    {
+        private IDiscordAccountRepository _discordAccountRepository;
+
+        private IModuleRepository _moduleRepository;
+
+        public DiscordAccountModuleRepository(
+            IDiscordAccountRepository discordAccountRepository,
+            IModuleRepository moduleRepository)
+        {
+            _discordAccountRepository = discordAccountRepository;
+            _moduleRepository = moduleRepository;
+        }
+
+        public List<MembersPerModuleDTO> NumberOfMembersPerModule(int limit = 10)
+        {
+            using (var db = new DbStan())
+            {
+                var query = from am in db.DiscordAccountModule
+                            join m in db.Module on am.FkModuleId equals m.ModuleId
+                            group m by m.ChannelName into g
+                            orderby g.Count() descending
+                            select new MembersPerModuleDTO
+                            {
+                                ModuleName = g.Key,
+                                MemberCount = g.Count()
+                            };
+                return query.Take(limit).ToList();
+            }
+        }
+
+        public int Insert(DiscordAccountModule discordAccountModule)
+        {
+            using (var db = new DbStan())
+            {
+                return db.InsertWithInt32Identity(discordAccountModule);
+            }
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿using LinqToDB;
+using LinqToDB;
+using StanDatabase.DTOs;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
@@ -47,17 +48,122 @@ namespace StanDatabase.DataAccessLayer
                             .Where(s => s.StudentEmail == oldStudent.StudentEmail)
                             .Set(s => s.StillStudying, false)
                             .Update();
-                    // TODO: how to update discord role on server from here?
+                    // Discord Roles on the Server will be updated through the UpdateStudentsCommand
                 }
             }
         }
 
-        public Student FindWithEmail(string email)
+        public Student? FindWithEmail(string email)
         {
             using (var db = new DbStan())
             {
-                Student student = db.Student.SingleOrDefault(s => s.StudentEmail == email);
-                return student;
+                return db.Student.LoadWith(h => h.House).SingleOrDefault(s => s.StudentEmail == email);
+            }
+        }
+
+        public List<StudentsPerHouseDTO> NumberOfStudentsPerHouse()
+        {
+            using (var db = new DbStan())
+            {
+                var query = from s in db.Student
+                            join h in db.House on s.FkHouseId equals h.HouseId
+                            group s by h.Name into g
+                            select new StudentsPerHouseDTO
+                            {
+                                HouseName = g.Key,
+                                StudentsCount = g.Count()
+                            };
+                return query.ToList();
+            }
+        }
+
+        public List<StudentsPerSemesterDTO> NumberOfStudentsPerSemester()
+        {
+            using (var db = new DbStan())
+            {
+                var query = from s in db.Student
+                            group s by s.Semester into g
+                            select new StudentsPerSemesterDTO
+                            {
+                                Semester = g.Key,
+                                StudentsCount = g.Count()
+                            };
+                return query.ToList();
+            }
+        }
+
+        public List<Student> GetCurrentStudents()
+        {
+            using (var db = new DbStan())
+            {
+                return db.Student.Where(s => s.StillStudying).ToList();
+            }
+        }
+
+        public void SetStudentIsAdmin(Student student, bool isAdmin)
+        {
+            using (var db = new DbStan())
+            {
+                db.Student
+                    .Where(s => s.StudentEmail == student.StudentEmail)
+                    .Set(s => s.IsDiscordAdmin, isAdmin)
+                    .Update();
+            }
+        }
+
+        public IList<Student> GetAllDiscordAdmins()
+        {
+            using (var db = new DbStan())
+            {
+                return db.Student
+                    .Where(s => s.IsDiscordAdmin == true)
+                    .ToList();
+            }
+        }
+        
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
+        public void AddModuleToUser(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                if (!db.DiscordAccountModule.Any(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module)))
+                {
+                    db.Insert(
+                        DiscordAccountModule.CreateNew(
+                            discordAccount,
+                            module
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
+        public void RemoveUserFromModule(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                db.DiscordAccountModule.Delete(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module));
+                //if ()
+                //{
+                //    db.Delete(
+                //        new DiscordAccountModule(
+                //            DateTime.Now,
+                //            discordAccount.DiscordAccountId,
+                //            discordAccount,
+                //            module.ModuleId,
+                //            module
+                //        )
+                //    );
+                //}
             }
         }
     }

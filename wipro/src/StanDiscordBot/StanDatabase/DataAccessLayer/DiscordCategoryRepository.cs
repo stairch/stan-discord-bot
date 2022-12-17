@@ -8,39 +8,45 @@ namespace StanDatabase.DataAccessLayer
     {
         private const int CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD = 50;
 
+        public bool DoesCategoryExist(string name)
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordCategory.Any(dc => dc.DiscordCategoryName.Equals(name));
+            }
+        }
+
         public DiscordCategory GetCategoryWithChannelCapacity()
         {
             using (var db = new DbStan())
             {
-                // TODO
-                List<DiscordCategory> discordCategories = db.DiscordCategory.ToList();
-                //discordCategories.AddRange(db.Module.Select(m => m.DiscordCategory).ToList());
-                //discordCategories = discordCategories
-                //    .Where(dc => discordCategories
-                //        .Count(d => d.Equals(dc)) < CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD + 1)
-                //    .Distinct()
-                //    .ToList();
-                DiscordCategory discordCategory = discordCategories.FirstOrDefault();
+                var latestCategoryQuery =   from dc in db.DiscordCategory
+                                            orderby dc.DiscordCategoryId descending
+                                            select dc;
+
+                DiscordCategory? discordCategory = latestCategoryQuery.FirstOrDefault();
                 // add new category when none are available
                 if (discordCategory == null)
                 {
-                    discordCategory = new DiscordCategory(CreateNewCategoryName(db));
-                    // https://github.com/linq2db/linq2db/issues/661
+                    discordCategory = new DiscordCategory();
+                    discordCategory.DiscordCategoryName = CreateNewCategoryName(db);
                     discordCategory.DiscordCategoryId = Convert.ToInt32(db.InsertWithIdentity(discordCategory));
                 }
 
-                return discordCategory;
-            }
-        }
+                // look how many modules in this category exist
+                int moduleCountInCategroy = (from m in db.Module
+                                            where m.FkDiscordCategoryId == discordCategory.DiscordCategoryId
+                                            select m).Count();
 
-        public DiscordCategory GetCategoryById(int id)
-        {
-            using (var db = new DbStan())
-            {
-                // TODO: why does this have the correct id
-                Console.WriteLine(db.DiscordCategory.Select(dc => dc.DiscordCategoryId).First());
-                // but not this?
-                return db.DiscordCategory.Single(dc => dc.DiscordCategoryId == id);
+                // if number of modules exceed capacity limit, create a new category
+                if (moduleCountInCategroy >= CHANNEL_LIMIT_PER_CATEGORY_ON_DISCORD)
+                {
+                    discordCategory = new DiscordCategory();
+                    discordCategory.DiscordCategoryName = CreateNewCategoryName(db);
+                    discordCategory.DiscordCategoryId = Convert.ToInt32(db.InsertWithIdentity(discordCategory));
+                }
+                Console.WriteLine(discordCategory);
+                return discordCategory;
             }
         }
 

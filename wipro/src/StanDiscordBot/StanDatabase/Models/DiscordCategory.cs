@@ -11,11 +11,6 @@ namespace StanDatabase.Models
         [Column, NotNull]
         public string DiscordCategoryName { get; set; }
 
-        public DiscordCategory(string discordCategoryName)
-        {
-            this.DiscordCategoryName = discordCategoryName;
-        }
-
         public override string ToString()
         {
             return $"{base.ToString()}[" +

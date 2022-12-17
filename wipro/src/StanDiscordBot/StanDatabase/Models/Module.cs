@@ -5,8 +5,6 @@ namespace StanDatabase.Models
     [Table(Name = "Modules")]
     public class Module
     {
-        private DiscordCategory discordCategory;
-
         [PrimaryKey, Identity]
         public int ModuleId { get; set; }
 
@@ -23,21 +21,7 @@ namespace StanDatabase.Models
         public int FkDiscordCategoryId { get; set; }
 
         [Association(ThisKey = nameof(FkDiscordCategoryId), OtherKey = nameof(Models.DiscordCategory.DiscordCategoryId))]
-        public DiscordCategory DiscordCategory
-        {
-            get => discordCategory;
-            set
-            {
-                discordCategory = value;
-                this.FkDiscordCategoryId = discordCategory.DiscordCategoryId;
-            }
-        }
-
-        public Module(string moduleShortname, string moduleFullname)
-        {
-            this.ChannelName = moduleShortname;
-            this.FullModuleName = moduleFullname;
-        }
+        public DiscordCategory DiscordCategory { get; set; }
 
         public override string ToString()
         {

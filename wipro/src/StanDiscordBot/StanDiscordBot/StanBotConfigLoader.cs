@@ -47,16 +47,23 @@ namespace StanBot
             }
         }
 
-        public static BotConfig Get()
-        {
-            return _botConfig;
-        }
+        public static BotConfig Config { get { return _botConfig; } }
     }
 
     public struct BotConfig
     {
         public string DiscordApplicationToken { get; set; }
 
+        public ulong GuildId { get; set; }
+
         public string Prefix { get; set; }
+
+        public string FromEmailAddress { get; set; }
+
+        public string FromEmailName { get; set; }
+
+        public string AppId { get; set; }
+
+        public string[] Scopes { get; set; }
     }
 }

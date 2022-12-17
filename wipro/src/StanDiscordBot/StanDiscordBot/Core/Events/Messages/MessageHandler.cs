@@ -16,13 +16,11 @@ namespace StanBot.Core.Events.Messages
         {
             // Ignore System messages
             if (!(socketMessage is SocketUserMessage message)) return;
-            Console.WriteLine($"Socket Message received {message.Channel.GetType()} and {message.Source}");
 
             foreach (IMessageReceiver receiver in messageReceivers)
             {
                 if (IsMessageSourceCorrect(message, receiver) && receiver.IsMatch(message))
                 {
-                    Console.WriteLine("Sending message");
                     await receiver.ProcessMessage(message);
                 }
             }
