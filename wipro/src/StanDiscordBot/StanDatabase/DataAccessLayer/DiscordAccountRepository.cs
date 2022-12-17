@@ -96,5 +96,16 @@ namespace StanDatabase.DataAccessLayer
                 throw new NotImplementedException();
             }
         }
+
+        public List<DiscordAccount> GetAllDiscordAdminAccounts()
+        {
+            using (var db = new DbStan())
+            {
+                return db.DiscordAccount
+                    .LoadWith(da => da.Student)
+                    .Where(da => da.Student.IsDiscordAdmin)
+                    .ToList();
+            }
+        }
     }
 }

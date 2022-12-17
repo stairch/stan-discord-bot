@@ -49,6 +49,8 @@ namespace StanBot
     {
         public string DiscordApplicationToken { get; set; }
 
+        public ulong GuildId { get; set; }
+
         public string Prefix { get; set; }
 
         public string FromEmailAddress { get; set; }

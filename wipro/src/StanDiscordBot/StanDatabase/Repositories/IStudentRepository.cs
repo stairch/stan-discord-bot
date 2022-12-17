@@ -38,8 +38,23 @@ namespace StanDatabase.Repositories
         /// <returns></returns>
         List<Student> GetCurrentStudents();
 
+        /// <summary>
+        /// Sets the isDiscordAdmin field for the given student.
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="isAdmin"></param>
+        void SetStudentIsAdmin(Student student, bool isAdmin);
+
+        /// <summary>
+        /// Returns all Students, which are marked as DiscordAdmins.
+        /// </summary>
+        /// <returns></returns>
+        IList<Student> GetAllDiscordAdmins();
+        
+        // TODO: add documentation
         void AddModuleToUser(DiscordAccount discordAccount, Module module);
 
+        // TODO: add documentation
         void RemoveUserFromModule(DiscordAccount discordAccount, Module module);
     }
 }

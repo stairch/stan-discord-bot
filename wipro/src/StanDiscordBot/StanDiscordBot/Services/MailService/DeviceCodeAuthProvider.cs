@@ -1,11 +1,15 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Identity.Client;
+using NLog;
 using System.Net.Http.Headers;
+using Logger = NLog.Logger;
 
 namespace StanBot.Services.MailService
 {
     internal class DeviceCodeAuthProvider : IAuthenticationProvider
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IPublicClientApplication _msalClient;
         private readonly string[] _scopes;
         private IAccount? _stanMailAccount;
@@ -33,7 +37,7 @@ namespace StanBot.Services.MailService
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error getting Access Token: {ex.Message}");
+                    _logger.Error($"Error getting Access Token. Stacktrace: {ex.Message}");
                     return null;
                 }
             }
@@ -42,13 +46,13 @@ namespace StanBot.Services.MailService
             // By doing this, MSAL will refresh the token automatically if
             // it is expired. Otherwise it returns the cached token.
             result = await _msalClient.AcquireTokenSilent(_scopes, _stanMailAccount).ExecuteAsync();
-
+            _logger.Info($"Device Authentication Token silent aquired.");
             return result.AccessToken;
         }
 
         private Task DeviceCodeResultCallback(DeviceCodeResult deviceCodeResult)
         {
-            Console.WriteLine($"Email DevicCodeResultCallback: {deviceCodeResult.Message}");
+            _logger.Info($"Device Authentication ResultCallback received. Message: {deviceCodeResult.Message}");
             return Task.CompletedTask;
         }
 

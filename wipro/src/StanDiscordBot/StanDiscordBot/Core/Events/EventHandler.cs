@@ -1,5 +1,6 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
+using NLog;
 using StanBot.Core.Events.Messages;
 using System.Reflection;
 
@@ -7,6 +8,8 @@ namespace StanBot.Core.Events
 {
     public class EventHandler
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly DiscordSocketClient _discordSocketClient;
         private readonly CommandService _commandService;
         private readonly OnUserJoinedEvent _onUserJoinedEvent;
@@ -26,7 +29,7 @@ namespace StanBot.Core.Events
 
         public async Task InitializeAsync(IServiceProvider provider)
         {
-            Console.WriteLine("Initialize all Modules async. Then register DiscordSocketClient Events");
+            _logger.Info("Initialize all Module Commands. Then register DiscordSocketClient Events");
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
 
             _discordSocketClient.UserJoined += _onUserJoinedEvent.OnUserJoined;

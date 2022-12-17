@@ -3,9 +3,13 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 using StanBot.Core.Events;
 using StanBot.Core.Events.Messages;
 using StanBot.Services;
+using StanBot.Services.ErrorNotificactionService;
 using StanBot.Services.MailService;
 using StanDatabase.DataAccessLayer;
 using StanDatabase.Repositories;
@@ -22,6 +26,7 @@ namespace StanBot
             StanBotConfigLoader.LoadConfig();
 
             using IHost host = Host.CreateDefaultBuilder()
+                .UseSystemd()
                 .ConfigureServices((_, services) => services
                     .AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
                     {
@@ -47,12 +52,20 @@ namespace StanBot
                     .AddSingleton<VerificationCodeManager>()
                     .AddSingleton<ModuleChannelService>()
                     .AddSingleton<RoleService>()
+                    .AddSingleton<MailErrorNotificationService>()
                     .AddSingleton<IMailService, MailService>()
+                    .AddSingleton<DatabaseErrorNotificationService>()
                     .AddScoped<IMessageReceiver, EMailMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, VerificationCodeMessageReceivedEvent>()
                     .AddScoped<IMessageReceiver, CommandMessageReceivedEvent>()
                     .AddScoped<OnUserJoinedEvent>()
-                    .AddLogging()
+                    .AddLogging(loggingBuilder =>
+                    {
+                        // configure logging with NLog
+                        loggingBuilder.ClearProviders();
+                        loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                        loggingBuilder.AddNLog();
+                    })
                     .AddSingleton<LogService>())
                 .Build();
 

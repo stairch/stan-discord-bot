@@ -20,5 +20,7 @@ namespace StanDatabase.Repositories
         bool IsStillStudying(DiscordAccount discordAccount);
 
         House GetHouseFromStudent(string username);
+
+        List<DiscordAccount> GetAllDiscordAdminAccounts();
     }
 }

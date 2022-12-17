@@ -21,7 +21,6 @@ namespace StanBot.Core.Events.Messages
             {
                 if (IsMessageSourceCorrect(message, receiver) && receiver.IsMatch(message))
                 {
-                    Console.WriteLine("Sending message");
                     await receiver.ProcessMessage(message);
                 }
             }
