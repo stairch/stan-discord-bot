@@ -176,56 +176,11 @@ Der Einsatz einer neuen Logging Library soll die Nachvollziehbarkeit der Softwar
 Diese Einträge sollen den Administratoren bei allfälligen Fehlersuchen unterstützen.\\\\ 
 
 \newpage
-\section{Stand der Technik}
+\section{Stand der Technik}\label{state-of-the-art}
 Als ersten Schritt soll der heutige Stand der Technik im Bereich Spach- und Text-Messaging überprüft werden.
 Dabei soll aufgezeigt werden, welche mögliche Plattformen es auf dem Markt gibt, und ob diese eine mögliche Alternative zum Discord Server sind.
 
 \subsection{Sprach- und Text-Messenger}
-
-\subsection{Discord}
-Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion.
-Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen werden.
-Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
-
-\subsubsection{Geschichte}
-Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
-Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
-2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
-als Startup gegr\"undet.\autocite{noauthor_discord_2021}
-Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
-Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
-
-2015 wurde Discord unter der Domain "discordapp.com" ver\"offentlicht.
-Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit
-und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund
-20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
-2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre XBox Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung
-von 150 Millionen US-Dollar. Bewertet wurde Discord Inc nun auf etwa 2 Milliarden US-Dollar.
-
-Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch f\"ur andere Zielgruppen ein.
-So wurde der Fokus von Videospielen weggelenkt auf einen universellen Kommunikations-und Chat Client, um es f\"ur andere Branchen,
-wie das Schulwesen oder innerhalb Unternehmen, ansprechender zu machen.
-Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
-\textit{Chat for Communities and Friends} und f\"uhrte Servervorlagen ein.
-
-Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
-wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
-
-\subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
-
-Discord hat leider ein paar Einschränkungen.
-Hierzu gehören Channel Limits, welche auf 500 pro Discord Server limitiert sind. \autocite{roonie_latest_2022}
-Diese können auf maximal 250 Kategorien aufgeteilt werden mit je maximal 50 Subchannels.
-Die Einschränkungen werden auf dem Discord Support Forum diskutiert, jedoch haben sich die Discord Arbeiter stehts an der Position festgehalten, die Limite sei hoch genug und es gäbe keine Sinnvollen nutzen an einer höheren Limite. \autocite{noauthor_increase_nodate}
-Dies könnte zukünftig zu Problemen führen, da es zur Zeit 533 Module gibt, welche besucht werden können.
-Dies beinhaltet ebenfalls ISA und diverse erweiterungs Module.
-Erfahrungen aus dem letzten Semester haben jedoch gezeigt, dass nur ein Bruchteil der Modulchannels genutzt wird, weshalb die Limite noch länger nicht erreicht werden sollte.
-Die Anzahl Rollen pro Discord Server ist ebenfalls eingeschränkt.
-Dies führt dazu, dass Studenten nicht über die Rollen die Modul-Channels freigegeben bekommen können, da dies dann den Rahmen sprengen würde. \autocite{noauthor_increase_nodate-1}
-Dies ist der Grund, dass die Studenten einzeln pro Channel freigegeben werden, anstatt dass diese eine neue Rolle bekommen, wie in der bisherigen Umsetzung.
-
-\subsubsection{Alternativen zu Discord}
-
 Die folgenden Platform sind die am weitest verbreiteten auf dem Markt, wenn es um Discord Alternativen und Sprach Chats im allgemeinen geht. \autocite{noauthor_discord-alternativen_nodate}
 
 \subsubsection*{Slack}
@@ -273,12 +228,12 @@ Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar e
 So sollte jeder Nutzer etwas passendes finden.
 Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
 
-\subsection{Discord}
+\subsubsection{Discord}
 Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion.
 Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen werden.
 Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
 
-\subsubsection{Geschichte}
+\subsubsection*{Geschichte}
 Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
 Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
 2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
@@ -302,7 +257,7 @@ Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
 Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
 wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
 
-\subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
+\subsubsection*{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
 Discord hat auch einige Einschränkungen.
 Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{vultaggio_discord_2022}
 \begin{itemize}
@@ -327,11 +282,16 @@ Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist e
 
 Bei der Konzeptbesprechung wurde ein Entity-Relationship Diagramm ausgearbeitet.
 Das Diagramm dient als Grundlage für die Design- und Architektur Entscheide der neuen Applikation.
-\todo{Bild ER-Diagramm}
+Des Weiteren wurde ein Konzept zur allgemeinen Projektstruktur erstellt und einzelne Überlegungen zum neuen Ablauf der Authentifizierung und Modul Anmeldung.
 
-Beschrieb ER-Diagramm
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/Konzept_Skizze.png}
+    \caption{Konzept Skizze}
+    \label{fig:concept-sketch}
+\end{figure}
 
-Überblick der Software mit den verschiedenen Scripts
+Eine genaue Beschreibung des ER-Diagramms kann im Kapitel \nameref{entity-relationship-diagramm} gefunden werden.
 
 \subsection{Technologien}
 
@@ -377,10 +337,24 @@ Das Drehbuch für die manuellen Systemtests findet man im Kapitel \nameref{Testd
 
 \newpage
 \section{Methoden}
+\subsection{Literaturrecherche}
+Um sich zu einem Thema zu informieren muss Literaturrecherche betrieben werden.
+Für die Literaturrecherche sind 2 Methoden verfügbar. \autocite{solis_so_2021}
+\begin{itemize}
+    \item \textbf{Systematische Literaturrecherche}\\
+    Die systematische Literaturrecherche wird benutzt, wenn man schon eine genaue Fragestellung besitzt und gezielt nach Themen sucht, um diese zu beantworten.
+    \item \textbf{Unsystematische Literaturrecherche (Schneeballsystem)}\\
+    Bei der unsystematischen Literaturrecherche will man sich einen Überblick über ein Thema verschaffen, bei dem noch keine Fragestellung definiert ist.
+\end{itemize}
+In diesem Projekt wird mit der systematischen Literaturrecherche gearbeitet.
+Die Fragestellung ist definiert und es wird gezielt nach Suchbegriffen recherchiert.\\\\
+Die Recherche wird in allen Teilen der Arbeit angewandt.
+Beim Recherchieren des Kapitels \nameref{state-of-the-art}, der \nameref{project-management} oder in der \nameref{implementation}.
+Die Recherche ist essentiell um aufgestellte Behauptungen zu untermauern und eine Lösung richtig zu implmentieren. 
 
-\subsection{Projektführung}
+\subsection{Projektführung}\label{project-management}
 Um ein Projekt korrekt anzugehen und durchzuführen braucht es eine gute Projektführung.
-Mit der Auswahl der Projektart und dem Vorgehensmodell, einem definierten Rahmenplan und Meilsensteinen,
+Mit der Auswahl der Projektart und dem Vorgehensmodell, einem definierten Rahmenplan und Meilensteinen,
 schafft man eine Umgebung mit der ein Projekt geplant und kontrolliert durchgeführt werden kann.
 Es hilft bei vielen Beteiligten den Überblick zu bewahren und ist essentiell in der Umsetzung.
 
@@ -417,7 +391,7 @@ In einer dritten Phase wird eine Anleitung für den zukünftigen Unterhalt des D
 
 Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentwicklung" gewählt. Da wir eine Analyse von bestehender Software machen und
 entweder bestehende Software weiterentwickeln oder eine neue erstellen.
-\newpage
+
 \subsubsection{Vorgehensmodell}\label{Vorgehensmodell}
 "\textit{Ein Vorgehensmodell ist eine mehr oder weniger genaue Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
@@ -459,7 +433,6 @@ Für dieses Projekt wird SoDa (Software Development Agile) verwendet und ist ein
 das bedeutet ein Mix aus klassischem und agilem Vorgehen.
 Es besteht auch aus verschiedenen Phasen die untereinander abgeschlossen sind,
 hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
-\newpage
 
 \begin{figure}[h]
     \centering
@@ -482,7 +455,7 @@ im Geschäftsumfeld üblich sind aber 2-Wochen.
 Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von SoDa abbilden.
 In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant.
 In der Konzeptiopns- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt.
-Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.
+Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.\\\\
 
 \subsubsection{Rahmenplan}
 Der Rahmenplan gibt ein Überblick über die ganzen Phasen des Projekts.
@@ -499,7 +472,7 @@ Es wurde entschieden eine Intialisierungsphase von 3 Wochen zu planen, da die An
 Am Schluss bleibt noch eine Woche für die Einführungsphase und das Erstellen der Anleitung.
 Für die Realisierungsphase bleiben 9 Wochen Zeit, die in Sprints eingeteilt werden können.
 Es verbleibt ein einwöchiger Sprint und 4 reguläre zweiwöchige Sprints.
-
+\newpage
 \subsubsection*{Meilensteine}
 Meilensteine erlauben es den Projektfortschritt festzustellen,
 in dem zuvor definierte Projektergebnisse (Artefakte) an einem gewissen Datum vorliegen.\\
@@ -672,7 +645,7 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
 \end{table}
 
 \clearpage
-\section{Realisierung}
+\section{Realisierung}\label{implementation}
 
 \subsection{Analyse der bestehenden Infrastruktur}
 Als erster Schritt wird eine Analyse des bestehenden Bots und seiner Funktion im Discord durchgef\"uhrt.
@@ -693,10 +666,9 @@ Der STAIR Discord-Server bietet auch Informationen und Unterst\"utzung f\"ur all
 Dort k\"onnen sich Studierende gezielt \"uber ein Modul austauschen, Fragen stellen oder Informationen mitteilen.
 Am Anfang wird gar nichts angezeigt. Man muss sich spezifisch f\"ur die Module registrieren um diese angezeigt zu bekommen. Dies verhindert
 
-\todo{Where is "350" coming from?}
 \begin{enumerate}
     \item dass man unn\"otig Benachrichtigungen von Channels bekommt, die einen nicht interessieren.
-    \item dass sein Discord nicht \"uberf\"ullt wird mit 350 Modul-Channels.
+    \item dass sein Discord nicht \"uberf\"ullt wird mit ca. 530 Modul-Channels.
 \end{enumerate}
 
 Die Commands \textit{show <module>} und \textit{hide <module>} erlauben es, den Channel hinzuzuf\"ugen oder zu entfernen.
@@ -1308,7 +1280,7 @@ Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie f
 In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und
 mit dem Aufsetzen der Linux Umgebung befasst.
 
-\subsubsection{Entity Relationship Diagramm}
+\subsubsection{Entity Relationship Diagramm}\label{entity-relationship-diagramm}
 Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden,
 welche Daten im System wichtig sind und wie diese gespeichert werden.
 Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
@@ -1794,12 +1766,13 @@ Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durc
 Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
 Die Abkürzungen können Studenten über die Modulliste der HSLU herausfinden und wird gleich hinter dem vollen Namen angezeigt.\autocite{noauthor_bachelor_nodate}
 
-\begin{figure}[h]
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=1\textwidth]{img/ausschnittModullisteHsluInformatik.PNG}
+    \includegraphics[width=0.8\textwidth]{img/ausschnittModullisteHsluInformatik.PNG}
     \caption{Ausschnitt der Modulliste des Informatik Studiengangs}
     \label{fig:modulliste-informatik}
 \end{figure}
+\clearpage
 
 \subsubsection{E-Mail Service}
 Der E-Mail Service wird im Authentifizierungsprozess benötigt.
