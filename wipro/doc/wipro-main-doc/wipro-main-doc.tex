@@ -2090,7 +2090,6 @@ Die NLog.config Datei für dieses Projekt sieht folgendermassen aus.
             <highlight-word condition="level == LogLevel.Fatal" foregroundColor="Red" text="FATAL" backgroundColor="White" />
         </target>
     </targets>
-
     <rules>
         <logger name="*" minlevel="Debug" writeTo="coloredConsole" />
     </rules>
@@ -2102,7 +2101,12 @@ Da der Server auf welchem der Bot läuft, wenn es gut läuft, nur einmal im Seme
 wird nicht unnötig Speicherplatz verbraucht.
 Die Log Daten kann man sich auch auf der Konsole anzeigen lassen.\\
 EIn Log Eintrag sieht dabei wie folgt aus:
-\todo{Log eintrag Beispiel anzeigen}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/LogLevels.png}
+    \caption{Logging Beispiele}
+    \label{fig:logging-examples}
+\end{figure}
 
 \newpage
 \subsection{Sprint 5}
