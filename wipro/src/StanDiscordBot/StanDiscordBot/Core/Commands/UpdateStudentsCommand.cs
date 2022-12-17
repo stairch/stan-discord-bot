@@ -1,4 +1,4 @@
-﻿using Discord.Commands;
+using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
 using NLog;
@@ -73,7 +73,7 @@ namespace StanBot.Core.Commands
                                 // Change Role in Database from student to exstudent
                                 _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.AccountId, studentRole.DiscordRoleId, exStudentRole);
                                 DiscordRole houseRole = _discordAccountDiscordRoleRepository.GetHouseRoleForAccount(discordAccount.AccountId)!;
-                                
+
 
                                 // Change Role in Discord
                                 _roleService.AddRole(Context, socketGuildUser, "exstudent");

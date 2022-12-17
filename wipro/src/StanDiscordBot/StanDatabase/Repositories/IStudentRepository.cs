@@ -50,5 +50,11 @@ namespace StanDatabase.Repositories
         /// </summary>
         /// <returns></returns>
         IList<Student> GetAllDiscordAdmins();
+        
+        // TODO: add documentation
+        void AddModuleToUser(DiscordAccount discordAccount, Module module);
+
+        // TODO: add documentation
+        void RemoveUserFromModule(DiscordAccount discordAccount, Module module);
     }
 }

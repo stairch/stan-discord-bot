@@ -1,4 +1,4 @@
-﻿using LinqToDB;
+using LinqToDB;
 using StanDatabase.DTOs;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
@@ -118,6 +118,52 @@ namespace StanDatabase.DataAccessLayer
                 return db.Student
                     .Where(s => s.IsDiscordAdmin == true)
                     .ToList();
+            }
+        }
+        
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
+        public void AddModuleToUser(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                if (!db.DiscordAccountModule.Any(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module)))
+                {
+                    db.Insert(
+                        DiscordAccountModule.CreateNew(
+                            discordAccount,
+                            module
+                        )
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add module to user when connection doesn't exist yet
+        /// </summary>
+        /// <param name="discordAccount"></param>
+        /// <param name="module"></param>
+        public void RemoveUserFromModule(DiscordAccount discordAccount, Module module)
+        {
+            using (var db = new DbStan())
+            {
+                db.DiscordAccountModule.Delete(dam => dam.DiscordAccount.Equals(discordAccount) && dam.Module.Equals(module));
+                //if ()
+                //{
+                //    db.Delete(
+                //        new DiscordAccountModule(
+                //            DateTime.Now,
+                //            discordAccount.DiscordAccountId,
+                //            discordAccount,
+                //            module.ModuleId,
+                //            module
+                //        )
+                //    );
+                //}
             }
         }
     }

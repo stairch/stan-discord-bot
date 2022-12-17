@@ -1,4 +1,4 @@
-﻿using Discord.Commands;
+using Discord.Commands;
 using Discord.Interactions;
 using ScottPlot.Plottable;
 using StanDatabase.Repositories;
@@ -45,35 +45,39 @@ namespace StanBot.Core.Commands
 
             try
             {
-                List<StudentsPerHouseDTO> list = _studentRepository.NumberOfStudentsPerHouse();
-
-                string[] labels = new string[list.Count()];
-                List<Bar> bars = new();
-
-                for (int i = 0; i < list.Count; i++)
+                if (Context.Channel.Name.Equals("bot-commands"))
                 {
-                    Bar bar = new()
+
+                    List<StudentsPerHouseDTO> list = _studentRepository.NumberOfStudentsPerHouse();
+
+                    string[] labels = new string[list.Count()];
+                    List<Bar> bars = new();
+
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        Value = list[i].StudentsCount,
-                        Position = i,
-                        FillColor = System.Drawing.Color.FromName(list[i].HouseName),
-                        Label = list[i].StudentsCount.ToString(),
-                        LineWidth = 2,
-                    };
-                    bars.Add(bar);
+                        Bar bar = new()
+                        {
+                            Value = list[i].StudentsCount,
+                            Position = i,
+                            FillColor = System.Drawing.Color.FromName(list[i].HouseName),
+                            Label = list[i].StudentsCount.ToString(),
+                            LineWidth = 2,
+                        };
+                        bars.Add(bar);
 
-                    labels[i] = list[i].HouseName;
+                        labels[i] = list[i].HouseName;
+                    }
+
+                    var plt = new ScottPlot.Plot(600, 400);
+                    plt.AddBarSeries(bars);
+                    plt.XTicks(labels);
+                    plt.Title("Students per House");
+                    plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
+                    plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
+                    plt.SetAxisLimits(yMin: 0);
+
+                    await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
                 }
-
-                var plt = new ScottPlot.Plot(600, 400);
-                plt.AddBarSeries(bars);
-                plt.XTicks(labels);
-                plt.Title("Students per House");
-                plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
-                plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
-                plt.SetAxisLimits(yMin: 0);
-
-                await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
             }
             catch(Exception ex)
             {
@@ -95,35 +99,38 @@ namespace StanBot.Core.Commands
 
             try
             {
-                List<StudentsPerSemesterDTO> list = _studentRepository.NumberOfStudentsPerSemester();
-
-                List<Bar> bars = new();
-                string[] labels = new string[list.Count];
-
-                for (int i = 0; i < list.Count; i++)
+                if (Context.Channel.Name.Equals("bot-commands"))
                 {
-                    Bar bar = new()
+                    List<StudentsPerSemesterDTO> list = _studentRepository.NumberOfStudentsPerSemester();
+
+                    List<Bar> bars = new();
+                    string[] labels = new string[list.Count];
+
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        Value = list[i].StudentsCount,
-                        Position = i,
-                        Label = list[i].StudentsCount.ToString(),
-                        FillColor = ScottPlot.Palette.Category10.GetColor(i),
-                        LineWidth = 2,
-                    };
-                    bars.Add(bar);
+                        Bar bar = new()
+                        {
+                            Value = list[i].StudentsCount,
+                            Position = i,
+                            Label = list[i].StudentsCount.ToString(),
+                            FillColor = ScottPlot.Palette.Category10.GetColor(i),
+                            LineWidth = 2,
+                        };
+                        bars.Add(bar);
 
-                    labels[i] = list[i].Semester.ToString();
+                        labels[i] = list[i].Semester.ToString();
+                    }
+
+                    var plt = new ScottPlot.Plot(600, 400);
+                    plt.AddBarSeries(bars);
+                    plt.XTicks(labels);
+                    plt.Title("Students per Semester");
+                    plt.XLabel(nameof(StudentsPerSemesterDTO.Semester));
+                    plt.YLabel(nameof(StudentsPerSemesterDTO.StudentsCount));
+                    plt.SetAxisLimits(yMin: 0);
+
+                    await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerSemester.png"));
                 }
-
-                var plt = new ScottPlot.Plot(600, 400);
-                plt.AddBarSeries(bars);
-                plt.XTicks(labels);
-                plt.Title("Students per Semester");
-                plt.XLabel(nameof(StudentsPerSemesterDTO.Semester));
-                plt.YLabel(nameof(StudentsPerSemesterDTO.StudentsCount));
-                plt.SetAxisLimits(yMin: 0);
-
-                await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerSemester.png"));
             }
             catch(Exception ex)
             {
@@ -145,35 +152,38 @@ namespace StanBot.Core.Commands
 
             try
             {
-                List<DiscordAccountsPerSemesterDTO> list = _discordAccountRepository.NumberOfDiscordAccountsPerSemester();
-
-                List<Bar> bars = new();
-                string[] labels = new string[list.Count];
-
-                for (int i = 0; i < list.Count; i++)
+                if (Context.Channel.Name.Equals("bot-commands"))
                 {
-                    Bar bar = new()
+                    List<DiscordAccountsPerSemesterDTO> list = _discordAccountRepository.NumberOfDiscordAccountsPerSemester();
+
+                    List<Bar> bars = new();
+                    string[] labels = new string[list.Count];
+
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        Value = list[i].AccountsCount,
-                        Position = i,
-                        Label = list[i].AccountsCount.ToString(),
-                        FillColor = ScottPlot.Palette.Category10.GetColor(i),
-                        LineWidth = 2,
-                    };
-                    bars.Add(bar);
+                        Bar bar = new()
+                        {
+                            Value = list[i].AccountsCount,
+                            Position = i,
+                            Label = list[i].AccountsCount.ToString(),
+                            FillColor = ScottPlot.Palette.Category10.GetColor(i),
+                            LineWidth = 2,
+                        };
+                        bars.Add(bar);
 
-                    labels[i] = list[i].Semester.ToString();
+                        labels[i] = list[i].Semester.ToString();
+                    }
+
+                    var plt = new ScottPlot.Plot(600, 400);
+                    plt.AddBarSeries(bars);
+                    plt.XTicks(labels);
+                    plt.Title("Discord Accounts per Semester");
+                    plt.XLabel(nameof(DiscordAccountsPerSemesterDTO.Semester));
+                    plt.YLabel(nameof(DiscordAccountsPerSemesterDTO.AccountsCount));
+                    plt.SetAxisLimits(yMin: 0);
+
+                    await Context.Channel.SendFileAsync(plt.SaveFig("img/accountsPerSemester.png"));
                 }
-
-                var plt = new ScottPlot.Plot(600, 400);
-                plt.AddBarSeries(bars);
-                plt.XTicks(labels);
-                plt.Title("Discord Accounts per Semester");
-                plt.XLabel(nameof(DiscordAccountsPerSemesterDTO.Semester));
-                plt.YLabel(nameof(DiscordAccountsPerSemesterDTO.AccountsCount));
-                plt.SetAxisLimits(yMin: 0);
-
-                await Context.Channel.SendFileAsync(plt.SaveFig("img/accountsPerSemester.png"));
             }
             catch(Exception ex)
             {

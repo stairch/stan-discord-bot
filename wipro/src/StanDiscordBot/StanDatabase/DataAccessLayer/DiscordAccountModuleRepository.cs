@@ -7,6 +7,18 @@ namespace StanDatabase.DataAccessLayer
 {
     public class DiscordAccountModuleRepository : IDiscordAccountModuleRepository
     {
+        private IDiscordAccountRepository _discordAccountRepository;
+
+        private IModuleRepository _moduleRepository;
+
+        public DiscordAccountModuleRepository(
+            IDiscordAccountRepository discordAccountRepository,
+            IModuleRepository moduleRepository)
+        {
+            _discordAccountRepository = discordAccountRepository;
+            _moduleRepository = moduleRepository;
+        }
+
         public List<MembersPerModuleDTO> NumberOfMembersPerModule(int limit = 10)
         {
             using (var db = new DbStan())

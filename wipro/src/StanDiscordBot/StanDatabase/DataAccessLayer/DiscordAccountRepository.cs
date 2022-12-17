@@ -91,7 +91,10 @@ namespace StanDatabase.DataAccessLayer
 
         public int Delete(int discordAccountId)
         {
-            throw new NotImplementedException();
+            using (var db = new DbStan())
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public List<DiscordAccount> GetAllDiscordAdminAccounts()
