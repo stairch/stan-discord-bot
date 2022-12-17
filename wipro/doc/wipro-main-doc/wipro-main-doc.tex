@@ -155,85 +155,35 @@ Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*
 \newpage
 
 \section{Problem, Fragestellung, Vision}
-Die bisherige Lösung ist instabil und führt regelmässig zu Problemen.
-So zum Beispiel funktionieren gewisse Befehle von Nadeko nicht mehr.
-Was dazu geführt hat ist nicht bekannt.
-Der Stan-Bot hat keine Bugs, jedoch gibt es hin und wieder unklarheiten bei den Studenten,
-weshalb diese nachfragen in den Hilf-Channels auf dem Discord Server.
-In der neuen Version sollten die nächsten Schritte und Abläufe für die Studenten verdeutlicht werden.
-\newline
-Die beiden bisherigen Lösungen sollen vereinheitlicht werden, was langzeitig Zeit bei der Übergabe an die nächsten Vorstandsmitglieder sparen soll.
-Auch hat die jetztige Lösung einige Einschränkungen.
-Da die Anzahl Rollen auf Discord beschränkt ist, mussten bisher mehrere Fächer auf einmal an Studenten freigegeben werden.
-Die Module sind dabei auch ungleichmässig verteilt.
-So gibt zum Beispiel die Rolle Security 14 Module auf einmal frei, die Rolle PREN hingegen nur vier Module und die Rolle AD nur ein einziges Modul.
-Hierbei sind vor allem die grössten Zusammenfassungen ein Problem, da dann Studierende mit zu vielen Nachrichten belästigt werden.
-Diese negative Nutzererfahrung soll zukünftig verhindert werden.
-\newline
-Zukünftig sollten Statistiken für den Vorstand von STAIR verfügbar sein um mehr über die Nutzung des Discord Servers zu erfahren
-und datenbasierte Entscheidungen treffen, sowie Werbung bei den Studentengruppen einsetzen zu können.
-\newline
-Neu soll eine Fehlererkennung eingeführt werden.
-Bisher wurde kein Admin informiert bei Problemen.
-Dies führte zu länger anhaltenden Fehlern als nötig.
-Mit einer automatischen Erkennung, zum Beispiel von der nicht-erreichbarkeit des Mail-Servers, Datenbank oder Discord-Servers könnte ein Admin umgehend informiert werden um Massnahmen zu treffen.
-Hierzu würde der jeweils andere Kommunikationskanal genutzt werden, also bei einem Fehler mit Discord wird per E-Mail informiert und umgekehrt.
-Es kann auch auftreten, dass eine Verbindung zu der Datenbank möglich ist, jedoch können keine Daten gespeichert werden.
-\todo{Decide if this will be done or not}
-Auch wenn jemand versucht für ein Modul anzumelden, welches nicht existiert, sollte dies erfasst werden um mögliche Fehler zu erkennen.
-\todo{Decide if this will be done or not}
-Ein weiterer Fall wäre wenn jemand versucht mit einer ungültigen E-Mail sich anzumelden.
-Hierbei wird unterschieden zwischen nicht erfasster Studenten Mail und einer nicht-studenten Mail.
-\todo{Format Studenten Mail irgendwo einfügen}
-Mit Hilfe einer Logging Library sollen Fehler nachvollziehbar bleiben.
-Hierzu kann eine bestehende Lösung genutzt werden, da keine speziellen Features gebraucht werden
-und ein lokales Speichern der Log Messages ist ausreichend.
+Der Studentenverein STAIR des Departemnts Informatik der Hochschule Luzern stellt über die Plattform Discord einen Server zur Verfügung.
+Über diesen können sich Studenten über das Studium oder spezifische Module austauschen.\\
+Auf dem Server laufen zwei Bots, welche sich um die Authentifikation der Studenten, sowie um die Einschreibung in die verschiedenen Modul-Channels kümmern.
+Der Bot zur Authentifikation funktioniert einwandfrei, aber beim Bot zur Moduleinschreibung kommt es immer wieder zu Problemen.
+Da dieser extern auf einer Plattform namens Nadeko erstellt wurde, kann nicht genau gesagt werden, wieso diese Probleme auftreten.\\
+Des Weiteren gibt es Unklarheiten bei den Studenten zur Benutzung dieser Bots.
+Auch die Aufteilung der Modul-Channels, in verschiedene Kategorien, ist nicht benutzerfreundlich gestaltet.
+In einer neuen Version, sollen die Probleme beseitigt und die Unklarheiten bei den Studenten geklärt werden.\\\\
+In diesem Projekt soll eine Lösung entwickelt werden, die den Discord Administratoren von STAIR eine Unterstützung und Mehrwert beitet.
+Die Lösung soll für STAIR und Studenten verständlich sein und einfach eingesetzt werden können.\\\\
+Das Ziel der Arbeit ist es, die vorher beschriebenen zwei Bots zusammenzuführen und damit eine einheitliche Platform zu haben, über welchen Bot Commands verwaltet werden.
+Des weiteren soll eine Datenbank eingeführt werden, die Studenten und Ihre Discord Accounts verbindet.
+Dies erleichtert die Authentifikation und die Verwaltung der Modul-Channels.
+Die Daten bieten auch einen statistischen Mehrwert für die STAIR Mitglieder, da ein besser Einblick gewährt wird, wer den Discord Server nutzt.
+Dies kann für Marketingzwecke sowie Event-Plannung verwendet werden.\\
+Auch soll der Einsatz von einer automatischen Fehlererkennung dazu beitragen, das Probleme beim Bot schnell an die Administartoren von STAIR weitergeleitet werden.
+So können lange Unsicherheiten und Probleme schneller behoben werden.
+Der Einsatz einer neuen Logging Library soll die Nachvollziehbarkeit der Software sicherstellen.
+Diese Einträge sollen den Administratoren bei allfälligen Fehlersuchen unterstützen.\\\\ 
 
 \newpage
 \section{Stand der Technik}
+Als ersten Schritt soll der heutige Stand der Technik im Bereich Spach- und Text-Messaging überprüft werden.
+Dabei soll aufgezeigt werden, welche mögliche Plattformen es auf dem Markt gibt, und ob diese eine mögliche Alternative zum Discord Server sind.
 
 \subsection{Sprach- und Text-Messenger}
-
-\subsection{Discord}
-Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion.
-Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen werden.
-Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
-
-\subsubsection{Geschichte}
-Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
-Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
-2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
-als Startup gegr\"undet.\autocite{noauthor_discord_2021}
-Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
-Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
-
-2015 wurde Discord unter der Domain "discordapp.com" ver\"offentlicht.
-Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit
-und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund
-20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
-2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre XBox Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung
-von 150 Millionen US-Dollar. Bewertet wurde Discord Inc nun auf etwa 2 Milliarden US-Dollar.
-
-Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch f\"ur andere Zielgruppen ein.
-So wurde der Fokus von Videospielen weggelenkt auf einen universellen Kommunikations-und Chat Client, um es f\"ur andere Branchen,
-wie das Schulwesen oder innerhalb Unternehmen, ansprechender zu machen.
-Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
-\textit{Chat for Communities and Friends} und f\"uhrte Servervorlagen ein.
-
-Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
-wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
-
-\subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
-
-% https://netcord.site/new-discord-channel-creation-ratelimit/
-% https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit
-% https://support.discord.com/hc/en-us/community/posts/360032363631-Increase-the-Max-Number-of-Roles-per-Server
-
-\subsubsection{Alternativen zu Discord}
-\todo{Yannis}
-
+Die folgenden Platform sind die am weitest verbreiteten auf dem Markt, wenn es um Discord Alternativen und Sprach Chats im allgemeinen geht. \autocite{}
+% https://www.ionos.de/digitalguide/server/knowhow/discord-alternative/
 \subsubsection*{Slack}
-
 Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
 Dies ist auch gut auf der Homepage des jeweiligen Unternehmens zu erkennen.
 So erwähnt Discord zum Beispiel: "\textit{STELL DIR EINEN ORT VOR, …
@@ -279,6 +229,49 @@ Auch wäre unklar, ob das Enterprise Lab eine solche Applikation zulassen würde
 Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann. \todo{source: https://matrix.org/clients}
 So sollte jeder Nutzer etwas passendes finden.
 Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
+
+\subsection{Discord}
+Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion.
+Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen werden.
+Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
+
+\subsubsection{Geschichte}
+Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
+Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
+2012 wurde das Unternehmen Discord Inc (damals noch Hammer \& Chisel)
+als Startup gegr\"undet.\autocite{noauthor_discord_2021}
+Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer
+Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
+
+2015 wurde Discord unter der Domain "discordapp.com" ver\"offentlicht.
+Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit
+und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund
+20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
+2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre XBox Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung
+von 150 Millionen US-Dollar. Bewertet wurde Discord Inc nun auf etwa 2 Milliarden US-Dollar.
+
+Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch f\"ur andere Zielgruppen ein.
+So wurde der Fokus von Videospielen weggelenkt auf einen universellen Kommunikations-und Chat Client, um es f\"ur andere Branchen,
+wie das Schulwesen oder innerhalb Unternehmen, ansprechender zu machen.
+Damit \"anderte das Unternehmen ihr Motto von \textit{Chat for Gamers} zu
+\textit{Chat for Communities and Friends} und f\"uhrte Servervorlagen ein.
+
+Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und
+wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
+
+\subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
+Discord hat auch einige Einschränkungen.
+Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{}
+% https://bestfriendsclub.ca/discord-member-limit/
+\begin{itemize}
+    \item Anzahl Channels: 500
+    \item Anzahl Rollen: 250
+    \item Anzahl Kategorien: 50
+    \item Anzahl Channels pro Kategorie: 50
+    \item Anzahl Mitglieder: 250'000
+    \item Anzahl Freunde eines Accounts: 1000
+    \item Anzahl Buchstaben für Rollen und Channels: 100
+\end{itemize}
 
 \subsubsection*{Warum Discord?}
 Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt.
@@ -345,7 +338,10 @@ Das Drehbuch für die manuellen Systemtests findet man im Kapitel \nameref{Testd
 \section{Methoden}
 
 \subsection{Projektführung}
-\todo{Nicolas}
+Um ein Projekt korrekt anzugehen und durchzuführen braucht es eine gute Projektführung.
+Mit der Auswahl der Projektart und dem Vorgehensmodell, einem definierten Rahmenplan und Meilsensteinen,
+schafft man eine Umgebung mit der ein Projekt geplant und kontrolliert durchgeführt werden kann.
+Es hilft bei vielen Beteiligten den Überblick zu bewahren und ist essentiell in der Umsetzung.
 
 \subsubsection{Projektart}
 Es gibt verschiedene Projektarten, welche je nach Vorhaben zur Anwendung kommen. Eine Projektart hilft, die erwarteten Ergebnisse zu spezifizieren
@@ -611,8 +607,8 @@ Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schad
 Die Risiken werden in eine sogenannte Risikomatrix eingetragen, wobei die Achsen die Eintrittswahrscheinlichkeit und das Schadensausmass repräsentieren.
 In dieser Matrix kann die Risikobereitschaft der Projektverantwortlichen eingetragen werden.
 Die Risikobereitschaft wird mit einer Linie durch die Matrix dargestellt.
-Wenn ein Risiko über der Linie liegt, müssen zwingend bessere Massnahmen ergriffen werden.
-\newline
+In dem Projekt wäre es der orangene und rote Bereich, welcher über der Bereitschaftslinie liegt.
+Wenn ein Risiko über der Linie liegt, müssen zwingend bessere Massnahmen ergriffen werden.\\
 Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobereitschaftslinie zu bringen.
 
 \begin{table}[h]
@@ -633,7 +629,6 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
     \caption{Risikomatrix}
     \label{tab: Riskmatrix}
 \end{table}
-\todo{Risikobereitschaftslinie irgendwie einzeichnen.}
 
 \clearpage
 \section{Realisierung}
@@ -659,10 +654,18 @@ Am Anfang wird gar nichts angezeigt. Man muss sich spezifisch f\"ur die Module r
 
 \begin{enumerate}
     \item dass man unn\"otig Benachrichtigungen von Channels bekommt, die einen nicht interessieren.
-    \item dass sein Discord nicht \"uberf\"ullt wird mit 400 Modul-Channels.
+    \item dass sein Discord nicht \"uberf\"ullt wird mit 350 Modul-Channels.
 \end{enumerate}
 
 Die Commands \textit{show <module>} und \textit{hide <module>} erlauben es, den Channel hinzuzuf\"ugen oder zu entfernen.
+Bei der jetzigen Version des Discord Bots werden die Anzahl Rollen, die vergeben werden können zum Problem.
+(Siehe Kapitel \ref{discord_einschraenkungen})
+Durch eine Anzahl von etwa 350 Modulen, welche am Departement Informatik unterrichtet werden, 
+kann die Modulfreigabe nicht mit Rollen gelöst werden.
+Zum jetzigen Zeitpunkt werden die Module in einzelne Themenbereiche zusammengefasst.
+Also z.B. alle Security Module in einer Kategorie.
+Bei einem show Command, wird dem Student nun die Rolle der entsprechenden Kategorie Hinzugefügt.
+Damit erhält er aber Einsicht in alle Module dieser Katgorie, was vielleicht gar nicht erwünscht ist.
 \newline
 
 Neu gibt es auch das Konzept von verschiedenen H\"ausern bei STAIR. Jeder Student wird dabei einem Haus zugeteilt. Die Zuteilung l\"auft
@@ -675,8 +678,8 @@ gesammelt hat, als Gewinner gelobt.
 Der Discord-Server bietet die Platform um sein Haus zu mobilisieren oder die neuesten Ergebnisse den Studenten zu verk\"unden.
 Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren zugeh\"origen Channels hinzugef\"ugt. \\
 Im folgenden Bild sieht man eine Übersicht über alle Discord Channels und Kategroien, wie sie momentan bestehen.
-\newpage
-\begin{figure}[ht]
+
+\begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth,height=10cm]{img/Stair_Discord_Channels.jpg}
     \caption{Stair Discord Channels Alt}
@@ -686,7 +689,6 @@ Im folgenden Bild sieht man eine Übersicht über alle Discord Channels und Kate
 \subsubsection*{Ablauf Authentifizierung \& Modulanmeldung}
 In den folgenden zwei Seiten wird der Authentifizierungsprozess und der Modulanmeldungsprozess als Ablaufdiagramm beschrieben.
 Dieser Ablauf wird zum jetzigen Zeitpunkt durchgeführt.
-\todo{Noch mehr schreiben}
 
 \begin{landscape}
     \begin{figure}[ht]
@@ -711,15 +713,40 @@ Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
 
 \subsubsection*{Konfigurationsmanagement alter Bot}
 In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizierung und den eingesetzten Libraries.
-\todo{Tabelle mit Spezifikationen vom System. (Versionen, Libraries)}
+
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|p{20em}|l|}
         \hline
         \rowcolor[gray]{.9} Name & Beschreibung & Version \\
         \hline
-        .NET Core & Core Library für C\# Projekte.
-        Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 4.0.0 \\
+        .NETCore & Core Library für C\# Projekte.
+        Enthält alle grundlegend Klassen und Libraries, welche für die Erstellung von .NET Projekten nötig sind. & 2.0.0 \\
+        \hline
+        NETStandard Library & Set von Standard .NET APIs & 2.0.3 \\
+        \hline
+        Discord.NET & Asynchrone API für Discord. & 2.3.0 \\
+        \hline
+        FakeItEasy & Mocking Bibliothek & 6.0.0 \\
+        \hline
+        FluentAssertions & Spezifizieren von TDD und BDD-Style Unit Tests. & 5.10.2 \\
+        \hline
+        Microsoft UserSecrets & User Secret Konfigurations provider & 3.1.0 \\
+        \hline
+        Microsoft Graph & Erlaubt alle Microsoft Dienste über eine einheitliche Schnittstelle anzusprechen & 1.21.0 \\
+        \hline
+        Microsoft.Identity.Client & Enthält Binaries für die Microsoft Authentication Library (MSAL) & 4.7.1 \\
+        \hline
+        Newtonsoft.JSON & High-Performance Framework für JSON & 12.0.3 \\
+        \hline
+        Ninject & Dependency Injector für .NET Applikationen & 3.3.4 \\
+        \hline
+        Nito.AsyncEx & Hilfsbibliothek für Task-Based Asynchronous Pattern (TAP) & 5.0.0 \\
+        \hline
+        Topshelf & Bibliothek zum Hosten von Applikationen. 
+        Bietet command-line optionen zum installieren, konfigurieren und laufen lassen von applications as a service. & 4.2.1 \\
+        \hline
+        xunit & Developer testing framework & 2.4.1 \\
         \hline
     \end{tabular}
     \caption{Konfigurationsmanagement Bot alt}
@@ -735,8 +762,8 @@ Das Programm ist in zwei Packages aufgeteilt.
     \item StanBot.Core
     \item StanBot.Service
 \end{itemize}
-
-\begin{figure}[h]
+\clearpage
+\begin{figure}[ht]
     \centering
     \hspace*{-1.5cm}
     \includegraphics[width=1.2\textwidth]{img/Klassendiagramm_Bot_alt.png}
@@ -745,13 +772,17 @@ Das Programm ist in zwei Packages aufgeteilt.
 \end{figure}
 
 \subsubsection{Ausführung Bot}
+Der Bot läuft auf einem Microsoft Windows Server 2019 Standard auf der Enterprise Lab Umgebung der HSLU. 
+Die Konfiguration entspricht der eines Windows Services und läuft dementsprechend durchgehend.
 
-Der Bot läuft auf einem Windows Server \#\#\#\# auf der Enterprise Lab Umgebung der HSLU. Die Konfiguration entspricht der eines
-Windows Services und läuft dementsprechend durchgehend.
-\newline
-\todo{Bild Service Konfiguration}
-\newline
-
+\begin{figure}[hb]
+    \centering
+    \hspace*{-2.5cm}
+    \includegraphics[width=1.3\textwidth,height=6cm]{img/Discord_Bot_old_service_configuration.png}
+    \caption{Stair Discord Service Konfiguration Alt}
+    \label{fig:bot-service-configuration-old}
+\end{figure}
+\clearpage
 
 \subsubsection{Geplante Änderungen}
 \todo{Yannis}
@@ -1161,7 +1192,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 \clearpage
 
 \subsection{Konfigurationsmanagement C\# Solution}
-\todo{Nicolas}
+In der folgenden Tabelle werden alle verwendeten NuGet Packete mit der verwendeten Version aufgelistet.
 
 \begin{table}[h]
     \centering
@@ -1170,13 +1201,54 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
         \rowcolor[gray]{.9} Name & Beschreibung & Version \\
         \hline
         .NET Core & Core Library für C\# Projekte.
-        Enthält alle grundlegend Klassen und Libraries, welche man zum Arbeiten braucht. & 6.0.0 \\
+        Enthält alle grundlegend Klassen und Libraries, welche man zum Erstellen von .NET Applikationen benötigt. & 6.0.0 \\
+        \hline
+        Discord.Net & Asynchronous API für Discord & 3.8.1 \\
+        \hline
+        linq2db.Mysql & Arbeiten mit Linq und Mysql für .NET & 4.3.0 \\
+        \hline
+        Micosoft Systemd & .NET hosting Infrastruktur für Systemd Services & 7.0.0 \\
+        \hline
+        Microsoft Graph & Erlaubt alle Microsoft Dienste über eine einheitliche Schnittstelle anzusprechen & 4.48.0 \\
+        \hline
+        Microsoft.NET.Test.Sdk & MSbuild targets für .NET Test Projekte. & 17.1.0 \\
+        \hline
+        MSTest & Evolution von Microsofts Test Framework & 2.2.8 \\
+        \hline
+        NLog.Extensions.Logging & Logging Framework für .NET Applikationen & 5.2.0 \\
+        \hline
+        ScottPlot & Plottion Library für .NET Applikationen & 4.1.59 \\
+        \hline
+        coverlet.collector & Code coverage library & 3.1.2 \\
         \hline
     \end{tabular}
     \caption{Konfigurationsmanagement}
     \label{tab: Konfigurationsmanagement}
 \end{table}
-\todo{Welches Projekt enthält welche Libraries}
+
+Man kann diese NuGet Packete für die ganze Solution installieren, oder für einzelne Projekte.
+Im folgenden wird aufgelistet, welches Projekt welche Packete enthält.\\
+Ganze Solution:
+\begin{itemize}
+    \item NLog
+\end{itemize}
+StanBot Projekt:
+\begin{itemize}
+    \item Discord.Net
+    \item Micosoft Systemd
+    \item Microsoft Graph
+    \item ScottPlot
+\end{itemize}
+StanDatabase Projekt:
+\begin{itemize}
+    \item linq2db.Mysql
+\end{itemize}
+StanDatabaseTest Projekt
+\begin{itemize}
+    \item coverlet.collector
+    \item Microsoft.NET.Test.Sdk
+    \item MSTest
+\end{itemize}
 
 \newpage
 \subsection{Sprint 1}
@@ -1190,7 +1262,7 @@ Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie f
 \end{figure}
 
 In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und
-mit dem Aufsetzten der Linux Umgebung befasst.
+mit dem Aufsetzen der Linux Umgebung befasst.
 
 \subsubsection{Entity Relationship Diagramm}
 Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden,
@@ -1222,14 +1294,17 @@ Wenn nun der Student sich im Discord beim Bot für ein Modul anmeldet, wird die 
 Der richtige Student, bzw. seine Daten, haben mit dieser Zuteilung nichts zu tun.
 \newline
 Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord möglich.
-Beschrieben wird dieses Problem im Kapitel \nameref{discord_einschraenkungen}.
+Durch die Einschränkung von 50 Channeln in einer Kategorie \ref{discord_einschraenkungen}, können nicht alle Module in einer Kategorie zusammengafsst werden.
+Dies bedeutet das die Module aufgeteilt werden müssen.
+In dieser Tabelle werden die Anzahl Kategorien gespeichert.
 
-\subsection{Aufsetzten Solution}
+\subsection{Aufsetzen Solution}
 Die C\# Solution wird in drei Projekte aufgeteilt, welche jeweils andere Verantwortlichkeiten haben.
 \begin{itemize}
     \item StanBot
     \item StanDatabase
     \item StanScripts
+    \item StanDatabaseTest
 \end{itemize}
 
 In dem \textbf{StanBot} Projekt wird der Discord Bot erstellt und alle Funktionalität liegen,
@@ -1241,8 +1316,10 @@ Datenbank Operationen sollen nur in diesem Projekt erfolgen.
 Die anderen Projekte sollen keinen direkten Zugriff auf die Datenbank haben.\\
 Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, 
 die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
-Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.
-\todo{Test Projekte hinzufügen}
+Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.\\
+Im \textbf{StanDatabaseTest} Projekt werden die Tests für die Datenbank geschrieben.
+In .NET Applikationen ist es üblich ein eigenes Projekt für die Tests zu erstellen.\autocite{}
+% https://learn.microsoft.com/de-de/dotnet/core/tutorials/testing-with-cli
 
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
@@ -1331,7 +1408,7 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 %\end{lstlisting}
 
-\subsubsection{Aufsetzten der Linux Umgebung}
+\subsubsection{Aufsetzen der Linux Umgebung}
 
 Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
 Diese musste 
@@ -1359,18 +1436,36 @@ dem Erstellen des Discord Bots und der ersten Kommunikation damit.
 \subsubsection{Modulerfassung}
 \todo{Yannis}
 
-\subsubsection{Aufsetzten Discord Bot}
+\subsubsection{Aufsetzen Discord Bot}
 Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
 Dort kann man den Namen des Bots angeben und erhält ein Application Token.
-Dieses dient wie als Private Key der Applikation und wird verwendet um sich im COde mit dem Bot zu verbinden.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/discord_developer_bot.png}
+    \caption{Developer Page Discord Application Token}
+    \label{fig:delevoper-application-token}
+\end{figure}
+Dieses dient wie als Private Key der Applikation und wird verwendet um sich im Code mit dem Bot zu verbinden.
 Weiter müssen auf der Platform noch die Berechtigungen des Bots spezialisiert werden.
-Diese müssen gut überlegt sein, da man nur für spezifizierte Events Callbacks im Code bekommt.
-\newline
+Dies kann unter dem Tab OAuth2 -> URL Generator gemacht werden.
+Die zugewisenen Berechtigungen müssen gut überlegt sein, da man nur für spezifizierte Events, Callbacks im Code bekommt.
+Für dieses Projekt muss die Berechtigung Administrator vergeben werden.
+Dies sollte allerdings immer mit Vorsicht genossen werden.
+Da der Stan Bot private Channels erstellen und verwalten soll, benötigt er diese Berechtigung.
 Wenn man die gewünschten Berechtigungen markiert hat, erhält man eine URL.
 Diese kann man direkt im Browser eingeben, um den Bot einem Server zuzuordnen.
 Damit das gelingt, muss der Nutzer auf dem Server die Berechtigung zum Bots hinzufügen besitzen. 
-\todo{Discord Developer Page: Applikationen im Web.}
-\todo{Bild Zuweisung von Bot zum Server}
+
+\begin{figure}[h]
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.7\textwidth]{img/apply_bot_to_server.png}
+    \end{minipage}
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.7\textwidth]{img/apply_bot_to_server_2.png}
+    \end{minipage}
+    \caption{Bot dem Server hinzufügen}
+    \label{fig:apply-bot-to-server}
+\end{figure}
 
 \subsubsection{Stan Bot Architektur}
 Grundlegend geht es bei der Bot Architektur um die Kommunikation mit der DiscordClient Klasse.
@@ -1434,7 +1529,12 @@ Die Settings Datei heisst \textit{stan.json}
 \begin{lstlisting}[language=json]
 {
     "DisordApplicationToken": "XXXX-XXXXX-XXXXXXXXXXXX",
-    "Prefix": "!"
+    "Prefix": "!",
+    "GuildId": "1234567891234567",
+    "FromEmailAddress": "stan@stair.ch",
+    "FromEmailName: "STAN",
+    "AppId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX",
+    "Scopes" ["Mail.Send", "Mail.Send.Shared"],
 }
 \end{lstlisting}
 
@@ -1458,9 +1558,16 @@ Diese und andere Konfigurationen können bei dem Erstellen des Bots angegeben we
 \end{lstlisting}
 
 Allerdings genügt diese Einstellung alleine noch nicht.
-Um Textnachrichten abzufangen, muss bei der Discord Developer Applikation noch ein spezieller Hacken gesetzt werden.
-\todo{Einfügen des Bildes der Discord Developer Einstellungen}
-\newline
+Um Textnachrichten abzufangen, müssen bei der Discord Developer Applikation noch die Privileged Gateway Intents aktiviert werden.
+Diese werden benötigt um die Nachrichten der Server Benutzer abzufangen.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/discord_developer_privileged_intents.png}
+    \caption{Privileged Intents für Discord Bot}
+    \label{fig:delevoper-privileged-intents}
+\end{figure}
+
 Nun können verschiedene Events beim DiscordClient abonniert werden.
 
 \begin{lstlisting}[language=csharp]
@@ -1663,7 +1770,6 @@ Um dieses Problem zu lösen, wird mit den Angeboten von Microsoft gearbeitet.\\
 Als Mail Server wird Outlook verwendet.
 Dies aus dem Grund, da alle Studenten ein Microsoft Konto besitzen und ihre E-Mails über Outlook verwalten.
 Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
-Nun wird Step-by-Step erklärt wie dieser Übertragungsprozess aus der Discord Bot Applikation funktioniert.
 
 \subsubsection*{Mircosoft Identity \& Microsoft Azure}
 %https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
@@ -1726,7 +1832,12 @@ await _graphServiceClient.Me.SendMail(message).Request().PostAsync();
 Da der GraphServiceClient mit dem richtigen Microsoft Konto authentifiziert ist, 
 werden nun die E-Mails direkt über das richtige Outlook Konto weitergeleitet.
 
-\todo{Hinzufügen Diagramm E-Mail Infrastruktur}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/Email_Infrastruktur.png}
+    \caption{Email Versand Infrastruktur}
+    \label{fig:send-email-infrastructure}
+\end{figure}
 
 \newpage
 \subsection{Sprint 4}
@@ -1762,7 +1873,12 @@ Die Abfragen werden in den weiteren Kapiteln noch genauer beschrieben.
 \subsubsection*{Aufruf Berechtigungen}
 Es sollen nur Administratoren und STAIR Mitglieder diese Commands einsehen und ausführen können.
 Dazu wurde bei den Commands das Attribute [RequireRole("stair")] und [RequireRole("administrator")] gebraucht.
-Dieses kontrolliert, ob es sich bei beim Aufrufer um einen Benutzer mit den Rollen "stair" oder "administrator" handelt.
+Diese Attribute haben allerdings nicht funktioniert.
+Es konnten immer noch Mitglieder ohne diese Rollen die Commands absetzen.\\
+Deshalb wurde eine andere Lösung implementiert.
+Auf Discord wird dabei ein \textbf{\#bot-commands} Text-Channel erstellt.
+Auf diesen haben nur die Administartoren und STAIR-Mitglieder Zugriff.
+Der Bot führt die Befehle jetzt nur aus, wenn Sie von diesem Channel geschickt werden.
 
 \subsubsection*{Plotting Library}
 Damit Statistiken einfacher verständlich und aussagekräftig sind, verwendet man Diagramme (engl. Plots).
@@ -2006,7 +2122,8 @@ Dieser Kontakt soll bei einem Datenbank Absturz über E-Mail erfolgen und bei ei
 Damit der Administrator bei einem Absturz nicht mit Nachrichten und E-Mails überhäuft wird, 
 wird der selbe Fehler maximal einmal alle 4 Stunden an den Adminsitrator gesendet.
 Das heisst, er bekommt nur einmal die Nachricht eines Absturzes und erst, wenn er das Problem nach 4 Stunden nicht gelöst hat, 
-bekommt er wieder eine Nachricht.\\\\
+bekommt er wieder eine Nachricht.
+\newpage
 Damit der Bot weiss, welche Personen als Administrator hinterlegt sind, 
 wird in der Datenbank in der Studenten Tabelle das Feld \textbf{IsDiscordAdmin} auf \textbf{True} gesetzt.
 Diese Zuweisung zum Discord Administrator kann per Command vorgenommen werden.
@@ -2039,7 +2156,23 @@ So eine Nachricht kann als E-Mail und als Discord Nachricht folgendermassen auss
 \end{figure}
 
 \subsubsection{Bot als Deamon}
-\todo{Nicolas}
+Der Discord Bot wird auf einem Linux Server des Enterprise Labs der Hochschule Luzern deployed.
+Dieser soll als Deamon laufen, also als Hintergundservice des Servers.
+Mit diesem Vorgehen kann sichergestellt werden, dass der Service ununterbrochen läuft.\\
+Um das Deployment auf Linux einfacher zu gestalten, bietet Microsoft auch eine systemd Blibliothek an, 
+mit der der Host Provider in diese Umgebung eingefügt werden kann.\autocite{}
+% https://learn.microsoft.com/de-de/dotnet/api/microsoft.extensions.hosting.systemdhostbuilderextensions.usesystemd?view=dotnet-plat-ext-3.1
+Dies kann mit folgendem Code hinzugefügt werden.
+
+\begin{lstlisting}[language=csharp]
+\\Program.cs
+using IHost host = Host.CreateDefaultBuilder()
+                .UseSystemd()
+                .ConfigureServices((_, services) => services
+                ...)
+\end{lstlisting}
+
+Die Bibliothek konfiguriert das Loggen in die Konsole im systems-Format und stellt Benachrichtigungen beim Starten und Beenden der Anwendung bereit.
 
 \newpage
 \subsection{Deployment des Bots auf den Linux Server}
@@ -2191,12 +2324,12 @@ Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabil
 
 \subsubsection*{Risiko-Update}
 \begin{itemize}
-    \item 
+    \item Keine.
 \end{itemize}
 
 \subsubsection*{Sprintbacklog}
 In diesem Sprint wurde eine User-Story umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+4%22+}
 \newline
 Geschätzer Aufwand: 5h
 \newline
@@ -2228,40 +2361,36 @@ Massnahmen:
 
 \subsubsection{Sprint 5}
 \subsubsection*{Sprintziel}
-Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
+Die Fehlermeldung wurde im Bot integriert und der Startkonfiguration wurde systemd hinzugefügt.
 
 \subsubsection*{Risiko-Update}
 \begin{itemize}
-    \item Die Modulerfassung funktioniert immer noch nicht.
-    Prioritäten müssen gesetzt werden.
-    Kann sein, dass sich Issues nach hinten verschieben.
+    \item Keine.
 \end{itemize}
 
 \subsubsection*{Sprintbacklog}
-In diesem Sprint wurden zwei User-Stories umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+In diesem Sprint wurde eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+5%22+}
 \newline
-Geschätzer Aufwand: 10h
+Geschätzer Aufwand: 4h
 \newline
-Effektiver Aufwand: 9 1/2 h
+Effektiver Aufwand: 3 1/2 h
 
 \subsubsection*{Retrospektive}
 Erfolge:
 \begin{itemize}
-    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
-    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
+    \item Die Fehlermitteilungen konnten erfolgreich hinzugefügt werden.
+    \item Die systemd Konfiguration konnte hinzugefügt werden.
+    \item Es wurde ein Stan Discord Logo designed und implementiert.
 \end{itemize}
 Probleme:
 \begin{itemize}
-    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
-    Das Device kann somit noch nicht hinzugefügt werden.
-    \item Die Modulerfassung funktioniert immer noch nicht.
-    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
+    \item Bei immer mehr Klassen in der Dependency Injection, kann es zu Circular Dependencies kommen.
 \end{itemize}
 Massnahmen:
 \begin{itemize}
-    \item Prioritäten setzten was die Modulerfassung anbelangt.
-    \item Möglichst zeitnah mit dem neuen Issue beginnen.
+    \item Dort Clean Coding Vorgehen anwenden. 
+    Bei immer mehr werdenden Klassen muss informiert werden, wie diese schön ins System injected werden können.
 \end{itemize}
 
 \subsection{Diagramme}
