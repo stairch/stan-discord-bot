@@ -32,8 +32,7 @@ namespace StanBot.Core.Commands
             IDiscordAccountRepository discordAccountRepository,
             IStudentRepository studentRepository,
             ModuleChannelService moduleChannelService,
-            DatabaseErrorNotificationService databaseErrorNotificationService
-            ModuleChannelService moduleChannelService,
+            DatabaseErrorNotificationService databaseErrorNotificationService,
             IMailService mailService)
         {
             _discordAccountModuleRepository = discordAccountModuleRepository;
