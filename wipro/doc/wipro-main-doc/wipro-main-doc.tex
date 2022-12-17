@@ -309,8 +309,7 @@ Im November 2022 ist die neue .NET 7 Version herausgekommen.
 Da .NET 6 am aktuellsten war zum Startzeitpunkt des WIPRO Projektes, die .NET 6 Version eine LTS Version ist und damit länger als .NET 7 unterstützt wird und in der Praxis stärker getestet ist, wird die WIPRO mit .NET 6 zuende geführt.\autocite{noauthor_net_2022}
 Zur Entwicklungszeit der alten Stan Discord Bot Version wurde noch auf .NET Framework gesetzt, weshalb der Bot auch noch nicht auf Linux lauffähig ist.
 Dies war jedoch der Wunsch von STAIR für zukünftige Projekte.
-
-\todo{siehe Kapitel "Geplante Änderungen}
+Dies wird genauer im Kapitel \nameref{Geplante Änderungen} beschrieben.
 
 \subsubsection{MySQL}
 
@@ -804,8 +803,8 @@ Die Konfiguration entspricht der eines Windows Services und läuft dementspreche
 
 Es wurde zusammen mit dem STAIR Team entschieden,
 auf Linux zu wechseln um alle Server einheitlich auf Linux zu haben.
-\todo{Wordpress erklären}
 Bei STAIR wird noch eine Wordpress-Seite und eine JavaScript Webseite betrieben.
+Wordpress ist ein Content Management System (CMS) und wird bei STAIR eingesetzt für die Hauptwebseite mit allen Events und weiteren Informationen.
 Da die Projekte jedoch sich von einander stark unterscheiden wurde entschieden mit verschiedenen Servern zu arbeiten und nicht alle auf dem gleichen Server zu hosten.
 Gleichzeitig befindet sich die Wordpress-Seite noch auf einem anderen Rechencenter als dem Enterprise Lab der HSLU.
 Dies verursacht auch Kosten, welche eingespart werden sollen in der Zukunft.
@@ -813,16 +812,13 @@ Um den Transfer zu vereinfachen, macht es sinn, nicht einen ohnehin bald obsolet
 
 \subsubsection*{Entscheid den Bot neu zu schreiben}
 
-\todo{replace .NET Standard with .NET Framework version}
-\todo{Add sources}
 Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core 3.1 mit veralteten Libraries genützt wurden.
 Diese werden nicht mehr unterstützt und sollten ersetzt werden.
-Hierbei wird .NET 6 mit C\# verwendet.
-So kann man Teile des Codes wiederverwenden.
+Für die neue Version wird .NET 6 mit C\# verwendet.
+Dies ermöglicht es, inspiration bei der alten Lösung zu holen, falls zum Beispiel die Verwendung der Discord Library unklar ist oder bei einem bereits existierenden Feature ein Probleme auftaucht.
 Die neueren .NET Versionen sind Cross-Platform fähig und können damit nun auch auf Linux verwendet werden.\autocite{de_george_installieren_nodate}
-Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{how to add pdf??? it's not in export} und die Sprache ist ähnlich zu Java,
-welche grundsätzlich an der Hochschule verwendet wird. \todo{source}
-\todo{ist persönliche Meinung okay hier?}
+Die Sprache wird nicht an der Hochschule breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{PDF source is not in Zotero export} und die Sprache ist ähnlich zu Java,
+welche grundsätzlich an der Hochschule verwendet wird.
 das WIPRO Team war zusätzlich bereits vertraut mit der C\# Sprache und hat diese als angenehm empfunden, was die Entscheidung zusätzlich unterstützte.
 
 \subsubsection*{Entscheid Login Funktionsweise}
@@ -1413,39 +1409,36 @@ public static class Program
 \subsubsection{Studentenerfassung}
 
 Die Studenten werden über ein vordefiniertes CSV File geladen.
-Hier wird ein Beispiel dieser Datei gezeigt:
-
-\todo{Add CSV data here}
-
-\todo{Yannis}
-
-%\begin{lstlisting}[language=csv]
-
-%\end{lstlisting}
+Nach dem Laden der Datei kann entschieden werden, ob die zuvor erfassten Nutzer als Exstudenten markiert werden sollen.
+Dies ermöglicht, gleich wie bei den Modulen, Studenten zu ergänzen und zum Start des neuen Semesters die Exstudierenden als solche zu markieren in der Datenbank.
+Zum Schluss muss über Discord noch ein Befehl gestartet werden um die Rollen auf dem Discord aktualisieren zu können.
+Das CSV Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
 
 \subsubsection{Aufsetzen der Linux Umgebung}
 
 Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
-In der Anleitung wird die genaue Installation erklärt.
-
-\todo{Siehe Kapitel Anleitung}
-
-\todo{Yannis}
+In der Anleitung im Kapitel \nameref{Bedienungsanleitung} wird die genaue Installation erklärt.
+Bei der Installation stellte MySQL das grösste Problem dar, da diese ein Standardpasswort setzt ohne dies dem Nutzer mitzuteilen was ses ist.
+Dieses muss deshalb mühsam herausgelesen werden aus dem Log Output.
 
 \subsubsection{Verbinden der Datenbank mit Linq2DB}
 
-\todo{Yannis}
 Die Verbindung zur Datenbank funktioniert über einen Connection String.
 Dieser beinhaltet die Adresse des Datenbank Servers, den dazugehörigen Port, den Datenbank Namen, den Benutzer, das Passwort, sowie das Encoding.
-Das genaue Format wird in der Anleitung beschrieben.\todo{Kapitel Verweis einfügen}
+Das genaue Format wird in der Anleitung im Kapitel \nameref{Konfiguration des StanBots} beschrieben.
 
 \newpage
 \subsection{Sprint 2}
-In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt, 
+In diesem Sprint wird sich mit der Modulerfassung per Script beschäftigt,
 dem Erstellen des Discord Bots und der ersten Kommunikation damit.
 
 \subsubsection{Modulerfassung}
-\todo{Yannis}
+
+Für die Modulerfassung wird die Liste an Modulen vom Sekretariat benötigt.
+Diese muss dann auf den Server hochgeladen werden und kann dann mithilfe der StanScripts Anwendung eingelesen werden.
+Nach dem Einlesen kann entschieden werden, ob die bereits zuvor erfassten Module gelöscht werden sollen oder nicht.
+Dies ermöglicht es dem Administrator einzelne fehlende Module nachzuerfassen oder vor dem Start des neuen Semesters die alten nicht mehr existierenden Module zu entfernen.
+Das Format der einzulesenden CSV-Datei wird im Kapitel \nameref{Bedienungsanleitung} geschrieben.
 
 \subsubsection{Aufsetzen Discord Bot}
 Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
@@ -1535,25 +1528,9 @@ Dieses Application Token ist wie der Private Key der Applikation und sollte nich
 Um diese und weitere sensible Informationen einlesen zu können, wird die Config Klasse erstellt.\\
 Diese enthält alle Felder der Settingsdatei und dient als Zugriffspunkt für die sensiblen Informationen.
 Sie liest mit einem einfachen JSON-Parser die Settings Datei ein und setzt ihre Attribute.
-
-Die Settings Datei heisst \textit{stan.json}
-\begin{lstlisting}[language=json]
-{
-    "DisordApplicationToken": "XXXX-XXXXX-XXXXXXXXXXXX",
-    "Prefix": "!",
-    "GuildId": "1234567891234567",
-    "FromEmailAddress": "stan@stair.ch",
-    "FromEmailName: "STAN",
-    "AppId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX",
-    "Scopes" ["Mail.Send", "Mail.Send.Shared"],
-}
-\end{lstlisting}
-
-\todo{Yannis}
-\todo{add connection string | remove password}
-\begin{lstlisting}
-    
-\end{lstlisting}
+Dabei werden zwei Settingsfiles unterschieden.
+Das erste Settingsfile beinhaltet Informationen bezüglich des Discord Servers.
+Die zweite Datei hat Informationen bezüglich der Datenbankverbindung und Einstellungen zum Laden der CSV-Daten, wie Studenten und Module.
 
 \subsubsection{Kommunikation mit Discord}
 Die DiscordNet Library für C\# implementiert die \textit{DiscordSocketClient} Klasse.
@@ -1749,6 +1726,7 @@ Auch der Prefix und Suffix muss entfernt werden, welche den Studiengang, bzw. da
 
 Beispiele:
 
+% TODO
 % \begin{table}[h]
 %     \centering
 %     \begin{tabular}{|1|p{20em}|1|}
@@ -1763,7 +1741,8 @@ Beispiele:
 % \end{table}
 
 Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
-Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
+Diese automatische Umwandlung wurde durch Unit Tests getestet.
+Genauere Angaben zu den Tests können im Kapitel \nameref{Testdrehbuch} gefunden werden.
 Die Abkürzungen können Studenten über die Modulliste der HSLU herausfinden und wird gleich hinter dem vollen Namen angezeigt.\autocite{noauthor_bachelor_nodate}
 
 \begin{figure}[hb]
@@ -2195,7 +2174,6 @@ Die Bibliothek konfiguriert das Loggen in die Konsole im systems-Format und stel
 \newpage
 \subsection{Deployment des Bots auf den Linux Server}
 
-
 \todo{Yannis}
 
 \newpage
@@ -2209,25 +2187,6 @@ Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nic
 So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird.
 
 \newpage
-\subsection{Instandhaltung Stan Discord Bot}
-
-Die Datenbank muss vor jedem Semesterbeginn aktualisiert werden mit der aktuellen Modulliste und der aktuellen Studierendenliste.
-Bei der Modulliste ist zu beachten, dass alle Module in der Liste enthalten sein müssen, auch wenn sie dieses Semester nicht durchgeführt werden.
-Ansonsten werden bisherige Chatverläufe von Modulen gelöscht, auch wenn diese ein Semester später erneut durchgeführt werden.
-Der STAIR Vorstand muss in regelmässigen Abständen die Hilfschannel auf dem Discord Server überwachen um zeitnah den Studierenden helfen zu können.
-
-\subsubsection{Aktualisieren des Servers}
-
-\todo{Yannis}
-
-\subsubsection{Aktualisieren der Module}
-
-\todo{Yannis}
-
-\subsubsection{Aktualisieren der Studierenden}
-
-\todo{Yannis}
-
 \subsubsection{Authentifizierung}
 \todo{Nicolas}
 
@@ -2537,14 +2496,60 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
         \end{verbatim}
 \end{enumerate}
 
+\subsection{Konfiguration des StanBots}
+
+Die Settings Datei heisst \textit{stan.json}
+\begin{lstlisting}[language=json]
+{
+    "DisordApplicationToken": "XXXX-XXXXX-XXXXXXXXXXXX",
+    "Prefix": "!",
+    "GuildId": "1234567891234567",
+    "FromEmailAddress": "stan@stair.ch",
+    "FromEmailName: "STAN",
+    "AppId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX",
+    "Scopes" ["Mail.Send", "Mail.Send.Shared"],
+}
+\end{lstlisting}
+
 \subsection{Unterhalt}
 
 Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \todo{Write tutorial}
 
-\subsection{Besprechungsprotokolle}
+\subsection{Studenten Liste laden}
 
-\subsubsection{Kick Off Meeting 23.09.2022}
+Hier wird ein Beispiel dieser Datei gezeigt:
+
+\todo{Add CSV data here}
+
+\todo{Yannis}
+
+%\begin{lstlisting}[language=csv]
+
+%\end{lstlisting}
+
+\subsection{Instandhaltung Stan Discord Bot}
+
+Die Datenbank muss vor jedem Semesterbeginn aktualisiert werden mit der aktuellen Modulliste und der aktuellen Studierendenliste.
+Bei der Modulliste ist zu beachten, dass alle Module in der Liste enthalten sein müssen, auch wenn sie dieses Semester nicht durchgeführt werden.
+Ansonsten werden bisherige Chatverläufe von Modulen gelöscht, auch wenn diese ein Semester später erneut durchgeführt werden.
+Der STAIR Vorstand muss in regelmässigen Abständen die Hilfschannel auf dem Discord Server überwachen um zeitnah den Studierenden helfen zu können.
+
+\subsubsection{Aktualisieren des Servers}
+
+\todo{Yannis}
+
+\subsubsection{Aktualisieren der Module}
+
+\todo{Yannis}
+
+\subsubsection{Aktualisieren der Studierenden}
+
+\todo{Yannis}
+
+\section{Besprechungsprotokolle}
+
+\subsection{Kick Off Meeting 23.09.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2571,7 +2576,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit STAIR 13.10.2022}
+\subsection{Meeting mit STAIR 13.10.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2596,7 +2601,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit Herr Waldmann 14.10.2022}
+\subsection{Meeting mit Herr Waldmann 14.10.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2619,7 +2624,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit STAIR 21.10.2022}
+\subsection{Meeting mit STAIR 21.10.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2645,7 +2650,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit Herr Waldmann 16.11.2022}
+\subsection{Meeting mit Herr Waldmann 16.11.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2657,10 +2662,8 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 
 \subsubsection*{Besprochene Punkte}
 
-\todo{dritter Punkt fertig schreiben.}
 \begin{enumerate}
     \item Wenn Dinge, wie Clean Coding genutzt werden, dann muss dies aus der Dokumentation heraus auch ersichtlich sein.
-    \item Testfälle sollen an Userstories geknüpft sein, zusammen mit ihren Rahmenbedingungen, um den Sinn der Testfälle aufzuzeigen.
     \item Der Aufbau des Testprotokolls wurde besprochen.
     \item Die Systemgrenzen müssen genau dokumentiert sein.
     \item Ein komischer Bug führte zu längeren Problemen und Verzögerungen in der Arbeit. Es wurden verschiedene Ansätze zur Lösung besprochen.
@@ -2674,7 +2677,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit STAIR 15.12.2022}
+\subsection{Meeting mit STAIR 15.12.2022}
 
 \subsubsection*{Anwesende Personen}
 
@@ -2702,7 +2705,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit Herr Waldmann 21.12.2022}
+\subsection{Meeting mit Herr Waldmann 21.12.2022}
 
 \todo{Ausfüllen}
 
