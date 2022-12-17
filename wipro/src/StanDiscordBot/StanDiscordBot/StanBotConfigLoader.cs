@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.Text.Json;
 
 namespace StanBot
@@ -15,7 +16,11 @@ namespace StanBot
             string jsonString;
             try
             {
-                jsonString = File.ReadAllText($"./{CONFIG_FILE}");
+	           	//string path = Path.Combine(_appEnvironment.ContentRootPath, CONFIG_FILE);
+            	string path = $"/home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/{CONFIG_FILE}";
+            	Console.WriteLine("Config Path " + path);
+            	jsonString = File.ReadAllText(path);
+                //jsonString = File.ReadAllText($"./{CONFIG_FILE}");
             }
             catch (Exception ex)
             {
