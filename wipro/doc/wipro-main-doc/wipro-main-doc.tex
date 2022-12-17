@@ -225,12 +225,18 @@ wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_di
 
 \subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
 
-% https://netcord.site/new-discord-channel-creation-ratelimit/
-% https://support.discord.com/hc/en-us/community/posts/360056762431-Increase-channel-limit
-% https://support.discord.com/hc/en-us/community/posts/360032363631-Increase-the-Max-Number-of-Roles-per-Server
+Discord hat leider ein paar Einschränkungen.
+Hierzu gehören Channel Limits, welche auf 500 pro Discord Server limitiert sind. \autocite{roonie_latest_2022}
+Diese können auf maximal 250 Kategorien aufgeteilt werden mit je maximal 50 Subchannels.
+Die Einschränkungen werden auf dem Discord Support Forum diskutiert, jedoch haben sich die Discord Arbeiter stehts an der Position festgehalten, die Limite sei hoch genug und es gäbe keine Sinnvollen nutzen an einer höheren Limite. \autocite{noauthor_increase_nodate}
+Dies könnte zukünftig zu Problemen führen, da es zur Zeit 533 Module gibt, welche besucht werden können.
+Dies beinhaltet ebenfalls ISA und diverse erweiterungs Module.
+Erfahrungen aus dem letzten Semester haben jedoch gezeigt, dass nur ein Bruchteil der Modulchannels genutzt wird, weshalb die Limite noch länger nicht erreicht werden sollte.
+Die Anzahl Rollen pro Discord Server ist ebenfalls eingeschränkt.
+Dies führt dazu, dass Studenten nicht über die Rollen die Modul-Channels freigegeben bekommen können, da dies dann den Rahmen sprengen würde. \autocite{noauthor_increase_nodate-1}
+Dies ist der Grund, dass die Studenten einzeln pro Channel freigegeben werden, anstatt dass diese eine neue Rolle bekommen, wie in der bisherigen Umsetzung.
 
 \subsubsection{Alternativen zu Discord}
-\todo{Yannis}
 
 \subsubsection*{Slack}
 
@@ -245,15 +251,12 @@ Da STAIR und der Discord Server auch für die Freizeit gedacht sind, macht es me
 \todo{add source}
 
 \subsubsection*{Skype}
-Skype ist eine ältere und sehr verbreitete Sprachchat Lösungen mit 100 Millionen aktiven Nutzern jeden Monat.
-\todo{source: https://techcrunch.com/2020/03/30/microsoft-teams-is-coming-to-consumers-but-skype-is-here-to-stay/}
+Skype ist eine ältere und sehr verbreitete Sprachchat Lösungen mit 100 Millionen aktiven Nutzern jeden Monat. \autocite{lardinois_microsoft_2020}
 Skype ist jedoch auch sehr eingeschränkt, was die Features angeht.
 So sind keine echten Communities möglich und Sprachchat ist nur per Anruf möglich.
 So können neue Nutzer also nicht einfach zu einem Sprachchat hinzukommen.
-Richtige Communities sind ebenfalls nicht vorhanden.
-\todo{source: https://www.gamingscan.com/discord-vs-skype-for-gaming/}
+Richtige Communities sind ebenfalls nicht vorhanden. \autocite{mattise_discord_2022}
 Diese fehlenden Features machen das Programm ungeeignet als Alternative.
-\todo{Source:}
 
 \subsubsection*{TeamSpeak}
 
@@ -271,12 +274,12 @@ Ein starker Fokus liegt auf der Privatsphäre der Nutzer.
 So ist man unabhängig von den Entwicklern und kann den Matrix Server auf dem eigenen Server aufsetzen.
 Die Software bringt jedoch auch seine Nachteile mit sich.
 So ist die Verbreitung noch relativ klein und hat wenig Nutzer.
-Mit 17 Millionen Nutzer \todo{source: https://matrix.org/faq/} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinten nach. \todo{source: https://www.businessofapps.com/data/discord-statistics/}
+Mit 17 Millionen Nutzer\autocite{noauthor_matrixorg_nodate} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinten nach.\autocite{david_curry_discord_2022}
 So müssten viele Studierende zuerst einen Account erstellen und sich einen Matrix aussschliesslich für den STAIR Server herunterladen. Dies wäre eine zusätzliche Hürde.
 Auch wäre das betreiben des Matrix Servers umständlicher, da die Updates neu manuell installiert werden müssen anstatt dies von Discord machen zu lassen.
 Auch wäre unklar, ob das Enterprise Lab eine solche Applikation zulassen würde, da dies einiges an Bandbreite kosten würde, was Discord zurzeit übernimmt für STAIR.
 
-Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann. \todo{source: https://matrix.org/clients}
+Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann.\autocite{noauthor_matrix_nodate}
 So sollte jeder Nutzer etwas passendes finden.
 Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
 
@@ -290,17 +293,15 @@ Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist e
 \newpage
 \section{Ideen und Konzepte}
 
-Bei der Konzeptbesprechung wurde ein Entity-Relationship Diagramm ausgearbeitet. Das Diagramm dient als Grundlage für die Design-
-und Architektur Entscheide der neuen Applikation.
+Bei der Konzeptbesprechung wurde ein Entity-Relationship Diagramm ausgearbeitet.
+Das Diagramm dient als Grundlage für die Design- und Architektur Entscheide der neuen Applikation.
 \todo{Bild ER-Diagramm}
 
 Beschrieb ER-Diagramm
 
-
 Überblick der Software mit den verschiedenen Scripts
 
 \subsection{Technologien}
-\todo{Yannis}
 
 \subsubsection{C\# und .NET Framework}
 
@@ -326,8 +327,9 @@ MSSQL hat die beste Unterstützung in C\# jedoch ist diese Kostenpflichtig.
 Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert.
 Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen und Kosten.\autocite{noauthor_sql_nodate}
 
-% https://www.nuget.org/packages/linq2db.MySql/
-% http://www.primaryobjects.com/2009/01/24/using-mysql-and-linq-to-sql-in-c-asp-net/
+Eine andere Version der gleichen Library, welche die MSSQL Unterstützung ermöglicht, bietet die Möglichkeit MySQL zu nützen.
+Die Library heisst \textit{linq2db.MySql}.
+Mit über 490'000 Downloads sollte die Stabilität für unsere Anwendung gegeben sein.\autocite{noauthor_linq2dbmysql_nodate}
 
 \subsection{Teststrategie}\label{Teststrategie}
 In diesem Projekt wird die abzugebende Software iterativ entwickelt.
@@ -754,7 +756,6 @@ Windows Services und läuft dementsprechend durchgehend.
 
 
 \subsubsection{Geplante Änderungen}
-\todo{Yannis}
 
 \subsubsection*{Wechsel zu Linux Server}
 
@@ -763,6 +764,9 @@ auf Linux zu wechseln um alle Server einheitlich auf Linux zu haben.
 \todo{Wordpress erklären}
 Bei STAIR wird noch eine Wordpress-Seite und eine JavaScript Webseite betrieben.
 Da die Projekte jedoch sich von einander stark unterscheiden wurde entschieden mit verschiedenen Servern zu arbeiten und nicht alle auf dem gleichen Server zu hosten.
+Gleichzeitig befindet sich die Wordpress-Seite noch auf einem anderen Rechencenter als dem Enterprise Lab der HSLU.
+Dies verursacht auch Kosten, welche eingespart werden sollen in der Zukunft.
+Um den Transfer zu vereinfachen, macht es sinn, nicht einen ohnehin bald obsoleten Server für das Deployment zu nutzen.
 
 \subsubsection*{Entscheid den Bot neu zu schreiben}
 
@@ -786,8 +790,8 @@ Auch muss hierzu ein bestimmter Link geöffnet werden, welcher von Stan verschic
 Dies könnte nicht vertrauenswürdig wirken bei Studenten.
 Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nun weiterhin verwendet wird.
 
-\subsubsection*{Wechsel zu Community Server}
-\todo{Yannis}
+%\subsubsection*{Wechsel zu Community Server}
+% https://support.discord.com/hc/en-us/articles/360047132851-Enabling-Your-Community-Server
 
 \subsubsection*{Entscheid zur Anbindung an eine Datenbank}
 
@@ -1334,7 +1338,7 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 \subsubsection{Aufsetzten der Linux Umgebung}
 
 Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
-Diese musste 
+In der Anleitung wird die genaue Installation erklärt.
 
 \todo{Siehe Kapitel Anleitung}
 
@@ -1344,12 +1348,8 @@ Diese musste
 
 \todo{Yannis}
 Die Verbindung zur Datenbank funktioniert über einen Connection String.
-Dieser beinhaltet alle Daten für die Verbindung:
-
-\todo{add connection string | remove password}
-\begin{lstlisting}
-    
-\end{lstlisting}
+Dieser beinhaltet die Adresse des Datenbank Servers, den dazugehörigen Port, den Datenbank Namen, den Benutzer, das Passwort, sowie das Encoding.
+Das genaue Format wird in der Anleitung beschrieben.\todo{Kapitel Verweis einfügen}
 
 \newpage
 \subsection{Sprint 2}
@@ -1436,6 +1436,12 @@ Die Settings Datei heisst \textit{stan.json}
     "DisordApplicationToken": "XXXX-XXXXX-XXXXXXXXXXXX",
     "Prefix": "!"
 }
+\end{lstlisting}
+
+\todo{Yannis}
+\todo{add connection string | remove password}
+\begin{lstlisting}
+    
 \end{lstlisting}
 
 \subsubsection{Kommunikation mit Discord}
@@ -1642,8 +1648,14 @@ Beispiele:
 
 Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
 Diese automatische Umwandlung wurde durch Unit Tests getestet. \todo{verlinke Testkapitel}
-\todo{Yannis}
-\todo{add image of mycampus calendar}
+Die Abkürzungen können Studenten über die Modulliste der HSLU herausfinden und wird gleich hinter dem vollen Namen angezeigt.\autocite{noauthor_bachelor_nodate}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/ausschnittModullisteHsluInformatik.PNG}
+    \caption{Ausschnitt der Modulliste des Informatik Studiengangs}
+    \label{fig:modulliste-informatik}
+\end{figure}
 
 \subsubsection{E-Mail Service}
 Der E-Mail Service wird im Authentifizierungsprozess benötigt.
@@ -2043,6 +2055,8 @@ So eine Nachricht kann als E-Mail und als Discord Nachricht folgendermassen auss
 
 \newpage
 \subsection{Deployment des Bots auf den Linux Server}
+
+
 \todo{Yannis}
 
 \newpage
@@ -2052,10 +2066,31 @@ So eine Nachricht kann als E-Mail und als Discord Nachricht folgendermassen auss
 \newpage
 \subsection{Einführung des neuen Bots}
 \todo{Yannis}
+Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nicht in einem laufenden Semester oder während der Prüfungsphase passiert.
+So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird.
 
 \newpage
-\subsection{Bedienungsanleitung Server}
+\subsection{Instandhaltung Stan Discord Bot}
+
+Die Datenbank muss vor jedem Semesterbeginn aktualisiert werden mit der aktuellen Modulliste und der aktuellen Studierendenliste.
+Bei der Modulliste ist zu beachten, dass alle Module in der Liste enthalten sein müssen, auch wenn sie dieses Semester nicht durchgeführt werden.
+Ansonsten werden bisherige Chatverläufe von Modulen gelöscht, auch wenn diese ein Semester später erneut durchgeführt werden.
+Der STAIR Vorstand muss in regelmässigen Abständen die Hilfschannel auf dem Discord Server überwachen um zeitnah den Studierenden helfen zu können.
+
+\subsubsection{Aktualisieren des Servers}
+
 \todo{Yannis}
+
+\subsubsection{Aktualisieren der Module}
+
+\todo{Yannis}
+
+\subsubsection{Aktualisieren der Studierenden}
+
+\todo{Yannis}
+
+\subsubsection{Authentifizierung}
+\todo{Nicolas}
 
 \newpage
 \section{Evaluation und Validation}
@@ -2262,6 +2297,7 @@ Massnahmen:
 \begin{itemize}
     \item Prioritäten setzten was die Modulerfassung anbelangt.
     \item Möglichst zeitnah mit dem neuen Issue beginnen.
+    \item Es sollten keine separaten Dokumente, wie Protokolle erstellt werden, sondern man sollte diese direkt einfügen in der Dokumentation um sich das Zusammenführen später zu ersparen.
 \end{itemize}
 
 \subsection{Diagramme}
@@ -2288,14 +2324,15 @@ Massnahmen:
 \section{Glossar}
 
 API
-
-CSV
-
-REST
-
-z.B.
-
 bzw.
+CSV
+Deployment
+Discord
+HSLU
+ISA Module
+Konsolenanwendungen
+REST
+z.B.
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
@@ -2383,7 +2420,7 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \begin{enumerate}
     \item Der Aufbau der WIPRO Dokumentation mit den verschiedenen Kapitel
     \item Inhaltslänge wird mehr als 60 Seiten erwartet ausser die Dokumentation ist speziell kompakt.
-    \item Yannis Krämer verlässt die Schweiz im Jnauar aufgrund eines Auslandsemesters. Alle beteiligten wären einverstanden damit die Präsentation frühzeitig oder online durchzuführen.
+    \item Yannis Krämer verlässt die Schweiz im Januar aufgrund eines Auslandsemesters. Alle beteiligten wären einverstanden damit die Präsentation frühzeitig oder online durchzuführen.
 \end{enumerate}
 
 \subsubsection*{Entscheidungen}
@@ -2398,19 +2435,23 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \subsubsection*{Anwesende Personen}
 
 \begin{itemize}
-    \item 
+    \item Yannis Krämer (WIPRO Arbeiter, Student)
+    \item Martin Steiger (STAIR Präsident)
+    \item Estefania Otero (STAIR Expräsidentin)
 \end{itemize}
 
 \subsubsection*{Besprochene Punkte}
 
 \begin{enumerate}
-    \item 
+    \item Es wurden verschiedene Architektur und Workflow Entscheidungen getroffen.
 \end{enumerate}
 
 \subsubsection*{Entscheidungen}
 
 \begin{enumerate}
-    \item 
+    \item Ein Student darf maximal einen Discord Account auf dem Server nützen. Der Account darf der Nutzer jedoch wechseln über die Zeit hinweg.
+    \item Es braucht keinen Sync Job um manuelle Änderungen auf dem Server zu erkennen. STAIR Mitglieder müssen Anfangs instruiert werden, dass manuelle Änderungen, welche eigentlich vom Bot vorgenommen werden, nicht erlaubt sind. Dieses Feature wäre ein nice-to-have für die Zukunft.
+    \item Der Übergang zum neuen Bot muss im Voraus den Studenten angekündigt werden. Eine Ankündigung per E-Mail wäre auch hilfreich, auch um Studenten auf den Discord Server zu bringen, welche diesen noch nicht genutzt haben. Es ist dabei aber okay, wenn sich die Studenten frisch anmelden müssen.
 \end{enumerate}
 
 \newpage
@@ -2437,14 +2478,59 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \end{enumerate}
 
 \newpage
-\subsubsection{Meeting mit STAIR 02.11.2022}
+\subsubsection{Meeting mit STAIR 21.10.2022}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Yannis Krämer (WIPRO Arbeiter, Student)
+    \item Martin Steiger (STAIR Präsident)
+    \item Estefania Otero (STAIR Expräsidentin)
+\end{itemize}
+
+\subsubsection*{Besprochene Punkte}
+
+\begin{enumerate}
+    \item Diverse Entscheidungen bezüglich Stakeholder
+\end{enumerate}
 
 \subsubsection*{Entscheidungen}
+
+\begin{enumerate}
+    \item HSLU Mitarbeiter, welche gleichzeitig Studieren, dürfen weiterhin den Discord Server nützen.
+    \item Masterstudenten dürfen den Discord Server ebenfalls nützen.
+    \item Digital Ideation Studenten Fachrichtung Kunst gehören nicht zu STAIR und werden deshalb vom Discord Server ausgeschlossen.
+    \item Das Aufsetzen des Servers und weitere Interaktionen über die Konsole sollen genau dokumentiert werden, da nicht alle (zukünftigen) STAIR Vorstandsmitglieder vertraut sind mit Konsolenanwendungen.
+\end{enumerate}
 
 \newpage
 \subsubsection{Meeting mit Herr Waldmann 16.11.2022}
 
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Markus Waldmann (WIPRO Betreuer, Dozent)
+    \item Nicolas Wiedmer (WIPRO Arbeiter, Student)
+    \item Yannis Krämer (WIPRO Arbeiter, Student)
+\end{itemize}
+
+\subsubsection*{Besprochene Punkte}
+
+\todo{dritter Punkt fertig schreiben.}
+\begin{enumerate}
+    \item Wenn Dinge, wie Clean Coding genutzt werden, dann muss dies aus der Dokumentation heraus auch ersichtlich sein.
+    \item Testfälle sollen an Userstories geknüpft sein, zusammen mit ihren Rahmenbedingungen, um den Sinn der Testfälle aufzuzeigen.
+    \item Der Aufbau des Testprotokolls wurde besprochen.
+    \item Die Systemgrenzen müssen genau dokumentiert sein.
+    \item Ein komischer Bug führte zu längeren Problemen und Verzögerungen in der Arbeit. Es wurden verschiedene Ansätze zur Lösung besprochen.
+    \item Um deutsche Texte vom Computer korrigieren zu lassen, kann Microsoft Word, Adobe PDF Reader oder Thesaurus verwendet werden.
+\end{enumerate}
+
 \subsubsection*{Entscheidungen}
+
+\begin{enumerate}
+    \item Es wäre möglich, dass die E-Mails über das EnterpriseLab verschickt werden können. Es wurde beschlossen dort mal nachzufragen.
+\end{enumerate}
 
 \newpage
 \subsubsection{Meeting mit STAIR 15.12.2022}
@@ -2472,6 +2558,41 @@ Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
     \item Es soll eine Meldung dem Student angezeigt werden nach dem E-Mail verschicken, damit der Nutzer weiss, dass der Authentifizierungscode dem Stan geschickt werden muss.
     \item Es soll die Anzahl Accounts pro House angezeigt werden in der Statistik.
     \item Release soll zwischen den Semesterferien durchgeführt werden, damit es keine Probleme in der Prüfungsphase gibt.
+\end{enumerate}
+
+\newpage
+\subsubsection{Meeting mit Herr Waldmann 21.12.2022}
+
+\todo{Ausfüllen}
+
+\subsubsection*{Anwesende Personen}
+
+\begin{itemize}
+    \item Nicolas Wiedmer (WIPRO Arbeiter, Student)
+    \item Yannis Krämer (WIPRO Arbeiter, Student)
+    \item Markus Waldmann (WIPRO Betreuer, Dozent)
+\end{itemize}
+
+\subsubsection*{Fragen}
+
+\begin{enumerate}
+    \item Soll Glossar vor oder nach Anhang eingefügt werden?
+    \item Wie lange soll die Präsentation werden?
+    \item Was soll der Inhalt der Präsentation sein?
+    \item Wer ist der Experte?
+    \item Geht 9. oder 10. Januar als Präsentationstermin?
+\end{enumerate}
+
+\subsubsection*{Besprochene Punkte}
+
+\begin{enumerate}
+    \item 
+\end{enumerate}
+
+\subsubsection*{Entscheidungen}
+
+\begin{enumerate}
+    \item 
 \end{enumerate}
 
 \end{document}
