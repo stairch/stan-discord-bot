@@ -3,6 +3,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using NLog;
 using StanBot.Services;
+using StanBot.Services.ErrorNotificactionService;
 using StanDatabase.Models;
 using StanDatabase.Repositories;
 
@@ -11,6 +12,8 @@ namespace StanBot.Core.Commands
     public class UpdateStudentsCommand : ModuleBase<SocketCommandContext>
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private readonly DatabaseErrorNotificationService _databaseErrorNotificationService;
         private readonly RoleService _roleService;
 
         private readonly IDiscordAccountRepository _discordAccountRepository;
@@ -21,12 +24,14 @@ namespace StanBot.Core.Commands
             IDiscordAccountRepository discordAccountRepository,
             IDiscordAccountDiscordRoleRepository discordAccountDiscordRoleRepository,
             IDiscordRoleRepository discordRoleRepository,
-            RoleService roleService)
+            RoleService roleService,
+            DatabaseErrorNotificationService databaseErrorNotificationService)
         {
             _discordAccountRepository = discordAccountRepository;
             _discordAccountDiscordRoleRepository = discordAccountDiscordRoleRepository;
             _discordRoleRepository = discordRoleRepository;
             _roleService = roleService;
+            _databaseErrorNotificationService = databaseErrorNotificationService;
         }
 
         [Command("updateStudents", true)]
@@ -89,6 +94,7 @@ namespace StanBot.Core.Commands
                 }
                 catch (Exception ex)
                 {
+                    _databaseErrorNotificationService.SendDatabaseErrorToAdmins(ex, "UpdateStudentsCommand");
                     _logger.Error($"There was an error during updating students. Stacktrace: {ex.Message}");
                     await ReplyAsync("Loaded new users failed. Check the log for more information.");
                 }
