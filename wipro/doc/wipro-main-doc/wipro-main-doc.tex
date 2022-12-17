@@ -181,8 +181,7 @@ Als ersten Schritt soll der heutige Stand der Technik im Bereich Spach- und Text
 Dabei soll aufgezeigt werden, welche mögliche Plattformen es auf dem Markt gibt, und ob diese eine mögliche Alternative zum Discord Server sind.
 
 \subsection{Sprach- und Text-Messenger}
-Die folgenden Platform sind die am weitest verbreiteten auf dem Markt, wenn es um Discord Alternativen und Sprach Chats im allgemeinen geht. \autocite{}
-% https://www.ionos.de/digitalguide/server/knowhow/discord-alternative/
+Die folgenden Platform sind die am weitest verbreiteten auf dem Markt, wenn es um Discord Alternativen und Sprach Chats im allgemeinen geht. \autocite{noauthor_discord-alternativen_nodate}
 \subsubsection*{Slack}
 Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
 Dies ist auch gut auf der Homepage des jeweiligen Unternehmens zu erkennen.
@@ -261,8 +260,7 @@ wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_di
 
 \subsubsection{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
 Discord hat auch einige Einschränkungen.
-Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{}
-% https://bestfriendsclub.ca/discord-member-limit/
+Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{vultaggio_discord_2022}
 \begin{itemize}
     \item Anzahl Channels: 500
     \item Anzahl Rollen: 250
@@ -1318,8 +1316,7 @@ Das \textbf{StanScripts} Projekt wird alle Scripte enthalten,
 die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
 Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.\\
 Im \textbf{StanDatabaseTest} Projekt werden die Tests für die Datenbank geschrieben.
-In .NET Applikationen ist es üblich ein eigenes Projekt für die Tests zu erstellen.\autocite{}
-% https://learn.microsoft.com/de-de/dotnet/core/tutorials/testing-with-cli
+In .NET Applikationen ist es üblich ein eigenes Projekt für die Tests zu erstellen.\autocite{tdykstra_organisieren_nodate}
 
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
@@ -1610,7 +1607,6 @@ Dies wird allerdings in Kauf genommen, da noch nichts von Bedeutung für den Ben
 Sobald der Code generiert wurde, wird dieser, zusammen mit einer Nachricht, dem Benutzer an die angegebene E-Mail Adresse gesendet 
 und eine Nachricht an den Benutzer zurückgegeben.\\
 Damit ist dieser Schritt abgeschlossen.
-\todo{Könnte noch Ablaufdiagramm eingefügt werden.}
 
 \subsubsection*{Das VerificationCodeMessageReceivedEvent}
 Die \textit{VerificationCodeMessageReceivedEvent}-Klasse implementiert auch das \textit{IMessageReceived}-Interface.
@@ -1630,7 +1626,6 @@ Damit hat er jetzt vollen Zugang zum STAIR-Server.\\\\
 Im Falle, dass der Benutzer sich schon einmal auf dem STAIR Server authentifiziert hat, 
 aber aus irgendeinem Grund den Server verlassen hat, muss er sich noch einmal authentifizieren.
 Allerdings werden keine Datenbankmanipulationen gemacht, sondern die Rollen, welcher er ja schon besitzt, zurückgegeben.
-\todo{Könnte noch Ablaufdiagramm eingefügt werden}
 
 \newpage
 \subsection{Sprint 3}
@@ -1778,8 +1773,7 @@ Für Besitzer eines Microsoft Azure Administator Kontos oder Office 365 ist die 
 bietet sich diese Lösung an.
 Die Microsoft Identity Platform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, bzw. diesen nutzen.
 Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
-Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{}
-%https://www.youtube.com/watch?v=sn9HWh-rg9o&ab_channel=MicrosoftAzure
+Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{noauthor_introduction_nodate}
 Dies sieht man auf folgender Abbildung.
 
 \begin{figure}[h]
@@ -1790,8 +1784,7 @@ Dies sieht man auf folgender Abbildung.
 \end{figure}
 
 Wenn man die Authentifizierungsmöglichkeiten bei der registrierten App aktiviert, wird automatisch Microsoft Identity verwendet.\\\\
-Für den Discord Bot wurde von Microsoft Identity die Microsoft Authentication Library (MSAL) benutzt. \autocite{}
-%https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications
+Für den Discord Bot wurde von Microsoft Identity die Microsoft Authentication Library (MSAL) benutzt. \autocite{dickson-mwendia_initialize_nodate}
 Diese ist Teil von Microsoft Identity.
 Damit kann man sich einen Client erstellen, mit dem man sich Authentifizieren kann.
 
@@ -1807,15 +1800,13 @@ Dem \textit{PublicClientApplicationBuilder} kann man die Anwendungs-ID mitgeben,
 Im Anschluss wird ausgewählt, wie man sich identifizieren möchte.
 Microsoft Identity bietet dort die gängigen Authentifizierungsmöglichkeiten an.
 So kann man sich mit dem Microsoft Konto anmelden oder aber über Third-Party Anbindungen authentifizieren.
-Dies nennt Microsoft, Hybrid Identity. \autocite{}
-% https://learn.microsoft.com/en-us/azure/active-directory/hybrid/whatis-hybrid-identity
+Dies nennt Microsoft, Hybrid Identity. \autocite{billmath_what_nodate}
 Für den Discord Bot wird das Gerät, auf dem die Applikation läuft, beim Starten einmalig authentifiziert und man erhält ein Access Token zurück.
 Dieses wird im nächsten Schritt für die Kommunikation mit der Microsoft Graph API verwendet.
 
 \subsubsection*{Microsoft Graph}
 Microsft Graph ist eine REST Schnittstelle von Microsft, mit dazugehörigen Clientbibliotheken.
-Mit diesen kann man alle Microsoft Service ansprechen. \autocite{}
-%https://learn.microsoft.com/de-DE/graph/overview-major-services
+Mit diesen kann man alle Microsoft Service ansprechen. \autocite{angelgolfer-ms_microsoft_nodate}
 Diese REST Schnittstelle kann man aus der eigenen Applikation aufrufen, um zum Beispiel über die Azure Applikation eine E-Mail zu versenden.
 Microsoft Graph läuft in der Grundlage mit einem Authentifizierten Benutzer oder Gruppen.
 So kann man über die REST Schnittstelle, sich zu jeder seiner Microsoft Anwendungen, Daten beschaffen.\\\\
@@ -1885,8 +1876,7 @@ Damit Statistiken einfacher verständlich und aussagekräftig sind, verwendet ma
 Plotting Libraries gibt es viele, doch es wurde sich für das kostenlose OpenSource Projekt ScottPlott entschieden.
 ScottPlot ist für .NET entwickelt und liefert viele verschiedene Chart-Möglichkeiten, die einfach erstellt und bearbeitet werden können, mit.
 Die Verwendung ähnelt sehr der Library Matplotlib und ist dadurch für Personen, die sich schon mit Statistiken im Programmieren beschäftigt haben, einfach zu lernen.
-Sie bieten alle bekannten Diagramm-Arten an und erlauben es auch interaktive Plots zu erstellen. \autocite{}
-%https://scottplot.net/
+Sie bieten alle bekannten Diagramm-Arten an und erlauben es auch interaktive Plots zu erstellen. \autocite{noauthor_scottplot_nodate}
 
 \newpage
 \subsubsection*{Statistik: Students per house}
@@ -2053,8 +2043,7 @@ Die Legende rechts bietet eine Übersicht der dargestellten Module.
 \subsubsection{Logging}
 Für ein sauberes Entwickeln und einen sauberen operativen Einsatz gehört das Schreiben von Log-Einträgen dazu.
 Damit man nachvollziehen kann, welche Schritte der Bot unternommen hat, sowie bei Fehlern schneller darauf reagieren kann.\\
-Als Logging Framework wurde sich für NLog entschieden.\autocite{}
-%https://nlog-project.org/
+Als Logging Framework wurde sich für NLog entschieden.\autocite{noauthor_nlog_nodate}
 Dies aus dem Grund, da es das verbreiteste Logging Framework für .Net Applikationen ist und es einfach in das Microsoft Logging System integriert werden kann.
 Auch ist es Open Source und Frei für die Benutzung.
 Für eine saubere Ausführung benötigt NLog eine Konfigurationsdatei.
@@ -2098,8 +2087,7 @@ welches ihn als Bot zu erkennen gibt.
 Damit der Bot ein sauberes Erscheinungsbild hat, wird für Ihn ein Logo erstellt.
 Da Stan schon als Maskottchen von STAIR etabliert ist, nämlich als kleiner Kaktus, 
 soll er noch mit einen spezifischen Discord Look ausgestattet werden.\\
-Die Designs werden bei STAIR über die Plattform \textbf{Canva} verwaltet und erstellt. \autocite{}
-% https://www.canva.com/de_de/
+Die Designs werden bei STAIR über die Plattform \textbf{Canva} verwaltet und erstellt. \autocite{noauthor_kostenloses_nodate}
 Darin wurde auch das Discord Stan Logo geboren.
 
 \begin{figure}[h]
@@ -2160,8 +2148,7 @@ Der Discord Bot wird auf einem Linux Server des Enterprise Labs der Hochschule L
 Dieser soll als Deamon laufen, also als Hintergundservice des Servers.
 Mit diesem Vorgehen kann sichergestellt werden, dass der Service ununterbrochen läuft.\\
 Um das Deployment auf Linux einfacher zu gestalten, bietet Microsoft auch eine systemd Blibliothek an, 
-mit der der Host Provider in diese Umgebung eingefügt werden kann.\autocite{}
-% https://learn.microsoft.com/de-de/dotnet/api/microsoft.extensions.hosting.systemdhostbuilderextensions.usesystemd?view=dotnet-plat-ext-3.1
+mit der der Host Provider in diese Umgebung eingefügt werden kann.\autocite{dotnet-bot_systemdhostbuilderextensionsusesystemdihostbuilder_nodate}
 Dies kann mit folgendem Code hinzugefügt werden.
 
 \begin{lstlisting}[language=csharp]
@@ -2317,6 +2304,7 @@ Massnahmen:
     \item Prioritäten setzten was die Modulerfassung anbelangt.
     \item Möglichst zeitnah mit dem neuen Issue beginnen.
 \end{itemize}
+\newpage
 
 \subsubsection{Sprint 4}
 \subsubsection*{Sprintziel}
@@ -2358,6 +2346,7 @@ Massnahmen:
     \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
     Man kann z.B. nur von einem bestimmten Channel aus Commands versenden.
 \end{itemize}
+\newpage
 
 \subsubsection{Sprint 5}
 \subsubsection*{Sprintziel}
@@ -2438,6 +2427,7 @@ bzw.
 \section{Literaturverzeichnis}
 \printbibliography
 
+\newpage
 \section{Bedienungsanleitung}
 
 \subsection{Aufsetzen des Servers}
