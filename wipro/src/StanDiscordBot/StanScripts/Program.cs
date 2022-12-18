@@ -71,13 +71,16 @@ namespace StanScripts
             string projectName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
             string helpInformation = "This program is for the Stan Discord Bot from STAIR (HSLU)." +
                 $"\n\nUse {HELP_COMMAND_NAME} to get this information." +
-                $"\nExample: {projectName}.exe {HELP_COMMAND_NAME}" +
+                $"\nExample (Windows): {projectName}.exe {HELP_COMMAND_NAME}" +
+                $"\nExample (Linux): ./{projectName} {HELP_COMMAND_NAME}" +
                 $"\n\nUse {LoadModules.COMMAND_NAME} to load the modules into the database and creating the channels on the discord." +
                 $"\nAdd the module file path as an argument" +
-                $"\nExample: {projectName}.exe {LoadModules.COMMAND_NAME} C:/temp/ModulesHS22.csv" +
+                $"\nExample (Windows): {projectName}.exe {LoadModules.COMMAND_NAME} C:/temp/ModulesHS22.csv" +
+                $"\nExample (Linux): ./{projectName} {LoadModules.COMMAND_NAME} ~/ModulesHS22.csv" +
                 $"\n\nUse {LoadStudents.COMMAND_NAME} to load the current students into the database." +
                 $"\nAdd the student file path as an argument" +
-                $"\nExample: {projectName}.exe {LoadStudents.COMMAND_NAME} C:/temp/StudentsHS22.csv";
+                $"\nExample (Windows): {projectName}.exe {LoadStudents.COMMAND_NAME} C:/temp/StudentsHS22.csv" +
+                $"\nExample (Linux): ./{projectName} {LoadStudents.COMMAND_NAME} ~/ModulesHS22.csv";
             Console.WriteLine(helpInformation);
         }
     }
