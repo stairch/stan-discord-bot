@@ -1,0 +1,6 @@
+{
+    "latex-workshop.latex.outDir": "./out",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "ltex.language": "de-DE",
+}
