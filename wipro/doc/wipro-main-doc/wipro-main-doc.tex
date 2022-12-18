@@ -2432,6 +2432,7 @@ ISA Module
 Konsolenanwendungen
 REST
 z.B.
+Windows-Subsystem for Linux = WSL
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
@@ -2451,12 +2452,20 @@ z.B.
 \subsection{Aufsetzen des Servers}
 
 Der Stan Discord Bot kann auf verschiedenen Betriebssystemen genützt werden.
-In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
-
-\todo{Complete tutorial}
+In dieser Anleitung wird jedoch auf das Aufsetzen für Ubuntu Linux 20.04 fokusiert.
+Die Befehle müssen ebenfalls von einem Linux Computer ausgeführt werden.
+Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionieren.
 
 \begin{enumerate}
     \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
+    \item Clone die beiden GitHub Repositories
+        \begin{verbatim}
+            $ git clone https://github.com/stairch/stan-discord-bot.git
+            $ git clone https://github.com/stairch/stair-config.git
+        \end{verbatim}
+        \begin{enumerate}
+            \item Achtung: Die beiden Repositories müssen im gleichen Überordner abgelegt sein, damit das \textit{buildAndDeploy} Script die Konfigurationsdateien findet.
+        \end{enumerate}
     \item Verbinde zum Server über SSH
         \begin{verbatim}
             $ ssh localadmin@stair-bot-lnx.el.eee.intern
@@ -2468,11 +2477,6 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
             # sudo apt upgrade -y
             # sudo apt autoremove
         \end{verbatim}
-    \item Installiere MySQL
-        \begin{verbatim}
-            # sudo apt install mysql-server
-            # sudo systemctl start mysql.service
-        \end{verbatim}
     \item Installiere .NET 6
         \begin{verbatim}
             # wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -2483,17 +2487,71 @@ In dieser Anleitung wird das Aufsetzen für Ubuntu Linux 20.04 gezeigt.
         \end{verbatim}
     \item Lade den Code auf den Server
         \begin{verbatim}
-            # 
+            # exit # Verlasse den Server
+            $ cd /path/to/stan-discord-bot/wipro/src/
+            $ sh buildAndDeploy.sh
+        \end{verbatim}
+    \item Setze StanBot als Service auf
+        \begin{verbatim}
+            $ ssh localadmin@stair-bot-lnx.el.eee.intern
+            # sudo cp ~/stan-discord-bot/wipro/src/stanBot.service /etc/systemd/system/
+            # sudo systemctl daemon-reload # Konfigurationen neu laden
+            # sudo systemctl start stanBot
+            # sudo systemctl enable stanBot
+            # sudo systemctl status stanBot
+            # sudo journalctl -u stanBot -e # when there are problems
+        \end{verbatim}
+    \item Installiere MySQL
+        \begin{verbatim}
+            # sudo apt install mysql-server
+            # sudo systemctl start mysql.service
+            # sudo systemctl enable mysql.service
+            # sudo systemctl status mysql.service
+        \end{verbatim}
+    \item Setze MySQL auf
+        \begin{verbatim}
+            # sudo mysql
+            > # ersetze im folgenden Befehl "myPassword" mit dem neuen Passwort
+            > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'myPassword';
+            > exit
+            $ mysql_secure_installation
+            > -- folge den Fragen und antworte mit Y oder N
+            Reload privilege tables now? : Y
+            $ # Teste ob das neue Login funktioniert
+            $ mysql -u root -p
+            $ # Gebe das neu gesetzte Passwort ein
+            > exit
+            # Erstelle nun den Datenbank User für die Anwendung
+            # Dieser muss mit dem Config File übereinstimmen
+            # sudo mysql
+            > # ersetze im folgenden Befehl "myPassword" mit dem neuen Passwort
+            > CREATE USER 'stanDbAcc'@'localhost' IDENTIFIED BY 'myPassword';
+            > GRANT ALL PRIVILEGES ON StanDB.* TO 'stanDbAcc'@'localhost' WITH GRANT OPTION;
+            > FLUSH PRIVILEGES;
+            > exit
+            $ Teste den neuen User
+            # sudo mysqladmin -p -u stanDbAcc version
+            $ # Es sollte nun die Version und andere Informationen angezeigt werden.
         \end{verbatim}
     \item Erstelle die Datenbank
         \begin{verbatim}
-            # 
+            $ mysql --host=localhost -u stanDbAcc -p < ~/stan-discord-bot/wipro/src/StanDatabase.sql
+            $ exit # verlasse den Server
         \end{verbatim}
-    \item Starte die Software
-        \begin{verbatim}
-            # sudo apt update
-            # sudo apt upgrade -y
-        \end{verbatim}
+    \item Es existiert ein Nutzer (E-Mail: info@stair.ch) auf Discord, welcher als StanBot fungiert. Das Passwort kann in der KeePass Datei gefunden werden
+    \item Füge den Bot Discord Account dem Discord Server hinzu.
+    \item Gebe ihm die folgenden Berechtigungen
+    \item Teste den Bot mit den verschiedenen Befehlen
+    \item Admins registrieren
+\end{enumerate}
+
+\newline
+Diese Anleitung baut auf folgenden Anleitungen auf:
+\begin{enumerate}
+    \item \href{https://devblogs.microsoft.com/dotnet/net-core-and-systemd/}{Systemd Service mit Dotnet erstellen}
+    \item \href{https://blog.maartenballiauw.be/post/2021/05/25/running-a-net-application-as-a-service-on-linux-with-systemd.html}{Systemd Service mit Dotnet erstellen 2}
+    \item \href{https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04}{MySQL auf Ubuntu installieren}
+    \item \href{https://askubuntu.com/questions/1004853/systemd-is-hanging-when-i-start-or-restart-a-service}{Systemd Service Konfiguration}
 \end{enumerate}
 
 \subsection{Konfiguration des StanBots}\label{konfigurationStanBot}
@@ -2516,18 +2574,6 @@ Die Settings Datei heisst \textit{stan.json}
 Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
 \todo{Write tutorial}
 
-\subsection{Studenten Liste laden}
-
-Hier wird ein Beispiel dieser Datei gezeigt:
-
-\todo{Add CSV data here}
-
-\todo{Yannis}
-
-%\begin{lstlisting}[language=csv]
-
-%\end{lstlisting}
-
 \subsection{Instandhaltung Stan Discord Bot}
 
 Die Datenbank muss vor jedem Semesterbeginn aktualisiert werden mit der aktuellen Modulliste und der aktuellen Studierendenliste.
@@ -2541,11 +2587,40 @@ Der STAIR Vorstand muss in regelmässigen Abständen die Hilfschannel auf dem Di
 
 \subsubsection{Aktualisieren der Module}
 
+\begin{verbatim}
+    $ ssh localadmin@stair-bot-lnx.el.eee.intern
+    $ mkdir ~/data
+    $ exit # Server verlassen
+    $ scp ./ListeModuleDepI.csv localadmin@stair-bot-lnx.el.eee.intern:~/data/
+\end{verbatim}
+
 \todo{Yannis}
+
+Hier wird ein Beispiel dieser Datei gezeigt:
+
+\todo{Add CSV data here}
+
+\todo{Yannis}
+
+%\begin{lstlisting}[language=csv]
+
+%\end{lstlisting}
 
 \subsubsection{Aktualisieren der Studierenden}
 
+
+scp ./ListeStudierendeHS22.csv  localadmin@stair-bot-lnx.el.eee.intern:~/data/
 \todo{Yannis}
+
+Hier wird ein Beispiel dieser Datei gezeigt:
+
+\todo{Add CSV data here}
+
+\todo{Yannis}
+
+%\begin{lstlisting}[language=csv]
+
+%\end{lstlisting}
 
 \section{Besprechungsprotokolle}
 

@@ -25,10 +25,9 @@ namespace StanDatabase
             string jsonString;
             try
             {
-                string path = $"/home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/{CONFIG_FILE}";
-            	Console.WriteLine("Database Config Path " + path);
-            	jsonString = File.ReadAllText(path);
-                //jsonString = File.ReadAllText($"./{CONFIG_FILE}");
+                string path = $"/home/localadmin/stair-config/stanBot/{CONFIG_FILE}";
+                Console.WriteLine("Database Config Path " + path);
+                jsonString = File.ReadAllText(path);
             }
             catch (Exception ex)
             {

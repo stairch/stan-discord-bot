@@ -14,10 +14,15 @@
     <PackageReference Include="Microsoft.Graph" Version="4.48.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.0" />
     <PackageReference Include="ScottPlot" Version="4.1.59" />
+    <!-- <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0" /> -->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StanDatabase\StanDatabase.csproj" />
   </ItemGroup>
 
+  <!-- <ItemGroup>
+    <FunctionsPreservedDependencies Include="System.Text.Encodings.Web.dll" />
+  </ItemGroup> -->
 </Project>

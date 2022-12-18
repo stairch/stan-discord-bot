@@ -1,9 +1,0 @@
-[Unit]
-Description=Stan Discord Bot from STAIR
-
-[Service]
-Type=simple
-ExecStart=/home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/StanBot
-
-[Install]
-WantedBy=multi-user.target
