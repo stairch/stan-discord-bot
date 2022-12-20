@@ -6,6 +6,7 @@ using StanDatabase.DTOs;
 using NLog;
 using StanBot.Services.ErrorNotificactionService;
 using System;
+using System.Drawing;
 
 namespace StanBot.Core.Commands
 {
@@ -15,6 +16,8 @@ namespace StanBot.Core.Commands
 
         private readonly DatabaseErrorNotificationService _databaseErrorNotificationService;
 
+        private readonly MailErrorNotificationService _mailErrorNotificationService;
+
         private readonly IStudentRepository _studentRepository;
         private readonly IDiscordAccountRepository _discordAccountRepository;
         private readonly IDiscordAccountModuleRepository _discordAccountModuleRepository;
@@ -23,16 +26,21 @@ namespace StanBot.Core.Commands
             IStudentRepository studentRepository,
             IDiscordAccountRepository discordAccountRepository,
             IDiscordAccountModuleRepository discordAccountModuleRepository,
-            DatabaseErrorNotificationService databaseErrorNotificationService) 
+            DatabaseErrorNotificationService databaseErrorNotificationService,
+            MailErrorNotificationService mailErrorNotificationService)
         {
             _studentRepository = studentRepository;
             _discordAccountRepository = discordAccountRepository;
             _discordAccountModuleRepository = discordAccountModuleRepository;
             _databaseErrorNotificationService = databaseErrorNotificationService;
+            _mailErrorNotificationService = mailErrorNotificationService;
 
             // Creates image directory for plots, if it doesnt exist yet
             if (!Directory.Exists("img"))
+            {
+                _logger.Debug("Create img folder for statistic diagrams");
                 Directory.CreateDirectory("img");
+            }
         }
 
         [Command("studentsPerHouse", true)]
@@ -48,11 +56,26 @@ namespace StanBot.Core.Commands
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
 
-                    List<StudentsPerHouseDTO> list = _studentRepository.NumberOfStudentsPerHouse();
+                    List<StudentsPerHouseDTO> list;
+                    try
+                    {
+                        list = _studentRepository.NumberOfStudentsPerHouse();
+                    }
+                    catch(Exception ex)
+                    {
+                        _databaseErrorNotificationService.SendDatabaseErrorToAdmins(ex, "StatisticCommand.studentsPerHouse");
+                        _logger.Error($"{ex.GetType()} There was an Error, due to a database exception. Admin has been contacted. Stacktrace: {ex.Message}");
+                        await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
+                            "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
+                            "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
+                        return;
+                    }
 
                     string[] labels = new string[list.Count()];
                     List<Bar> bars = new();
 
+                    _logger.Debug("Create bars for diagram");
+                    Font font = new Font("Arial", 12.0f);
                     for (int i = 0; i < list.Count; i++)
                     {
                         Bar bar = new()
@@ -61,28 +84,35 @@ namespace StanBot.Core.Commands
                             Position = i,
                             FillColor = System.Drawing.Color.FromName(list[i].HouseName),
                             Label = list[i].StudentsCount.ToString(),
+                            //FontName = "Arial", // doesn't exist
+                            // Font = font, // not allowed -> readonly
                             LineWidth = 2,
                         };
+                        //bar.Font.
                         bars.Add(bar);
 
                         labels[i] = list[i].HouseName;
                     }
 
+                    _logger.Debug("Create plot variable");
                     var plt = new ScottPlot.Plot(600, 400);
                     plt.AddBarSeries(bars);
                     plt.XTicks(labels);
+                    _logger.Debug("Set title");
                     plt.Title("Students per House");
                     plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
                     plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
                     plt.SetAxisLimits(yMin: 0);
 
+                    _logger.Debug("Return diagram");
                     await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
                 }
             }
             catch(Exception ex)
             {
-                _databaseErrorNotificationService.SendDatabaseErrorToAdmins(ex, "StatisticCommand.studentsPerHouse");
-                _logger.Error($"There was an Error, due to a database exception. Admin has been contacted. Stacktrace: {ex.Message}");
+                // TODO: use different error notification service
+                _mailErrorNotificationService.SendMailErrorToAdmins(ex, "StatisticCommand.studentsPerHouse");
+                _logger.Error($"{ex.GetType()} There was an Error, while creating the diagram. Admin has been contacted. Message: {ex.Message} | Stacktrace: {ex.StackTrace}");
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
