@@ -19,7 +19,9 @@ rsync -av ../../../stair-config localadmin@stair-bot-lnx.el.eee.intern:~/.
 
 ssh localadmin@stair-bot-lnx.el.eee.intern "mv /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/NLog.config /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/"
 
-ssh localadmin@stair-bot-lnx.el.eee.intern "touch ~/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/discordAdmins.csv"
+ssh localadmin@stair-bot-lnx.el.eee.intern "touch /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/discordAdmins.csv"
+
+scp ../../../system.drawing.common/lib/net6.0/System.Drawing.Common.dll localadmin@stair-bot-lnx.el.eee.intern:/home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/
 
 echo "In case of an update, run the following (don't do this when setting up the server for the first time):"
 echo "$ ssh localadmin@stair-bot-lnx.el.eee.intern"
