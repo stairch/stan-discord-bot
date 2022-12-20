@@ -48,8 +48,8 @@ namespace StanBot.Core.Events.Messages
                 if (student == null)
                 {
                     await message.Channel.SendMessageAsync(
-                        $"Ein Student mit der E-Mail Addresse {message.Content} existiert nicht. "
-                        + "Kontrolliere auf mögliche Tippfehler oder kontaktiere einen Administrator.\n\r\n\r"
+                        $"Ein Student mit der E-Mail Addresse {message.Content} existiert nicht."
+                        + " Kontrolliere auf mögliche Tippfehler oder kontaktiere einen Administrator.\n\r\n\r"
                         + $"A student with the email address {message.Content} does not exist. Check for possible typos or contact an administrator."
                         );
                     _logger.Info($"Could not find a student with Email: {message.Content}");
@@ -88,7 +88,8 @@ namespace StanBot.Core.Events.Messages
             {
                 await _mailService.SendMailToAsync(message.Content, "STAIR Discord Verification", messageBody);
 
-                await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt.\n\rThanks! I've sent a mail to {message.Content}.");
+                await message.Channel.SendMessageAsync($"Vielen Dank! Ich habe ein Mail an {message.Content} geschickt. Bitte sende mir per Discord den dort erhaltenen Code zurück. \n\r " + 
+                    $"Thanks! I've sent a mail to {message.Content}. Please send me back via Discord the code you received there.");
                 _logger.Info($"Successfully send Email to {message.Content} with Verification Code {verificationCode}");
             } 
             catch

@@ -65,10 +65,7 @@ namespace StanScripts
                 string moduleShortname = ModuleUtil.ExtractModuleShortname(moduleOccassionNumber);
                 string moduleFullname = values[moduleFullnameColumnIndex].Trim();
 
-                Module module = new Module();
-                module.ChannelName = moduleShortname;
-                module.FullModuleName = moduleFullname;
-
+                Module module = Module.CreateNew(moduleShortname, moduleFullname);
                 currentModules.Add(module);
             }
 
@@ -84,7 +81,7 @@ namespace StanScripts
 
         private bool ShouldOldModulesBeRemoved()
         {
-            string question = "Should modules not contained in the list be removed? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
+            string question = $"Should modules not contained in the list be removed? ({ConsoleHelper.YesAnswer}/{ConsoleHelper.NoAnswer})" +
                 $"\nAnswering with {ConsoleHelper.YesAnswer} removes the other module channels.\"";
             return ConsoleHelper.YesNoQuestion(question);
         }

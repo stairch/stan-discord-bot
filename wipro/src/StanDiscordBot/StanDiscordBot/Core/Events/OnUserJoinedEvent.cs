@@ -14,7 +14,7 @@ namespace StanBot.Core.Events
                 "Hello good friend. \n\r"
                 + "Ich bin Stan und heisse dich herzlich Willkommen auf dem STAIR Discord Server.\n"
                 + "Da der Discord Server nur für Studenten der HSLU Informatik ist, muss ich verifizieren, "
-                + "dass du dort immatrikuliert bist. Bitte sende mir dafür deine stud.hslu.ch Mail Adresse zu. "
+                + "dass du dort immatrikuliert bist. Bitte sende mir dafür deine stud.hslu.ch oder deine hslu.ch Mail Adresse zu. "
                 + "Danach werde ich dir ein Mail mit einem Code und weiteren Instruktionen schicken. "
                 + "Mit dem weiteren Verweilen auf dem Server akzeptierst du die folgenden Regeln.\n\r"
                 + "**Regeln** - ja, leider\n\r"

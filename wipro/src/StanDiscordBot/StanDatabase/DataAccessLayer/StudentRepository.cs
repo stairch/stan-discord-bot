@@ -34,18 +34,18 @@ namespace StanDatabase.DataAccessLayer
         {
             using (var db = new DbStan())
             {
-                IList<string> currentStudentEmails = students
-                    .Select(cs => cs.StudentEmail)
-                    .ToList();
+                IEnumerable<string> newStudentMails = students
+                    .Select(s => s.StudentEmail);
 
-                IList<Student> oldStudents = db.Student
-                    .Where(s => currentStudentEmails.Contains(s.StudentEmail))
-                    .ToList();
+                IEnumerable<string> currentStudentMails = db.Student
+                    .Select(s => s.StudentEmail);
 
-                foreach (Student oldStudent in oldStudents)
+                IList<string> oldStudentMails = currentStudentMails.Except(newStudentMails).ToList();
+
+                foreach (string mail in oldStudentMails)
                 {
                     db.Student
-                            .Where(s => s.StudentEmail == oldStudent.StudentEmail)
+                            .Where(s => s.StudentEmail == mail)
                             .Set(s => s.StillStudying, false)
                             .Update();
                     // Discord Roles on the Server will be updated through the UpdateStudentsCommand
