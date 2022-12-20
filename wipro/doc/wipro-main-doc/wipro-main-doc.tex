@@ -1108,7 +1108,9 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der STAIR Administrator muss sich eine Liste von Studenten mit zugehörigen Häusern von der Hochschul-Administration besorgen.
-        \item Er kann die Liste als Parameter an ein "LoadStudent" Sript übergeben.
+        \item Es muss auf dem Linux Server ein Ordner "$\mathtt{\sim}$/data" existieren.
+        \item Er kann per SSH die neue Studentenliste in diesen Ordner hochladen.
+        \item Er kann auf dem Server die Liste als Parameter an das "LoadStudents" Sript übergeben.
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Die Liste wird automatisch in das System eingelesen und die entsprechenden Datenbankeinträge werden erstellt.
@@ -1131,6 +1133,8 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der STAIR Administrator muss sich eine Liste mit allen verfügbaren Modulen des Departements Informatik von der Hochschul-Administration besorgen.
+        \item Es muss auf dem Linux Server ein Ordner "$\mathtt{\sim}$/data" existieren.
+        \item Er kann per SSH die neue Studentenliste in diesen Ordner hochladen.
         \item Er kann die Liste als Parameter an ein "LoadModules" Script übergeben.
     \end{enumerate}\\
     \hline
@@ -1187,21 +1191,21 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
 \begin{longtable}[h]{|p{15em}|p{25em}|}
     \hline
-    \multicolumn{2}{|l|}{\textbf{Ein STAIR Administrator kann über ein Script Statistiken auslesen.}} \\
+    \multicolumn{2}{|l|}{\textbf{Ein STAIR Administrator kann über eine Schnittstelle Statistiken auslesen.}} \\
     \hline
     \multicolumn{2}{|l|}{\textbf{Testfall \#8}} \\
     \hline
     \textbf{Epic / Anforderung} & \#6 \\*
-     & Die Administration von x kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über den Discord erstellen. \\
+     & Die Administration von STAIR kann über eine zur Verfügung gestellte Schnittstelle, Statistiken über den Discord erstellen. \\
     \hline
     \textbf{Durchführung} &
     \begin{enumerate}
-        \item Der STAIR Administrator kann sich mit dem Script "Statistics" über die verschiedenen Statistiken informieren.
-        \item Er kann einen Befehl auf diesem Script ausführen.
+        \item Der STAIR Administrator kann über die Schnittstelle verschiedene Statistikbefehle absetzten.
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Je nach Befehl gibt das Script die gewünschten Werte zurück.
-    So können zum Beispiel die Anzahl Studenten pro Haus, oder die momentanen Modulanmeldungen ausgelesen werden. \\
+    So können zum Beispiel die Anzahl Studenten pro Haus, oder die momentanen Modulanmeldungen ausgelesen werden.
+    Die Statistik wir ansehnlich dargestellt. \\
     \hline
     \caption{Testdrehbuch - Testfall \#8}
 \end{longtable}
@@ -2181,8 +2185,255 @@ Die Bibliothek konfiguriert das Loggen in die Konsole im systemd-Format und stel
 \todo{Yannis}
 
 \newpage
-\subsection{Tests Durchführung}
-\todo{Nicolas}
+\subsection{Testprotokolle}
+Die manuellen Systemtests werden nach dem Drehbuch im Kapitel \nameref{Testdrehbuch} durchgeführt.
+Der Bot ist zu diesem Zeitpunkt auf dem Linux Server deployed und wartet auf eintreffende Nachrichten. 
+Die Mailservice Infrastruktur steht und ist bereit.
+Die Tests werden aber noch auf einem Discord Test Server durchgeführt.
+Der Bot wird erst nach dieser Arbeit in das laufende System eingebunden.
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#1}} \\
+    \hline
+    \textbf{Titel} & Betritt ein neuer Student den Discord Server, bekommt er direkt eine Nachricht. \\
+    \hline
+    \textbf{Getestete Komponenten} & 
+        \tabitem StanBot.OnUserJoinedEvent \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} & 
+        Wenn ein neuer Besucher oder Besucherin auf den Server gelangt, erhält er/sie eine Direktnachricht vom Bot.
+        In der Nachricht sind Informationen zum Anmeldeprozess sowie zu den Anstandsregeln beschrieben. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig. \\
+    \hline
+    \textbf{Datum} & 20.12.2022 \\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Es wird folgende Information dem Nutzer gesendet (der englische Teil wurde auf dem Bild weggelassen) 
+        \includegraphics[width=0.8\textwidth]{img/Tests/1_Test_InfoMessage.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#1}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#2}} \\
+    \hline
+    \textbf{Titel} & Ein Student kann sich beim Bot authentifizieren. Teil E-Mail. \\
+    \hline
+    \textbf{Getestete Komponenten} &  
+        \tabitem StanBot.EMailMessageReceivedEvent \\*
+     &  \tabitem StanBot.MailService \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} &  
+        Der Student:in kann dem Bot seine korrekte E-Mail-Adresse schicken. 
+        Der Bot kontrolliert in der Datenbank, ob der Student existiert und generiert einen zugehörigen Verifizierungscode.
+        Im Anschluss wird korrekt eine E-Mail versendet mit dem Code sowie Instruktionen zum weiteren Vorgehen. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig.\\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Der Bot versendet erfolgreich diese Message. 
+        \includegraphics[width=0.8\textwidth]{img/Tests/2_Test_emailMessage.png} \\*
+     &  Die Email: \\*
+     &  \includegraphics[width=0.8\textwidth]{img/Tests/2_Test_email.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#2 E-Mail}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#2}} \\
+    \hline
+    \textbf{Titel} & Ein Student kann sich beim Bot authentifizieren. Teil Verifizierungscode. \\
+    \hline
+    \textbf{Getestete Komponenten} &  
+        \tabitem StanBot.VerificationCodeMessageReceivedEvent \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} &  
+        Wenn der Student erfolgreich die E-Mail vom Bot erhalten hat, kann er ihm den Authentifizierungscode per Discord senden. 
+        Der Bot überprüft, ob der Student, der DiscordAccount und der Code übereinstimmen und erstellt in der Datenbank die Verlinkungen vom Studenten zum Discord Account. 
+        Im Anschluss gibt er ihm die Studenten-Rolle sowie die zugehörige Haus Rolle frei. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig. \\
+    \hline
+    \textbf{Datum} & 20.12.2022 \\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Der Bot erstellt den Discord Account und die Verlinkungen in der Datenbank. 
+        \includegraphics[width=0.8\textwidth]{img/Tests/2_Test_dbAccountStudent.png} \\*
+      & \includegraphics[width=0.4\textwidth]{img/Tests/2_Test_dbAccountRoles.png} \\*
+      & Der Bot gibt erfolgreich die Rollen "student" und "House xy" frei. 
+        \includegraphics[width=0.3\textwidth]{img/Tests/2_Test_discordRole.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#2 Verifizierungscode}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#3}} \\
+    \hline
+    \textbf{Titel} & Ein Nicht-Student kann sich nicht authentifizieren. \\
+    \hline
+    \textbf{Getestete Komponenten} &  \tabitem StanBot.EMailMessageReceivedEvent \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} & 
+        Der Bot filtert alle Nachrichten heraus, die nicht dem Muster @stud.hslu.ch oder @hslu.ch entsprechen.
+        Dies bedeutet aber auch, dass er keine Antwort gibt, falls Nachrichten nicht diesem Muster entsprechen.
+        Falls Name oder Vorname nicht korrekt sind, erhält der Benutzer:in eine Nachricht, dass der Student:in nicht existiert. \\
+    \hline
+    \textbf{Massnahmen} & 
+        Das keine Antwort zurückkommt kann verwirrend wirken. 
+        Eventuell bei Direktnachrichten immer etwas zurückschreiben, wie z.B. «Diesen Text habe ich nicht verstanden». \\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Nachricht, falls Student nicht existiert \\*
+     &  \includegraphics[width=0.6\textwidth]{img/Tests/3_Test_StudentNotFound.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#3}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#4}} \\
+    \hline
+    \textbf{Titel} & Ein STAIR Administrator kann eine Liste mit Studenten in das System einlesen. \\
+    \hline
+    \textbf{Getestete Komponenten} & 
+        \tabitem StanScripts.LoadStudents \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} &  
+        Beim Ausführen des Scripts werden die richtigen Spalten extrahiert und geprüft. 
+        Ist die csv-Datei korrekt, werden die neuen Studenten der Datenbank hinzugefügt und bei bestehenden Studenten das Semester aktualisiert.
+        Am Schluss kann noch die Option ausgewählt werde, dass Studenten, welche nicht mehr auf der Liste vorhanden sind, als Ex-Studenten markiert werden. 
+        Damit wird in der Datenbank das StillStudying Feld des Studenten auf False gesetzt. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig \\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & LoadStudent Script Output: \\*
+     & \includegraphics[width=0.8\textwidth]{img/Tests/4_Test_LoadStudents.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#4}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#5}} \\
+    \hline
+    \textbf{Titel} & Ein STAIR Administrator kann eine Liste mit Modulen in das System einlesen. \\
+    \hline
+    \textbf{Getestete Komponenten} &  
+        \tabitem StanScripts.LoadModules \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} &  
+        Beim Ausführen des Scripts wird das CSV-File auf korrekte Spalten überprüft und einigen Tests unterzogen. 
+        Dabei wird geschaut, dass die Modulnamen und Nummern richtig extrahiert werden. 
+        Den Modulen wird nun eine Category zugeordnet und in die Datenbank eingefügt. 
+        Auch hier gibt es eine Option um Module, welche nicht mehr in der Liste vorhanden sind zu löschen. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig\\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & LoadModules Script Output \\*
+     &  \includegraphics[width=0.8\textwidth]{img/Tests/5_Test_LoadModules.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#5}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#6}} \\
+    \hline
+    \textbf{Titel} & Ein Student kann sich beim Bot für ein Modul anmelden. \\
+    \hline
+    \textbf{Getestete Komponenten} &  
+        \tabitem StanBot.showCommand \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} & 
+        Ein authentifizierter Student kann im Channel \#registering den show <module> Command ausführen.
+        Falls das Modul nicht gefunden wurde, meldet es das zurück.
+        Wenn das Modul gefunden wurde, wird der Discord Account mit dem Modul verlinkt und der Student als Mitglied dem Channel hinzugefügt. 
+        Die Nachricht wird nach 5 Sekunden aus dem Chat gelöscht. \\
+    \hline
+    \textbf{Massnahmen} & Nachrichten von Modulen, welche nicht gefunden werden, könnten auch nach einer gewissen Zeit gelöscht werden. \\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Show command \\*
+     &  \includegraphics[width=0.6\textwidth]{img/Tests/6_Test_ShowCommandMessage.png} \\*
+     &  Datenbankeintrag \\*
+     &  \includegraphics[width=0.6\textwidth]{img/Tests/6_Test_ShowCommandDatabase.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#6}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#7}} \\
+    \hline
+    \textbf{Titel} & Ein Student kann sich beim Bot bei einem Modul abmelden. \\
+    \hline
+    \textbf{Getestete Komponenten} & 
+        \tabitem StanBot.HideCommand \\*
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} & 
+        Wenn der Student den hide <module> Command in den \#registering Channel eingibt, wird er als Mitglied vom Channel entfernt. 
+        Dadurch ist er für ihn nicht mehr sichtbar.
+        Die Verlinkung in der Datenbank zwischen dem Discord Account und dem Modul wird aufgehoben.
+        Die Nachricht wird auch nach 5 Sekunden aus dem Chat gelöscht. \\
+    \hline
+    \textbf{Massnahmen} & Nachrichten von Modulen, welche nicht gefunden werden, könnten auch nach einer gewissen Zeit gelöscht werden. \\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Hide command \\*
+    &  \includegraphics[width=0.6\textwidth]{img/Tests/7_Test_HideCommandMessage.png} \\*
+    &  Datenbankeintrag \\*
+    &  \includegraphics[width=0.5\textwidth]{img/Tests/7_Test_HideCommandDatabase.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#7}
+\end{longtable}
+
+\begin{longtable}[h]{|p{9em}|p{31em}|}
+    \hline
+    \multicolumn{2}{|l|}{\textbf{Testfall \#8}} \\
+    \hline
+    \textbf{Titel} & Ein STAIR Administrator kann über eine Schnittstelle Statistiken auslesen. \\
+    \hline
+    \textbf{Getestete Komponenten} & 
+        \tabitem StanBot.StatisticCommands \\ *
+     &  \tabitem Database \\
+    \hline
+    \textbf{Tatsächliches Ergebnis/ Verhalten} & 
+        Das STAIR Mitglied kann sich in Discord über den !help Command die verschiedenen Statistik Commands anzeigen lassen. 
+        Wenn er einen ausführt, bekommt er die Statistik als Plot präsentiert. \\
+    \hline
+    \textbf{Massnahmen} & Keine Massnahmen nötig\\
+    \hline
+    \textbf{Datum} & 20.12.2022\\
+    \hline
+    \textbf{Zusammenfassung} & 
+        Der studentsPerSemester Command \\*
+     &  \includegraphics[width=0.7\textwidth]{img/Tests/8_Test_statisticCommand.png} \\
+    \hline
+    \caption{Testprotokoll - Testfall \#8}
+\end{longtable}
 
 \newpage
 \subsection{Einführung des neuen Bots}
@@ -2191,16 +2442,12 @@ Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nic
 So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird.
 
 \newpage
-\subsubsection{Authentifizierung}
-\todo{Nicolas}
-
-\newpage
 \section{Evaluation und Validation}
 
 \todo{schreiben}
 
-\subsection{Fehlererkennung}
 
+\newpage
 \section{Ausblick}
 
 \todo{schreiben}
@@ -2318,6 +2565,7 @@ Probleme:
 \end{itemize}
 Massnahmen:
 \begin{itemize}
+    \item Die Accountinfromationen für den Mail-Service einholen, damit die E-Mail Kommunikation getestet werden kann.
     \item Prioritäten setzten was die Modulerfassung anbelangt.
     \item Möglichst zeitnah mit dem neuen Issue beginnen.
 \end{itemize}
@@ -2329,7 +2577,7 @@ Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabil
 
 \subsubsection*{Risiko-Update}
 \begin{itemize}
-    \item Keine.
+    \item Durch das Hinzufügen immer mehr Libraries steigt die Wahrscheinlichkeit, dass es Probleme beim Deployen des Bots auf den Linux Server gibt.
 \end{itemize}
 
 \subsubsection*{Sprintbacklog}
@@ -2394,11 +2642,7 @@ Probleme:
     \item Bei immer mehr Klassen in der Dependency Injection, kann es zu Circular Dependencies kommen.
 \end{itemize}
 Massnahmen:
-\todo{Ist Item 4 gewollt? Wurde nicht fertig geschrieben}
 \begin{itemize}
-    \item Prioritäten setzten was die Modulerfassung anbelangt.
-    \item Möglichst zeitnah mit dem neuen Issue beginnen.
-    \item Es sollten keine separaten Dokumente, wie Protokolle erstellt werden, sondern man sollte diese direkt einfügen in der Dokumentation um sich das Zusammenführen später zu ersparen.
     \item Dort Clean Coding Vorgehen anwenden. wo es Sinn macht.
     \item Bei immer mehr werdenden Klassen muss informiert werden, wie diese schön ins System injected werden können.
 \end{itemize}
@@ -2625,6 +2869,34 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 %\end{lstlisting}
 
+\subsubsection{Neu starten des Bots}
+Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, bzw. neu gestartet werden muss,
+muss beim Starten des Bots das Device mit dem Azure Microsoft Stan Account authentifiziert werden.
+Dazu werden die Anweisungen in der Log-Console befolgt.
+Der Log Eintrag des \textbf{DeviceCodeAuthProvider} leitet auf die \href{https://microsoft.com/devicelogin}{Microsoft Device Login} Seite weiter.
+Auf dieser muss der Key eingeben werden, welcher auch in dem Log-Eintrag mitgegeben wird.
+Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
+
+\begin{figure}[h]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/Tut_deviceAuthLog.png}
+    \caption{Anleitung - Device Authentication Log Message}
+    \label{fig:tutorial-device-auth-log}
+\end{figure}
+
+\begin{figure}[h]
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.8\textwidth]{img/Tut_deviceAuthLogin.png}
+    \end{minipage}
+    \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=0.8\textwidth]{img/Tut_deviceAuthAccount.png}
+    \end{minipage}
+    \caption{Anleitung - Device Authentication}
+    \label{fig:tutorial-device-auth}
+\end{figure}
+
+\newpage
 \section{Besprechungsprotokolle}
 
 \subsection{Kick Off Meeting 23.09.2022}
@@ -2799,10 +3071,13 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 
 \begin{enumerate}
     \item Soll Glossar vor oder nach Anhang eingefügt werden?
+    \item Testprotokolle Teil des Realisations-Kapitel?
+    \item Abstract auch auf English?
     \item Wie lange soll die Präsentation werden?
     \item Was soll der Inhalt der Präsentation sein?
     \item Wer ist der Experte?
     \item Geht 9. oder 10. Januar als Präsentationstermin?
+    \item Arbeitsjournal wo einfügen?
 \end{enumerate}
 
 \subsubsection*{Besprochene Punkte}
