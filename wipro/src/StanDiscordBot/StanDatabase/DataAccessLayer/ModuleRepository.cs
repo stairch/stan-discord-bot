@@ -50,7 +50,7 @@ namespace StanDatabase.DataAccessLayer
                     .ToList();
 
                 IList<Module> oldModuleChannels = db.Module
-                    .Where(omc => currentModuleChannelNames.Contains(omc.ChannelName))
+                    .Where(omc => currentModuleChannelNames.Contains(omc.ChannelName.ToUpper()))
                     .ToList();
 
                 db.Module
@@ -63,7 +63,7 @@ namespace StanDatabase.DataAccessLayer
         {
             using (var db = new DbStan())
             {
-                return db.Module.SingleOrDefault(m => m.ChannelName.Equals(moduleName)) != null;
+                return db.Module.SingleOrDefault(m => m.ChannelName.Equals(moduleName.ToUpper())) != null;
             }
         }
 
@@ -73,7 +73,7 @@ namespace StanDatabase.DataAccessLayer
             {
                 return db.Module
                     .LoadWith(m => m.DiscordCategory)
-                    .SingleOrDefault(m => m.ChannelName.Equals(moduleName));
+                    .SingleOrDefault(m => m.ChannelName.Equals(moduleName.ToUpper()));
             }
         }
     }
