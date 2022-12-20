@@ -72,7 +72,6 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Datenbankfehler. Der Administrator kann nicht hinzugefügt werden. " +
                     "There was an error retrieving the email. An administrator can not be added.\n\r", embed: embed.Build());
             }
-            
         }
 
         [Command("removeAdmin")]

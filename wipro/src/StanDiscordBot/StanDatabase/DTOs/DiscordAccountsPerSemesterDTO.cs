@@ -5,13 +5,13 @@
         private int _semester;
         private int _accountsCount;
 
-        public int Semester { 
-            get { return _semester; } 
+        public int Semester {
+            get { return _semester; }
             set { _semester = value; }
         }
 
-        public int AccountsCount { 
-            get { return _accountsCount; } 
+        public int AccountsCount {
+            get { return _accountsCount; }
             set { _accountsCount = value; }
         }
     }
