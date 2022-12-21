@@ -28,3 +28,6 @@ echo "$ ssh localadmin@stair-bot-lnx.el.eee.intern"
 echo "$ sudo systemctl restart stanBot"
 echo "$ sudo systemctl status stanBot"
 echo "$ sudo journalctl -u stanBot -e # when there are problems"
+
+# how to get dll version number
+#monodis --assembly file.exe | grep Version
