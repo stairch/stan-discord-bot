@@ -14,6 +14,8 @@
     <PackageReference Include="Microsoft.Graph" Version="4.48.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.0" />
     <PackageReference Include="ScottPlot" Version="4.1.59" />
+    <!-- https://www.nuget.org/packages/System.Drawing.Common#versions-body-tab -->
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <!-- <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.0" /> -->
   </ItemGroup>
