@@ -46,7 +46,7 @@ CREATE TABLE Students (
 CREATE TABLE DiscordAccounts (
     DiscordAccountId INT AUTO_INCREMENT NOT NULL,
     Username VARCHAR(255),
-    AccountId INT,
+    AccountId BIGINT,
     VerifiedDate DATETIME,
 	FkStudentId INT,
     PRIMARY KEY (DiscordAccountId),

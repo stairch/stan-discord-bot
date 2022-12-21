@@ -7,13 +7,13 @@ namespace StanDatabase.Repositories
     {
         int Insert (DiscordAccount discordAccount);
 
-        DiscordAccount? GetAccount(int discriminaterValue, string username);
+        DiscordAccount? GetAccount(long discriminaterValue, string username);
 
-        bool DoesDiscordAccountExist(int discriminatorValue, string username);
+        bool DoesDiscordAccountExist(long discriminatorValue, string username);
 
         List<DiscordAccountsPerSemesterDTO> NumberOfDiscordAccountsPerSemester();
 
-        int Delete (int discordAccountId);
+        int Delete(int discordAccountId);
 
         bool IsAdmin(string username);
 

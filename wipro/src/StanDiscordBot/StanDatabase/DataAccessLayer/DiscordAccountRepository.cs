@@ -15,7 +15,7 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public bool DoesDiscordAccountExist(int discriminatorValue, string username)
+        public bool DoesDiscordAccountExist(long discriminatorValue, string username)
         {
             using(var db = new DbStan())
             {
@@ -23,7 +23,7 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public DiscordAccount? GetAccount(int discriminaterValue, string username)
+        public DiscordAccount? GetAccount(long discriminaterValue, string username)
         {
             using(var db = new DbStan())
             {

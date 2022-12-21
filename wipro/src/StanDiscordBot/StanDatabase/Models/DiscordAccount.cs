@@ -15,7 +15,7 @@ namespace StanDatabase.Models
         /// Describes the Id given by discord that is seen next to the name
         /// </summary>
         [Column, NotNull]
-        public int AccountId { get; set; }
+        public long AccountId { get; set; }
 
         [Column]
         public int FkStudentId { get; set; }
@@ -26,7 +26,7 @@ namespace StanDatabase.Models
         [Column]
         public DateTime VerifiedDate { get; set; }
 
-        public static DiscordAccount CreateNew(string username, int accountId, Student student)
+        public static DiscordAccount CreateNew(string username, long accountId, Student student)
         {
             DiscordAccount account = new DiscordAccount();
             account.Username = username;
