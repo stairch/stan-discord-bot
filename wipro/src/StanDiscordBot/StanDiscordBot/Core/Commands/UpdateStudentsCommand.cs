@@ -63,16 +63,17 @@ namespace StanBot.Core.Commands
                             if(_discordAccountRepository.IsStillStudying(discordAccount))
                             {
                                 // Change Role in Database from exstudent to student
-                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.AccountId, exStudentRole.DiscordRoleId, studentRole);
+                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.DiscordAccountId, exStudentRole.DiscordRoleId, studentRole);
 
                                 // Change Role in Discord
                                 _roleService.AddRole(Context, socketGuildUser, "student");
                                 _roleService.RemoveRole(Context, socketGuildUser, "exstudent");
-                            } else
+                            }
+                            else
                             {
                                 // Change Role in Database from student to exstudent
-                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.AccountId, studentRole.DiscordRoleId, exStudentRole);
-                                DiscordRole houseRole = _discordAccountDiscordRoleRepository.GetHouseRoleForAccount(discordAccount.AccountId)!;
+                                _discordAccountDiscordRoleRepository.ChangeStillStudyingRole(discordAccount.DiscordAccountId, studentRole.DiscordRoleId, exStudentRole);
+                                DiscordRole houseRole = _discordAccountDiscordRoleRepository.GetHouseRoleForAccount(discordAccount.DiscordAccountId)!;
 
 
                                 // Change Role in Discord
