@@ -41,21 +41,24 @@ namespace StanDatabase.DataAccessLayer
             }
         }
 
-        public void RemoveOld(IList<Module> currentModules)
+        public void RemoveOld(IList<Module> modules)
         {
             using (var db = new DbStan())
             {
-                IList<string> currentModuleChannelNames = currentModules
-                    .Select(cmc => cmc.ChannelName)
-                    .ToList();
+                IEnumerable<string> newModules = modules
+                    .Select(m => m.ChannelName);
 
-                IList<Module> oldModuleChannels = db.Module
-                    .Where(omc => currentModuleChannelNames.Contains(omc.ChannelName.ToUpper()))
-                    .ToList();
+                IEnumerable<string> currentModules = db.Module
+                    .Select(m => m.ChannelName);
 
-                db.Module
-                        .Where(m => oldModuleChannels.Select(omc => omc.ChannelName).Contains(m.ChannelName))
+                IList<string> oldModules = currentModules.Except(newModules).ToList();
+
+                foreach (string moduleName in oldModules)
+                {
+                    db.Module
+                        .Where(m => m.ChannelName == moduleName)
                         .Delete();
+                }
             }
         }
 

@@ -50,7 +50,7 @@ CREATE TABLE DiscordAccounts (
     VerifiedDate DATETIME,
 	FkStudentId INT,
     PRIMARY KEY (DiscordAccountId),
-	FOREIGN KEY (FkStudentId) REFERENCES Students(StudentId)
+	FOREIGN KEY (FkStudentId) REFERENCES Students(StudentId) ON DELETE CASCADE
 );
 
 CREATE TABLE DiscordAccountsModules (
@@ -59,16 +59,16 @@ CREATE TABLE DiscordAccountsModules (
     FkModuleId INT,
     -- https://stackoverflow.com/questions/5835978/how-to-properly-create-composite-primary-keys-mysql
     PRIMARY KEY (FkDiscordAccountId, FkModuleId),
-    FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
-    FOREIGN KEY (FkModuleId) REFERENCES Modules(ModuleId)
+    FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId) ON DELETE CASCADE,
+    FOREIGN KEY (FkModuleId) REFERENCES Modules(ModuleId) ON DELETE CASCADE
 );
 
 CREATE TABLE DiscordAccountsDiscordRoles (
     FkDiscordAccountId INT NOT NULL,
     FkDiscordRoleId INT NOT NULL,
 	PRIMARY KEY (FkDiscordAccountId, FkDiscordRoleId),
-    FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId),
-    FOREIGN KEY (FkDiscordRoleId) REFERENCES DiscordRoles(DiscordRoleId)
+    FOREIGN KEY (FkDiscordAccountId) REFERENCES DiscordAccounts(DiscordAccountId) ON DELETE CASCADE,
+    FOREIGN KEY (FkDiscordRoleId) REFERENCES DiscordRoles(DiscordRoleId) ON DELETE CASCADE
 );
 
 -- Add houses

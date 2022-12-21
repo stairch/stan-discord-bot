@@ -23,6 +23,14 @@ namespace StanDatabase.Models
         [Association(ThisKey = nameof(FkDiscordCategoryId), OtherKey = nameof(Models.DiscordCategory.DiscordCategoryId))]
         public DiscordCategory DiscordCategory { get; set; }
 
+        public static Module CreateNew(string moduleShortname, string moduleFullname)
+        {
+            Module module = new Module();
+            module.ChannelName = moduleShortname;
+            module.FullModuleName = moduleFullname;
+            return module;
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}[" +

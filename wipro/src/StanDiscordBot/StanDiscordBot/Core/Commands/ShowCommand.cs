@@ -81,7 +81,7 @@ namespace StanBot.Core.Commands
                             await newChannel.AddPermissionOverwriteAsync(Context.Guild.EveryoneRole, OverwritePermissions.DenyAll(newChannel));
                         }
 
-                        DiscordAccount discordAccount = _discordAccountRepository.GetAccount((int)Context.User.Id, Context.User.Username);
+                        DiscordAccount discordAccount = _discordAccountRepository.GetAccount(Context.User.DiscriminatorValue, Context.User.Username);
 
                         if (discordAccount != null)
                         {
