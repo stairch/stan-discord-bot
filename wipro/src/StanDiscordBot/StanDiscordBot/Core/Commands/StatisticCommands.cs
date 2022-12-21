@@ -5,8 +5,10 @@ using StanDatabase.Repositories;
 using StanDatabase.DTOs;
 using NLog;
 using StanBot.Services.ErrorNotificactionService;
-using System;
-using System.Drawing;
+using OxyPlot;
+using OxyPlot.GtkSharp;
+using OxyPlot.Series;
+using OxyPlot.Axes;
 
 namespace StanBot.Core.Commands
 {
@@ -55,7 +57,6 @@ namespace StanBot.Core.Commands
             {
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
-
                     List<StudentsPerHouseDTO> list;
                     try
                     {
@@ -71,41 +72,9 @@ namespace StanBot.Core.Commands
                         return;
                     }
 
-                    string[] labels = new string[list.Count()];
-                    List<Bar> bars = new();
-
-                    _logger.Debug("Create bars for diagram");
-                    Font font = new Font("Arial", 12.0f);
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        Bar bar = new()
-                        {
-                            Value = list[i].StudentsCount,
-                            Position = i,
-                            FillColor = System.Drawing.Color.FromName(list[i].HouseName),
-                            Label = list[i].StudentsCount.ToString(),
-                            //FontName = "Arial", // doesn't exist
-                            // Font = font, // not allowed -> readonly
-                            LineWidth = 2,
-                        };
-                        //bar.Font.
-                        bars.Add(bar);
-
-                        labels[i] = list[i].HouseName;
-                    }
-
-                    _logger.Debug("Create plot variable");
-                    var plt = new ScottPlot.Plot(600, 400);
-                    plt.AddBarSeries(bars);
-                    plt.XTicks(labels);
-                    _logger.Debug("Set title");
-                    plt.Title("Students per House");
-                    plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
-                    plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
-                    plt.SetAxisLimits(yMin: 0);
-
-                    _logger.Debug("Return diagram");
-                    await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
+                    createStudentPerHousePlot(list);
+                    
+                    await Context.Channel.SendFileAsync("img/studentsPerHouse.png");
                 }
             }
             catch(Exception ex)
@@ -126,8 +95,8 @@ namespace StanBot.Core.Commands
         public async Task StudentsPerSemester()
         {
             _logger.Info($"Received statistic command !studentsPerSemester from {Context.Message.Author.Username}.");
-
-            try
+            await ReplyAsync($"Not implemented yet.");
+            /*try
             {
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
@@ -169,7 +138,7 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
-            }
+            }*/
         }
 
         [Command("accountsPerSemester", true)]
@@ -179,8 +148,8 @@ namespace StanBot.Core.Commands
         public async Task AccountsPerSemester()
         {
             _logger.Info($"Received statistic command !accountsPerSemester from {Context.Message.Author.Username}.");
-
-            try
+            await ReplyAsync($"Not implemented yet");
+            /*try
             {
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
@@ -222,7 +191,7 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
-            }
+            }*/
         }
 
         [Command("membersPerModule", true)]
@@ -232,8 +201,8 @@ namespace StanBot.Core.Commands
         public async Task MembersPerModule(int numberOfModules = 10)
         {
             _logger.Info($"Received statistic command !memebersPerModule from {Context.Message.Author.Username}.");
-
-            try
+            await ReplyAsync($"Not implemented yet");
+            /*try
             {
                 List<MembersPerModuleDTO> list = _discordAccountModuleRepository.NumberOfMembersPerModule(numberOfModules);
 
@@ -262,6 +231,71 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
+            }*/
+        }
+
+        private void createStudentPerHousePlotScottplot(List<StudentsPerHouseDTO> list)
+        {
+            string[] labels = new string[list.Count()];
+            List<Bar> bars = new();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Bar bar = new()
+                {
+                    Value = list[i].StudentsCount,
+                    Position = i,
+                    FillColor = System.Drawing.Color.FromName(list[i].HouseName),
+                    Label = list[i].StudentsCount.ToString(),
+                    LineWidth = 2,
+                };
+                bars.Add(bar);
+
+                labels[i] = list[i].HouseName;
+            }
+
+            var plt = new ScottPlot.Plot(600, 400);
+            plt.AddBarSeries(bars);
+            plt.XTicks(labels);
+            plt.Title("Students per House");
+            plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
+            plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
+            plt.SetAxisLimits(yMin: 0);
+
+            //await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
+        }
+
+        private void createStudentPerHousePlot(List<StudentsPerHouseDTO> students)
+        {
+            var model = new PlotModel
+            {
+                Title = "Students per House"
+            };
+
+            var barSeries = new OxyPlot.Series.BarSeries();
+            var catergoryAxis = new CategoryAxis();
+
+            for (int i = 0; i < students.Count; i++)
+            {
+                BarItem bar = new()
+                {
+                    Value = students[i].StudentsCount,
+                };
+                catergoryAxis.Labels.Add(students[i].HouseName);
+                barSeries.Items.Add(bar);
+            }
+
+            model.Series.Add(barSeries);
+            model.Axes.Add( catergoryAxis);
+
+            using (var stream = new MemoryStream())
+            {
+                var pngExporter = new PngExporter { Width = 600, Height = 400, Background = OxyColors.White };
+                pngExporter.Export(model, stream);
+                using (var file = new FileStream("img/studentsPerHouse.png", FileMode.Create, FileAccess.Write))
+                {
+                    stream.WriteTo(file);
+                }
             }
         }
     }
