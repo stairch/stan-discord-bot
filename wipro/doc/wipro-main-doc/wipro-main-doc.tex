@@ -923,7 +923,7 @@ Für das Projekt werden folgende Epics definiert.
     \label{tab: Epics}
 \end{table}
 
-\subsubsection{User Stories}
+\subsubsection{User Stories}\label{user-stories}
 Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Bausteine eines Sprints.
 Dieser Prozess wird auch \textbf{Story-Splitting} genannt
 User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
@@ -2232,6 +2232,7 @@ Die kompletten Testprotokolle können im Anhang im Kapitel \nameref{test-protoco
             Der hide <module> Command funktioniert richtig.
             Falls Module nicht gefunden werden wird eine Fehlermeldung vom Bot zurückgegeben.
             Diese könnte auch nach einiger Zeit gelöscht werden. \\
+        \hline
         \#8 & Es gibt 4 Statistic Commands. Diese funktionieren gut. Keine Massnahmen nötig. \\
         \hline
     \end{tabular}
@@ -2246,12 +2247,32 @@ So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierend
 
 \newpage
 \section{Evaluation und Validation}
-
+\begin{itemize}
+    \item Inhalt: festgelegte Ziele kritisch reflektieren
+    \item Wissenschaftliches Vorgehen : Lösungsweg kritisch reflektieren. (Variantenbildung, Bewertung, Entscheid, Validierung)
+    \item Auswertung und Interpretation der Ergebnisse
+    \item Nachweis, dass die Ziele erreicht wurden oder warum nicht
+\end{itemize}
 \todo{schreiben}
 
+\begin{itemize}
+    \item Wesentliche Aussagen - Überblick über den Aufbau der Arbeit, Ergebnisse der einzelnen Kapitel werden kurz vorgestellt 
+    \item Ergebnis: Antwort auf die Forschungsfrage - Ergebnisse und Forschungsfrage in Beziehung setzen. Wie wird die Forschungsfrage beantwortet?
+    \item Kritische Würdigung - Ergebnisse in Forschungskontext einordnen, Geltungsbereich kritisch einschätzen; selbstkritische Reflexion, Kritikpunkte, Fehlstellen und Beschränkungen 
+    \item Konsequenzen der Ergebnisse - Schlussfolgerungen, offene Fragen , Vorschläge für weitere Forschung: „future research“
+\end{itemize}
+
+Das Ziel dieser Arbeit war es... 
+In der Arbeit wurde 
 
 \newpage
 \section{Ausblick}
+\begin{itemize}
+    \item Reflexion der eigenen Arbeit
+    \item ungelöste Probleme
+    \item weitere Ideen
+    \item Ausblick - Zusammenfassung schreiben und Ergebnisse in die Zukunft projizieren, bevorstehende Entwicklungen skizzieren, Auswirkungen der Ergebnisse auf die Praxis
+\end{itemize}
 
 \todo{schreiben}
 
@@ -2278,9 +2299,11 @@ Studentenerfassung ist implementiert.
 In diesem Sprint wurde nur eine User-Story umgesetzt.\\
 \url{https://github.com/stairch/stan-discord-bot/issues/2}
 \newline
-Geschätzter Aufwand: 8h
+Geschätzter Aufwand: 9 h
 \newline
-Effektiver Aufwand: 6 1/2 h
+Effektiver Aufwand: 15 h\\
+Die Abweichung fällt so hoch aus, da die User Story nur den Aspekt der Modullade-Funktionalität, abschätzt.
+Die Datenbank musste in diesem Sprint aber auch noch erstellt werden, deshalb wurde mehr gearbeitet.
 
 \subsubsection*{Retrospektive}
 Erfolge:
@@ -2311,9 +2334,9 @@ Modulerfassung ist implementiert und die Kommunikation mit Discord und dem Bot f
 In diesem Sprint wurden zwei User-Stories umgesetzt.\\
 \url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+2%22}
 \newline
-Geschätzter Aufwand: 15h
+Geschätzter Aufwand: 21 h
 \newline
-Effektiver Aufwand: 16 h
+Effektiver Aufwand: 20 h
 
 \subsubsection*{Retrospektive}
 Erfolge:
@@ -2349,9 +2372,12 @@ Der show/hide <module> Command wurde implementiert und der E-Mail versandt für 
 In diesem Sprint wurden zwei User-Stories umgesetzt.\\
 \url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
 \newline
-Geschätzter Aufwand: 10h
+Geschätzter Aufwand: 27 h
 \newline
-Effektiver Aufwand: 9 1/2 h
+Effektiver Aufwand: 19 h\\
+Beide User Stories wurden zu hoch eingeschätzt. 
+Die Infrastruktur stand zu diesem Zeitpunkt schon.
+Aus diesem Grund haben die beiden User-Stories nicht so lange gedauert, wie geschätzt.
 
 \subsubsection*{Retrospektive}
 Erfolge:
@@ -2387,9 +2413,9 @@ Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabil
 In diesem Sprint wurde eine User-Story umgesetzt.\\
 \url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+4%22+}
 \newline
-Geschätzter Aufwand: 5h
+Geschätzter Aufwand: 9 h
 \newline
-Effektiver Aufwand: 6 h
+Effektiver Aufwand: 8 h
 
 \subsubsection*{Retrospektive}
 Erfolge:
@@ -2429,9 +2455,9 @@ Die Fehlermeldung wurde im Bot integriert und der Startkonfiguration wurde syste
 In diesem Sprint wurde eine User-Story umgesetzt.\\
 \url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+5%22+}
 \newline
-Geschätzter Aufwand: 4h
+Geschätzter Aufwand: 5 h
 \newline
-Effektiver Aufwand: 3 1/2 h
+Effektiver Aufwand: 5 h
 
 \subsubsection*{Retrospektive}
 Erfolge:
@@ -2449,6 +2475,109 @@ Massnahmen:
     \item Dort Clean Coding Vorgehen anwenden. wo es Sinn macht.
     \item Bei immer mehr werdenden Klassen muss informiert werden, wie diese schön ins System injected werden können.
 \end{itemize}
+
+\newpage
+\subsection{Arbeitsjournal Zusammenfassung}
+Die Zeitvorgabe des Projektes bestand aus 180 Arbeitstunden für jede Person.
+Für die User-Stories wurden gesamt 70 Stunden eingeplant, siehe Kapitel \nameref{user-stories}.
+Dies bedeutet, dass noch 290 Stunden für Pitch, Projektmanagement und Dokumentation sowie Recherche zur Verfügung stehen.\\
+Nach Abschluss des Projektes wurde folgende IST-Übersicht erstellt.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/Projektplan-IST.png}
+    \caption{Projektplan IST-Zustand}
+    \label{fig:plan-hours-actual-state}
+\end{figure}
+
+Eine genaue Übersicht der geleisteten Stunden findet man im Kapitel \nameref{work-journal-complete}.
+
+\newpage
+\subsection{Arbeitsjournal Komplett}\label{work-journal-complete}
+Arbeitsjournal Nicolas Wiedmer.
+Anzahl Stunden: 181.45
+
+\begin{longtable}[h]{|l|l|l|p{20em}|l|}
+    \hline
+    \rowcolor[gray]{.9} Datum & Von & Bis & Tätigkeiten & Anz. Stunden  \\
+    19.09.2022 & 13:00 & 14:30 & Aufsetzten einer Odnerstruktur in OneDrive. Nochmaliges durchlesen des Auftrags auf der Projektschiene. & 01:30 \\
+    19.09.2022 & 15:00 & 16:00 & Erste Pitch Vorlage   vorbereiten. & 01:00  \\
+    19.09.2022 & 19:30 & 21:00 & Besprechung mit Yannis. Erklärung der Aufgabe.   Freigabe aller Berechtigungen für die verschiedenen Plattformen & 01:30 \\
+    20.09.2022 & 09:30 & 11:00 & Erstellen eines Logos für unseren Discord Bot & 01:30 \\
+    21.09.2022 & 13:00 & 16:00 & Gemeinsames Arbeiten mit Yannis. Fertigstellung des   Pitchs. Klonen des jetzigen Repositories und installieren von Latex & 03:00 \\
+    23.09.2022 & 17:00 & 18:15 & Kick-Off Meeting mit der Betreuungsperson & 01:15 \\
+    27.09.2022 & 09:00 & 11:00 & Erstellen des Arbeitsjournal und Freigabe des   Ordners für Betreuungsperson. Einarbeitung in LaTeX und einfügen des   Deckblattes und der richtigen Titel & 02:00 \\
+    27.09.2022 & 12:45 & 14:00 & Einrichten von Zotero und Verbinden mit Latex & 01:15 \\
+    27.09.2022 & 14:00 & 16:00 & Recherche und schreiben über Discord & 02:00 \\
+    28.09.2022 & 09:30 & 11:15 & Klassendiagramm vom derzeitigen StanBot erstellt & 01:45 \\
+    28.09.2022 & 13:00 & 17:00 & Treffen mit Yannis. Ausarbeiten des ER-Diagramms   und besprechen allg. Punkte im Design des neuen Bots. & 04:00 \\
+    30.09.2022 & 15:30 & 17:30 & Schreiben Doku. Aufbau   Discord & 02:00 \\
+    03.10.2022 & 13:00 & 14:00 & Abschnitt Discord   überarbeitet & 01:00 \\
+    04.10.2022 & 08:45 & 09:50 & Projekttypisierung & 01:05 \\
+    04.10.2022 & 15:15 & 17:40 & Vorgehensmodell und   Rahmenplan beschrieben & 02:25  \\
+    05.10.2022 & 13:00 & 15:00 & Treffen mit Yannis. Ausarbeiten der einzelnen   Projekte in der neuen Solution und definieren der Bilbiotheken. & 02:00 \\
+    07.10.2022 & 15:30 & 18:30 & Doku Vorgehensmodell, Rahmenplan und Meilensteine   fertig beschreiben. Epics definieren & 03:00 \\
+    11.10.2022 & 12:00 & 13:15 & User Stories angefangen zu dokumentieren & 01:15 \\
+    11.10.2022 & 16:45 & 17:45 & Weiter User Stories und   in Latex longtables implementiert & 01:00 \\
+    12.10.2022 & 09:30 & 10:20 & User Stories fertig   dokumentiert. & 00:50 \\
+    12.10.2022 & 10:30 & 11:45 & Sprintplanung erstellt. Teststrategie und Vorlage   für die Sprintreview von Sprint 1 geschrieben. & 01:15 \\
+    12.10.2022 & 13:15 & 15:00 & Treffen mit Yannis. Besprechung jetziger Stand. & 01:45 \\
+    12.10.2022 & 16:00 & 19:10 & User-Stories in Github eingetragen und Zuweisungen   gemacht. Template für Testdrehbuch erstellt. Erste Testfälle geschrieben & 03:10 \\
+    14.10.2022 & 15:25 & 16:05 & Besprechung mit Yannis und Herr Waldmann. & 00:40 \\
+    17.10.2022 & 08:45 & 12:30 & Fertigstellen des Testdrehbuchs. Neu arrangieren   der Kapitel und Anfangen mit Risikomanagement. & 03:45 \\
+    17.10.2022 & 14:45 & 16:00 & Risikotabellen & 01:15 \\
+    17.10.2022 & 20:00 & 21:00 & Sprint 1 Review mit   Yannis & 01:00  \\
+    19.10.2022 & 10:00 & 13:00 & Doku & 03:00  \\
+    24.10.2022 & 13:15 & 16:30 & Discord Bot angefangen zu implementieren. User Story   Authentifizierung. & 03:15 \\
+    24.10.2022 & 16:50 & 18:15 & Worker and Systemd angeschaut, um den Bot als   Deamon auf dem Linux Server laufen zu lassen. & 01:25 \\
+    25.10.2022 & 13:00 & 17:00 & Versucht Bot richtig aufzusetzten mit Dependency   Injection und richtigem Config laden. & 04:00 \\
+    26.10.2022 & 10:30 & 11:30 & Hinzufügen von Commands. Der Bot soll Chat   Nachrichten mitlesen um zu bestimmen, ob ihm Commands gesendet werden. & 01:00 \\
+    26.10.2022 & 16:30 & 19:00 & Hinzufügen von Ping und Help Command. Versucht   die richtigen Berechtigungen für den Bot zu vergeben, im Zusammenspiel mit   den gateway Intents. & 02:30   \\
+    26.10.2022 & 19:45 & 22:25 & Erstellen von einem Event Handler, bei dem alle   Discord Client Events registriert werden. Die Einzelnen Events werden in   Klassen separiert. Message Events allgemein, werden über einen Message   Handler vergeben und implementieren ein Message Receiver Interface. & 02:40 \\
+    31.10.2022 & 08:30 & 10:45 & Korrektes weiterleiten der Nachrichten an den   richtigen Message receiver. Mithilfe von Regex und ChannelType überprüfung. & 02:15  \\
+    31.10.2022 & 13:00 & 18:50 & Implementieren vom Repository Pattern für die   Datenbank. Umschreiben der LoadStudent und LoadModules Scripts. Einfügen der   Methoden zum Speichern der Daten während des Authentifikationsprozesses. & 05:50  \\
+    02.11.2022 & 13:30 & 15:00 & Treffen mit Yannis. Besprechung jetziger Stand   und vorstellen der Implementierung. & 01:30  \\
+    09.11.2022 & 08:15 & 12:00 & Verifizieren des Codes bei der Authentifikation   und Erstellen eines neuen Discord Accounts in der Datenbank, verlinkt mit dem   User. Danach auslesen der Rollen für den verlinkten Discord Account und   zuweisen der Rollen. & 03:45  \\
+    09.11.2022 & 13:30 & 19:00 & Email-Service eingebunden. Dabei wurde der   gleiche verwendet, wie beim alten Bot, da dort schon ein funktionierendes   System läuft. & 05:30 \\
+    14.11.2022 & 15:30 & 17:30 & Dokumentation Repository Pattern und Solution   aufsetzen & 02:00  \\
+    14.11.2022 & 18:15 & 19:40 & Dokumentation. Hinzufügen von listings zum   Darstellen der Code snippets und erklären von Dependency Injection und   Services & 01:25 \\
+    16.11.2022 & 13:10 & 15:30 & Doku und Besprechung mit Yannis & 02:20 \\
+    16.11.2022 & 15:30 & 16:15 & Besprechung mit Herr   Waldmann & 00:45  \\
+    23.11.2022 & 08:00 & 11:05 & Erstellen Prozessdiagramme für Modulanmeldung und   Authentifizierungsprozess & 03:05  \\
+    23.11.2022 & 15:15 & 17:10 & Debugging Category class   und Datenbank & 01:55  \\
+    24.11.2022 & 08:20 & 11:00 & Weiteres Debugging mit der Id und der Category   class. Funktioniert immer noch nicht. Beim ersten Insert geht es, aber nacher   gibt es 0 zurück & 02:40\\
+    24.11.2022 & 15:00 & 16:00 & Weiter Debuggen. Hilfe von Tibo. Herausgefunden   das das falsche Auslesen am Konstruktor gelegen hat. & 01:00 \\
+    25.11.2022 & 15:15 & 18:00 & Bugs gefixed. Verlinkung vom Discord Account zu   den Rollen gemacht und diese richtig asigned. & 02:45 \\
+    26.11.2022 & 10:00 & 12:30 & Beim joinen vom Server wird im   Authentifizierungsprozess geprüft ob der User schon einmal auf dem Server   war. Dann wird ihm   einfach die Role zurückgegeben. & 02:30  \\
+    29.11.2022 & 09:30 & 13:30 & Den ersten Statistic command implementiert. Kann   nun die Anzahl Studenten pro Haus abfragen & 04:00  \\
+    29.11.2022 & 14:10 & 19:10 & Added 3 more statistical   methods to use from discord. & 05:00  \\
+    02.12.2022 & 16:30 & 18:00 & Doku. Command Service   erklärt & 01:30 \\
+    05.12.2022 & 10:30 & 12:15 & Doku. Risikomatrix vervollständigt. Kapitel   hinzugefügt & 01:45  \\
+    05.12.2022 & 13:00 & 14:30 & ER-Diagramm erstellt. & 01:30  \\
+    05.12.2022 & 16:30 & 17:30 & Message Handling   Klassendiagramm erstellt & 01:00 \\
+    05.12.2022 & 18:15 & 20:30 & Hinzufügen der Diagramme in die Doku und   vervollständigen von Links in Zotero. & 02:15  \\
+    06.12.2022 & 08:30 & 11:30 & Informiert über Microsoft   Identity & 03:00  \\
+    06.12.2022 & 13:00 & 18:30 & Login für den Stan Microsoft Account bekommen.   Konnte die Active Directory anschauen und die E-Mail-Funktion ausprobieren.   Diese funktioniert. Weiter wurde das Kapitel mit den Statistiken in der Doku   beschrieben & 05:30  \\
+    06.12.2022 & 22:00 & 22:40 & Stan logo Kapitel in Doku hinzugefügt & 00:40 \\
+    07.12.2022 & 18:00 & 21:15 & Code von Update Command überarbeitet und schön   gemacht. & 03:15\\
+    07.12.2022 & 22:40 & 00:00 & Test ubuntu server   aufgesetzt & 01:20  \\
+    08.12.2022 & 00:00 & 01:30 & shared folder auf ubuntu server eingerichtet und   text console application versucht zu deployen & 01:30 \\
+    14.12.2022 & 10:00 & 13:15 & Nlog für alles logging eingerichtet und eine   Config datei erstellt zum farbe loggen. & 03:15 \\
+    14.12.2022 & 14:30 & 22:00 & Treffen mit Yannis und Besprechung weiteres   Vorgehen. Fehler mitteilung an eingetragenen Discord Admin implementiert. & 07:30  \\
+    15.12.2022 & 14:30 & 17:30 & Dokumentation und Besprechung mit Martin zum Anschauen   der jetzigen Ergebnisse & 03:00  \\
+    16.12.2022 & 12:30 & 16:30 & Doku Fehlermitteilung & 04:00 \\
+    16.12.2022 & 21:30 & 24:00 & Doku alle Kapitel   überarbeiten & 02:30 \\
+    17.12.2022 & 00:00 & 02:00 & Kapitel fertig schreiben und Fehlermitteilung im   Code weiter implementieren & 02:00 \\
+    17.12.2022 & 13:00 & 15:00 & Logging Kapitel fertig geschrieben und   Literaturresearch Methode & 02:00 \\
+    19.12.2022 & 07:30 & 09:30 & Dokumentation mit Word auf Schreibfehler   überprüft & 02:00 \\
+    20.12.2022 & 10:00 & 12:00 & Abstract schreiben & 02:00  \\
+    20.12.2022 & 13:15 & 22:30 & Testprotokolle geschrieben und den Code darauf   getestet. Musste noch ein paar Sachen anpassen. Alte Studenten als   Exstudenten markieren und alte Module löschen hat nicht funktioniert. Hat einfach alle   gelöscht. Weiter recherchiert zu OxyPlot & 09:15  \\
+    21.12.2022 & 09:00 & 12:15 & Besprechung mit Herr Waldmann und einfügen Header   und deaktivieren von Statistic Commands & 03:15 \\
+    21.12.2022 & 14:30 & 18:00 & Projektplan für IST Zustand erstellt.  Arbeitsjournal & 03:30 \\
+    \hline
+    \caption{Arbeitsjournal Nicolas Wiedmer}
+    \label{tab:work-journal-nicolas}
+\end{longtable}
 
 \subsection{Diagramme}
 \begin{landscape}
