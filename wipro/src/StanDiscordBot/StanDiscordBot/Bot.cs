@@ -30,6 +30,7 @@ namespace StanBot
 
             provider.GetRequiredService<LogService>();
             await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
+            // TODO: comment in
             /*await provider.GetRequiredService<IMailService>().InitializeAsync(
                 StanBotConfigLoader.Config.FromEmailAddress, 
                 StanBotConfigLoader.Config.FromEmailName,
