@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "StanScripts (Modules)": {
+      "commandName": "Project",
+      "commandLineArgs": "loadModules Y:\\studium\\sem6\\wipro\\ListeModuleDepI.csv"
+    },
+    "StanScripts (Students)": {
+      "commandName": "Project",
+      "commandLineArgs": "loadStudents Y:\\studium\\sem6\\wipro\\ListeStudierendeHS22.csv"
+    },
+    "StanScripts (help)": {
+      "commandName": "Project",
+      "commandLineArgs": "help"
+    }
+  }
+}

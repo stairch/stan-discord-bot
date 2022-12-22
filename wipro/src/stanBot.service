@@ -1,0 +1,18 @@
+[Unit]
+Description=Stan Discord Bot service/deamon from STAIR
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dotnet /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/StanBot.dll
+
+# ensure the service restarts after crashing
+Restart=always
+# amount of time to wait before restarting the service
+RestartSec=5
+
+# This environment variable is necessary when dotnet isn't loaded for the specified user.
+# To figure out this value, run 'env | grep DOTNET_ROOT' when dotnet has been loaded into your shell.
+Environment=DOTNET_ROOT=/usr/lib64/dotnet
+
+[Install]
+WantedBy=multi-user.target
