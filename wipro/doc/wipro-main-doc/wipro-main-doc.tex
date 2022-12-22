@@ -40,44 +40,44 @@
 \newglossaryentry{STAIR}
 {
     name={STAIR},
-    description={Der Studierendenverein des Departement Informatik der Hochschule Luzern.}
+    description={(Students Association Informatics Rotkreuz) Der Studierendenverein des Departement Informatik der Hochschule Luzern.}
     long={Students Association Informatics Rotkreuz}
 }
 \newglossaryentry{URL}
 {
     name={URL},
-    description={Mit URL wird eine Adresse bezeichnet, die den Pfad auf eine Datei, auf einem gewissen Server angibt.},
+    description={(Uniform Resource Locator) Mit URL wird eine Adresse bezeichnet, die den Pfad auf eine Datei, auf einem gewissen Server angibt.},
     long={Uniform Resource Locator}
 }
 \newglossaryentry{REST}
 {
     name={REST},
-    description={Programmierparadigma, welches das Verhalten für Kommunikation im Web zwischen Client und Server beschreibt.},
+    description={(Representational State Transfer) Programmierparadigma, welches das Verhalten für Kommunikation im Web zwischen Client und Server beschreibt.},
     long={Representational State Transfer}
 }
 \newglossaryentry{API}
 {
     name={API},
-    description={Ein API beschreibt eine Programmierschnittstelle, an die ein anderes Program Anfragen schicken kann, um Daten auszutauschen oder eine Funktion zu starten.},
+    description={(Application Programming Interface) Ein API beschreibt eine Programmierschnittstelle, an die ein anderes Program Anfragen schicken kann, um Daten auszutauschen oder eine Funktion zu starten.},
     long={Application Programming Interface}
 }
 \newglossaryentry{SoDa}
 {
     name={SoDa},
-    description={SoDa beschreibt ein Scrum basiertes Projekt- und Vorgehensmodell für die Forschung und Industrie.},
-    long={Software Development Agile (SoDa)}
+    description={(Software Development Agile) SoDa beschreibt ein Scrum basiertes Projekt- und Vorgehensmodell für die Forschung und Industrie. Es wird vor allem in der Softwareentwicklung gebraucht.},
+    long={Software Development Agile}
 }
 \newglossaryentry{CSV}
 {
     name={CSV},
-    description={Esbeschreibt ein Dateiformat, bei dem die Daten kommasepariert sind.}
+    description={(Comma Separated Values) Es beschreibt ein Dateiformat, bei dem die Daten kommasepariert sind.}
     long={Comma Separated Values}
 }
 \newglossaryentry{JSON}
 {
     name={JSON},
-    description={Es beschreibt ein Datenaustauschformat.}
-    long={JavaScript Object Notation }
+    description={(JavaScript Object Notation) Es beschreibt ein Datenaustauschformat.}
+    long={JavaScript Object Notation}
 }
 \newglossaryentry{bzw.}
 {
@@ -237,7 +237,7 @@ Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*
 \normalfont
 \newpage
 \section*{I{\hspace*{1cm}}Abstract}
-Der Studierendeverein \gls{STAIR} der Hochschule Luzern betreibt einen Discord Server, auf dem sich die Studierende austauschen können. 
+Der Studierendeverein \gls{STAIR} der Hochschule Luzern betreibt einen Discord Server, auf dem sich die Studierenden austauschen können. 
 Auf dem Server laufen 2 Bots, die sich um die Authentifikation und die Anmeldung für Modul-Channels kümmern. 
 Die Bots funktionieren nicht zusammen und es kommt bei der Modul-Channel-Anmeldung immer wieder zu Problemen.\\
 Das Ziel dieser Arbeit ist es, den Discord Bot des Studierendevereins STAIR neu zu implementieren, um die Administrationsarbeit auf dem Server zu verringern und neue Daten für Event- und Marketingplanung zu sammeln.\\
@@ -245,7 +245,7 @@ Dabei wird mithilfe einer Ist-Analyse der alte Bot untersucht und Änderungsents
 Diese Änderungen werden im Verlauf von 5 Sprints nach der Software-Development-Agile \gls{SoDa} Methode implementiert.\\
 Es wird ein neuer Bot erstellt, welcher den Authentifizierungsmechanismus und verschiedene Befehle für STAIR Mitglieder und Studierende beinhaltet. 
 Des Weiteren wird eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server in der Hochschul-Enterprise-Lab Umgebung eingesetzt. 
-Für den operativen Einsatz wird eine Anleitung geschrieben, die den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studierenden und der Module jedes Semesters bietet. 
+Für den operativen Einsatz wird eine Anleitung geschrieben, die den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studierenden und der Module jedes Semesters bietet. \\
 Für die Studierenden wird der Discord Server übersichtlicher gestaltet und der Umgang mit dem Bot vereinfacht. 
 Mithilfe des Bots können in Zukunft neue Studierende auf dem Discord Server einfacher verwaltet werden. 
 Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampagnen besser auf bestimmte Zielgruppen anzupassen.\\\\
@@ -259,7 +259,7 @@ Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit
     These changes are implemented over the course of 5 sprints using the software development Agile \gls{SoDa} method.\\
     A new bot will be created, which will include the authentication mechanism and various commands for STAIR members and students. 
     Furthermore, a database will be built and the bot will be deployed on a Linux server in the university enterprise lab environment. 
-    For operational use, a guide will be written to assist Discord server administrators in updating students and modules each semester. 
+    For operational use, a guide will be written to assist Discord server administrators in updating students and modules each semester. \\
     For the students, the Discord server will be more clearly arranged and the handling of the bot will be simplified. 
     With the help of the bot, it will be easier to manage new students on the Discord server in the future. 
     The introduction of a database will give STAIR members the ability to better tailor event and marketing campaigns to specific audiences.}
@@ -481,7 +481,7 @@ Für dieses Wirtschaftsprojekt stehen folgende Projektarten zur Auswahl:
     \item IT-Infrastrukturentwicklung
     \item Strukturierte Analyse und Konzeption von Systemen und Abläufen \autocite{oliver_gilbert_wipro_2022} %Wegleitung
 \end{itemize}
-Die Aufgabenstellung verlangt, dass man in einer ersten Phase eine Analyse der bestehenden Infrastruktur und des zur Zeit laufenden Bots durchführen. 
+Die Aufgabenstellung verlangt, dass man in einer ersten Phase eine Analyse der bestehenden Infrastruktur und des zur Zeit laufenden Bots durchführt. 
 Die Analyse beruht auf der Frage, ob die zurzeit laufende Applikation den neuen Features angepasst werden kann oder ersetzt werden muss. 
 In einer zweiten Phase wird eventuell ein neuer Bot in einer neuen Infrastruktur implementiert oder lediglich die neuen Features hinzugefügt. 
 In einer dritten Phase wird eine Anleitung für den künftigen Unterhalt des Discord-Servers und des Bots erstellt.\\
@@ -850,6 +850,7 @@ Das Programm ist in zwei Packages aufgeteilt:
     \item StanBot.Core
     \item StanBot.Service
 \end{itemize}
+Eine grosse Version des Diagramms findet man im Anhang im Kapitel \nameref{diagrams}.
 \clearpage
 
 \begin{figure}[ht]
@@ -1729,7 +1730,7 @@ Nun schaut der Command Service durch alle Commands durch, welche er im vorherige
 Falls er diesen Command nicht erfolgreich ausführen kann, gibt er eine Fehlermeldung zurück, die wiederum in geeigneter Form den Benutzer mitgeteilt wird.
 
 \subsubsection*{Command-Klassen erklärt}
-Die Command Klassen erben, wie im vorherigen Kapitel erklärt, von textbf{ModuleBase<SocketCommandContext>}. 
+Die Command Klassen erben, wie im vorherigen Kapitel erklärt, von\\ \textbf{ModuleBase<SocketCommandContext>}. 
 Dadurch werden alle Methoden, welche in der Klasse mit einem \textbf{[Command()]} Attribut versehen sind, dem Command Service hinzugefügt.
 
 \begin{lstlisting}[language=csharp]
@@ -2690,7 +2691,17 @@ Anzahl Stunden: 182.75
     \label{tab:work-journal-yannis}
 \end{longtable}
 
-\subsection{Diagramme}
+\subsection{Diagramme}\label{diagrams}
+\begin{landscape}
+    \begin{figure}[ht]
+        \centering
+        \hspace*{-5cm}
+        \includegraphics[width=1.7\textwidth]{img/Klassendiagramm_Bot_alt.png}
+        \caption{Klassendiagramm Bot alt gross}
+        \label{fig:Klassendiagramm_Bot_alt_big}
+    \end{figure}
+\end{landscape}
+
 \begin{landscape}
     \begin{figure}[hb]
         \centering
