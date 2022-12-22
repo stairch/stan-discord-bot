@@ -2272,21 +2272,25 @@ So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierend
     \item Konsequenzen der Ergebnisse - Schlussfolgerungen, offene Fragen , Vorschläge für weitere Forschung: „future research“
 \end{itemize}
 
-Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, 
-um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.
-Nach dieser Zeilstellung sind wir diese Arbeit angegenagen.\\
+Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.
+Auf dieses Ziel wurde in der Arbeit hingearbeitet.\\
 In einer ersten Phase wurden Ideen und Konzepte zum Stand der Technik, sowie Methoden zur Projektdurchführung ausgearbeitet.
 Für dieses Projekt haben wir uns verstärkt mit den Sprach- und Text Messangern auf dem Markt auseinander gesetzt und diese Discord gegenüber gestellt.
 Da im Vorfeld, Discord als Zielplattform schon vorgegeben war, haben die anderen Platformen nicht zu unserer Entscheidung beigetragen, Discord als Plattform zu wählen.
 Allerdings gab es uns die Möglichkeit andere Plattformen anzuschauen und diese vielleicht in zukünftige Umgestaltungen einzubeziehen.\\
-Für die Projektmethode wurde, die an der Hochschul praktizierte Softwareentwicklungsmethode, SoDa ausgewählt.
+Für die Projektmethode wurde, die an der Hochschul praktizierte Softwareentwicklungsmethode, \gls{SoDa} ausgewählt.
 Es erleichtert einem die Kontrolle in der Projektführung stark, wenn man in Sprints arbeitet.
 Die User-Stories bieten eine gute Möglichkeit, Softwarefeatures einfach zu definieren und zuzuteilen.
 Die Arbeit musste nicht auf das kleinste Paket heruntergebrochen werden, da eine User-Story alle Arbeitschritte beinhaltet.
 Dadurch gestaltet es die Arbeit angenehmer und macht die Planungsphase in einem nur 14-Wöchigen Projekt deutlich kürzer.
 Allerdings wurden die Anforderungen vor dem Projekt fix festgelegt und es sind während dem Projekt keine neuen Anforderungen hinzugekommen.
 Diese hätte man mit SoDa einfach in das Projekt eingliedern können, so wurde das Projekt aber eigentlich sequentiell abgearbeitet.\\\\
-In der Realisierungsphase wurden
+In der Realisierungsphase wurde zuerst eine Analyse des alten Bots gemacht.
+Da der Bot veraltete .Net Versionen und Libraries verwendet hat, wurde entschieden, einen neuen Bot zu implementieren, welcher beide vorherigen Bots vereint.
+Um das Ziel der Datensammlung zu erreichen, wurde im Hintergund eine Datenbank eingeführt, welche die authentifizierten Studenten mit den Discord Accounts verbindet.
+Auf dieser Datenbank wurde im Anschluss die Applikation aufgebaut.\\\\
+Damit die 
+Die neue Lösung erhöht etwas den administrativen Aufwand auf der Serverseite
 
 In der Arbeit wurde neue
 
@@ -2620,6 +2624,93 @@ Anzahl Stunden: 181.45
     \caption{Arbeitsjournal Nicolas Wiedmer}
     \label{tab:work-journal-nicolas}
 \end{longtable}
+\clearpage
+
+Arbeitsjournal Yannis Krämer.
+Anzahl Stunden: 182.75
+
+\begin{longtable}[h]{|l|l|l|p{20em}|l|}
+    \hline
+    \rowcolor[gray]{.9} Datum & Von & Bis & Tätigkeiten & Anz. Stunden  \\
+    18.09.2022 & 16:00 & 18:00 & Durchlesen von Auftrag, Anschauen von bisheriger   Umsetzung & 02:00 \\
+    19.09.2022 & 19:30 & 22:00 & Besprechung mit Nicolas, Arbeiten an Pitch & 02:30 \\
+    21.09.2022 & 13:00 & 16:00 & Gemeinsames Arbeiten mit Nicolas (online).   Besprechung und Überblick Projekt und bisherige Lösung & 03:00 \\
+    21.09.2022 & 20:15 & 21:30 & Weiter arbeiten am Pitch, Üben des Pitch,   Organisation Meeting & 01:15 \\
+    22.09.2022 & 08:00 & 12:00 & Änderung Design Pitch, Durchgehen Auftrag,   Nachschauen der bisher genützten Libraries, Latex Vorlage teilen, Ordner   Struktur im Repository einfügen & 04:00 \\
+    22.09.2022 & 16:10 & 16:30 & Freigabe Windows Server & 00:20 \\
+    23.09.2022 & 10:00 & 11:00 & Remote Desktop zu Windows Server auf Linux Laptop   aufsetzen & 01:00 \\
+    23.09.2022 & 17:00 & 18:15 & Kick-Off Meeting & 01:15 \\
+    28.09.2022 & 11:00 & 11:10 & Anschauen der Änderungen von Nicolas, Besprechung   mit Nicolas & 00:10 \\
+    28.09.2022 & 13:00 & 17:00 & Treffen mit Nicolas. Ausarbeiten des ER-Diagramms   und besprechen allg. Punkte im Design des neuen Bots. & 04:00 \\
+    29.09.2022 & 11:00 & 11:30 & Zotero installieren, Notizen von Besprechung   einfügen in Dokumentation & 00:30 \\
+    04.10.2022 & 19:00 & 21:15 & Dokumetieren, Start Ablaufdiagramme der   bisherigen Lösung & 02:15 \\
+    05.10.2022 & 11:45 & 12:45 & Fertigstellung Ablaufdiagramme der bisherigen   Lösung & 01:00 \\
+    05.10.2022 & 13:00 & 15:00 & Treffen mit Nicolas. Ausarbeiten der einzelnen   Projekte in der neuen Solution und definieren der Bilbiotheken. & 02:00 \\
+    05.09.2022 & 15:00 & 15:30 & Aufräumen des Meetingraumes, Bestellung Linux   Server im Enterprise Lab, Dokunentieren der Besprochenen Themen in Meeting & 00:30 \\
+    07.09.2022 & 09:00 & 09:30 & E-Mails an Sekretariat schreiben für Studenten   und Modul Liste & 00:30 \\
+    10.10.2022 & 19:30 & 22:15 & Start Programmierung der Datenbank, Mergen von   Dokumentation, Community Server einlesen & 02:45 \\
+    11.10.2022 & 20:30 & 22:30 & Nachführen Arbeitsjournal, Einfügen von   automatischer Zeitdauerrechnung in Arbeitsjournal, hochladen von Code   Änderungen & 02:00 \\
+    12.10.2022 & 07:30 & 08:10 & Dokumentieren & 00:40 \\
+    12.10.2022 & 12:45 & 13:30 & Dokumentieren & 00:45 \\
+    12.10.2022 & 14:00 & 18:00 & Besprechung mit Nicolas, Dokumentieren von   Vision, Vergleiche von Tools, Technologien & 04:00 \\
+    13.10.2022 & 12:45 & 13:20 & Besprechung mit STAIR (Martin und Estefania) & 00:35 \\
+    13.10.2022 & 14:30 & 16:30 & Überprüfung der Daten vom Sekretariat   (Modulliste, Studentenliste), überarbeitung von verschiedenen Kapitel   (Vision, Toolabgleich, Technologien) & 02:00 \\
+    14.10.2022 & 15:25 & 16:05 & Besprechung mit Nicolas und Herr Waldmann, Mergen   von Dokumentation in Git & 00:40 \\
+    14.10.2022 & 16:15 & 16:25 & Hinzufügen einer Spalte im Arbeitsjournal & 00:10 \\
+    16.10.2022 & 14:00 & 18:30 & Datenbank implementieren & 04:30 \\
+    17.10.2022 & 20:00 & 21:00 & Sprint 1 Review mit   Nicolas & 01:00 \\
+    18.10.2022 & 19:45 & 20:35 & Datenbankanpassungen   vornehmen & 00:50 \\
+    19.10.2022 & 06:55 & 07:45 & Datenbankanpassungen   vornehmen & 00:50 \\
+    20.10.2022 & 08:00 & 09:15 & Log Library einfügen, Datenbank Unit Test Projekt   hinzufügen, DB anpassen & 01:15 \\
+    21.10.2022 & 15:40 & 16:20 & Besprechung mit Estefania & 00:40 \\
+    21.10.2022 & 16:30 & 17:00 & Server aufsetzen & 00:30 \\
+    26.10.2022 & 07:42 & 08:03 & Format in Dokumentation   verbessern & 00:21 \\
+    26.10.2022 & 13:17 & 17:02 & Dokumentation nachführen über Implementierung,   Start Bedienungsanleitung Server aufsetzen & 03:45 \\
+    28.10.2022 & 09:40 & 10:45 & Datenbank SQL File   finalisieren & 01:05 \\
+    02.11.2022 & 13:30 & 15:00 & Besprechung mit Nicolas. Austausch von   Umsetzungen der letzten Woche & 01:30 \\
+    02.11.2022 & 15:10 & 17:00 & Implentieren von kleineren Besprochenen Details & 01:50 \\
+    06.11.2022 & 20:00 & 23:10 & Refactorings um doppelten Code zu vermeiden,   kleinere Formatsprobleme lösen in den Scripts, Datenbank Verbindungsproblem   anfangen zu lösen & 03:10 \\
+    07.11.2022 & 18:42 & 23:59 & Datenbank zum Laufen bringen, LoadStudents Script   testen und Probleme beheben, LoadModules angefangen zu testen, aber hat noch   offenen Bug, Startup Settings konfigurieren & 05:17 \\
+    08.11.2022 & 07:05 & 08:55 & Refactorings in Zusammenhang mit der Datenbank   Verbindung & 01:50 \\
+    08.11.2022 & 17:18 & 18:00 &  & 00:42 \\
+    09.11.2022 & 12:45 & 16:15 & Datenbank Problem debugging (leider ohne Erfolg),   Kommunizieren mit Nicolas über bisherig erledigte Aufgaben, Installation auf   Laptop (bisher immer auf Desktop Zuhause gearbeitet) & 03:30 \\
+    10.11.2022 & 09:55 & 12:10 & Austausch Kontakte bei STAIR, Refactorings, wie   umbenennungen, Config aus der Datei ermöglichen für StanDB, Logging erweitern & 02:15 \\
+    13.11.2022 & 18:05 & 18:25 & Austausch mit Martin von STAIR über bisherigen   Vortschritt & 00:20 \\
+    15.11.2022 & 18:20 & 23:54 & Nachführen Arbeitsjournal, hochladen von   bisherigen Änderungen, Debugging ID Problem, Logging vermehrt einfügen,   Refactorings & 05:34 \\
+    16.11.2022 & 13:23 & 16:50 & Besprechung mit Nicolas und Herr Waldmann, & 03:27 \\
+    17.11.2022 & 10:20 & 11:45 & Dokumentation weiter gearbeitet, Einfügen des   Besprechungsprotokolls & 01:25 \\
+    20.11.2022 & 14:30 & 16:40 & Gestartet mit   UpdateModules und UpdateStudents Commands. & 02:10 \\
+    22.11.2022 & 19:40 & 23:30 & Weiter gearbeitet an UpdateModules und   UpdateStudents Commands. & 03:50 \\
+    23.11.2022 & 13:20 & 17:10 & Besprechung mit Nicolas, Testing von   UpdateModules und UpdateStudents, Refactoring von bestehendem Code & 03:50 \\
+    27.11.2022 & 14:10 & 17:40 & Debugging von Errors, Erweiterung der   Bedienungsanleitung & 03:30 \\
+    29.11.2022 & 18:45 & 23:59 & Nachdokumentieren verschiedener Features, Update   der Bedienungsanleitung & 05:14 \\
+    30.11.2022 & 00:00 & 00:40 &  & 00:40 \\
+    30.11.2022 & 06:30 & 06:50 & Fortschritt hochladen & 00:20 \\
+    30.11.2022 & 13:00 & 18:10 & Starten mit der Show und Hide Befehle & 05:10 \\
+    02.12.2022 & 15:15 & 17:50 &  & 02:35 \\
+    06.12.2022 & 19:10 & 23:59 & Weiterentwicklung und Testing von Featuers, Show   Command fertig stellen & 04:49 \\
+    07.12.2022 & 00:00 & 01:00 & Merge Branches von   Dokumentation & 01:00 \\
+    07.12.2022 & 07:30 & 07:58 & Code Änderungen hochladen und mergen & 00:28 \\
+    07.12.2022 & 13:20 & 16:20 & Dokumentieren & 03:00 \\
+    13.12.2022 & 20:40 & 23:30 & Dependency Injection bei verschiedenen Befehlen   einfügen & 02:50 \\
+    14.12.2022 & 06:52 & 07:05 & Hochladen von Änderungen & 00:13 \\
+    14.12.2022 & 12:30 & 23:10 & TODOs in Dokumentation   durchgehen & 10:40 \\
+    15.12.2022 & 15:05 & 18:55 & Protokolle von Besprechungen in Dokumentation   einfügen & 03:50 \\
+    16.12.2022 & 22:15 & 23:59 & Dokumentation im Kapitel   5 erarbeiten & 01:44 \\
+    17.12.2022 & 00:00 & 03:35 &  & 03:35 \\
+    17.12.2022 & 12:42 & 17:24 & Dokumentation Kapitel 5 beenden, Mergen von  Änderungen in Git & 04:42 \\
+    17.12.2022 & 18:15 & 23:55 & Deployment auf Linux Server als Service,   Erstellen der Bedienungsanleitung, Erstellung des Deploymentscripts & 05:40 \\
+    18.12.2022 & 14:35 & 18:50 & Beenden der Installation und Setup von MySQL und   Datenbank & 04:15 \\
+    20.12.2022 & 13:40 & 18:20 & Server Setup & 04:40 \\
+    20.12.2022 & 19:50 & 22:15 &  & 02:25 \\
+    21.12.2022 & 08:05 & 12:20 & Besprechung mit Herr Waldmann, Erstellen des   Contextdiagrams & 04:15 \\
+    21.12.2022 & 13:15 & 14:15 &  & 01:00 \\
+    22.12.2022 & 09:00 & 12:06 & Nachführen des   Arbeitsjournals & 03:06 \\
+    22.12.2022 & 13:05 & 18:00 & Schreiben Ausblick & 04:55 \\
+    \hline
+    \caption{Arbeitsjournal Yannis Krämer}
+    \label{tab:work-journal-yannis}
+\end{longtable}
 
 \subsection{Diagramme}
 \begin{landscape}
@@ -2884,237 +2975,6 @@ Anzahl Stunden: 181.45
     \hline
     \caption{Testprotokoll - Testfall \#8}
 \end{longtable}
-
-\newpage
-\subsection{Einführung des neuen Bots}
-\todo{Yannis}
-Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nicht in einem laufenden Semester oder während der Prüfungsphase passiert.
-So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird bei der Testats- oder Prüfungsvorbereitung.
-
-\newpage
-\section{Evaluation und Validation}
-
-\todo{schreiben}
-
-\newpage
-\section{Ausblick}
-
-\todo{schreiben}
-
-\newpage
-
-\section{Anh\"ange}
-
-\subsection{Sprintreviews}\label{Sprintreviews}
-In diesem Kapitel werden die einzelnen Sprintreviews aufgelistet.
-Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und
-einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
-
-\subsubsection{Sprint 1}
-\subsubsection*{Sprintziel}
-Studentenerfassung ist implementiert.
-
-\subsubsection*{Risiko-Update}
-\begin{itemize}
-    \item Kommunikation in Richtung Discord wurde im Vorfeld noch nicht bedacht.
-    Kann sein das die Architektur angepasst werden muss, um Kommunikation ausgehend vom Bot starten zu können.
-\end{itemize}
-
-\subsubsection*{Sprintbacklog}
-In diesem Sprint wurde nur eine User-Story umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues/2}
-\newline
-Geschätzter Aufwand: 8h
-\newline
-Effektiver Aufwand: 6 1/2 h
-
-\subsubsection*{Retrospektive}
-Erfolge:
-\begin{itemize}
-    \item LoadStudenten Script konnte einfach und schnell erstellt werden.
-    \item Library Linq2db einfacher als erwartet.
-\end{itemize}
-Probleme:
-\begin{itemize}
-    \item Linq2db stellt keine Generierung der Datenbank aus den Klassen zur Verfügung.
-\end{itemize}
-Massnahmen:
-\begin{itemize}
-    \item Datenbank Schema muss manuell erstellt werden.
-\end{itemize}
-\newpage
-
-\subsubsection{Sprint 2}
-\subsubsection*{Sprintziel}
-Modulerfassung ist implementiert und die Kommunikation mit Discord und dem Bot funktioniert.
-
-\subsubsection*{Risiko-Update}
-\begin{itemize}
-    \item Keine.
-\end{itemize}
-
-\subsubsection*{Sprintbacklog}
-In diesem Sprint wurden zwei User-Stories umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+2%22}
-\newline
-Geschätzter Aufwand: 15h
-\newline
-Effektiver Aufwand: 16 h
-
-\subsubsection*{Retrospektive}
-Erfolge:
-\begin{itemize}
-    \item Kommunikation mit Discord und dem Bot konnte sichergestellt werden.
-    \item Ein Help und ein Ping Befehl konnten zum Testen implementiert werden.
-    \item Der Bot schreibt einen Benutzer direkt an, sobald dieser den Server betritt.
-    \item Die Modulerfassung alleine funktioniert.
-\end{itemize}
-Probleme:
-\begin{itemize}
-    \item Bei der Modulerfassung können die Kategorien noch nicht richtig erstellt werden und zugewiesen werden.
-    Die ID der neu erstellten Kategorie wird nicht richtig zurückgegeben.
-\end{itemize}
-Massnahmen:
-\begin{itemize}
-    \item Kleines Test Projekt erstellen und weiter versuchen. Auf Logik-Fehler nochmal kontrollieren.
-\end{itemize}
-\newpage
-
-\subsubsection{Sprint 3}
-\subsubsection*{Sprintziel}
-Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
-
-\subsubsection*{Risiko-Update}
-\begin{itemize}
-    \item Die Modulerfassung funktioniert immer noch nicht.
-    Prioritäten müssen gesetzt werden.
-    Kann sein, dass sich Issues nach hinten verschieben.
-\end{itemize}
-
-\subsubsection*{Sprintbacklog}
-In diesem Sprint wurden zwei User-Stories umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
-\newline
-Geschätzter Aufwand: 10h
-\newline
-Effektiver Aufwand: 9 1/2 h
-
-\subsubsection*{Retrospektive}
-Erfolge:
-\begin{itemize}
-    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
-    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
-\end{itemize}
-Probleme:
-\begin{itemize}
-    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
-    Das Device kann somit noch nicht hinzugefügt werden.
-    \item Die Modulerfassung funktioniert immer noch nicht.
-    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
-\end{itemize}
-Massnahmen:
-\begin{itemize}
-    \item Die Accountinfromationen für den Mail-Service einholen, damit die E-Mail Kommunikation getestet werden kann.
-    \item Prioritäten setzten was die Modulerfassung anbelangt.
-    \item Möglichst zeitnah mit dem neuen Issue beginnen.
-\end{itemize}
-
-\newpage
-\subsubsection{Sprint 4}
-\subsubsection*{Sprintziel}
-Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabiles Logging Framework.
-
-\subsubsection*{Risiko-Update}
-\begin{itemize}
-    \item Durch das Hinzufügen immer mehr Libraries steigt die Wahrscheinlichkeit, dass es Probleme beim Deployen des Bots auf den Linux Server gibt.
-\end{itemize}
-
-\subsubsection*{Sprintbacklog}
-In diesem Sprint wurde eine User-Story umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+4%22+}
-\newline
-Geschätzter Aufwand: 5h
-\newline
-Effektiver Aufwand: 6 h
-
-\subsubsection*{Retrospektive}
-Erfolge:
-\begin{itemize}
-    \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
-    Dort wurde für die Erstellung von Models Konstruktoren eingesetzt.
-    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, \gls{bzw.} befüllt.
-    Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
-    \item Die Statistiken konnten erfolgreich implementiert werden.
-    \item Es konnte ein stabiles Logging Framework NLog in das System eingebunden werden.
-    \item Für den E-Mail Versand wurde der richtige Account von STAIR freigeschalten.
-    Dieser kann jetzt erfolgreich genutzt werden.
-    \item Der show und hide Command konnte erfolgreich umgesetzt werden.
-\end{itemize}
-Probleme:
-\begin{itemize}
-    \item Bei den Commands gibt es ein RequireRole Attribut, welches man eigentlich verwenden kann um die Rolle des Aufrufenden Benutzers zu prüfen.
-    Dieses funktioniert allerdings nicht.
-\end{itemize}
-Massnahmen:
-\begin{itemize}
-    \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
-    Man kann \gls{z.B.} nur von einem bestimmten Channel aus Commands versenden.
-\end{itemize}
-
-\newpage
-\subsubsection{Sprint 5}
-\subsubsection*{Sprintziel}
-Die Fehlermeldung wurde im Bot integriert und der Startkonfiguration wurde systemd hinzugefügt.
-
-\subsubsection*{Risiko-Update}
-\begin{itemize}
-    \item Keine.
-\end{itemize}
-
-\subsubsection*{Sprintbacklog}
-In diesem Sprint wurde eine User-Story umgesetzt.\\
-\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+5%22+}
-\newline
-Geschätzter Aufwand: 4h
-\newline
-Effektiver Aufwand: 3 1/2 h
-
-\subsubsection*{Retrospektive}
-Erfolge:
-\begin{itemize}
-    \item Die Fehlermitteilungen konnten erfolgreich hinzugefügt werden.
-    \item Die systemd Konfiguration konnte hinzugefügt werden.
-    \item Es wurde ein Stan Discord Logo designed und implementiert.
-\end{itemize}
-Probleme:
-\begin{itemize}
-    \item Bei immer mehr Klassen in der Dependency Injection, kann es zu Circular Dependencies kommen.
-\end{itemize}
-Massnahmen:
-\begin{itemize}
-    \item Dort Clean Coding Vorgehen anwenden. wo es Sinn macht.
-    \item Bei immer mehr werdenden Klassen muss informiert werden, wie diese schön ins System injected werden können.
-\end{itemize}
-
-\subsection{Diagramme}
-\begin{landscape}
-    \begin{figure}[hb]
-        \centering
-        \hspace*{-4.5cm}
-        \includegraphics[width=1.6\textwidth]{img/ER-Diagramm.png}
-        \caption{Entity Relationship Diagram Gross}
-        \label{fig:ER-Diagram-big}
-    \end{figure}
-\end{landscape}
-
-\begin{figure}[ht]
-    \centering
-    \hspace*{-2cm}
-    \includegraphics[width=1.3\textwidth]{img/MessageHandling.png}
-    \caption{Message Handling}
-    \label{fig:message-handling}
-\end{figure}
-\clearpage
 
 \newpage
 \section{Abbildungsverzeichnis}
