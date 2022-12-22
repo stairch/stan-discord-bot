@@ -18,6 +18,57 @@
     autooneside=false,% <- needed if you want to use \leftmark and \rightmark in a onesided document
     headsepline
 ]{scrlayer-scrpage}
+% https://tex.stackexchange.com/questions/8946/how-to-combine-acronym-and-glossary
+\usepackage[acronym]{glossaries}
+%\usepackage{glossaries}
+%\usepackage[automake]{glossaries-extra}
+
+%\makeglossaries
+%\makeglossary
+\makenoidxglossaries
+
+\newglossaryentry{API}
+{
+    name={API},
+    description={Ein API beschreibt eine Programmierschnittstelle, wo ein anderes Program anfragen schicken kann um Daten auszutauschen oder eine Funktion zu starten.},
+    %first={\glsentrylong{API}},
+    long={Application Programming Interface}
+}
+\newglossaryentry{SoDa}
+{
+    name={SoDa},
+    description={SoDa beschreibt ein Scrum basiertes Projekt- und Vorgehensmodell für die Forschung und Industrie.},
+    long={Software Development Agile (SoDa)}
+}
+\newglossaryentry{bzw.}
+{
+    name={bzw.},
+    description={beziehungsweise},
+    long={beziehungsweise}
+}
+\newglossaryentry{CSV}
+{
+    name={CSV},
+    description={CSV steht für Comma Separated Values und beschreibt ein Dateiformat, wobei die Daten Kommasepariert sind.}
+}
+\newglossaryentry{z.B.}
+{
+    name={z.B.},
+    description={zum Beispiel}
+}
+\newglossaryentry{JSON}
+{
+    name={JSON},
+    description={Die Abkürzung JSON steht für JavaScript Object Notation und beschreibt ein Datenaustauschformat.}
+}
+% Deployment
+% Discord
+% HSLU
+% ISA Module
+% Konsolenanwendungen
+% REST
+% Windows-Subsystem for Linux = WSL
+%\newacronym
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -106,8 +157,7 @@
 }
 
 \author{Yannis Kr\"amer und Nicolas Wiedmer}
-% TODO: Update date
-\date{21.12.2022}
+\date{23.12.2022}
 
 \begin{document}
 
@@ -164,7 +214,7 @@ Auf dem Server laufen 2 Bots, die sich um die Authentifikation und die Anmeldung
 Die Bots funktionieren nicht zusammen und es kommt bei der Modul-Channel-Anmeldung immer wieder zu Problemen.\\
 Das Ziel dieser Arbeit ist es, den Discord Bot des Studierendevereins STAIR neu zu implementieren, um die Administrationsarbeit auf dem Server zu verringern und neue Daten für Event- und Marketingplanung zu sammeln.\\
 Dabei wird mithilfe einer Ist-Analyse der alte Bot untersucht und Änderungsentscheidungen getroffen. 
-Diese Änderungen werden im Verlauf von 5 Sprints nach der Software-Development-Agile (SoDa) Methode implementiert.\\
+Diese Änderungen werden im Verlauf von 5 Sprints nach der Software-Development-Agile \gls{SoDa} Methode implementiert.\\
 Es wird ein neuer Bot erstellt, welcher den Authentifizierungsmechanismus und verschiedene Befehle für STAIR Mitglieder und Studierende beinhaltet. 
 Des Weiteren wird eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server in der Hochschul-Enterprise-Lab Umgebung eingesetzt. 
 Für den operativen Einsatz wird eine Anleitung geschrieben, die den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studierenden und der Module jedes Semesters bietet. 
@@ -172,8 +222,18 @@ Für die Studierenden wird der Discord Server übersichtlicher gestaltet und der
 Mithilfe des Bots können in Zukunft neue Studierende auf dem Discord Server einfacher verwaltet werden. 
 Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampagnen besser auf bestimmte Zielgruppen anzupassen.
 
-\newpage
+\textit{English version}
 
+\todo{write abstract in English}
+\newpage
+\section*{II{\hspace*{1cm}}Glossar}
+
+\printnoidxglossaries
+
+% https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
+\todo{schreiben}
+
+\newpage
 \tableofcontents
 
 \newpage
@@ -261,7 +321,7 @@ Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu gener
 2012 wurde das Unternehmen Discord Inc. (damals noch Hammer \& Chisel) als Startup gegründet. \autocite{noauthor_discord_2021}
 Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel für die Weiterentwicklung ihrer Applikation auf zusätzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
 2015 wurde Discord unter der Domain "discordapp.com" veröffentlicht. 
-Der Text- und Sprach Messenger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
+Der Text- und Sprach Messenger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie \gls{z.B.} Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
 2018 kündete auch Microsoft Discord Unterstützung für ihre X-Box Live Nutzer an und unterstützte Discord mit einer Finanzierung von 150 Millionen US-Dollar. 
 Bewertet wurde Discord Inc. nun auf etwa 2 Milliarden US-Dollar.\\
 Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch auf andere Zielgruppen ein. 
@@ -421,7 +481,7 @@ Je nach Teamgrösse und Vorhaben eignet sich eher ein klassisches oder agiles Vo
 Klassische Vorgehen werden meist bei sehr grossen Projekten eingesetzt, wie Bau- und Infrastruktur Projekten oder innerhalb Wertschöpfungsketten. 
 Also dort, wo es eine lange Planungsphase braucht und keinen Sinn macht, iterativ vorzugehen. 
 Das agile Vorgehen wird eher in kleineren Teams verwendet und ist vor allem in der Software-Entwicklung oder im Marketing bekannt.\\\\
-Für dieses Projekt wird SoDa (Software Development Agile) verwendet. 
+Für dieses Projekt wird \gls{SoDa} (Software Development Agile) verwendet. 
 Das ist ein hybrides Vorgehen, das bedeutet ein Mix aus klassischem und agilem Vorgehen. 
 Es besteht ebenfalls aus verschiedenen Phasen, die untereinander abgeschlossen sind, hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
 
@@ -434,13 +494,13 @@ Es besteht ebenfalls aus verschiedenen Phasen, die untereinander abgeschlossen s
 
 Wie der Name schon sagt, ist es für die Softwareentwicklung konzipiert und erlaubt es, die gängigen Artefakte, welche man bei der Softwareentwicklung erstellen muss, in die Projektphasen miteinzubinden. 
 So werden in der Initialisierungsphase der Projektauftrag, BusinessCase und der Anforderungskatalog definiert. 
-In der Einführungsphase können Anleitungen oder Einführungen für den operativen Einsatz erstellt werden. 
+In der Einführungsphase können Anleitungen oder Einführungen für den operativen Einsatz erstellt werden.
 Die Konzeptions- und Realisierungsphase erlaubt es, die Vorteile der agilen Vorgehensweise nach Scrum in der Entwicklung zu nutzen. 
 Durch das Vorgehen mithilfe von Sprints können bei jedem Zyklus neue Anforderungen erfasst und das weitere Vorgehen geplant werden. 
 Die Sprints können beliebig lang gesetzt werden, im Geschäftsumfeld üblich sind aber 2 Wochen.\\
-Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von SoDa abbilden. 
-In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant. 
-In der Konzeptions- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt. 
+Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von \gls{SoDa} abbilden.
+In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant.
+In der Konzeptions- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt.
 Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.\\\\
 
 \subsubsection{Rahmenplan}
@@ -472,7 +532,7 @@ Artefakte sind konkrete Dokumente oder Software, die vorliegen müssen. Zum Beis
     \item etc.
 \end{itemize}
 
-In SoDa ist es normal, bei jedem Phasenwechsel einen Meilenstein zu definieren und in der Mitte der Realisierungsphase ebenfalls einen. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
+In \gls{SoDa} ist es normal, bei jedem Phasenwechsel einen Meilenstein zu definieren und in der Mitte der Realisierungsphase ebenfalls einen. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
 Durch dieses Vorgehen erhält man 5 Meilensteine für dieses Projekt.
 
 \begin{table}[h]
@@ -584,7 +644,7 @@ Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schad
     Weiter wird automatisch ein Neuverbindungsversuch gestartet. &
     Möglich & Mittel & 4 \\
     \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die CSV Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die \gls{CSV} Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
     in das System gespeist wird. So können unerwartete Charaktere direkt markiert und ausgeschlossen werden. &
     Unwahrscheinlich & Mittel & 2 \\
     \hline
@@ -717,9 +777,9 @@ In der folgenden Tabelle ist eine Übersicht der verwendeten IDE, ihrer Spezifiz
         .NETCore & Core Library für C\# Projekte.
         Enthält alle grundlegend Klassen und Libraries, welche für die Erstellung von .NET Projekten nötig sind. & 2.0.0 \\
         \hline
-        NETStandard Library & Set von Standard .NET APIs & 2.0.3 \\
+        NETStandard Library & Set von Standard .NET \gls{API}s & 2.0.3 \\
         \hline
-        Discord.NET & Asynchrone API für Discord. & 2.3.0 \\
+        Discord.NET & Asynchrone \gls{API} für Discord. & 2.3.0 \\
         \hline
         FakeItEasy & Mocking Bibliothek & 6.0.0 \\
         \hline
@@ -731,7 +791,7 @@ In der folgenden Tabelle ist eine Übersicht der verwendeten IDE, ihrer Spezifiz
         \hline
         Microsoft.Identity.Client & Enthält Binaries für die Microsoft Authentication Library (MSAL) & 4.7.1 \\
         \hline
-        Newtonsoft.JSON & High-Performance Framework für JSON & 12.0.3 \\
+        Newtonsoft.JSON & High-Performance Framework für \gls{JSON} & 12.0.3 \\
         \hline
         Ninject & Dependency Injector für .NET Applikationen & 3.3.4 \\
         \hline
@@ -832,7 +892,7 @@ Zusammen mit STAIR wurde entschieden, wieder eine eigens entwickelte Lösung zu 
 Dies hat verschiedene Vorteile. 
 Als erstes ist damit gleich auch der Datenschutz gewährleistet. 
 Auch sind so keine künstlichen Limitierungen eines extern entwickelten Bots vorhanden. 
-Die einzigen Limitierungen sind vom API von Discord und von technischen Know-How der betreuenden Entwicklern. 
+Die einzigen Limitierungen sind vom \gls{API} von Discord und von technischen Know-How der betreuenden Entwicklern. 
 Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten. 
 Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
 
@@ -1125,7 +1185,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der Student geht auf den Registrierungs-Channel.
-        \item Er schreibt \textit{show <module>} in den Chat. (Also z.B. \textit{show ISF})
+        \item Er schreibt \textit{show <module>} in den Chat. (Also \gls{z.B.} \textit{show ISF})
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und fügt den Studenten automatisch als Mitglied diesem Text-Channel hinzu.
@@ -1146,7 +1206,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der Student geht auf den Registrierungs-Channel.
-        \item Er schreibt \textit{hide <module>} in den Chat. (Also z.B. \textit{hide ISF})
+        \item Er schreibt \textit{hide <module>} in den Chat. (Also \gls{z.B.} \textit{hide ISF})
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und meldet den Studenten automatisch davon ab.
@@ -1189,9 +1249,9 @@ In der folgenden Tabelle werden alle verwendeten NuGet Pakete mit der verwendete
         .NET Core & Core Library für C\# Projekte.
         Enthält alle grundlegend Klassen und Libraries, welche man zum Erstellen von .NET Applikationen benötigt. & 6.0.0 \\
         \hline
-        Discord.Net & Asynchrone API für Discord & 3.8.1 \\
+        Discord.Net & Asynchrone \gls{API} für Discord & 3.8.1 \\
         \hline
-        linq2db.Mysql & Arbeiten mit Linq und Mysql für .NET & 4.3.0 \\
+        linq2db.Mysql & Arbeiten mit Linq und MySQL für .NET & 4.3.0 \\
         \hline
         Micosoft Systemd & .NET hosting Infrastruktur für Systemd Services & 7.0.0 \\
         \hline
@@ -1271,7 +1331,7 @@ Der \textit{DiscordAccount} wird bei der Authentifikation dem Studierenden zugeo
 Über die Tabelle \textit{AccountRole}, werden nach dem Authentifizierungsprozess dem Studierenden, die richtigen Rollen zugeordnet.\\
 Die Tabelle \textit{Module} wird auch über eine, von der Hochschul-Administration zur Verfügung gestellten Liste befüllt. 
 Wenn sich nun der Studierende im Discord beim Bot für ein Modul anmeldet, wird die Zuordnung von Modul und DiscordAccount vorgenommen. 
-Der richtige Studierende, bzw. seine Daten, haben mit dieser Zuteilung nichts zu tun.\\
+Der richtige Studierende, \gls{bzw.} seine Daten, haben mit dieser Zuteilung nichts zu tun.\\
 Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord nötig. 
 Durch die Einschränkung von 50 Channeln in einer Kategorie \ref{discord_einschraenkungen}, können nicht alle Module in einer Kategorie zusammengefasst werden. 
 Dies bedeutet, dass die Module aufgeteilt werden müssen. 
@@ -1372,11 +1432,11 @@ public static class Program
 \end{lstlisting}
 
 \subsubsection{Studierendenerfassung}
-Die Studierenden werden über ein vordefiniertes CSV File geladen. 
+Die Studierenden werden über ein vordefiniertes \gls{CSV} File geladen. 
 Nach dem Laden der Datei kann entschieden werden, ob die zuvor erfassten Nutzer als ExStudierende markiert werden und auch sollen. 
 Dies ermöglicht es, gleich wie bei den Modulen, Studierende zu ergänzen und zum Start des neuen Semesters die Exstudierenden als solche zu markieren in der Datenbank. 
 Zum Schluss muss über Discord noch ein Befehl gestartet werden, um die Rollen auf dem Discord aktualisieren zu können. 
-Das CSV Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
+Das \gls{CSV} Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
 
 \subsubsection{Aufsetzen der Linux Umgebung}
 Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt. 
@@ -1400,7 +1460,7 @@ Für die Modulerfassung wird die Liste an Modulen vom Sekretariat benötigt.
 Diese muss dann auf den Server hochgeladen werden und kann dann mithilfe der StanScripts Anwendung eingelesen werden.
 Nach dem Einlesen kann entschieden werden, ob die bereits zuvor erfassten Module gelöscht werden sollen oder nicht.
 Dies ermöglicht es dem Administrator einzelne fehlende Module nachzuerfassen oder vor dem Start des neuen Semesters die alten nicht mehr existierenden Module zu entfernen.
-Das Format der einzulesenden CSV-Datei wird im Kapitel \nameref{Bedienungsanleitung} geschrieben.
+Das Format der einzulesenden \gls{CSV}-Datei wird im Kapitel \nameref{Bedienungsanleitung} geschrieben.
 
 \subsubsection{Aufsetzen Discord Bot}
 Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
@@ -1489,10 +1549,10 @@ Beim Starten des Discord Bots muss eine Konfiguration mit spezifischen \textbf{D
 Dieses Application-Token ist wie der Private Key der Applikation und sollte nicht veröffentlicht werden.
 Um diese und weitere sensible Informationen einlesen zu können, wird die Config Klasse erstellt.\\
 Diese enthält alle Felder der Settings Datei und dient als Zugriffspunkt für die sensiblen Informationen.
-Sie liest mit einem einfachen JSON-Parser die Settings Datei ein und setzt ihre Attribute.
+Sie liest mit einem einfachen \gls{JSON}-Parser die Settings Datei ein und setzt ihre Attribute.
 Dabei werden zwei Settingsfiles unterschieden.
 Die erste Settings Datei enthält Informationen bezüglich des Discord Servers.
-Die zweite Datei hat Informationen bezüglich der Datenbankverbindung und Einstellungen zum Laden der CSV-Daten, wie Studenten und Module.
+Die zweite Datei hat Informationen bezüglich der Datenbankverbindung und Einstellungen zum Laden der \gls{CSV}-Daten, wie Studenten und Module.
 
 \subsubsection{Kommunikation mit Discord}
 Die Discord.Net Library für C\# implementiert die \textit{DiscordSocketClient} Klasse.
@@ -1683,8 +1743,9 @@ Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nic
 
 Der angegebene Modulname muss dem Kurznamen entsprechen.
 Gross und Kleinschreibung darf ignoriert werden, da im Hintergrund dies einheitlich umgewandelt wird.
-Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Professoren, zu unterscheiden.
-Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, bzw. das Jahr und Semester beinhaltet.
+Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, \gls{z.B.} bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
+Dieser wird entfernt, da sich Studenten über die Durchführungen hinweg austauschen können sollen.
+Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, \gls{bzw.} das Jahr und Semester beinhaltet.
 
 Beispiele:
 
@@ -1739,7 +1800,7 @@ Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
 Die Microsoft Identity Plattform erlaubt es Entwicklern einen Authentifizierungsmechanismus in ihre Applikation einzubauen.
 Für Besitzer eines Microsoft Azure Administrator Kontos oder Office 365 ist die Lösung kostenlos und da auch STAIR einen Office 365 Account hat,
 bietet sich diese Lösung an.
-Die Microsoft Identity Plattform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, bzw. diesen nutzen.
+Die Microsoft Identity Plattform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, \gls{bzw.} diesen nutzen.
 Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
 Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{noauthor_introduction_nodate}
 Dies sieht man auf folgender Abbildung.
@@ -1937,7 +1998,7 @@ Diese Query ist etwas schwieriger in Linq zu übersetzten, da es so etwas wie \t
 Stattdessen müssen die Aufrufe der Tabellen in der Query vertauscht werden.
 Also die Tabelle, welche man mit \textbf{RIGHT JOIN} ganz anzeigen möchte, muss zuerst selektiert werden.
 Im Anschluss wird dann die andere gejoint.\\
-Damit auch leere Felder anzeigt werden, also z.B. Semester in denen es keine registrierten Studenten hat, 
+Damit auch leere Felder anzeigt werden, also \gls{z.B.} Semester in denen es keine registrierten Studenten hat, 
 muss der Befehl \textit{DefaultIfEmpty()} auf der gejointen Gruppe aufgerufen werden.
 
 \begin{lstlisting}[language=SQL]
@@ -2378,7 +2439,7 @@ Erfolge:
 \begin{itemize}
     \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
     Dort wurde für die Erstellung von Models Konstruktoren eingesetzt.
-    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, bzw. befüllt.
+    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, \gls{bzw.} befüllt.
     Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
     \item Die Statistiken konnten erfolgreich implementiert werden.
     \item Es konnte ein stabiles Logging Framework NLog in das System eingebunden werden.
@@ -2394,7 +2455,7 @@ Probleme:
 Massnahmen:
 \begin{itemize}
     \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
-    Man kann z.B. nur von einem bestimmten Channel aus Commands versenden.
+    Man kann \gls{z.B.} nur von einem bestimmten Channel aus Commands versenden.
 \end{itemize}
 
 \newpage
@@ -2653,7 +2714,7 @@ Anzahl Stunden: 181.45
     \hline
     \textbf{Massnahmen} & 
         Das keine Antwort zurückkommt kann verwirrend wirken. 
-        Eventuell bei Direktnachrichten immer etwas zurückschreiben, wie z.B. «Diesen Text habe ich nicht verstanden». \\
+        Eventuell bei Direktnachrichten immer etwas zurückschreiben, wie \gls{z.B.} «Diesen Text habe ich nicht verstanden». \\
     \hline
     \textbf{Datum} & 20.12.2022\\
     \hline
@@ -2676,7 +2737,7 @@ Anzahl Stunden: 181.45
     \hline
     \textbf{Tatsächliches Ergebnis/ Verhalten} &  
         Beim Ausführen des Scripts werden die richtigen Spalten extrahiert und geprüft. 
-        Ist die csv-Datei korrekt, werden die neuen Studenten der Datenbank hinzugefügt und bei bestehenden Studenten das Semester aktualisiert.
+        Ist die \gls{CSV}-Datei korrekt, werden die neuen Studenten der Datenbank hinzugefügt und bei bestehenden Studenten das Semester aktualisiert.
         Am Schluss kann noch die Option ausgewählt werde, dass Studenten, welche nicht mehr auf der Liste vorhanden sind, als Ex-Studenten markiert werden. 
         Damit wird in der Datenbank das StillStudying Feld des Studenten auf False gesetzt. \\
     \hline
@@ -2701,7 +2762,7 @@ Anzahl Stunden: 181.45
      &  \tabitem Database \\
     \hline
     \textbf{Tatsächliches Ergebnis/ Verhalten} &  
-        Beim Ausführen des Scripts wird das CSV-File auf korrekte Spalten überprüft und einigen Tests unterzogen. 
+        Beim Ausführen des Scripts wird das \gls{CSV}-File auf korrekte Spalten überprüft und einigen Tests unterzogen. 
         Dabei wird geschaut, dass die Modulnamen und Nummern richtig extrahiert werden. 
         Den Modulen wird nun eine Category zugeordnet und in die Datenbank eingefügt. 
         Auch hier gibt es eine Option um Module, welche nicht mehr in der Liste vorhanden sind zu löschen. \\
@@ -2800,25 +2861,241 @@ Anzahl Stunden: 181.45
 \end{longtable}
 
 \newpage
-\section{Glossar}
+\subsection{Einführung des neuen Bots}
+\todo{Yannis}
+Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nicht in einem laufenden Semester oder während der Prüfungsphase passiert.
+So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird bei der Testats- oder Prüfungsvorbereitung.
 
-API
-bzw.
-CSV
-Deployment
-Discord
-HSLU
-ISA Module
-Konsolenanwendungen
-REST
-z.B.
-Windows-Subsystem for Linux = WSL
+\newpage
+\section{Evaluation und Validation}
 
-% https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
 
+\newpage
+\section{Ausblick}
+
+\todo{schreiben}
+
+\newpage
+
+\section{Anh\"ange}
+
+\subsection{Sprintreviews}\label{Sprintreviews}
+In diesem Kapitel werden die einzelnen Sprintreviews aufgelistet.
+Diese beinhalten immer eine Reflektion zum letzten Sprint mit einer Übersicht der umgesetzten User-Stories und
+einer Retrospektive über aufgefallenen Problemen und dazugehörigen Massnahmen.
+
+\subsubsection{Sprint 1}
+\subsubsection*{Sprintziel}
+Studentenerfassung ist implementiert.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Kommunikation in Richtung Discord wurde im Vorfeld noch nicht bedacht.
+    Kann sein das die Architektur angepasst werden muss, um Kommunikation ausgehend vom Bot starten zu können.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurde nur eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues/2}
+\newline
+Geschätzter Aufwand: 8h
+\newline
+Effektiver Aufwand: 6 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item LoadStudenten Script konnte einfach und schnell erstellt werden.
+    \item Library Linq2db einfacher als erwartet.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Linq2db stellt keine Generierung der Datenbank aus den Klassen zur Verfügung.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Datenbank Schema muss manuell erstellt werden.
+\end{itemize}
+\newpage
+
+\subsubsection{Sprint 2}
+\subsubsection*{Sprintziel}
+Modulerfassung ist implementiert und die Kommunikation mit Discord und dem Bot funktioniert.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Keine.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+2%22}
+\newline
+Geschätzter Aufwand: 15h
+\newline
+Effektiver Aufwand: 16 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Kommunikation mit Discord und dem Bot konnte sichergestellt werden.
+    \item Ein Help und ein Ping Befehl konnten zum Testen implementiert werden.
+    \item Der Bot schreibt einen Benutzer direkt an, sobald dieser den Server betritt.
+    \item Die Modulerfassung alleine funktioniert.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei der Modulerfassung können die Kategorien noch nicht richtig erstellt werden und zugewiesen werden.
+    Die ID der neu erstellten Kategorie wird nicht richtig zurückgegeben.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Kleines Test Projekt erstellen und weiter versuchen. Auf Logik-Fehler nochmal kontrollieren.
+\end{itemize}
+\newpage
+
+\subsubsection{Sprint 3}
+\subsubsection*{Sprintziel}
+Der show/hide <module> Command wurde implementiert und der E-Mail versandt für das Authentifizieren.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    Prioritäten müssen gesetzt werden.
+    Kann sein, dass sich Issues nach hinten verschieben.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurden zwei User-Stories umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Sprint+3%22}
+\newline
+Geschätzter Aufwand: 10h
+\newline
+Effektiver Aufwand: 9 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Der E-Mail Versand konnte implementiert werden und sollte funktionieren.
+    Das Device, auf welchem der Bot läuft, wird beim Starten von dem Azure Dienst erkannt und kann hinzugefügt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Der E-Mail versandt läuft über eine Azure Applikation, für die wir die Berechtigung noch nicht haben.
+    Das Device kann somit noch nicht hinzugefügt werden.
+    \item Die Modulerfassung funktioniert immer noch nicht.
+    \item Mit dem show/hide <module> Issue wurde noch nicht begonnen.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Die Accountinfromationen für den Mail-Service einholen, damit die E-Mail Kommunikation getestet werden kann.
+    \item Prioritäten setzten was die Modulerfassung anbelangt.
+    \item Möglichst zeitnah mit dem neuen Issue beginnen.
+\end{itemize}
+
+\newpage
+\subsubsection{Sprint 4}
+\subsubsection*{Sprintziel}
+Die Statistiken für die STAIR Mitglieder wurden implementiert, sowie ein stabiles Logging Framework.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Durch das Hinzufügen immer mehr Libraries steigt die Wahrscheinlichkeit, dass es Probleme beim Deployen des Bots auf den Linux Server gibt.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurde eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+4%22+}
+\newline
+Geschätzter Aufwand: 5h
+\newline
+Effektiver Aufwand: 6 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
+    Dort wurde für die Erstellung von Models Konstruktoren eingesetzt.
+    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, \gls{bzw.} befüllt.
+    Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
+    \item Die Statistiken konnten erfolgreich implementiert werden.
+    \item Es konnte ein stabiles Logging Framework NLog in das System eingebunden werden.
+    \item Für den E-Mail Versand wurde der richtige Account von STAIR freigeschalten.
+    Dieser kann jetzt erfolgreich genutzt werden.
+    \item Der show und hide Command konnte erfolgreich umgesetzt werden.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei den Commands gibt es ein RequireRole Attribut, welches man eigentlich verwenden kann um die Rolle des Aufrufenden Benutzers zu prüfen.
+    Dieses funktioniert allerdings nicht.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
+    Man kann \gls{z.B.} nur von einem bestimmten Channel aus Commands versenden.
+\end{itemize}
+
+\newpage
+\subsubsection{Sprint 5}
+\subsubsection*{Sprintziel}
+Die Fehlermeldung wurde im Bot integriert und der Startkonfiguration wurde systemd hinzugefügt.
+
+\subsubsection*{Risiko-Update}
+\begin{itemize}
+    \item Keine.
+\end{itemize}
+
+\subsubsection*{Sprintbacklog}
+In diesem Sprint wurde eine User-Story umgesetzt.\\
+\url{https://github.com/stairch/stan-discord-bot/issues?q=is%3Aissue+milestone%3A%22Sprint+5%22+}
+\newline
+Geschätzter Aufwand: 4h
+\newline
+Effektiver Aufwand: 3 1/2 h
+
+\subsubsection*{Retrospektive}
+Erfolge:
+\begin{itemize}
+    \item Die Fehlermitteilungen konnten erfolgreich hinzugefügt werden.
+    \item Die systemd Konfiguration konnte hinzugefügt werden.
+    \item Es wurde ein Stan Discord Logo designed und implementiert.
+\end{itemize}
+Probleme:
+\begin{itemize}
+    \item Bei immer mehr Klassen in der Dependency Injection, kann es zu Circular Dependencies kommen.
+\end{itemize}
+Massnahmen:
+\begin{itemize}
+    \item Dort Clean Coding Vorgehen anwenden. wo es Sinn macht.
+    \item Bei immer mehr werdenden Klassen muss informiert werden, wie diese schön ins System injected werden können.
+\end{itemize}
+
+\subsection{Diagramme}
+\begin{landscape}
+    \begin{figure}[hb]
+        \centering
+        \hspace*{-4.5cm}
+        \includegraphics[width=1.6\textwidth]{img/ER-Diagramm.png}
+        \caption{Entity Relationship Diagram Gross}
+        \label{fig:ER-Diagram-big}
+    \end{figure}
+\end{landscape}
+
+\begin{figure}[ht]
+    \centering
+    \hspace*{-2cm}
+    \includegraphics[width=1.3\textwidth]{img/MessageHandling.png}
+    \caption{Message Handling}
+    \label{fig:message-handling}
+\end{figure}
+\clearpage
+
+\newpage
 \section{Abbildungsverzeichnis}
 \listoffigures
+
+Nicht-referenzierte Grafiken sind Eigenproduktionen.
 
 \section{Tabellenverzeichnis}
 \listoftables
@@ -2836,6 +3113,7 @@ In dieser Anleitung wird jedoch auf das Aufsetzen für Ubuntu Linux 20.04 fokusi
 Die Befehle müssen ebenfalls von einem Linux Computer ausgeführt werden.
 Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionieren.
 
+\todo{Check format}
 \begin{enumerate}
     \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
     \item Clone die beiden GitHub Repositories
@@ -3002,7 +3280,7 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 %\end{lstlisting}
 
 \subsubsection{Neu starten des Bots}
-Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, bzw. neu gestartet werden muss,
+Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, \gls{bzw.} neu gestartet werden muss,
 muss beim Starten des Bots das Device mit dem Azure Microsoft Stan Account authentifiziert werden.
 Dazu werden die Anweisungen in der Log-Console befolgt.
 Der Log Eintrag des \textbf{DeviceCodeAuthProvider} leitet auf die \href{https://microsoft.com/devicelogin}{Microsoft Device Login} Seite weiter.
@@ -3202,67 +3480,52 @@ Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
 \subsubsection*{Fragen}
 
 \begin{enumerate}
-    \item Soll Glossar vor oder nach Anhang eingefügt werden?
-        nach dem Abstract einfügen
-    \item Testprotokolle Teil des Realisations-Kapitel?
-        kommt auf den Umfang darauf an.
-        Resultate in einer kleinen Tabelle mit Beschreibung in den Hauptteil
-        Verweisen auf die Tests im Anhang
-        Testdrehbuch im Anhang einfügen
-    \item Abstract auch auf Englisch schreiben?
-        in Deutsch und Englisch einfügen
-    \item Wie genau sollen Besprechungsprotokolle sein?
-        Entscheidungen mit Begründungen einfügen
     \item Wie lange soll die Präsentation werden?
-        20 min Präsentation
-        25 min mit Demonstration
-    \item Was soll der Inhalt der Präsentation sein?
-        Werdegang der Präsentation
-        Pitchmässig überzeugen
-        Gerne nochmals Auftrag, Herausforderungen und Lösungen aufzeigen
-        Vorbereitet sein auf Fragen von Enterprise Lab
-
-    \item Wer ist der zweite Experte?
         \begin{itemize}
-            \item Joho
+            \item Die Präsentation sollte etwa 20 Minuten dauern. Wenn die Präsentation noch eine Demonstration beinhaltet, dann sollte diese 25 Minuten dauern.
+        \end{itemize}
+    \item Was soll der Inhalt der Präsentation sein?
+        \begin{itemize}
+            \item Die Präsentation soll den Werdegang des Projektes aufzeigen.
+            \item Die Präsentation soll das Produkt, wie in einem Pitch, verkaufen.
+            \item Der genaue Auftrag soll nochmals Aufgezeigt werden.
+            \item Die Umsetzung soll die Herausforderungen und die davon resultierenden Masnnahmen und Lösungen aufzeigen.
         \end{itemize}
     \item Geht 9. oder 10. Januar als Präsentationstermin?
         \begin{itemize}
             \item Nicolas Wiedmer, Yannis Krämer und Martin Steiger haben an beiden Tagen Zeit.
             \item Estefania Otero hat am 10. nur am Morgen Zeit.
             \item Yannis Krämer ist ab 15. Januar im Ausland aufgrund eines Auslandsemesters.
-            \item Markus Waldmann hat an beiden Tagen Zeit 
-            \item Vorverschoben erwähnen in Einladung
-            \item bereits Schulzimmer resrvieren
+            \item Markus Waldmann hat an beiden Tagen Zeit
         \end{itemize}
     \item Wo soll man das Arbeitsjournal einfügen?
-        Umfang der Stunden aufzeigen
-        Bemerkungen müssen nicht eingefügt werden
-        1 Seite pro Person ist ausreichend
-        Unterschied soll-ist aufzeigen
-    \item Wie abgeben?
-        PDF per Mail an alle Beteiligten
+        \begin{itemize}
+            \item Der Aufwand muss aufgezeigt werden, damit man sieht das die Credits gerechtfertigt sind.
+            \item Der Unterschiedzwischen der soll und ist Situation.
+            \item Eine Seite pro Person ist ausreichend.
+        \end{itemize}
     \item Letzte Tipps
-        Bewertungen anschauen
-        guter Kontrast  und kein rot/grün
-        Anschauen wenn ausgedruckt
-        Kopf und Fusszeile soll Titel der Arbeit beinhalten,
-        (Was passiert wenn einzelnes Blatt von Arbeit gefunden wird?)
-        Kapitelname in Fusszeile einfügen
-        "nicht-referenzierte Grafiken sind eigenproduktionen"
-        Fussnoten sind okay
+        \begin{itemize}
+            \item Bewertungsraster nochmals anschauen
+            \item Überall auf den Kontrast achtenund keine rot/grüne Designs verwenden.
+            \item Die Kopf und Fusszeile sollen mindestens der Titel der Arbeit und die Seitenzahl beinhalten. Optimal wäre noch wenn das Kapitel erwähnt wird.
+        \end{itemize}
 \end{enumerate}
 
 \subsubsection*{Besprochene Punkte}
 
 \begin{enumerate}
-    \item 
+    \item Der zweite Experte ist Bruno Joho.
 \end{enumerate}
 
 \subsubsection*{Entscheidungen}
 
 \begin{enumerate}
-    \item 
+    \item Das Glossar soll nach dem Abstract eingefügt werden.
+    \item Die detailierten Testprotokolle sollen im Anhang hinzugefügt werden. Eine Zusammenfassung von den Ergebnissen soll in den Hauptteil eingefügt werden.
+    \item Das Abstract soll auf Deutsch und Englisch eingefügt werden.
+    \item Die Abgabe soll wenn möglich per E-Mail erfolgen an alle beteiligten, welche auch an der Präsentation teilnehmen werden.
+    \item Die Besprechungsprotokolle müssen vor allem die Entscheidungen und die dazugehörigen Begründungen beinhalten.
 \end{enumerate}
 
 \end{document}
