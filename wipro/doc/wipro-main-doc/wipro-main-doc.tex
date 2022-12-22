@@ -3012,44 +3012,43 @@ In dieser Anleitung wird jedoch auf das Aufsetzen für Ubuntu Linux 20.04 fokusi
 Die Befehle müssen ebenfalls von einem Linux Computer ausgeführt werden.
 Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionieren.
 
-\todo{Check format}
 \begin{enumerate}
     \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
     \item Clone die beiden GitHub Repositories
-        \begin{verbatim}
+        \begin{lstlisting}
             $ git clone https://github.com/stairch/stan-discord-bot.git
             $ git clone https://github.com/stairch/stair-config.git
-        \end{verbatim}
+        \end{lstlisting}
         \begin{enumerate}
             \item Achtung: Die beiden Repositories müssen im gleichen Überordner abgelegt sein, damit das \textit{buildAndDeploy} Script die Konfigurationsdateien findet.
         \end{enumerate}
     \item Verbinde zum Server über SSH
-        \begin{verbatim}
+        \begin{lstlisting}
             $ ssh localadmin@stair-bot-lnx.el.eee.intern
-        \end{verbatim}
+        \end{lstlisting}
     \item Führe Updates durch
-        \begin{verbatim}
+        \begin{lstlisting}
             # sudo apt update
-            $ apt list --upgradable
+            $ apt list --upgradablex
             # sudo apt upgrade -y
             # sudo apt autoremove
-        \end{verbatim}
+        \end{lstlisting}
     \item Installiere .NET 6
-        \begin{verbatim}
-            # wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+        \begin{lstlisting}[escapeinside={@}{@}]
+            # wget https://packages.microsoft.com/config/ubuntu/20.04/@\newline\postbreak@packages-microsoft-prod.deb -O packages-microsoft-prod.deb
             # sudo dpkg -i packages-microsoft-prod.deb
             $ rm packages-microsoft-prod.deb
             # sudo apt update
             # sudo apt install -y dotnet-sdk-6.0
-        \end{verbatim}
+        \end{lstlisting}
     \item Lade den Code auf den Server
-        \begin{verbatim}
+        \begin{lstlisting}
             # exit # Verlasse den Server
             $ cd /path/to/stan-discord-bot/wipro/src/
             $ sh buildAndDeploy.sh
-        \end{verbatim}
+        \end{lstlisting}
     \item Setze StanBot als Service auf
-        \begin{verbatim}
+        \begin{lstlisting}
             $ ssh localadmin@stair-bot-lnx.el.eee.intern
             # sudo cp ~/stan-discord-bot/wipro/src/stanBot.service /etc/systemd/system/
             # sudo systemctl daemon-reload # Konfigurationen neu laden
@@ -3057,16 +3056,16 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             # sudo systemctl enable stanBot
             # sudo systemctl status stanBot
             # sudo journalctl -u stanBot -e # when there are problems
-        \end{verbatim}
+        \end{lstlisting}
     \item Installiere MySQL
-        \begin{verbatim}
+        \begin{lstlisting}
             # sudo apt install mysql-server
             # sudo systemctl start mysql.service
             # sudo systemctl enable mysql.service
             # sudo systemctl status mysql.service
-        \end{verbatim}
+        \end{lstlisting}
     \item Setze MySQL auf
-        \begin{verbatim}
+        \begin{lstlisting}
             # sudo mysql
             > # ersetze im folgenden Befehl "myPassword" mit dem neuen Passwort
             > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'myPassword';
@@ -3089,12 +3088,12 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             $ Teste den neuen User
             # sudo mysqladmin -p -u stanDbAcc version
             $ # Es sollte nun die Version und andere Informationen angezeigt werden.
-        \end{verbatim}
+        \end{lstlisting}
     \item Erstelle die Datenbank
-        \begin{verbatim}
+        \begin{lstlisting}
             $ mysql --host=localhost -u stanDbAcc -p < ~/stan-discord-bot/wipro/src/StanDatabase.sql
             $ exit # verlasse den Server
-        \end{verbatim}
+        \end{lstlisting}
     \item Es existiert ein Nutzer (E-Mail: info@stair.ch) auf Discord, welcher als StanBot fungiert. Das Passwort kann in der KeePass Datei gefunden werden
     \item Füge den Bot Discord Account dem Discord Server hinzu.
     \item Gebe ihm die folgenden Berechtigungen
