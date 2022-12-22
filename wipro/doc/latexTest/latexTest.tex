@@ -1,0 +1,32 @@
+\documentclass{article}
+
+\usepackage[acronym]{glossaries}
+\makenoidxglossaries
+
+%from documentation
+%\newacronym[⟨key-val list⟩]{⟨label ⟩}{⟨abbrv ⟩}{⟨long⟩}
+%above is short version of this
+% \newglossaryentry{⟨label ⟩}{type=\acronymtype,
+% name={⟨abbrv ⟩},
+% description={⟨long⟩},
+% text={⟨abbrv ⟩},
+% first={⟨long⟩ (⟨abbrv ⟩)},
+% plural={⟨abbrv ⟩\glspluralsuffix},
+% firstplural={⟨long⟩\glspluralsuffix\space (⟨abbrv ⟩\glspluralsuffix)},
+% ⟨key-val list⟩}
+
+\newacronym{cd}{CD}{compact disk}
+
+\newglossaryentry{tree}{name={tree},
+    description={trees are the better humans}}
+
+\begin{document}
+\noindent
+First use \gls{cd}\\
+subsequent \gls{cd}
+
+Nomenclature \gls{tree}
+
+\printnoidxglossaries
+
+\end{document}

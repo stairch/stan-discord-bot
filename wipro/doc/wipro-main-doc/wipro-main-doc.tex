@@ -20,13 +20,42 @@
 ]{scrlayer-scrpage}
 % https://tex.stackexchange.com/questions/8946/how-to-combine-acronym-and-glossary
 \usepackage[acronym]{glossaries}
+%\usepackage{glossaries}
+%\usepackage[automake]{glossaries-extra}
+
+%\makeglossaries
+%\makeglossary
+\makenoidxglossaries
 
 \newglossaryentry{API}
 {
-    name={Application Programming Interface},
+    name={API},
     description={Ein API beschreibt eine Programmierschnittstelle, wo ein anderes Program anfragen schicken kann um Daten auszutauschen oder eine Funktion zu starten.},
-    first={\glsentrylong{API}}
+    %first={\glsentrylong{API}},
+    long={Application Programming Interface}
 }
+\newglossaryentry{SoDa}
+{
+    name={SoDa},
+    description={SoDa beschreibt ein Scrum basiertes Projekt- und Vorgehensmodell für die Forschung und Industrie.},
+    long={Software Development Agile (SoDa)}
+}
+\newglossaryentry{bzw.}
+{
+    name={bzw.},
+    description={beziehungsweise},
+    long={beziehungsweise}
+}
+
+% CSV
+% Deployment
+% Discord
+% HSLU
+% ISA Module
+% Konsolenanwendungen
+% REST
+% z.B.
+% Windows-Subsystem for Linux = WSL
 %\newacronym
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -174,7 +203,7 @@ Die Bots funktionieren nicht zusammen und es kommt bei der Modul-Channel-Anmeldu
 Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, 
 um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.\\
 Dabei wurde mithilfe einer Ist-Analyse der alte Bot untersucht und Änderungsentscheidungen getroffen.
-Diese Änderungen wurden im Verlauf von 5 Sprints nach der Software-Development-Agile (SoDa) Methode implementiert.\\
+Diese Änderungen wurden im Verlauf von 5 Sprints nach der \gls{SoDa} Methode implementiert.\\
 Es wurde ein neuer Bot erstellt, welcher den Authentifizierungsmechanismus und verschiedene Befehle für STAIR Mitglieder und Studenten beinhaltet.
 Des Weiteren wurde eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server in der Hochschul-Enterprise-Lab Umgebung eingesetzt.
 Für den operativen Einsatz wurde eine Anleitung geschrieben, welche den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studenten und der Module jedes Semester bietet.
@@ -189,19 +218,10 @@ Durch die Einführung einer Datenbank, erhalten STAIR Mitglieder die Möglichkei
 \newpage
 \section*{II{\hspace*{1cm}}Glossar}
 
-\printglossaries
-SoDa
-API
-bzw.
-CSV
-Deployment
-Discord
-HSLU
-ISA Module
-Konsolenanwendungen
-REST
-z.B.
-Windows-Subsystem for Linux = WSL
+%\printglossaries
+%\printglossary
+
+\printnoidxglossaries
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
 \todo{schreiben}
@@ -477,7 +497,7 @@ Das agile Vorgehen wird meist eher in kleineren Teams verwendet und ist vor alle
 im Marketing bekannt.
 \newline
 
-Für dieses Projekt wird SoDa (Software Development Agile) verwendet und ist ein hybrides Vorgehen,
+Für dieses Projekt wird \gls{SoDa} verwendet und ist ein hybrides Vorgehen,
 das bedeutet ein Mix aus klassischem und agilem Vorgehen.
 Es besteht auch aus verschiedenen Phasen die untereinander abgeschlossen sind,
 hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
@@ -500,7 +520,7 @@ Anforderungen erfasst und das weitere Vorgehen geplant werden. Die Sprints könn
 im Geschäftsumfeld üblich sind aber 2-Wochen.
 
 
-Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von SoDa abbilden.
+Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von \gls{SoDa} abbilden.
 In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant.
 In der Konzeptions- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt.
 Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.\\\\
@@ -533,7 +553,7 @@ Artefakte sind konkrete Dokumente oder Software die vorliegen muss. Zum Beispiel
     \item etc.
 \end{itemize}
 
-In SoDa ist es normal, bei jedem Phasenwechsel ein Meilenstein zu definieren und in der Mitte der
+In \gls{SoDa} ist es normal, bei jedem Phasenwechsel ein Meilenstein zu definieren und in der Mitte der
 Realisierungsphase noch einmal. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
 Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
 
@@ -785,9 +805,9 @@ In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizie
         .NETCore & Core Library für C\# Projekte.
         Enthält alle grundlegend Klassen und Libraries, welche für die Erstellung von .NET Projekten nötig sind. & 2.0.0 \\
         \hline
-        NETStandard Library & Set von Standard .NET APIs & 2.0.3 \\
+        NETStandard Library & Set von Standard .NET \gls{API}s & 2.0.3 \\
         \hline
-        Discord.NET & Asynchrone API für Discord. & 2.3.0 \\
+        Discord.NET & Asynchrone \gls{API} für Discord. & 2.3.0 \\
         \hline
         FakeItEasy & Mocking Bibliothek & 6.0.0 \\
         \hline
@@ -906,7 +926,7 @@ Zusammen mit STAIR wurde entschieden, wieder eine eigens entwickelte Lösung zu 
 Dies hat verschiedene Vorteile.
 Als erstes ist damit gleich auch der Datenschutz gewährleistet.
 Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vorhanden.
-Die einzigen Limitierungen sind vom API von Discord und von technischen Know-How der betreuenden Entwicklern.
+Die einzigen Limitierungen sind vom \gls{API} von Discord und von technischen Know-How der betreuenden Entwicklern.
 Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten.
 Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
 \newpage
@@ -1268,7 +1288,7 @@ In der folgenden Tabelle werden alle verwendeten NuGet Pakete mit der verwendete
         .NET Core & Core Library für C\# Projekte.
         Enthält alle grundlegend Klassen und Libraries, welche man zum Erstellen von .NET Applikationen benötigt. & 6.0.0 \\
         \hline
-        Discord.Net & Asynchrone API für Discord & 3.8.1 \\
+        Discord.Net & Asynchrone \gls{API} für Discord & 3.8.1 \\
         \hline
         linq2db.Mysql & Arbeiten mit Linq und MySQL für .NET & 4.3.0 \\
         \hline
@@ -1356,7 +1376,7 @@ Der \textit{DiscordAccount} wird bei der Authentifikation dem Studenten zugeordn
 \newline
 Die Tabelle \textit{Module} wird auch über eine, von der Hochschul-Administration, zur Verfügung gestellte Liste befüllt.
 Wenn nun der Student sich im Discord beim Bot für ein Modul anmeldet, wird die Zuordnung von Modul und DiscordAccount vorgenommen.
-Der richtige Student, bzw. seine Daten, haben mit dieser Zuteilung nichts zu tun.
+Der richtige Student, \gls{bzw.} seine Daten, haben mit dieser Zuteilung nichts zu tun.
 \newline
 Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord möglich.
 Durch die Einschränkung von 50 Channeln in einer Kategorie \ref{discord_einschraenkungen}, können nicht alle Module in einer Kategorie zusammengefasst werden.
@@ -1776,7 +1796,7 @@ Der angegebene Modulname muss dem Kurznamen entsprechen.
 Gross und Kleinschreibung darf ignoriert werden, da im Hintergrund dies einheitlich umgewandelt wird.
 Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
 Dieser wird entfernt, da sich Studenten über die Durchführungen hinweg austauschen können sollen.
-Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, bzw. das Jahr und Semester beinhaltet.
+Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, \gls{bzw.} das Jahr und Semester beinhaltet.
 
 Beispiele:
 
@@ -1831,7 +1851,7 @@ Auch STAIR nutzt Outlook um ihre E-Mails zu versenden.
 Die Microsoft Identity Plattform erlaubt es Entwicklern einen Authentifizierungsmechanismus in ihre Applikation einzubauen.
 Für Besitzer eines Microsoft Azure Administrator Kontos oder Office 365 ist die Lösung kostenlos und da auch STAIR einen Office 365 Account hat,
 bietet sich diese Lösung an.
-Die Microsoft Identity Plattform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, bzw. diesen nutzen.
+Die Microsoft Identity Plattform baut auf der OpenId Technologie auf und kann damit jeden OpenId Connect Provider hinzufügen, \gls{bzw.} diesen nutzen.
 Um einer Applikation diese Authentifizierungsmechanismen hinzuzufügen, muss in Microsoft Azure eine Applikation erstellt werden.
 Dort können dann Berechtigung für die Benutzer und die Applikation eingestellt werden, sowie die App-Id herausgelesen werden. \autocite{noauthor_introduction_nodate}
 Dies sieht man auf folgender Abbildung.
@@ -2455,7 +2475,7 @@ Erfolge:
 \begin{itemize}
     \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
     Dort wurde für die Erstellung von Models Konstruktoren eingesetzt.
-    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, bzw. befüllt.
+    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, \gls{bzw.} befüllt.
     Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
     \item Die Statistiken konnten erfolgreich implementiert werden.
     \item Es konnte ein stabiles Logging Framework NLog in das System eingebunden werden.
@@ -3033,7 +3053,7 @@ Erfolge:
 \begin{itemize}
     \item Das Problem der letzten beiden Sprints mit der Datenbank konnte gelöst werden.
     Dort wurde für die Erstellung von Models Konstruktoren eingesetzt.
-    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, bzw. befüllt.
+    Diese wurden allerdings von Linq2DB nicht richtig aufgerufen, \gls{bzw.} befüllt.
     Aus diesem Grund haben wir die Konstruktoren weggelassen und eine statische CreateNew Methode hinzugefügt.
     \item Die Statistiken konnten erfolgreich implementiert werden.
     \item Es konnte ein stabiles Logging Framework NLog in das System eingebunden werden.
@@ -3296,7 +3316,7 @@ Hier wird ein Beispiel dieser Datei gezeigt:
 %\end{lstlisting}
 
 \subsubsection{Neu starten des Bots}
-Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, bzw. neu gestartet werden muss,
+Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, \gls{bzw.} neu gestartet werden muss,
 muss beim Starten des Bots das Device mit dem Azure Microsoft Stan Account authentifiziert werden.
 Dazu werden die Anweisungen in der Log-Console befolgt.
 Der Log Eintrag des \textbf{DeviceCodeAuthProvider} leitet auf die \href{https://microsoft.com/devicelogin}{Microsoft Device Login} Seite weiter.
