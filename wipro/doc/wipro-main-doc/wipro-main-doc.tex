@@ -2322,6 +2322,7 @@ Damit kann er diesen ablösen.
 Es gibt noch mehrere Ideen für weitere Features.
 Die nächste Aktivität in Zusammenhang mit diesem Projekt ist jedoch das Deployment auf dem Produktivserver.
 Dies wird vor dem Frühlingssemester 2023 im Februar passieren.
+Zudem müssen die Module und Studierenden aktualisiert werden in der Datenbank für das nächste Semester.
 \newline
 Innerhalb des STAIR Vorstandes gibt es noch Stimmen, welche sich wünschen, dass es eine Möglichkeit gibt für Studierende und Unternehmen eigene Beiträge in Zusammenhang mit \gls{z.B.} Job Angeboten oder Events auAusblickf dem Discord automatisch veröffentlichen zu können.
 So könnte man auf der STAIR Webseite ein Formular aufschalten und den Inhalt dann an den Discord Bot schicken und veröffentlichen.
@@ -3009,7 +3010,7 @@ Nicht-referenzierte Grafiken sind Eigenproduktionen.
 
 Der Stan Discord Bot kann auf verschiedenen Betriebssystemen genützt werden.
 In dieser Anleitung wird jedoch auf das Aufsetzen für Ubuntu Linux 20.04 fokusiert.
-Die Befehle müssen ebenfalls von einem Linux Computer ausgeführt werden.
+Die Befehle müssen ebenfalls von einem Linux Computer in einer Bash-Konsole ausgeführt werden.
 Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionieren.
 
 \begin{enumerate}
@@ -3034,8 +3035,8 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             # sudo apt autoremove
         \end{lstlisting}
     \item Installiere .NET 6
-        \begin{lstlisting}[escapeinside={@}{@}]
-            # wget https://packages.microsoft.com/config/ubuntu/20.04/@\newline\postbreak@packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+        \begin{lstlisting}
+            # wget https://packages.microsoft.com/config/ubuntu/20.04/ packages-microsoft-prod.deb -O packages-microsoft-prod.deb
             # sudo dpkg -i packages-microsoft-prod.deb
             $ rm packages-microsoft-prod.deb
             # sudo apt update
@@ -3077,8 +3078,8 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             $ mysql -u root -p
             $ # Gebe das neu gesetzte Passwort ein
             > exit
-            # Erstelle nun den Datenbank User für die Anwendung
-            # Dieser muss mit dem Config File übereinstimmen
+            $ # Erstelle nun den Datenbank User fuer die Anwendung
+            $ # Dieser muss mit dem Config File uebereinstimmen
             # sudo mysql
             > # ersetze im folgenden Befehl "myPassword" mit dem neuen Passwort
             > CREATE USER 'stanDbAcc'@'localhost' IDENTIFIED BY 'myPassword';
@@ -3094,13 +3095,33 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             $ mysql --host=localhost -u stanDbAcc -p < ~/stan-discord-bot/wipro/src/StanDatabase.sql
             $ exit # verlasse den Server
         \end{lstlisting}
-    \item Es existiert ein Nutzer (E-Mail: info@stair.ch) auf Discord, welcher als StanBot fungiert. Das Passwort kann in der KeePass Datei gefunden werden
+    \item Es existiert ein Nutzer (E-Mail: info@stair.ch) auf Discord, welcher als StanBot fungiert. Das Passwort kann in der KeePass Datei gefunden werden.
     \item Füge den Bot Discord Account dem Discord Server hinzu.
-    \item Gebe ihm die folgenden Berechtigungen
+        \begin{enumerate}
+            \item Öffne die \href{https://discord.com/developers/applications} Seite des STAIR StanBot Accounts.
+            \item Wähle den StanBot an.
+            \item Gehe zum \textit{OAuth2} Tab
+            \item Gebe dem Bot die folgenden Berechtigungen\par
+                \begin{minipage}{\linewidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{img/berechtigungenBot.png}
+                    %\caption{Anleitung - Berechtigungen Bot}
+                    \label{fig:berechtigungenBot}
+                \end{minipage}
+            \item Die generierte URL kann nun genutzt werden um den Bot auf einen neuen Server einzuladen.
+            \item Füge die URL im Browser ein.
+            \item Wähle den Server, wo der Bot hinzugefügt werden soll. Hierfür werden Admin Rechte auf dem jeweiligen Discord Server benötigt.
+        \end{enumerate}
     \item Teste den Bot mit den verschiedenen Befehlen
+        \begin{enumerate}
+            \item Für eine Übersicht von allen verfügbaren Befehlen steht der Befehl \textit{!help} verwendet werden.
+        \end{enumerate}
     \item Admins registrieren
+        \begin{enumerate}
+            \item Öffne Discord
+            \item Schicke im \textit{bot-commands} den Befehl \textit{!addAdmin <email-address>} für alle Administratoren des Discord Bots.
+        \end{enumerate}
 \end{enumerate}
-
 Diese Anleitung baut auf folgenden Anleitungen auf:
 \begin{enumerate}
     \item \href{https://devblogs.microsoft.com/dotnet/net-core-and-systemd/}{Systemd Service mit Dotnet erstellen}
@@ -3124,63 +3145,108 @@ Die Settings Datei heisst \textit{stan.json}
 }
 \end{lstlisting}
 
-\subsection{Unterhalt}
+\subsection{Konfiguration der Datenbankverbindung}
 
-Einmal pro Semester müssen die Module und die Studierenden aktualisiert werden.
-\todo{Write tutorial}
+Die zweite Konfigurationsdatei dient zur Datenbankverbindung,
+sowie die Spezifikation der zu ladenden CSV Dateien.
+Die Datei muss als \textit{stanDatabaseConfig.json} benannt sein und wird vom Stan Bot, sowie vom Stan Scripts verwendet.
 
+\begin{lstlisting}[language=json]
+{
+    // database configuration
+    "DatabaseName": "StanDB",
+    "ConnectionString": "Server=localhost;Port=3306;Database=StanDB;Uid=stanDbAcc; Pwd=XXXXXXXXX;charset=utf8;",
+    // csv configuration
+    "Separator": ",",
+    "EmailColumnNameInCsv": "E-Mail",
+    "HouseColumnNameInCsv": "STAIR House",
+    "SemesterColumnNameInCsv": "Semester",
+    "ModuleShortnameColumnNameInCsv": "Anlassnummer",
+    "ModuleFullnameColumnNameInCsv": "Anlassbezeichnung"
+}
+\end{lstlisting}
+
+\newpage
 \subsection{Instandhaltung Stan Discord Bot}
 
-Die Datenbank muss vor jedem Semesterbeginn aktualisiert werden mit der aktuellen Modulliste und der aktuellen Studierendenliste.
-Bei der Modulliste ist zu beachten, dass alle Module in der Liste enthalten sein müssen, auch wenn sie dieses Semester nicht durchgeführt werden.
-Ansonsten werden bisherige Chatverläufe von Modulen gelöscht, auch wenn diese ein Semester später erneut durchgeführt werden.
-Der STAIR Vorstand muss in regelmässigen Abständen die Hilfs-Channel auf dem Discord Server überwachen um zeitnah den Studierenden helfen zu können.
+Der STAIR-Vorstand muss in regelmässigen Abständen die Hilfs-Channel auf dem Discord Server überwachen um zeitnah den Studierenden helfen zu können.
+Ansonsten gibt es noch weitere Tasks, welche in den folgenden drei Kapitel genauer erklärt werden.
 
 \subsubsection{Aktualisieren des Servers}
 
-\todo{Yannis}
+Der Server sollte in regelmässigen Abständen aktualisiert werden um keine Sicherheitslücken offen zu lassen.
+Hierzu können die folgenden Befehle genützt werden:
+
+\begin{lstlisting}
+    # sudo apt update
+    $ apt list --upgradable
+    # sudo apt upgrade -y
+\end{lstlisting}
 
 \subsubsection{Aktualisieren der Module}
 
-\begin{verbatim}
+Um die Module zu aktualisieren, braucht man die aktuelle Liste der Module.
+Diese kann ganz einfach beim Sekretariat der HSLU Informatik beantragt werden.
+Bei der Modulliste ist zu beachten, dass alle Module in der Liste enthalten sein müssen, auch wenn sie dieses Semester nicht durchgeführt werden.
+Ansonsten werden bisherige Chatverläufe von Modulen gelöscht, auch wenn diese ein Semester später erneut durchgeführt werden.
+Die Liste wird im CSV Format benötigt.
+Die Spaltennamen können in der Config-Datei von Stan Database festgelegt werden.
+Hier ist ein Beispiel der einzulesenden Datei:
+
+\begin{lstlisting}
+    Anlassnummer,Anlassbezeichnung
+    I.BA_111_DIGITECH.16,DI_Digital Technologies Fundamentals
+    I.BA_112_UX.16,DI_User Experience Design & Engineering
+    I.BA_113_GAME.20,DI_Game Design & Engineering
+    I.BA_120_IUX.22,User Experience Design & Engineering
+    I.BA_121_IGAME.22,Game Design & Engineering
+\end{lstlisting}
+Sobald diese Datei richtig formatiert wurde, kann diese über die Konsole eingelesen werden.
+\begin{lstlisting}
     $ ssh localadmin@stair-bot-lnx.el.eee.intern
-    $ mkdir ~/data
-    $ exit # Server verlassen
+    $ mkdir \~/data # erstelle den Datenordner (muss nur beim ersten Mal ausgefuehrt werden)
+    $ exit \# Server verlassen
+    $ \# Dateinamen ersetzen durch die Datei welche hochgeladen werden sollte.
     $ scp ./ListeModuleDepI.csv localadmin@stair-bot-lnx.el.eee.intern:~/data/
-\end{verbatim}
+    $ ssh localadmin@stair-bot-lnx.el.eee.intern
+    $ cd /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/
+    $ ./StanScripts.dll loadModules /home/localadmin/data/ListeModuleDepI.csv
+\end{lstlisting}
+Nachdem die Datei auf dem Server eingelesen wurde, muss nun die Änderung noch auf dem StanBot aktiviert werden.
+Man muss hierzu im \textit{bot-commands} Channel den Befehl \textit{!updatemodules} schicken.
+Der Bot sollte dies dann mit einer Antwortnachricht bestätigen.
 
-\todo{Yannis}
-
-Hier wird ein Beispiel dieser Datei gezeigt:
-
-\todo{Add CSV data here}
-
-\todo{Yannis}
-
-%\begin{lstlisting}[language=csv]
-
-%\end{lstlisting}
-
+\newpage
 \subsubsection{Aktualisieren der Studierenden}
 
-
-scp ./ListeStudierendeHS22.csv  localadmin@stair-bot-lnx.el.eee.intern:~/data/
-\todo{Yannis}
-
-Hier wird ein Beispiel dieser Datei gezeigt:
-
-\todo{Add CSV data here}
-
-\todo{Yannis}
-
-%\begin{lstlisting}[language=csv]
-
-%\end{lstlisting}
+Die Studierendenliste muss aktualisiert werden um Exstudierende als solche zu markieren und um neue Studierende den Zugang zu ermöglichen.
+Die aktuelle Liste kann auf dem Sekretariat bezogen werden.
+Diese muss dann in ein CSV Format gebracht werden.
+Diese könnte wie folgt aussehen:
+\begin{lstlisting}
+    Vorname,Nachname,E-Mail,STAIR House,Semester
+    Hans,Muster,hans.muster@stud.hslu.ch,Yellow,3
+    Yannis,Kraemer,yannis.kraemer@stud.hslu.ch,Grey,6
+    Nicolas,Wiedmer,nicolas.wiedmer@stud.hslu.ch,Blue,5
+\end{lstlisting}
+Wenn die Datei vorbereitet wurde, muss diese nun auf dem Server eingelesen werden.
+Hierzu können folgende Befehle verwendet werden:
+\begin{lstlisting}
+    $ ssh localadmin@stair-bot-lnx.el.eee.intern
+    $ mkdir \~/data # erstelle den Datenordner (muss nur beim ersten Mal ausgefuehrt werden)
+    $ exit # Server verlassen
+    $ # Der Dateinamen muss fuer die einzulesende Datei angepasst werden
+    $ scp ./ListeStudierendeHS22.csv  localadmin@stair-bot-lnx.el.eee.intern:~/data/
+    $ ssh localadmin@stair-bot-lnx.el.eee.intern
+    $ cd /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/
+    $ ./StanScripts.dll loadStudents /home/localadmin/data/ListeStudierendeHS22.csv
+\end{lstlisting}
 
 \subsubsection{Neu starten des Bots}
+
 Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, \gls{bzw.} neu gestartet werden muss,
 muss beim Starten des Bots das Device mit dem Azure Microsoft Stan Account authentifiziert werden.
-Dazu werden die Anweisungen in der Log-Console befolgt.
+Dazu werden die Anweisungen in der Log-Konsole befolgt.
 Der Log Eintrag des \textbf{DeviceCodeAuthProvider} leitet auf die \href{https://microsoft.com/devicelogin}{Microsoft Device Login} Seite weiter.
 Auf dieser muss der Key eingeben werden, welcher auch in dem Log-Eintrag mitgegeben wird.
 Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
