@@ -2,6 +2,7 @@
 
 \usepackage{xcolor}
 \usepackage{amssymb}
+\usepackage[english]{babel}
 \usepackage[a4paper]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -23,10 +24,19 @@
 %\usepackage{glossaries}
 %\usepackage[automake]{glossaries-extra}
 
+% Replace "Glossary" with "II   Glossar"
+% https://www.mrunix.de/forums/showthread.php?65522-Glossaries-Verzeichnisbezeichnungen-umbenennen
+% using english because german needs an extra package installed
+\addto\captionsenglish{
+    \renewcommand\glossaryname{II{\hspace*{1cm}}Glossar}
+}
+\deftranslation[to=english]{Glossary}{II{\hspace*{1cm}}Glossar}
+
 %\makeglossaries
 %\makeglossary
 \makenoidxglossaries
 
+% https://tex.stackexchange.com/questions/8946/how-to-combine-acronym-and-glossary
 \newglossaryentry{API}
 {
     name={API},
@@ -226,12 +236,10 @@ Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit
 
 \todo{write abstract in English}
 \newpage
-\section*{II{\hspace*{1cm}}Glossar}
 
 \printnoidxglossaries
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
-\todo{schreiben}
 
 \newpage
 \tableofcontents
