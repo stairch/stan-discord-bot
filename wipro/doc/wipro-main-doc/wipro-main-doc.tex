@@ -215,7 +215,7 @@
 \textbf{Studiengang:} BSc Informatik oder Wirtschaftsinformatik  \newline \newline
 \textbf{Jahr:} 2022 \newline \newline
 \textbf{Betreuungsperson:} Markus Waldmann \newline \newline
-\textbf{Expertin/Experte:} \newline \newline
+\textbf{Expertin/Experte:} Bruno Joho \newline \newline
 \textbf{Auftraggeberin/Auftraggeber:} STAIR (Martin Steiger \& Estefania Otero)\newline \newline \newline
 \textbf{Codierung / Klassifizierung der Arbeit:}\\
 $\boxtimes$ \"Offentlich
@@ -228,8 +228,8 @@ $\square$ Vertraulich
 
 \paragraph{\textbf{Eidesstattliche Erkl\"arung}}
 Ich erkl\"are hiermit, dass ich/wir die vorliegende Arbeit selbst\"andig und ohne unerlaubte fremde Hilfe angefertigt haben, alle verwendeten Quellen, Literatur und andere Hilfsmittel angegeben haben, w\"ortlich oder inhaltlich entnommene Stellen als solche kenntlich gemacht haben, das Vertraulichkeitsinteresse des Auftraggebers wahren und die Urheberrechtsbestimmungen der Hochschule Luzern respektieren werden. \newline \newline
-Ort / Datum, Unterschrift	\underline{\hspace*{8cm}} \newline \newline
-Ort / Datum, Unterschrift	\underline{\hspace*{8cm}} \newline \newline \newline
+Ort / Datum, Unterschrift:	Rotkreuz, 23.12.2022 \underline{\hspace*{4cm}} \newline \newline
+Ort / Datum, Unterschrift:	Rotkreuz, 23.12.2022 \underline{\hspace*{4cm}} \newline \newline \newline
 \textbf{Ausschliesslich bei Abgabe in gedruckter Form: \\
 Eingangsvisum durch das Sekretariat auszuf\"ullen}\newline \newline
 Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*{4cm}}
@@ -3077,12 +3077,14 @@ Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionier
             \item Wähle den StanBot an.
             \item Gehe zum \textit{OAuth2} Tab
             \item Gebe dem Bot die folgenden Berechtigungen\par
+            \begin{figure}[h]
+                \centering
                 \begin{minipage}{\linewidth}
-                    \centering
                     \includegraphics[width=1\textwidth]{img/berechtigungenBot.png}
-                    %\caption{Anleitung - Berechtigungen Bot}
-                    \label{fig:berechtigungenBot}
                 \end{minipage}
+                \caption{Anleitung - Berechtigungen Bot}
+                \label{fig:berechtigungenBot}
+            \end{figure}
             \item Die generierte URL kann nun genutzt werden um den Bot auf einen neuen Server einzuladen.
             \item Füge die URL im Browser ein.
             \item Wähle den Server, wo der Bot hinzugefügt werden soll. Hierfür werden Admin Rechte auf dem jeweiligen Discord Server benötigt.
@@ -3214,9 +3216,10 @@ Hierzu können folgende Befehle verwendet werden:
     $ scp ./ListeStudierendeHS22.csv  localadmin@stair-bot-lnx.el.eee.intern:~/data/
     $ ssh localadmin@stair-bot-lnx.el.eee.intern
     $ cd /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/
-    $ ./StanScripts.dll loadStudents /home/localadmin/data/ListeStudierendeHS22.csv
+    $ ./StanScripts.dll loadStudents /home/localadmin/data/ListeStudierendeHS22.csv 
 \end{lstlisting}
 
+\clearpage
 \subsubsection{Neu starten des Bots}
 
 Falls der Bot wegen Fehlern oder Weiterentwicklung neu auf den Server deployed werden muss, \gls{bzw.} neu gestartet werden muss,
@@ -3245,7 +3248,7 @@ Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
     \label{fig:tutorial-device-auth}
 \end{figure}
 
-\newpage
+\clearpage
 \section{Besprechungsprotokolle}
 
 \subsection{Kick Off Meeting 23.09.2022}
