@@ -46,15 +46,27 @@
     description={beziehungsweise},
     long={beziehungsweise}
 }
-
-% CSV
+\newglossaryentry{CSV}
+{
+    name={CSV},
+    description={CSV steht für Comma Separated Values und beschreibt ein Dateiformat, wobei die Daten Kommasepariert sind.}
+}
+\newglossaryentry{z.B.}
+{
+    name={z.B.},
+    description={zum Beispiel}
+}
+\newglossaryentry{JSON}
+{
+    name={JSON},
+    description={Die Abkürzung JSON steht für JavaScript Object Notation und beschreibt ein Datenaustauschformat.}
+}
 % Deployment
 % Discord
 % HSLU
 % ISA Module
 % Konsolenanwendungen
 % REST
-% z.B.
 % Windows-Subsystem for Linux = WSL
 %\newacronym
 
@@ -218,9 +230,6 @@ Durch die Einführung einer Datenbank, erhalten STAIR Mitglieder die Möglichkei
 \newpage
 \section*{II{\hspace*{1cm}}Glossar}
 
-%\printglossaries
-%\printglossary
-
 \printnoidxglossaries
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
@@ -317,7 +326,7 @@ Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen
 Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
 
 2015 wurde Discord unter der Domain "discordapp.com" ver\"offentlicht.
-Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie z.B. Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
+Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie \gls{z.B.} Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
 2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre X-Box Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung von 150 Millionen US-Dollar. Bewertet wurde Discord Inc. nun auf etwa 2 Milliarden US-Dollar.
 
 Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch f\"ur andere Zielgruppen ein.
@@ -668,7 +677,7 @@ Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schad
     Weiter wird automatisch ein Neuverbindungsversuch gestartet. &
     Möglich & Mittel & 4 \\
     \hline
-    R2 & Das Einlesen der Listen zerstört die Datenbank & Die CSV Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
+    R2 & Das Einlesen der Listen zerstört die Datenbank & Die \gls{CSV} Datei durchläuft vor dem Einlesen verschiedene Tests, bevor sie
     in das System gespeist wird. So können unerwartete Charaktere direkt markiert und ausgeschlossen werden. &
     Unwahrscheinlich & Mittel & 2 \\
     \hline
@@ -745,7 +754,7 @@ Bei der jetzigen Version des Discord Bots werden die Anzahl Rollen, die vergeben
 Durch eine Anzahl von etwa 350 Modulen, welche am Departement Informatik unterrichtet werden, 
 kann die Modulfreigabe nicht mit Rollen gelöst werden.
 Zum jetzigen Zeitpunkt werden die Module in einzelne Themenbereiche zusammengefasst.
-Also z.B. alle Security Module in einer Kategorie.
+Also \gls{z.B.} alle Security Module in einer Kategorie.
 Bei einem show-Command, wird dem Student nun die Rolle der entsprechenden Kategorie Hinzugefügt.
 Damit erhält er aber Einsicht in alle Module dieser Kategorie, was vielleicht gar nicht erwünscht ist.
 \newline
@@ -819,7 +828,7 @@ In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizie
         \hline
         Microsoft.Identity.Client & Enthält Binaries für die Microsoft Authentication Library (MSAL) & 4.7.1 \\
         \hline
-        Newtonsoft.JSON & High-Performance Framework für JSON & 12.0.3 \\
+        Newtonsoft.JSON & High-Performance Framework für \gls{JSON} & 12.0.3 \\
         \hline
         Ninject & Dependency Injector für .NET Applikationen & 3.3.4 \\
         \hline
@@ -1224,7 +1233,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der Student geht auf den Registrierungs-Channel.
-        \item Er schreibt \textit{show <module>} in den Chat. (Also z.B. \textit{show ISF})
+        \item Er schreibt \textit{show <module>} in den Chat. (Also \gls{z.B.} \textit{show ISF})
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und fügt den Studenten automatisch als Mitglied diesem Text-Channel hinzu.
@@ -1245,7 +1254,7 @@ Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
     \textbf{Durchführung} &
     \begin{enumerate}
         \item Der Student geht auf den Registrierungs-Channel.
-        \item Er schreibt \textit{hide <module>} in den Chat. (Also z.B. \textit{hide ISF})
+        \item Er schreibt \textit{hide <module>} in den Chat. (Also \gls{z.B.} \textit{hide ISF})
     \end{enumerate}\\
     \hline
     \textbf{Erwartetes Ergebnis / Verhalten} & Der Bot erkennt das Modul und meldet den Studenten automatisch davon ab.
@@ -1481,11 +1490,11 @@ public static class Program
 
 \subsubsection{Studentenerfassung}
 
-Die Studenten werden über ein vordefiniertes CSV File geladen.
+Die Studenten werden über ein vordefiniertes \gls{CSV} File geladen.
 Nach dem Laden der Datei kann entschieden werden, ob die zuvor erfassten Nutzer als Exstudenten markiert werden sollen.
 Dies ermöglicht, gleich wie bei den Modulen, Studenten zu ergänzen und zum Start des neuen Semesters die Exstudierenden als solche zu markieren in der Datenbank.
 Zum Schluss muss über Discord noch ein Befehl gestartet werden um die Rollen auf dem Discord aktualisieren zu können.
-Das CSV Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
+Das \gls{CSV} Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
 
 \subsubsection{Aufsetzen der Linux Umgebung}
 
@@ -1511,7 +1520,7 @@ Für die Modulerfassung wird die Liste an Modulen vom Sekretariat benötigt.
 Diese muss dann auf den Server hochgeladen werden und kann dann mithilfe der StanScripts Anwendung eingelesen werden.
 Nach dem Einlesen kann entschieden werden, ob die bereits zuvor erfassten Module gelöscht werden sollen oder nicht.
 Dies ermöglicht es dem Administrator einzelne fehlende Module nachzuerfassen oder vor dem Start des neuen Semesters die alten nicht mehr existierenden Module zu entfernen.
-Das Format der einzulesenden CSV-Datei wird im Kapitel \nameref{Bedienungsanleitung} geschrieben.
+Das Format der einzulesenden \gls{CSV}-Datei wird im Kapitel \nameref{Bedienungsanleitung} geschrieben.
 
 \subsubsection{Aufsetzen Discord Bot}
 Um einen Bot zu erstellen, muss man eine Applikation auf der online Discord Developer Plattform kreieren.
@@ -1600,10 +1609,10 @@ Beim Starten des Discord Bots muss eine Konfiguration mit spezifischen \textbf{D
 Dieses Application-Token ist wie der Private Key der Applikation und sollte nicht veröffentlicht werden.
 Um diese und weitere sensible Informationen einlesen zu können, wird die Config Klasse erstellt.\\
 Diese enthält alle Felder der Settings Datei und dient als Zugriffspunkt für die sensiblen Informationen.
-Sie liest mit einem einfachen JSON-Parser die Settings Datei ein und setzt ihre Attribute.
+Sie liest mit einem einfachen \gls{JSON}-Parser die Settings Datei ein und setzt ihre Attribute.
 Dabei werden zwei Settingsfiles unterschieden.
 Die erste Settings Datei enthält Informationen bezüglich des Discord Servers.
-Die zweite Datei hat Informationen bezüglich der Datenbankverbindung und Einstellungen zum Laden der CSV-Daten, wie Studenten und Module.
+Die zweite Datei hat Informationen bezüglich der Datenbankverbindung und Einstellungen zum Laden der \gls{CSV}-Daten, wie Studenten und Module.
 
 \subsubsection{Kommunikation mit Discord}
 Die Discord.Net Library für C\# implementiert die \textit{DiscordSocketClient} Klasse.
@@ -1794,7 +1803,7 @@ Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nic
 
 Der angegebene Modulname muss dem Kurznamen entsprechen.
 Gross und Kleinschreibung darf ignoriert werden, da im Hintergrund dies einheitlich umgewandelt wird.
-Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
+Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, \gls{z.B.} bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
 Dieser wird entfernt, da sich Studenten über die Durchführungen hinweg austauschen können sollen.
 Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, \gls{bzw.} das Jahr und Semester beinhaltet.
 
@@ -2049,7 +2058,7 @@ Diese Query ist etwas schwieriger in Linq zu übersetzten, da es so etwas wie \t
 Stattdessen müssen die Aufrufe der Tabellen in der Query vertauscht werden.
 Also die Tabelle, welche man mit \textbf{RIGHT JOIN} ganz anzeigen möchte, muss zuerst selektiert werden.
 Im Anschluss wird dann die andere gejoint.\\
-Damit auch leere Felder anzeigt werden, also z.B. Semester in denen es keine registrierten Studenten hat, 
+Damit auch leere Felder anzeigt werden, also \gls{z.B.} Semester in denen es keine registrierten Studenten hat, 
 muss der Befehl \textit{DefaultIfEmpty()} auf der gejointen Gruppe aufgerufen werden.
 
 \begin{lstlisting}[language=SQL]
@@ -2491,7 +2500,7 @@ Probleme:
 Massnahmen:
 \begin{itemize}
     \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
-    Man kann z.B. nur von einem bestimmten Channel aus Commands versenden.
+    Man kann \gls{z.B.} nur von einem bestimmten Channel aus Commands versenden.
 \end{itemize}
 
 \newpage
@@ -2750,7 +2759,7 @@ Anzahl Stunden: 181.45
     \hline
     \textbf{Massnahmen} & 
         Das keine Antwort zurückkommt kann verwirrend wirken. 
-        Eventuell bei Direktnachrichten immer etwas zurückschreiben, wie z.B. «Diesen Text habe ich nicht verstanden». \\
+        Eventuell bei Direktnachrichten immer etwas zurückschreiben, wie \gls{z.B.} «Diesen Text habe ich nicht verstanden». \\
     \hline
     \textbf{Datum} & 20.12.2022\\
     \hline
@@ -2773,7 +2782,7 @@ Anzahl Stunden: 181.45
     \hline
     \textbf{Tatsächliches Ergebnis/ Verhalten} &  
         Beim Ausführen des Scripts werden die richtigen Spalten extrahiert und geprüft. 
-        Ist die csv-Datei korrekt, werden die neuen Studenten der Datenbank hinzugefügt und bei bestehenden Studenten das Semester aktualisiert.
+        Ist die \gls{CSV}-Datei korrekt, werden die neuen Studenten der Datenbank hinzugefügt und bei bestehenden Studenten das Semester aktualisiert.
         Am Schluss kann noch die Option ausgewählt werde, dass Studenten, welche nicht mehr auf der Liste vorhanden sind, als Ex-Studenten markiert werden. 
         Damit wird in der Datenbank das StillStudying Feld des Studenten auf False gesetzt. \\
     \hline
@@ -2798,7 +2807,7 @@ Anzahl Stunden: 181.45
      &  \tabitem Database \\
     \hline
     \textbf{Tatsächliches Ergebnis/ Verhalten} &  
-        Beim Ausführen des Scripts wird das CSV-File auf korrekte Spalten überprüft und einigen Tests unterzogen. 
+        Beim Ausführen des Scripts wird das \gls{CSV}-File auf korrekte Spalten überprüft und einigen Tests unterzogen. 
         Dabei wird geschaut, dass die Modulnamen und Nummern richtig extrahiert werden. 
         Den Modulen wird nun eine Category zugeordnet und in die Datenbank eingefügt. 
         Auch hier gibt es eine Option um Module, welche nicht mehr in der Liste vorhanden sind zu löschen. \\
@@ -3069,7 +3078,7 @@ Probleme:
 Massnahmen:
 \begin{itemize}
     \item Es muss eine Alternative gesucht werden um die Berechtigung einzuholen.
-    Man kann z.B. nur von einem bestimmten Channel aus Commands versenden.
+    Man kann \gls{z.B.} nur von einem bestimmten Channel aus Commands versenden.
 \end{itemize}
 
 \newpage
