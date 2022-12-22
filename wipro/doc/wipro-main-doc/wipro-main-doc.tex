@@ -230,13 +230,23 @@ Des Weiteren wird eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server
 Für den operativen Einsatz wird eine Anleitung geschrieben, die den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studierenden und der Module jedes Semesters bietet. 
 Für die Studierenden wird der Discord Server übersichtlicher gestaltet und der Umgang mit dem Bot vereinfacht. 
 Mithilfe des Bots können in Zukunft neue Studierende auf dem Discord Server einfacher verwaltet werden. 
-Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampagnen besser auf bestimmte Zielgruppen anzupassen.
+Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampagnen besser auf bestimmte Zielgruppen anzupassen.\\\\
 
-\textit{English version}
+\textit{
+    The student association STAIR of the Lucerne University of Applied Sciences and Arts operates a Discord server on which students can exchange information. 
+    There are 2 bots running on the server that take care of authentication and registration for module channels. 
+    The bots do not work together and there are always problems with the module channel registration.\\
+    The goal of this work is to re-implement the Discord bot of the student club STAIR to reduce the administration work on the server and to collect new data for event and marketing planning.
+    With the help of an as-is-analysis, the old bot will be examined and change-decisions will be made.
+    These changes are implemented over the course of 5 sprints using the software development Agile \gls{SoDa} method.\\
+    A new bot will be created, which will include the authentication mechanism and various commands for STAIR members and students. 
+    Furthermore, a database will be built and the bot will be deployed on a Linux server in the university enterprise lab environment. 
+    For operational use, a guide will be written to assist Discord server administrators in updating students and modules each semester. 
+    For the students, the Discord server will be more clearly arranged and the handling of the bot will be simplified. 
+    With the help of the bot, it will be easier to manage new students on the Discord server in the future. 
+    The introduction of a database will give STAIR members the ability to better tailor event and marketing campaigns to specific audiences.}
 
-\todo{write abstract in English}
 \newpage
-
 \printnoidxglossaries
 
 % https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
@@ -2257,27 +2267,12 @@ So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierend
 
 \newpage
 \section{Evaluation und Validation}
-\begin{itemize}
-    \item Inhalt: festgelegte Ziele kritisch reflektieren
-    \item Wissenschaftliches Vorgehen : Lösungsweg kritisch reflektieren. (Variantenbildung, Bewertung, Entscheid, Validierung)
-    \item Auswertung und Interpretation der Ergebnisse
-    \item Nachweis, dass die Ziele erreicht wurden oder warum nicht
-\end{itemize}
-\todo{schreiben}
-
-\begin{itemize}
-    \item Wesentliche Aussagen - Überblick über den Aufbau der Arbeit, Ergebnisse der einzelnen Kapitel werden kurz vorgestellt 
-    \item Ergebnis: Antwort auf die Forschungsfrage - Ergebnisse und Forschungsfrage in Beziehung setzen. Wie wird die Forschungsfrage beantwortet?
-    \item Kritische Würdigung - Ergebnisse in Forschungskontext einordnen, Geltungsbereich kritisch einschätzen; selbstkritische Reflexion, Kritikpunkte, Fehlstellen und Beschränkungen 
-    \item Konsequenzen der Ergebnisse - Schlussfolgerungen, offene Fragen , Vorschläge für weitere Forschung: „future research“
-\end{itemize}
-
 Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.
 Auf dieses Ziel wurde in der Arbeit hingearbeitet.\\
-In einer ersten Phase wurden Ideen und Konzepte zum Stand der Technik, sowie Methoden zur Projektdurchführung ausgearbeitet.
-Für dieses Projekt haben wir uns verstärkt mit den Sprach- und Text Messangern auf dem Markt auseinander gesetzt und diese Discord gegenüber gestellt.
+In der ersten Phase wurden Ideen und Konzepte zum Stand der Technik, sowie Methoden zur Projektdurchführung ausgearbeitet.
+Für dieses Projekt haben wir uns verstärkt mit den Sprach- und Text-Messengern auf dem Markt auseinander gesetzt und diese Discord gegenüber gestellt.
 Da im Vorfeld, Discord als Zielplattform schon vorgegeben war, haben die anderen Platformen nicht zu unserer Entscheidung beigetragen, Discord als Plattform zu wählen.
-Allerdings gab es uns die Möglichkeit andere Plattformen anzuschauen und diese vielleicht in zukünftige Umgestaltungen einzubeziehen.\\
+Allerdings gab es uns die Möglichkeit andere Plattformen anzuschauen und diese vielleicht in zukünftige Umgestaltungen mit einzubeziehen.\\
 Für die Projektmethode wurde, die an der Hochschul praktizierte Softwareentwicklungsmethode, \gls{SoDa} ausgewählt.
 Es erleichtert einem die Kontrolle in der Projektführung stark, wenn man in Sprints arbeitet.
 Die User-Stories bieten eine gute Möglichkeit, Softwarefeatures einfach zu definieren und zuzuteilen.
@@ -2289,10 +2284,15 @@ In der Realisierungsphase wurde zuerst eine Analyse des alten Bots gemacht.
 Da der Bot veraltete .Net Versionen und Libraries verwendet hat, wurde entschieden, einen neuen Bot zu implementieren, welcher beide vorherigen Bots vereint.
 Um das Ziel der Datensammlung zu erreichen, wurde im Hintergund eine Datenbank eingeführt, welche die authentifizierten Studenten mit den Discord Accounts verbindet.
 Auf dieser Datenbank wurde im Anschluss die Applikation aufgebaut.\\\\
-Damit die 
-Die neue Lösung erhöht etwas den administrativen Aufwand auf der Serverseite
+Die neu implementierte Datenbank erhöht die Administrationsarbeit auf der Serverseite.
+Dadurch, dass jedes Semester neue Studenten hinzukommen, sowie Module hinzugefügt oder gelöscht werden, muss die Datenbank auf dem neusten Stand gehalten werden.
+Zu diesem Zweck wurde eine Bedienungsanleitung geschrieben, welche den Verlauf des Aktualisierens beschreibt.
+Auf der anderen Seite wird der administrative Aufwand auf dem Discord Server erheblich reduziert, da Module nicht mehr manuell freigeben werden müssen, und die beiden Bots jetzt zusammen laufen.
+Ausserdem werden mit den Daten neue Möglichkeiten eröffnet, um Event- und Marketingplanung zu betreiben.\\\\
+Für uns und den Auftraggeber wurden die Ziele erreicht.
+Der neue Stan Bot bietet die gleiche und zusätzliche Funktionen im Vergleich mit dem alten Bot.
+Damit kann er diesen ablösen.
 
-In der Arbeit wurde neue
 
 \newpage
 \section{Ausblick}
