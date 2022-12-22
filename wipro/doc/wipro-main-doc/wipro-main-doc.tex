@@ -862,11 +862,11 @@ Diese werden nicht mehr unterstützt und sollten ersetzt werden.
 Für die neue Version wird .NET 6 mit C\# verwendet. 
 Dies ermöglicht es, Inspiration bei der alten Lösung zu holen, falls zum Beispiel die Verwendung der Discord Library unklar ist oder bei einem bereits existierenden Feature ein Problem auftaucht. 
 Die neueren .NET Versionen sind Cross-Plattform fähig und können auf Linux verwendet werden.\autocite{de_george_installieren_nodate}
-Die Sprache wird an der Hochschule nicht breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{PDF source is not in Zotero export} und die Sprache ist ähnlich zu Java, welche grundsätzlich an der Hochschule verwendet wird.
+Die Sprache wird an der Hochschule nicht breit verwendet, es gibt jedoch das Modul \textit{C\# in Action}\autocite{noauthor_bachelor_nodate}, wo die Sprache erklärt wird und die Sprache ist ohnehin ähnlich zu Java, welche grundsätzlich an der Hochschule unterrichtet wird.
 Das WIPRO Team ist zusätzlich bereits vertraut mit C\# als Sprache und hat diese als angenehm empfunden, was die Entscheidung zusätzlich unterstützte. 
 
 \subsubsection*{Entscheid Login Funktionsweise}
-\todo{source}
+
 Beim Login wird überlegt, das Switch-Login der Hochschule zu verwenden, welches auch für aussenstehende Zwecke verwendet werden kann. 
 Es wird dagegen entschieden, da STAIR nicht die volle Kontrolle über den Service hat. 
 Es können plötzlich neue Interface Standards erlassen werden, was zu Problemen führen kann. 
@@ -1366,9 +1366,19 @@ Darin werden sich die Scripte für die Studierende -und Modulerfassung befinden.
 Im \textbf{StanDatabaseTest} Projekt werden die Tests für die Datenbank geschrieben.
 In .NET Applikationen ist es üblich ein eigenes Projekt für die Tests zu erstellen.\autocite{tdykstra_organisieren_nodate}
 
+\newpage
 \subsection{Kontextdiagramm}
-\todo{Yannis}
 
+Diese Darstellung zeigt die wichtigsten Komponenten und wie diese zusammenarbeiten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{img/wipro-stanBotContextDiagram.png}
+    \caption{Kontextdiagramm}
+    \label{fig:Kontextdiagramm}
+\end{figure}
+
+\newpage
 \subsubsection{Repository Pattern für die Daten}
 Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben. 
 Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.
@@ -1742,39 +1752,42 @@ Der ping-Befehl gibt die aktuelle Antwortzeit des Bots zurück.
 Beim help-Befehl werden alle Commands, welche registriert sind, aufgelistet.
 Des Weiteren kann auch ein \textbf{!help <command>} Befehl ausgeführt werden, um detailliertere Informationen zu einem Befehl zu erhalten.
 
+\newpage
 \subsubsection{show/hide <module> Command}
 
 Die beiden Commands show und hide können von Studenten benutzt werden um sich selbst an einem Modul Discord Channel hinzuzufügen und sich dann über das Modul austauschen zu können.
 Der Name des Moduls muss hierfür spezifisch formatiert sein.
 Eine Anleitung hierzu wird dem Studenten auf dem Channel zum Anmelden bei den Modulen angezeigt.
-Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nicht untergeht.
-
+Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nicht untergeht.\\
 Der angegebene Modulname muss dem Kurznamen entsprechen.
 Gross und Kleinschreibung darf ignoriert werden, da im Hintergrund dies einheitlich umgewandelt wird.
 Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, \gls{z.B.} bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
 Dieser wird entfernt, da sich Studenten über die Durchführungen hinweg austauschen können sollen.
-Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, \gls{bzw.} das Jahr und Semester beinhaltet.
-
+Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, \gls{bzw.} das Jahr und Semester beinhaltet.\\
 Beispiele:
 
-% TODO
-% \begin{table}[h]
-%     \centering
-%     \begin{tabular}{|1|p{20em}|1|}
-%         \hline
-%         \rowcolor[gray]{.9} Angezeigt im MyCampus & Beispiel Befehl & Voller Modulname \\
-%         \hline
-%         I.BA_GAMEDEV.H2201 & show gamedev & Game Development \\
-%         \hline
-%     \end{tabular}
-%     \caption{Show und Hide Command Beispiele}
-%     \label{tab: Show und Hide Command Beispiele}
-% \end{table}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[gray]{.9} Angezeigt bei Modulbeschrieb & Angezeigt im MyCampus (Stundenplan) & Beispiel Befehl \\
+        \hline
+        GAMEDEV & I.BA\_GAMEDEV.H2201 & show gamedev \\
+        \hline
+        3DMOD4RT & I.BA\_3DMOD4RT.21 & show 3dmod4rt \\
+        \hline
+        LIAL & I.BA\_LIAL\_E.F2201 & show lial \\
+        \hline
+    \end{tabular}
+    \caption{Show und Hide Command Beispiele}
+    \label{tab: Show und Hide Command Beispiele}
+\end{table}
 
 Diese Umwandlung muss ebenfalls beim Laden der Modul-Liste des Sekretariats durchgeführt werden.
 Diese automatische Umwandlung wurde durch Unit Tests getestet.
 Genauere Angaben zu den Tests können im Kapitel \nameref{Testdrehbuch} gefunden werden.
-Die Abkürzungen können Studenten über die Modulliste der HSLU herausfinden und wird gleich hinter dem vollen Namen angezeigt.\autocite{noauthor_bachelor_nodate}
+Die Abkürzungen können Studenten über die Modulliste der HSLU herausfinden und wird gleich hinter dem vollen Namen angezeigt.\autocite{noauthor_bachelor_nodate} \\
+Um die Fehleranfälligkeit des Bots zu verringern wird die Gross- und Kleinschreibung der Module nicht beachtet.
 
 \begin{figure}[hb]
     \centering
@@ -2251,7 +2264,7 @@ Die kompletten Testprotokolle können im Anhang im Kapitel \nameref{test-protoco
 \end{table}
 
 \subsection{Einführung des neuen Bots}
-\todo{Yannis}
+
 Es wurde zusammen mit dem STAIR Präsidenten besprochen, dass das Einführen nicht in einem laufenden Semester oder während der Prüfungsphase passiert.
 So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierenden die Austauschmöglichkeit des Discord Servers genommen wird.
 
@@ -2305,6 +2318,7 @@ In der Arbeit wurde neue
     \item Ausblick - Zusammenfassung schreiben und Ergebnisse in die Zukunft projizieren, bevorstehende Entwicklungen skizzieren, Auswirkungen der Ergebnisse auf die Praxis
 \end{itemize}
 
+\todo{Add Reflexion der eigenen Arbeit}
 Es gibt noch mehrere Ideen für weitere Features.
 Die nächste Aktivität in Zusammenhang mit diesem Projekt ist jedoch das Deployment auf dem Produktivserver.
 Dies wird vor dem Frühlingssemester 2023 im Februar passieren.
@@ -3351,8 +3365,6 @@ Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
 
 \newpage
 \subsection{Meeting mit Herr Waldmann 21.12.2022}
-
-\todo{Ausfüllen}
 
 \subsubsection*{Anwesende Personen}
 
