@@ -160,8 +160,30 @@ Für die Studenten ist der Discord Server übersichtlicher gestaltet und der Umg
 Mithilfe des Bots können in Zukunft neue Studenten auf dem Discord Server einfacher verwaltet werden.
 Durch die Einführung einer Datenbank, erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampangnen besser auf bestimmte Zielgruppen anzupassen.
 
-\newpage
+\textit{English version}
 
+\todo{write abstract in English}
+
+\newpage
+\section*{II{\hspace*{1cm}}Glossar}
+
+SoDa
+API
+bzw.
+CSV
+Deployment
+Discord
+HSLU
+ISA Module
+Konsolenanwendungen
+REST
+z.B.
+Windows-Subsystem for Linux = WSL
+
+% https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
+\todo{schreiben}
+
+\newpage
 \tableofcontents
 
 \newpage
@@ -1225,7 +1247,7 @@ In der folgenden Tabelle werden alle verwendeten NuGet Pakete mit der verwendete
         \hline
         Discord.Net & Asynchrone API für Discord & 3.8.1 \\
         \hline
-        linq2db.Mysql & Arbeiten mit Linq und Mysql für .NET & 4.3.0 \\
+        linq2db.Mysql & Arbeiten mit Linq und MySQL für .NET & 4.3.0 \\
         \hline
         Micosoft Systemd & .NET hosting Infrastruktur für Systemd Services & 7.0.0 \\
         \hline
@@ -1729,7 +1751,8 @@ Diese Anleitung wird auch gepinnt, damit sie zwischen den vielen Nachrichten nic
 
 Der angegebene Modulname muss dem Kurznamen entsprechen.
 Gross und Kleinschreibung darf ignoriert werden, da im Hintergrund dies einheitlich umgewandelt wird.
-Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Professoren, zu unterscheiden.
+Einige Module haben am Ende des Kurznamens eine Erweiterung um die verschiedenen Durchführungen, z.B. bei verschiedenen Dozenten oder Professoren, die Durchführung unterscheiden zu können.
+Dieser wird entfernt, da sich Studenten über die Durchführungen hinweg austauschen können sollen.
 Auch der Präfix und Suffix muss entfernt werden, welche den Studiengang, bzw. das Jahr und Semester beinhaltet.
 
 Beispiele:
@@ -2446,7 +2469,6 @@ So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierend
 
 \todo{schreiben}
 
-
 \newpage
 \section{Ausblick}
 
@@ -2668,25 +2690,10 @@ Massnahmen:
 \clearpage
 
 \newpage
-\section{Glossar}
-
-API
-bzw.
-CSV
-Deployment
-Discord
-HSLU
-ISA Module
-Konsolenanwendungen
-REST
-z.B.
-Windows-Subsystem for Linux = WSL
-
-% https://blog.aristolo.com/de/definition-begriffe-bachelorarbeit-masterarbeit-dissertation/
-\todo{schreiben}
-
 \section{Abbildungsverzeichnis}
 \listoffigures
+
+Nicht-referenzierte Grafiken sind Eigenproduktionen.
 
 \section{Tabellenverzeichnis}
 \listoftables
@@ -2704,6 +2711,7 @@ In dieser Anleitung wird jedoch auf das Aufsetzen für Ubuntu Linux 20.04 fokusi
 Die Befehle müssen ebenfalls von einem Linux Computer ausgeführt werden.
 Mit \textit{Windows Subsystem for Linux (WSL)} sollte es jedoch auch funktionieren.
 
+\todo{Check format}
 \begin{enumerate}
     \item Verbinde zum VPN oder verbinde zum WLAN an der Hochschule
     \item Clone die beiden GitHub Repositories
@@ -3070,67 +3078,51 @@ Das Passwort für den Stan account kann beim STAIR Vorstand eingeholt werden.
 \subsubsection*{Fragen}
 
 \begin{enumerate}
-    \item Soll Glossar vor oder nach Anhang eingefügt werden?
-        nach dem Abstract einfügen
-    \item Testprotokolle Teil des Realisations-Kapitel?
-        kommt auf den Umfang darauf an.
-        Resultate in einer kleinen Tabelle mit Beschreibung in den Hauptteil
-        Verweisen auf die Tests im Anhang
-        Testdrehbuch im Anhang einfügen
-    \item Abstract auch auf Englisch schreiben?
-        in Deutsch und Englisch einfügen
-    \item Wie genau sollen Besprechungsprotokolle sein?
-        Entscheidungen mit Begründungen einfügen
     \item Wie lange soll die Präsentation werden?
-        20 min Präsentation
-        25 min mit Demonstration
-    \item Was soll der Inhalt der Präsentation sein?
-        Werdegang der Präsentation
-        Pitchmässig überzeugen
-        Gerne nochmals Auftrag, Herausforderungen und Lösungen aufzeigen
-        Vorbereitet sein auf Fragen von Enterprise Lab
-
-    \item Wer ist der zweite Experte?
         \begin{itemize}
-            \item Joho
+            \item Die Präsentation sollte etwa 20 Minuten dauern. Wenn die Präsentation noch eine Demonstration beinhaltet, dann sollte diese 25 Minuten dauern.
+        \end{itemize}
+    \item Was soll der Inhalt der Präsentation sein?
+        \begin{itemize}
+            \item Die Präsentation soll den Werdegang des Projektes aufzeigen.
+            \item Die Präsentation soll das Produkt, wie in einem Pitch, verkaufen.
+            \item Der genaue Auftrag soll nochmals Aufgezeigt werden.
+            \item Die Umsetzung soll die Herausforderungen und die davon resultierenden Masnnahmen und Lösungen aufzeigen.
         \end{itemize}
     \item Geht 9. oder 10. Januar als Präsentationstermin?
         \begin{itemize}
             \item Nicolas Wiedmer, Yannis Krämer und Martin Steiger haben an beiden Tagen Zeit.
             \item Estefania Otero hat am 10. nur am Morgen Zeit.
             \item Yannis Krämer ist ab 15. Januar im Ausland aufgrund eines Auslandsemesters.
-            \item Markus Waldmann hat an beiden Tagen Zeit 
-            \item Vorverschoben erwähnen in Einladung
-            \item bereits Schulzimmer resrvieren
+            \item Markus Waldmann hat an beiden Tagen Zeit
         \end{itemize}
     \item Wo soll man das Arbeitsjournal einfügen?
-        Umfang der Stunden aufzeigen
-        Bemerkungen müssen nicht eingefügt werden
-        1 Seite pro Person ist ausreichend
-        Unterschied soll-ist aufzeigen
-    \item Wie abgeben?
-        PDF per Mail an alle Beteiligten
+        \begin{itemize}
+            \item Der Aufwand muss aufgezeigt werden, damit man sieht das die Credits gerechtfertigt sind.
+            \item Der Unterschiedzwischen der soll und ist Situation.
+            \item Eine Seite pro Person ist ausreichend.
     \item Letzte Tipps
-        Bewertungen anschauen
-        guter Kontrast  und kein rot/grün
-        Anschauen wenn ausgedruckt
-        Kopf und Fusszeile soll Titel der Arbeit beinhalten,
-        (Was passiert wenn einzelnes Blatt von Arbeit gefunden wird?)
-        Kapitelname in Fusszeile einfügen
-        "nicht-referenzierte Grafiken sind eigenproduktionen"
-        Fussnoten sind okay
+        \begin{itemize}
+            \item Bewertungsraster nochmals anschauen
+            \item Überall auf den Kontrast achtenund keine rot/grüne Designs verwenden.
+            \item Die Kopf und Fusszeile sollen mindestens der Titel der Arbeit und die Seitenzahl beinhalten. Optimal wäre noch wenn das Kapitel erwähnt wird.
+        \end{itemize}
 \end{enumerate}
 
 \subsubsection*{Besprochene Punkte}
 
 \begin{enumerate}
-    \item 
+    \item Der zweite Experte ist Bruno Joho.
 \end{enumerate}
 
 \subsubsection*{Entscheidungen}
 
 \begin{enumerate}
-    \item 
+    \item Das Glossar soll nach dem Abstract eingefügt werden.
+    \item Die detailierten Testprotokolle sollen im Anhang hinzugefügt werden. Eine Zusammenfassung von den Ergebnissen soll in den Hauptteil eingefügt werden.
+    \item Das Abstract soll auf Deutsch und Englisch eingefügt werden.
+    \item Die Abgabe soll wenn möglich per E-Mail erfolgen an alle beteiligten, welche auch an der Präsentation teilnehmen werden.
+    \item Die Besprechungsprotokolle müssen vor allem die Entscheidungen und die dazugehörigen Begründungen beinhalten.
 \end{enumerate}
 
 \end{document}
