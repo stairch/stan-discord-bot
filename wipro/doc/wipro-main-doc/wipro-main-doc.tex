@@ -219,24 +219,22 @@ Rotkreuz, den	\underline{\hspace*{4cm}}	\hspace*{1cm} Visum:	\underline{\hspace*
 \normalfont
 \newpage
 \section*{I{\hspace*{1cm}}Abstract}
-Der Studentenverein STAIR der Hochschule Luzern betreibt einen Discord Server auf dem sich die Studenten austauschen können.
-Auf dem Server laufen 2 Bots, die sich mit der Authentifikation und der Anmeldung für Modul-Channels befassen.
+Der Studierendeverein STAIR der Hochschule Luzern betreibt einen Discord Server, auf dem sich die Studierende austauschen können. 
+Auf dem Server laufen 2 Bots, die sich um die Authentifikation und die Anmeldung für Modul-Channels kümmern. 
 Die Bots funktionieren nicht zusammen und es kommt bei der Modul-Channel-Anmeldung immer wieder zu Problemen.\\
-Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, 
-um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.\\
-Dabei wurde mithilfe einer Ist-Analyse der alte Bot untersucht und Änderungsentscheidungen getroffen.
-Diese Änderungen wurden im Verlauf von 5 Sprints nach der \gls{SoDa} Methode implementiert.\\
-Es wurde ein neuer Bot erstellt, welcher den Authentifizierungsmechanismus und verschiedene Befehle für STAIR Mitglieder und Studenten beinhaltet.
-Des Weiteren wurde eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server in der Hochschul-Enterprise-Lab Umgebung eingesetzt.
-Für den operativen Einsatz wurde eine Anleitung geschrieben, welche den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studenten und der Module jedes Semester bietet.
-Für die Studenten ist der Discord Server übersichtlicher gestaltet und der Umgang mit dem Bot vereinfacht worden.
-Mithilfe des Bots können in Zukunft neue Studenten auf dem Discord Server einfacher verwaltet werden.
-Durch die Einführung einer Datenbank, erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampangnen besser auf bestimmte Zielgruppen anzupassen.
+Das Ziel dieser Arbeit ist es, den Discord Bot des Studierendevereins STAIR neu zu implementieren, um die Administrationsarbeit auf dem Server zu verringern und neue Daten für Event- und Marketingplanung zu sammeln.\\
+Dabei wird mithilfe einer Ist-Analyse der alte Bot untersucht und Änderungsentscheidungen getroffen. 
+Diese Änderungen werden im Verlauf von 5 Sprints nach der Software-Development-Agile \gls{SoDa} Methode implementiert.\\
+Es wird ein neuer Bot erstellt, welcher den Authentifizierungsmechanismus und verschiedene Befehle für STAIR Mitglieder und Studierende beinhaltet. 
+Des Weiteren wird eine Datenbank aufgebaut, sowie der Bot auf einem Linux Server in der Hochschul-Enterprise-Lab Umgebung eingesetzt. 
+Für den operativen Einsatz wird eine Anleitung geschrieben, die den Administratoren des Discord Servers eine Hilfe bei der Aktualisierung der Studierenden und der Module jedes Semesters bietet. 
+Für die Studierenden wird der Discord Server übersichtlicher gestaltet und der Umgang mit dem Bot vereinfacht. 
+Mithilfe des Bots können in Zukunft neue Studierende auf dem Discord Server einfacher verwaltet werden. 
+Durch die Einführung einer Datenbank erhalten STAIR Mitglieder die Möglichkeit, Events- und Marketingkampagnen besser auf bestimmte Zielgruppen anzupassen.
 
 \textit{English version}
 
 \todo{write abstract in English}
-
 \newpage
 
 \printnoidxglossaries
@@ -249,103 +247,100 @@ Durch die Einführung einer Datenbank, erhalten STAIR Mitglieder die Möglichkei
 \newpage
 
 \section{Problem, Fragestellung, Vision}
-Der Studentenverein STAIR des Departments Informatik der Hochschule Luzern stellt über die Plattform Discord einen Server zur Verfügung.
-Über diesen können sich Studenten über das Studium oder spezifische Module austauschen.\\
-Auf dem Server laufen zwei Bots, welche sich um die Authentifikation der Studenten, sowie um die Einschreibung in die verschiedenen Modul-Channels kümmern.
-Der Bot zur Authentifikation funktioniert einwandfrei, aber beim Bot zur Moduleinschreibung kommt es immer wieder zu Problemen.
+Der Studierendeverein STAIR des Departments Informatik der Hochschule Luzern stellt über die Plattform Discord einen Server zur Verfügung. 
+Über diesen können sich Studierende über das Studium oder spezifische Module austauschen.\\
+Auf dem Server laufen zwei Bots, welche sich um die Authentifikation der Studierenden sowie um die Einschreibung in die verschiedenen Modul-Channels kümmern. 
+Der Bot zur Authentifikation funktioniert einwandfrei, jedoch kommt es beim Bot zur Moduleinschreibung immer wieder zu Problemen. 
 Da dieser extern auf einer Plattform namens Nadeko erstellt wurde, kann nicht genau gesagt werden, wieso diese Probleme auftreten.\\
-Des Weiteren gibt es Unklarheiten bei den Studenten zur Benutzung dieser Bots.
-Auch die Aufteilung der Modul-Channels, in verschiedene Kategorien, ist nicht benutzerfreundlich gestaltet.
-In einer neuen Version, sollen die Probleme beseitigt und die Unklarheiten bei den Studenten geklärt werden.\\\\
-In diesem Projekt soll eine Lösung entwickelt werden, die den Discord Administratoren von STAIR eine Unterstützung und Mehrwert bietet.
-Die Lösung soll für STAIR und Studenten verständlich sein und einfach eingesetzt werden können.\\\\
-Das Ziel der Arbeit ist es, die vorher beschriebenen zwei Bots zusammenzuführen und damit eine einheitliche Plattform zu haben, über welchen Bot Commands verwaltet werden.
-Des Weiteren soll eine Datenbank eingeführt werden, die Studenten und Ihre Discord Accounts verbindet.
-Dies erleichtert die Authentifikation und die Verwaltung der Modul-Channels.
-Die Daten bieten auch einen statistischen Mehrwert für die STAIR Mitglieder, da ein besser Einblick gewährt wird, wer den Discord Server nutzt.
+Des Weiteren gibt es Unklarheiten bei den Studierenden zur Benutzung dieser Bots. 
+Auch die Aufteilung der Modul-Channels in verschiedene Kategorien ist nicht benutzerfreundlich gestaltet. 
+In einer neuen Version sollen die Probleme beseitigt und die Unklarheiten bei die Studierenden geklärt werden.\\\\
+In diesem Projekt soll eine Lösung entwickelt werden, die den Discord Administratoren von STAIR eine Unterstützung und Mehrwert bietet. 
+Die Lösung soll für STAIR und Studierende verständlich sein und einfach eingesetzt werden können.\\\\
+Das Ziel der Arbeit ist es, die vorher beschriebenen zwei Bots zusammenzuführen und damit eine einheitliche Plattform zu schaffen, über welche Bot Commands verwaltet werden. 
+Weiter soll eine Datenbank eingeführt werden, die Studierende und Ihre Discord Accounts verbindet. 
+Dies erleichtert die Authentifikation und die Verwaltung der Modul-Channels. 
+Die Daten bieten ebenfalls einen statistischen Mehrwert für die STAIR Mitglieder, da ein besser Einblick gewährt wird, wer den Discord Server nutzt. 
 Dies kann für Marketingzwecke sowie Event-Planung verwendet werden.\\
-Auch soll der Einsatz von einer automatischen Fehlererkennung dazu beitragen, das Probleme beim Bot schnell an die Administratoren von STAIR weitergeleitet werden.
-So können lange Unsicherheiten und Probleme schneller behoben werden.
-Der Einsatz einer neuen Logging-Library soll die Nachvollziehbarkeit der Software sicherstellen.
-Diese Einträge sollen den Administratoren bei allfälligen Fehlersuchen unterstützen.\\\\ 
+Auch soll der Einsatz von einer automatischen Fehlererkennung dazu beitragen, dass Probleme beim Bot schnell an die Administratoren von STAIR weitergeleitet werden. 
+So können lange Unsicherheiten und Probleme schneller behoben werden. 
+Der Einsatz einer neuen Logging-Library soll die Nachvollziehbarkeit der Software sicherstellen. 
+Diese Einträge sollen die Administratoren beim allfälligen Fehlersuchen unterstützen.
+
 
 \newpage
 \section{Stand der Technik}\label{state-of-the-art}
-Als ersten Schritt soll der heutige Stand der Technik im Bereich Sprach- und Text-Messaging überprüft werden.
-Dabei soll aufgezeigt werden, welche mögliche Plattformen es auf dem Markt gibt, und ob diese eine mögliche Alternative zum Discord Server sind.
+Als ersten Schritt wird der heutige Stand der Technik im Bereich Sprach- und Text-Messaging überprüft. 
+Dabei soll aufgezeigt werden, welche möglichen Plattformen es auf dem Markt gibt und ob diese eine mögliche Alternative zum Discord Server sind.
 
 \subsection{Sprach- und Text-Messenger}
-Die folgenden Plattform sind die am weitest verbreiteten auf dem Markt, wenn es um Discord Alternativen und Sprach Chats im allgemeinen geht. \autocite{noauthor_discord-alternativen_nodate}
+Die folgenden Plattformen sind die am weit verbreitetsten auf dem Markt, wenn es um Alternativen zu Discord und Sprachchats im Allgemeinen geht. \autocite{noauthor_discord-alternativen_nodate}
 
 \subsubsection*{Slack}
-Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities.
-Dies ist auch gut auf der Homepage des jeweiligen Unternehmens zu erkennen.
+Slack ist eine sehr ähnliche Alternative zu Discord, richtet sich jedoch mehr an Unternehmen als an Communities. 
+Dies ist gut auf der Homepage des jeweiligen Unternehmens zu erkennen. 
 So erwähnt Discord zum Beispiel: "\textit{STELL DIR EINEN ORT VOR, …
 … an dem du Teil eines Schulklubs, einer Gaming-Gruppe oder einer weltweiten Kunst-Community sein kannst. Ein Ort, an dem du einfach Zeit mit Freunden verbringen kannst. Ein Ort, an dem es leicht ist, sich jederzeit zu treffen und zu unterhalten.}" \autocite{noauthor_discord_nodate}
 wo hingegen Slack folgendes schreibt: "\textit{Great teamwork starts with a digital HQ
 With all your people, tools and communication in one place, you can work faster and more flexibly than ever before.}"\autocite{slack_slack_nodate}
-Auch der Fokus der Anwendung liegt stärker auf dem Textchat als auf dem Sprachchat, wo sich Discord wiederum mehr fokussiert.\autocite{noauthor_slack_nodate}
-Da STAIR und der Discord Server auch für die Freizeit gedacht sind, macht es mehr Sinn auf ein Freizeit Tool zu setzen.
+Der Fokus der Anwendung liegt stärker auf dem Textchat als auf dem Sprachchat, auf den sich Discord wiederum mehr fokussiert.\autocite{noauthor_slack_nodate}
+Da STAIR und der Discord Server auch für die Freizeit gedacht sind, macht es mehr Sinn auf ein Freizeittool zu setzen.
 
 \subsubsection*{Skype}
 Skype ist eine ältere und sehr verbreitete Sprachchat Lösungen mit 100 Millionen aktiven Nutzern jeden Monat. \autocite{lardinois_microsoft_2020}
-Skype ist jedoch auch sehr eingeschränkt, was die Features angeht.
-So sind keine echten Communities möglich und Sprachchat ist nur per Anruf möglich.
-So können neue Nutzer also nicht einfach zu einem Sprachchat hinzukommen.
+Skype ist jedoch sehr eingeschränkt, was die Features betrifft. 
+So sind keine echten Communities möglich und Sprachchat ist nur per Anruf möglich. 
+Neue Nutzer können also nicht einfach zu einem Sprachchat hinzukommen. 
 Richtige Communities sind ebenfalls nicht vorhanden. \autocite{mattise_discord_2022}
 Diese fehlenden Features machen das Programm ungeeignet als Alternative.
 
 \subsubsection*{TeamSpeak}
-
-TeamSpeak macht es möglich einfach und ohne viel Rechenressourcen einen Server zum Austauschen aufzusetzen.
-Der Fokus von TeamSpeak sind klar die Sprachchats.
-Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und klar nicht der Fokus der Anwendung.
-Da Textchat nicht unwichtig ist für den Austausch den STAIR anbieten will,
-ist dies wohl keine geeignete Lösung.
-Ein grosser Nachteil ist, dass nur 32 aktive Nutzer kostenfrei auf einen Server kommen können.
-Dies würde zu starken Mehrkosten führen für STAIR.\autocite{mockel_discord_2022}
+TeamSpeak macht es möglich, einfach und ohne viele Rechenressourcen einen Server zum Austauschen aufzusetzen. 
+Der Fokus von TeamSpeak sind klar die Sprachchats. 
+Auch wenn Textchats möglich sind, sind diese stärker eingeschränkt und stehen nicht im Fokus der Anwendung. 
+Da Textchat nicht unwichtig ist für den Austausch, den STAIR anbieten will, ist dies keine geeignete Lösung. 
+Ein grosser Nachteil ist, dass nur 32 aktive Nutzer kostenfrei auf einen Server kommen können. 
+Dies würde zu starken Mehrkosten führen bei STAIR.\autocite{mockel_discord_2022}
 
 \subsubsection*{Matrix}
-
-Matrix wurde 2019 veröffentlicht und ist eine Open Source Alternative zu Discord.
-Hierbei kommt Matrix dem Discord mit der Bedienung sehr nahe.
-Ein starker Fokus liegt auf der Privatsphäre der Nutzer.
-So ist man unabhängig von den Entwicklern und kann den Matrix Server auf dem eigenen Server aufsetzen.
-Die Software bringt jedoch auch seine Nachteile mit sich.
-So ist die Verbreitung noch relativ klein und hat wenig Nutzer.
-Mit 17 Millionen Nutzer\autocite{noauthor_matrixorg_nodate} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinten nach.\autocite{david_curry_discord_2022}
-So müssten viele Studierende zuerst einen Account erstellen und sich einen Matrix ausschliesslich für den STAIR Server herunterladen. Dies wäre eine zusätzliche Hürde.
-Auch wäre das Betreiben des Matrix Servers umständlicher, da die Updates neu manuell installiert werden müssen anstatt dies von Discord machen zu lassen.
-Auch wäre unklar, ob das Enterprise Lab eine solche Applikation zulassen würde, da dies einiges an Bandbreite kosten würde, was Discord zurzeit übernimmt für STAIR.
-
+Matrix wurde 2019 veröffentlicht und ist eine Open Source Alternative zu Discord. 
+Hierbei kommt Matrix dem Discord mit der Bedienung sehr nahe. 
+Ein starker Fokus liegt auf der Privatsphäre der Nutzer. 
+So ist man unabhängig von den Entwicklern und kann den Matrix Server auf dem eigenen Server aufsetzen. 
+Die Software bringt jedoch auch seine Nachteile mit sich. 
+So ist die Verbreitung noch relativ gering. 
+Mit 17 Millionen Nutzer\autocite{noauthor_matrixorg_nodate} hinkt Matrix noch stark an den 300 Millionen Nutzern von Discord hinterher.\autocite{david_curry_discord_2022}
+So müssten viele Studierende zuerst einen Account erstellen und sich eine Matrix ausschliesslich zur Verwendung des STAIR Servers herunterladen. 
+Dies ist eine zusätzliche Hürde. 
+Auch ist das Betreiben des Matrix Servers umständlicher, da die Updates neu manuell installiert werden müssen, anstatt dies von Discord machen zu lassen. 
+Unklar ist, ob das Enterprise Lab eine solche Applikation zulassen würde, da dies einiges an Bandbreite kosten würde, was Discord zurzeit übernimmt für STAIR.\\
 Der Vorteil an Matrix ist, dass jeder seinen eigenen Client wählen oder sogar entwickeln kann.\autocite{noauthor_matrix_nodate}
-So sollte jeder Nutzer etwas passendes finden.
-Auch ist die Privatsphäre der Studierenden geschützt, da keine Informationen nach aussen geraten wenn der Server selbst gehostet ist.
+So sollte jeder Nutzer etwas Passendes finden. 
+Die Privatsphäre der Studierenden ist geschützt, da keine Informationen nach aussen geraten, wenn der Server selbst gehostet ist.
 
 \subsubsection{Discord}
-Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion.
-Er kann online auf einer Webseite, oder mit Hilfe eines Clients lokal aufgerufen werden.
-Discord unterst\"utzt alle g\"angigen Betriebssysteme und kann auch auf mobilen Endger\"aten verwendet werden.
+Der Online Dienst Discord ist ein Instant-Messaging und Chat Tool mit Sprach- und Videokonferenz Funktion. 
+Er kann online auf einer Webseite oder mit Hilfe eines Clients lokal aufgerufen werden. 
+Discord unterstützt alle gängigen Betriebssysteme und kann auch auf mobilen Endgeräten verwendet werden.
 
 \subsubsection*{Geschichte}
-Urspr\"unglich wurde Discord f\"ur Computerspiele geschaffen, um die Kommunikation zwischen den Spielkameraden zu vereinfachen und zu verbessern.
-Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu bauen, der benutzerfreundlich und effizient erweist.
-2012 wurde das Unternehmen Discord Inc. (damals noch Hammer \& Chisel) als Startup gegr\"undet.\autocite{noauthor_discord_2021}
-Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel f\"ur die Weiterentwicklung Ihrer Applikation auf zus\"atzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
-
-2015 wurde Discord unter der Domain "discordapp.com" ver\"offentlicht.
-Der Text und Sprach Messanger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie \gls{z.B.} Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
-2018 k\"undete auch Microsoft Discord Unterst\"utzung f\"ur ihre X-Box Live Nutzer an und unterst\"utzte Discord mit einer Finanzierung von 150 Millionen US-Dollar. Bewertet wurde Discord Inc. nun auf etwa 2 Milliarden US-Dollar.
-
-Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch f\"ur andere Zielgruppen ein.
-So wurde der Fokus von Videospielen weggelenkt auf einen universellen Kommunikations- und Chat Client, um es f\"ur andere Branchen, wie das Schulwesen oder innerhalb Unternehmen, ansprechender zu machen.
-Damit \"anderte das Unternehmen ihr Motto von "\textit{Chat for Gamers}" zu "\textit{Chat for Communities and Friends}" und f\"uhrte Servervorlagen ein.
-
-Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und wird auf 15 Milliarden US-Dollar gewertet (Stand 2021). \autocite{david_curry_discord_2022}
+Ursprünglich wurde Discord für Computerspiele entwickelt, um die Kommunikation zwischen den Spielenden zu vereinfachen und zu verbessern. 
+Das Ziel war es, neben der komplexen Spielmechanik einen Chat-Messanger zu generieren, der sich als benutzerfreundlich und effizient erweist. 
+2012 wurde das Unternehmen Discord Inc. (damals noch Hammer \& Chisel) als Startup gegründet. \autocite{noauthor_discord_2021}
+Im Jahre 2014 konnte die Unternehmung Hammer \& Chisel für die Weiterentwicklung ihrer Applikation auf zusätzliche Finanzierungsmittel, von anderen Unternehmen zur Verfügung gestellt, zurückgreifen.
+2015 wurde Discord unter der Domain "discordapp.com" veröffentlicht. 
+Der Text- und Sprach Messenger erfreute sich schnell grosser Beliebtheit und geriet so in das Blickfeld grösserer Investoren wie \gls{z.B.} Warner Media, die den Dienst 2016 mit rund 20 Millionen US-Dollar unterstützte. \autocite{noauthor_warner_2022} .
+2018 kündete auch Microsoft Discord Unterstützung für ihre X-Box Live Nutzer an und unterstützte Discord mit einer Finanzierung von 150 Millionen US-Dollar. 
+Bewertet wurde Discord Inc. nun auf etwa 2 Milliarden US-Dollar.\\
+Aufgrund der Covid-19 Pandemie und den steigenden Benutzerzahlen stellte sich Discord auch auf andere Zielgruppen ein. 
+So wurde der Fokus von Videospielen weggelenkt hin zu einem universellen Kommunikations- und Chat Client, sodass die Funktionen für andere Branchen, wie das Schulwesen oder Unternehmen, ansprechender werden. 
+Damit änderte das Unternehmen ihr Motto von "\textit{Chat for Gamers}" zu "\textit{Chat for Communities and Friends}" und f\"uhrte Servervorlagen ein.\\
+Heute hat Discord mehr als 140 Millionen monatlich aktive User, verwaltet etwa 13.5 Millionen aktive Server und wird mit 15 Milliarden US-Dollar bewertet (Stand 2021). \autocite{david_curry_discord_2022}
 
 \subsubsection*{Discord Einschr\"ankungen}\label{discord_einschraenkungen}
-Discord hat auch einige Einschränkungen.
+Discord hat einige Einschränkungen. 
 Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{vultaggio_discord_2022}
+
 \begin{itemize}
     \item Anzahl Channels: 500
     \item Anzahl Rollen: 250
@@ -357,18 +352,17 @@ Diese machen sich allerdings erst bei sehr grossen Servern bemerkbar.\autocite{v
 \end{itemize}
 
 \subsubsection*{Warum Discord?}
-Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt.
-Für dieses Projekt ist Discord verbindlich festgelegt.
-STAIR kommuniziert schon lange über die Plattform und es hat sich eine grosse Community mit knapp 700 Studierenden und Exstudierenden aufgebaut.
-Discord erlaubt grosse Freiheiten in der Erstellung von Servern und Channels, deren Bearbeitung und der Freigabe unter den Mitgliedern.
-Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten hat, ist es sehr verbreitet bei jungen Leuten aller Ethnien und Gruppierungen.
+Wie man gesehen hat, gibt es noch andere Sprach- und Text Messanger auf dem Markt. 
+Für dieses Projekt ist Discord verbindlich festgelegt. 
+STAIR kommuniziert schon lange über die Plattform und es hat sich eine grosse Community mit knapp 700 Studierenden und Exstudierenden aufgebaut. 
+Discord erlaubt grosse Freiheiten in der Erstellung von Servern und Channels, deren Bearbeitung und der Freigabe unter den Mitgliedern. 
+Da es ein kostenloser Dienst ist und diese Einstellungsmöglichkeiten bestehen, ist es sehr verbreitet bei jungen Menschen.
 
 \newpage
 \section{Ideen und Konzepte}
-
-Bei der Konzeptbesprechung wurde ein Entity-Relationship Diagramm ausgearbeitet.
-Das Diagramm dient als Grundlage für die Design- und Architektur Entscheide der neuen Applikation.
-Des Weiteren wurde ein Konzept zur allgemeinen Projektstruktur erstellt und einzelne Überlegungen zum neuen Ablauf der Authentifizierung und Modul Anmeldung.
+Bei der Konzeptbesprechung wurde ein Entity-Relationship Diagramm ausgearbeitet. 
+Das Diagramm dient als Grundlage für die Design- und Architektur Entscheide der neuen Applikation. 
+Weiter wird ein Konzept zur allgemeinen Projektstruktur erstellt und einzelne Überlegungen zum neuen Ablauf der Authentifizierung und Modul Anmeldung gemacht.
 
 \begin{figure}[h]
     \centering
@@ -377,77 +371,70 @@ Des Weiteren wurde ein Konzept zur allgemeinen Projektstruktur erstellt und einz
     \label{fig:concept-sketch}
 \end{figure}
 
-Eine genaue Beschreibung des ER-Diagramms kann im Kapitel \nameref{entity-relationship-diagramm} gefunden werden.
+Eine genaue Beschreibung des ER-Diagramms ist im Kapitel \nameref{entity-relationship-diagramm} zu finden.
 
 \subsection{Technologien}
 
 \subsubsection{C\# und .NET Framework}
-
-Es wurde entschieden weiterhin mit C\# zu arbeiten.
-Dies wurde auch für die bereits existierende Version verwendet.
-Discord Libraries sind jedoch auch in anderen Programmiersprachen verfügbar.
+Es wird entschieden, weiterhin mit C\# zu arbeiten. 
+Dies wird auch für die bereits existierende Version verwendet. 
+Discord Libraries sind jedoch auch in anderen Programmiersprachen verfügbar, wie zum Beispiel Java, PHP, Python oder JavaScript. \autocite{noauthor_discord_nodate-1} 
 Discord selbst führt eine Liste zu den verfügbaren Libraries und deren unterstützten Programmiersprachen, welche von der Community entwickelt wurden.\autocite{noauthor_discord_2022-1}
-Bei Besprechungen mit den Stakeholdern wurde kein Grund gesehen auf etwas anderes umzusteigen, vor allem da durch das existierende Projekte eine gewisse Machbarkeit für einen Teil der Features bereits bewiesen wurde.
-Durch die neuen .NET Versionen wird es nun auch möglich den C\# Code auf andere Plattformen als nur Windows zu exportieren.
-Hierfür wurde früher Project Mono gebraucht oder .NET Core.
+Bei Besprechungen mit den Stakeholdern wird kein Grund gesehen, auf etwas anderes umzusteigen, vor allem da durch das existierende Projekt eine gewisse Machbarkeit für einen Teil der Features bereits bewiesen wurde. 
+Durch die neuen .NET Versionen wird es nun auch möglich, den C\# Code auf andere Plattformen als nur Windows zu exportieren. 
+Hierfür wurde früher Project Mono gebraucht oder .NET Core. 
 Die beiden Projekte wurden mit dem .NET Framework zusammengeführt zu der .NET 5 Version.\autocite{schwichtenberg_net_2019}
-Im November 2022 ist die neue .NET 7 Version herausgekommen.
-Da .NET 6 am aktuellsten war zum Startzeitpunkt des WIPRO Projektes, die .NET 6 Version eine LTS Version ist und damit länger als .NET 7 unterstützt wird und in der Praxis stärker getestet ist, wird die WIPRO mit .NET 6 zu Ende geführt.\autocite{noauthor_net_2022}
-Zur Entwicklungszeit der alten Stan Discord Bot Version wurde noch auf .NET Framework gesetzt, weshalb der Bot auch noch nicht auf Linux lauffähig ist.
-Dies war jedoch der Wunsch von STAIR für zukünftige Projekte.
-Dies wird genauer im Kapitel \nameref{geplanteAenderungen} beschrieben.
+Im November 2022 ist die neue .NET 7 Version veröffentlicht worden. 
+Da .NET 6 am aktuellsten ist zum Startzeitpunkt des WIPRO Projektes, die .NET 6 Version eine LTS Version ist und damit länger als .NET 7 unterstützt wird und in der Praxis stärker getestet ist, wird die WIPRO mit .NET 6 zu Ende geführt.\autocite{noauthor_net_2022}
+Zur Entwicklungszeit der alten Stan Discord Bot Version wurde noch auf .NET Framework gesetzt, weshalb der Bot auch noch nicht auf Linux lauffähig ist. 
+Dies ist der Wunsch von STAIR für zukünftige Projekte. 
+Im Kapitel \nameref{geplanteAenderungen} wird das genauer beschrieben.
 
 \subsubsection{MySQL}
-
-Als Datenbank wurde MySQL ausgewählt.
-MSSQL hat die beste Unterstützung in C\# jedoch ist diese Kostenpflichtig.
-Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert.
-Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien ohne diese Einschränkungen und Kosten.\autocite{noauthor_sql_nodate}
-
-Eine andere Version der gleichen Library, welche die MSSQL Unterstützung ermöglicht, bietet die Möglichkeit MySQL zu nützen.
+Als Datenbank wurde MySQL ausgewählt. 
+MSSQL hat die beste Unterstützung in C\#, doch sie ist nur kostenpflichtig verfügbar. 
+Es gibt eine kostenfreie Version, jedoch ist diese auf 10 GB limitiert. 
+Dies macht die Technologie unattraktiv im Vergleich mit anderen Technologien, welche diese Einschränkungen und Kosten nicht besitzen.\autocite{noauthor_sql_nodate}\\
+Eine andere Version der gleichen Library, welche die MSSQL Unterstützung ermöglicht, bietet die Möglichkeit MySQL zu nützen. 
 Die Library heisst \textit{linq2db.MySql}.
-Mit über 490'000 Downloads sollte die Stabilität für unsere Anwendung gegeben sein.\autocite{noauthor_linq2dbmysql_nodate}
+Mit über 490’000 Downloads ist die Stabilität für den neuen Discord Bot gegeben sein.\autocite{noauthor_linq2dbmysql_nodate}
 
 \subsection{Teststrategie}\label{Teststrategie}
-In diesem Projekt wird die abzugebende Software iterativ entwickelt.
+In diesem Projekt wird die abzugebende Software iterativ entwickelt. 
 Ein genauerer Beschrieb dazu ist im Kapitel \nameref{Vorgehensmodell} zu finden.
-Diese Vorgehensweise erlaubt es flexibel auf neue Anforderungen zu reagieren und
-während jeder Phase die Funktionalität sicher zu stellen.
-\newline
-Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet.
-Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt. \autocite{noauthor_arrangeactassert_nodate}
-Vor einem Meilenstein oder der Übergabe der Software wird die Software auch einigen manuellen Systemtests unterzogen.
-\newline
+Diese Vorgehensweise erlaubt es, flexibel auf neue Anforderungen zu reagieren und während jeder Phase die Funktionalität sicherzustellen. 
+Die einzelnen Komponenten innerhalb der Software werden mithilfe von Unit-Tests getestet. 
+Diese Tests werden nach dem AAA-Pattern "Arrange, Act, Assert" erstellt und ausgeführt.\autocite{noauthor_arrangeactassert_nodate}
+Vor einem Meilenstein oder der Übergabe der Software wird die Software einigen manuellen Systemtests unterzogen.
 Das Drehbuch für die manuellen Systemtests findet man im Kapitel \nameref{Testdrehbuch}.
 
 \newpage
 \section{Methoden}
 \subsection{Literaturrecherche}
-Um sich zu einem Thema zu informieren muss Literaturrecherche betrieben werden.
-Für die Literaturrecherche sind 2 Methoden verfügbar. \autocite{solis_so_2021}
+Um sich zu einem Thema zu informieren, muss Literaturrecherche betrieben werden. 
+Für die Literaturrecherche stehen 2 Methoden zur Verfügung.\autocite{solis_so_2021}
 \begin{itemize}
     \item \textbf{Systematische Literaturrecherche}\\
     Die systematische Literaturrecherche wird benutzt, wenn man schon eine genaue Fragestellung besitzt und gezielt nach Themen sucht, um diese zu beantworten.
     \item \textbf{Unsystematische Literaturrecherche (Schneeballsystem)}\\
     Bei der unsystematischen Literaturrecherche will man sich einen Überblick über ein Thema verschaffen, bei dem noch keine Fragestellung definiert ist.
 \end{itemize}
-In diesem Projekt wird mit der systematischen Literaturrecherche gearbeitet.
+In diesem Projekt wird mit der systematischen Literaturrecherche gearbeitet. 
 Die Fragestellung ist definiert und es wird gezielt nach Suchbegriffen recherchiert.\\\\
 Die Recherche wird in allen Teilen der Arbeit angewandt.
-Beim Recherchieren des Kapitels \nameref{state-of-the-art}, der \nameref{project-management} oder in der \nameref{implementation}.
-Die Recherche ist essentiell um aufgestellte Behauptungen zu untermauern und eine Lösung richtig zu implementieren. 
+Beispielsweise beim recherchieren des Kapitels \nameref{state-of-the-art}, der \nameref{project-management} oder in der \nameref{implementation}.
+Die Recherche ist essentiell, um aufgestellte Behauptungen zu untermauern und eine Lösung richtig zu implementieren.
 
 \subsection{Projektführung}\label{project-management}
-Um ein Projekt korrekt anzugehen und durchzuführen braucht es eine gute Projektführung.
-Mit der Auswahl der Projektart und dem Vorgehensmodell, einem definierten Rahmenplan und Meilensteinen,
-schafft man eine Umgebung mit der ein Projekt geplant und kontrolliert durchgeführt werden kann.
-Es hilft bei vielen Beteiligten den Überblick zu bewahren und ist essentiell in der Umsetzung.
+Um ein Projekt korrekt anzugehen und durchzuführen, braucht es eine gute Projektführung.
+Mit der Auswahl der Projektart und dem Vorgehensmodell, einem definierten Rahmenplan und Meilensteinen, schafft man eine Umgebung, mit der ein Projekt geplant und kontrolliert durchgeführt werden kann. 
+Es hilft, bei vielen Beteiligten den Überblick zu bewahren und ist essentiell für die Umsetzung.
 
 \subsubsection{Projektart}
-Es gibt verschiedene Projektarten, welche je nach Vorhaben zur Anwendung kommen. Eine Projektart hilft, die erwarteten Ergebnisse zu spezifizieren
-und geht auch mit der richtigen Wahl eines Vorgehensmodells daher.
-\newline
-Ein Projekt kann nach verschiedenen Modellen typisiert werden. Verbreitete Ansätze dabei sind:
+Es gibt verschiedene Projektarten, welche je nach Vorhaben zur Anwendung kommen. 
+Eine Projektart hilft, die erwarteten Ergebnisse zu spezifizieren und geht auch mit der richtigen Wahl eines Vorgehensmodells einher.
+Ein Projekt kann nach verschiedenen Modellen typisiert werden.\\
+Verbreitete Ansätze dabei sind:
 \begin{itemize}
     \item Portfoliobezogene Projektklassifikation
     \item Externe und interne Projekte
@@ -456,11 +443,9 @@ Ein Projekt kann nach verschiedenen Modellen typisiert werden. Verbreitete Ansä
     \item Diamond Approach
     \item oder die Erstellung eines Projektprofils\autocite{claus_husselmann_zielgerichtete_nodate} %PMRE Projekttypisierung
 \end{itemize}
-Auf den genaueren Beschrieb der einzelnen Modelle, wird verzichtet, da für dieses Projekt eine Vorgabe der verschiedenen Projektarten gemacht wurde.
-Für zukünftige Projekte könnte man aber auf diese Projekttypisierungsmodelle zurückgreifen um sein Vorhaben genau einzustufen.
-\newline
-
-Für dieses Wirtschaftsprojekt standen folgende Projektarten zur Auswahl:
+Auf den genauen Beschrieb der einzelnen Modelle wird verzichtet, da für dieses Projekt eine Vorgabe der verschiedenen Projektarten gemacht wurde. 
+Für zukünftige Projekte könnte aber auf diese verschiedenen Projekttypisierungsmodelle zurückgreifen werden, damit das Vorhaben genau eingestuft werden kann.\\
+Für dieses Wirtschaftsprojekt stehen folgende Projektarten zur Auswahl:
 \begin{itemize}
     \item Einsatz von Standardsoftware und Services
     \item Software- und Produktentwicklung
@@ -468,56 +453,45 @@ Für dieses Wirtschaftsprojekt standen folgende Projektarten zur Auswahl:
     \item IT-Infrastrukturentwicklung
     \item Strukturierte Analyse und Konzeption von Systemen und Abläufen \autocite{oliver_gilbert_wipro_2022} %Wegleitung
 \end{itemize}
-
-Unsere Aufgabestellung verlangt, dass wir in einer ersten Phase, eine Analyse der bestehenden Infrastruktur und des zur Zeit laufenden Bots durchführen.
-Die Analyse beruht auf der Frage, ob die zurzeit laufende Applikation, den neuen Features angepasst werden kann oder ersetzt werden muss.
-In einer zweiten Phase wird evtl. ein neuer Bot in einer neuen Infrastruktur implementiert oder nur die neuen Features hinzugefügt.
-In einer dritten Phase wird eine Anleitung für den zukünftigen Unterhalt des Discord-Servers und des Bots erstellt.
-
-Aufgrund dieser Aufgabenstellung wurde die Projektart "Software- und Produktentwicklung" gewählt. Da wir eine Analyse von bestehender Software machen und
-entweder bestehende Software weiterentwickeln oder eine neue erstellen.
+Die Aufgabenstellung verlangt, dass man in einer ersten Phase eine Analyse der bestehenden Infrastruktur und des zur Zeit laufenden Bots durchführen. 
+Die Analyse beruht auf der Frage, ob die zurzeit laufende Applikation den neuen Features angepasst werden kann oder ersetzt werden muss. 
+In einer zweiten Phase wird eventuell ein neuer Bot in einer neuen Infrastruktur implementiert oder lediglich die neuen Features hinzugefügt. 
+In einer dritten Phase wird eine Anleitung für den künftigen Unterhalt des Discord-Servers und des Bots erstellt.\\
+Aufgrund der Aufgabenstellung wird die Projektart "Software- und Produktentwicklung" gewählt, da eine Analyse von bestehender Software gemacht und entweder bestehende Software weiterentwickelt, oder eine Neue erstellt werden muss.
 
 \subsubsection{Vorgehensmodell}\label{Vorgehensmodell}
 "\textit{Ein Vorgehensmodell ist eine mehr oder weniger genaue Anleitung, in welchen Schritten und durch welche Tätigkeiten das Projektziel
 erreicht werden kann.}"\autocite{sarre_lufthansa-reservierung_2009}
-Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen.
-Des Weiteren dient es mit verschiedenen Methoden, Techniken, Standards und kann die Übersichtlichkeit und Planbarkeit in einem Projekt stark erhöhen.
-Bei Nutzung eines Vorgehensmodells ist die Wahrscheinlichkeit ein Projekt innerhalb der festgelegten Zeit, mit dem verfügbarem Budget und in einer
-angemessenen Qualität fertigzustellen, insgesamt grösser. \autocite{jenny_projektmanagement_2016} %PMB Projektmanagement folie23
-\newline
-
-Man unterscheidet grundlegend zwischen klassischem und agilem Projektmanagement.
-Beim klassischen Vorgehensmodellen arbeitet man meist sequentiell.
-Also eine Phase folgt der anderen und baut darauf auf.
-Rückkopplungen sind meistens nicht möglich und verzögern den Endtermin des Projektes.\\
-Bespiele für klassische Vorgehensmodelle sind
+Es beschreibt die verschiedenen Projektphasen, Meilensteine, Rollen, Aufgaben und die Arbeitsergebnisse (Artefakte) unter einheitlichen Begriffen. 
+Des Weiteren dient es mit verschiedensten Methoden, Techniken, Standards der Schaffung einer grösseren Übersichtlichkeit und kann somit die Planbarkeit eines Projekts stark erhöhen. 
+Bei Nutzung eines Vorgehensmodells ist die Wahrscheinlichkeit, ein Projekt innerhalb der festgelegten Zeit mit dem verfügbaren Budget und in einer angemessenen Qualität fertigzustellen, insgesamt höher. \autocite{jenny_projektmanagement_2016}\\\\ %PMB Projektmanagement folie23
+Man unterscheidet grundlegend zwischen klassischem und agilem Projektmanagement. 
+Bei klassischen Vorgehensmodellen wird meist sequentiell gearbeitet. 
+Das heißt, eine Phase folgt der nächsten und baut darauf auf. 
+Rückkopplungen sind meistens nicht möglich und verzögern somit den Endtermin des Projektes nicht.\\
+Beispiele für klassische Vorgehensmodelle sind:
 \begin{itemize}
     \item das Wasserfallmodell, in dem die Phasen die verschiedenen Aktivitäten darstellen.
     \item das V-Modell, welches man gut für die Qualitätssicherung brauchen kann.
     \item oder Hermes, welches vor allem vom Schweizer Bund verwendet wird.
     \item etc.
 \end{itemize}
-
-Im agilen Projektmanagement arbeitet man iterativ und kann in den einzelnen Phasen immer wieder neu planen.
-Dies erlaubt eine schnellere Rücksprache mit den Stakeholdern und die Einbringung neuer Ideen. \\
-Beispiele für iterative Vorgehensmodelle sind
+Im agilen Projektmanagement arbeitet man iterativ und kann in den einzelnen Phasen immer wieder neu planen. 
+Dies erlaubt eine schnellere Rücksprache mit den Stakeholdern und die Einbringung neuer Ideen.\\
+Beispiele für iterative Vorgehensmodelle sind:
 \begin{itemize}
     \item Scrum, welches den Grundstein des agilen Projektmanagement gebildet hat.
     \item SAFe steht für (Scaled Agile Framework) und erlaubt es Scrum in grossen Organisationen einzusetzen.
     \item etc. \autocite{noauthor_liste_2022}
 \end{itemize}
 
-Je nach Teamgrösse und Vorhaben eignet sich eher ein klassisches oder agiles Vorgehen.
-Klassische Vorgehen werden meist bei sehr grossen Projekten eingesetzt, wie Bau- und Infrastruktur Projekten oder
-innerhalb Wertschöpfungsketten. Also dort, wo es eine lange Planungsphase braucht und es keinen Sinn macht iterativ vorzugehen.
-Das agile Vorgehen wird meist eher in kleineren Teams verwendet und ist vor allem in der Software-Entwicklung oder
-im Marketing bekannt.
-\newline
-
-Für dieses Projekt wird \gls{SoDa} verwendet und ist ein hybrides Vorgehen,
-das bedeutet ein Mix aus klassischem und agilem Vorgehen.
-Es besteht auch aus verschiedenen Phasen die untereinander abgeschlossen sind,
-hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
+Je nach Teamgrösse und Vorhaben eignet sich eher ein klassisches oder agiles Vorgehen. 
+Klassische Vorgehen werden meist bei sehr grossen Projekten eingesetzt, wie Bau- und Infrastruktur Projekten oder innerhalb Wertschöpfungsketten. 
+Also dort, wo es eine lange Planungsphase braucht und keinen Sinn macht, iterativ vorzugehen. 
+Das agile Vorgehen wird eher in kleineren Teams verwendet und ist vor allem in der Software-Entwicklung oder im Marketing bekannt.\\\\
+Für dieses Projekt wird \gls{SoDa} (Software Development Agile) verwendet. 
+Das ist ein hybrides Vorgehen, das bedeutet ein Mix aus klassischem und agilem Vorgehen. 
+Es besteht ebenfalls aus verschiedenen Phasen, die untereinander abgeschlossen sind, hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, bei dem man nach Scrum vorgeht.
 
 \begin{figure}[h]
     \centering
@@ -526,24 +500,19 @@ hat aber auch einen iterativen Teil in der Konzeptions- und Realisierungsphase, 
     \label{fig:SoDa}
 \end{figure}
 
-
-Wie der Name schon sagt, ist es für die Software Entwicklung konzipiert und erlaubt es, die gängigen Artefakte,
-welche man bei der Software Entwicklung erstellen muss, in die Projektphasen miteinzubinden.
-So wird in der Initialisierungsphase der Projektauftrag, Business-Case und der Anforderungskatalog definiert und
-in der Einführungsphase können Anleitungen oder Einführungen für den operativen Einsatz erstellt werden.
-Die Konzeptions- und Realisierungsphase erlaubt es, die Vorteile von der agilen Vorgehensweise nach Scrum,
-in der Entwicklung zu gebrauchen. Durch das Vorgehen mithilfe von Sprints können bei jedem Zyklus neue
-Anforderungen erfasst und das weitere Vorgehen geplant werden. Die Sprints können beliebig lang gesetzt werden,
-im Geschäftsumfeld üblich sind aber 2-Wochen.
-
-
+Wie der Name schon sagt, ist es für die Softwareentwicklung konzipiert und erlaubt es, die gängigen Artefakte, welche man bei der Softwareentwicklung erstellen muss, in die Projektphasen miteinzubinden. 
+So werden in der Initialisierungsphase der Projektauftrag, BusinessCase und der Anforderungskatalog definiert. 
+In der Einführungsphase können Anleitungen oder Einführungen für den operativen Einsatz erstellt werden.
+Die Konzeptions- und Realisierungsphase erlaubt es, die Vorteile der agilen Vorgehensweise nach Scrum in der Entwicklung zu nutzen. 
+Durch das Vorgehen mithilfe von Sprints können bei jedem Zyklus neue Anforderungen erfasst und das weitere Vorgehen geplant werden. 
+Die Sprints können beliebig lang gesetzt werden, im Geschäftsumfeld üblich sind aber 2 Wochen.\\
 Die verschiedenen Phasen unserer Aufgabenstellung lassen sich gut auf die verschiedenen Phasen von \gls{SoDa} abbilden.
 In der Initialisierungsphase wird die Analyse der jetzigen Software erstellt und das Projekt geplant.
 In der Konzeptions- und Realisierungsphase wird in Sprints eingeteilt, die neue Software erstellt.
 Und in der Einführungsphase kann die Bedienungsanleitung für den weiteren Gebrauch geschrieben werden.\\\\
 
 \subsubsection{Rahmenplan}
-Der Rahmenplan gibt ein Überblick über die ganzen Phasen des Projekts.
+Der Rahmenplan gibt einen Überblick über die alle Phasen des Projekts. 
 Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als Meilensteine deklariert und mit konkretem Datum versehen.
 
 \begin{figure}[h]
@@ -553,15 +522,16 @@ Die geplanten Zwischenergebnisse werden an fixen Punkten im Projekt als Meilenst
     \caption{Rahmenplan}
     \label{fig:Rahmenplan}
 \end{figure}
-Es wurde entschieden eine Intialisierungsphase von 3 Wochen zu planen, da die Analyse der bestehenden Software in dieser Phase stattfindet.
-Am Schluss bleibt noch eine Woche für die Einführungsphase und das Erstellen der Anleitung.
-Für die Realisierungsphase bleiben 9 Wochen Zeit, die in Sprints eingeteilt werden können.
-Es verbleibt ein einwöchiger Sprint und 4 reguläre zweiwöchige Sprints.
+
+Es wird entschieden, eine Initialisierungsphase von 3 Wochen zu planen, die Analyse der bestehenden Software findet in dieser Phase statt. 
+Es bleibt noch eine Woche für die Einführungsphase und das Erstellen der Anleitung. 
+Für die Realisierungsphase bleiben 9 Wochen, die in Sprints eingeteilt werden können. 
+Zum Schluss verbleiben ein einwöchiger Sprint und 4 reguläre zweiwöchige Sprints.
+
 \newpage
 \subsubsection*{Meilensteine}
-Meilensteine erlauben es den Projektfortschritt festzustellen,
-in dem zuvor definierte Projektergebnisse (Artefakte) an einem gewissen Datum vorliegen.\\
-Artefakte sind konkrete Dokumente oder Software die vorliegen muss. Zum Beispiel:
+Meilensteine erlauben es, den Projektfortschritt festzustellen, in dem zuvor definierte Projektergebnisse (Artefakte) an einem gewissen Datum vorliegen.\\
+Artefakte sind konkrete Dokumente oder Software, die vorliegen müssen. Zum Beispiel:
 \begin{itemize}
     \item Testprotokolle
     \item Prototypen
@@ -570,9 +540,8 @@ Artefakte sind konkrete Dokumente oder Software die vorliegen muss. Zum Beispiel
     \item etc.
 \end{itemize}
 
-In \gls{SoDa} ist es normal, bei jedem Phasenwechsel ein Meilenstein zu definieren und in der Mitte der
-Realisierungsphase noch einmal. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
-Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
+In \gls{SoDa} ist es normal, bei jedem Phasenwechsel einen Meilenstein zu definieren und in der Mitte der Realisierungsphase ebenfalls einen. \autocite{jenny_projektmanagement_2016} % PMB Projektplanung p23-25
+Durch dieses Vorgehen erhält man 5 Meilensteine für dieses Projekt.
 
 \begin{table}[h]
     \centering
@@ -599,19 +568,18 @@ Nach diesem Vorgehen erhält man 5 Meilensteine für dieses Projekt.
     \caption{Meilensteine}
     \label{tab: Meilensteine}
 \end{table}
+
 \clearpage
 \subsection{Risikomanagement}
-Das Ziel jedes Projektes ist, eine möglichst hohe Wertschöpfung zu generieren.
-Doch Wertschöpfung und Risiko stehen komplementär zueinander.
-Das bedeutet, je höher die Wertschöpfung, desto höher das Risiko.
-Um die Wertschöpfung möglichst hoch zu halten und die Risiken zu minimieren wird Risikomanagement betrieben.
-Im Risikomanagement unterscheidet man zwischen \textbf{Produktrisiken} und \textbf{Projektrisiken}.
-\newline
-Produktrisiken werden direkt als Arbeitspakete im Projekt verbaut.
-Dabei wird geschaut, welche Gefahren für Mensch und Umwelt während der ganzen Umsetzung und Betreibung auftreten können.
-\newline
-Die Projektrisiken werden im Projektmanagement behandelt.
-Dabei wird geschaut, welche Probleme mich daran hindern könnten ein Projekt erfolgreich abzuschliessen.
+Das Ziel jedes Projektes ist, eine möglichst hohe Wertschöpfung zu generieren. 
+Doch Wertschöpfung und Risiko stehen komplementär zueinander. 
+Das bedeutet, je höher die Wertschöpfung, desto höher das Risiko. 
+Um die Wertschöpfung möglichst hoch zu halten und die Risiken zu minimieren, wird Risikomanagement betrieben. 
+Im Risikomanagement unterscheidet man zwischen \textbf{Produktrisiken} und \textbf{Projektrisiken}. \autocite[p.~8-16]{peter_sollberger_risikomanagement_2021}
+Produktrisiken werden direkt als Arbeitspakete im Projekt verbaut. 
+Dabei wird geschaut, welche Gefahren für Mensch und Umwelt während der ganzen Umsetzung undwährend des Betriebs auftreten können.
+Die Projektrisiken werden im Projektmanagement behandelt. 
+Dabei wird geschaut, welche Probleme einen daran hindern könnten, ein Projekt erfolgreich abzuschliessen. \\
 Dies könnten sein:
 \begin{itemize}
     \item technische Risiken
@@ -619,17 +587,16 @@ Dies könnten sein:
     \item wirtschaftliche, industrielle und Geschäftsrisiken
 \end{itemize}
 \noindent
-Das Ziel des Risikomanagements ist es, Risiken frühzeitig zu erkennen und entsprechende Massnahmen zu ergreifen.
+Das Ziel des Risikomanagements ist es, Risiken frühzeitig zu erkennen und entsprechende Massnahmen zu ergreifen. 
 Der Prozess dabei ist folgender:
 \begin{enumerate}
     \item Identifizieren
     \item Analysieren
     \item Priorisieren
     \item Massnahmen erarbeiten
-    \item Überwachen \autocite[p.~8-16]{peter_sollberger_risikomanagement_2021}
+    \item Überwachen
 \end{enumerate}
-\noindent
-In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten.
+In diesem Kapitel werden verschiedene Grundrisiken identifiziert, die während dem Projekt auftreten könnten. 
 Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \nameref{Sprintreviews}, ein Risiko-Update durchgeführt werden.\\\\
 
 \begin{tabular}[h]{ll}
@@ -670,9 +637,9 @@ Da dieses Projekt während der Umsetzungsphase iterativ läuft, kann bei den \na
 
 \clearpage
 \subsubsection{Massnahmen}
-\noindent
 Nun werden die Risiken analysiert und entsprechende Massnahmen erarbeitet.
 Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schadensausmass festgehalten.
+
 \begin{longtable}[h]{|p{1em}|p{8em}|p{10em}|p{7em}|p{5em}|p{2em}|}
     \hline
     \rowcolor[gray]{.9} \rot{ID} & \rot{Risiko} & \rot{Massnahmen} &
@@ -703,11 +670,11 @@ Dabei wird das neue Risiko mit angepasster Eintrittswahrscheinlichkeit und Schad
 \end{longtable}
 
 \subsubsection{Risikomatrix}
-Die Risiken werden in eine sogenannte Risikomatrix eingetragen, wobei die Achsen die Eintrittswahrscheinlichkeit und das Schadensausmass repräsentieren.
-In dieser Matrix kann die Risikobereitschaft der Projektverantwortlichen eingetragen werden.
-Die Risikobereitschaft wird mit einer Linie durch die Matrix dargestellt.
-In dem Projekt wäre es der orangene und rote Bereich, welcher über der Bereitschaftslinie liegt.
-Wenn ein Risiko über der Linie liegt, müssen zwingend bessere Massnahmen ergriffen werden.\\
+Die Risiken werden in eine sogenannte Risikomatrix eingetragen, wobei die Achsen die Eintrittswahrscheinlichkeit und das Schadensausmass darstellen. 
+In dieser Matrix kann die Risikobereitschaft der Projektverantwortlichen eingetragen werden. 
+Die Risikobereitschaft wird mit einer Linie durch die Matrix dargestellt. 
+In dem Projekt wäre es der orangene und rote Bereich, welcher über der Bereitschaftslinie liegt. 
+Wenn ein Risiko über der Linie liegt, müssen zwingend andere Massnahmen ergriffen werden.\\
 Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobereitschaftslinie zu bringen.
 
 \begin{table}[h]
@@ -733,50 +700,46 @@ Das Ziel ist es mit den getroffenen Massnahmen alle Risiken unter diese Risikobe
 \section{Realisierung}\label{implementation}
 
 \subsection{Analyse der bestehenden Infrastruktur}
-Als erster Schritt wird eine Analyse des bestehenden Bots und seiner Funktion im Discord durchgef\"uhrt.
+Als erster Schritt wird eine Analyse des bestehenden Bots und seiner Funktion im Discord durchgeführt.
 
 \subsubsection{Aufbau Discord}
-Der Discord Server "STAIR" wird von STAIR verwaltet und ist ein online Treffpunkt f\"ur alle Studenten des Departements Informatik.
-Beim erstmaligen Eintreten in den Server hat man noch keine Berechtigung und es wird deshalb noch nichts, ausser dem Help Channel
-angezeigt. Man bekommt vom Bot Stan, beim Eintreten auf den Server, eine Nachricht mit einer Anleitung. Darin ist beschrieben, wie
-man sich authentifizieren kann. Bei der Authentifizierung wird vom Bot geschaut ob es sich um eine Studenten E-Mail Adresse handelt.
-Wenn dem so ist, schickt der Bot einen 6-stelligen Random Code, den der Benutzer im Discord dem Bot zur\"uckschreiben muss.
-
-Hat dieser Prozess funktioniert, ist man "eingeloggt" und bekommt vom Bot die Rolle Student zugeteilt. Damit hat man Zugriff auf
-die verschiedenen Grund-Channels, wie Gaming, Administration, General, Studying, etc.
-In diesen Channels kann man sich mit seinen Mitstudierenden Sprachlich oder per Text \"uber alle Themen austauschen.
-\newline
-
-Der STAIR Discord-Server bietet auch Informationen und Unterst\"utzung f\"ur alle Module an. Dabei hat jedes Modul einen eigenen Channel.
-Dort k\"onnen sich Studierende gezielt \"uber ein Modul austauschen, Fragen stellen oder Informationen mitteilen.
-Am Anfang wird gar nichts angezeigt. Man muss sich spezifisch f\"ur die Module registrieren um diese angezeigt zu bekommen. Dies verhindert
-
+Der Discord Server "STAIR" wird von STAIR verwaltet und ist ein online Treffpunkt für alle Studierenden des Departments Informatik. 
+Beim erstmaligen Eintreten in den Server hat man noch keine Berechtigungen. 
+Es wird deshalb ausser dem Help Channel noch nichts angezeigt. 
+Man bekommt vom Bot Stan, nach Eintreten in den Server, eine Nachricht mit einer Anleitung. 
+Darin ist beschrieben, wie man sich authentifiziert. 
+Bei der Authentifizierung wird vom Bot geschaut, ob es sich um eine Studierenden E-Mailadresse handelt. 
+Wenn dem so ist, schickt der Bot einen 6-stelligen Random Code, den der Benutzer im Discord dem Bot zurückschreiben muss.\\
+Hat dieser Prozess funktioniert, ist man "eingeloggt" und bekommt vom Bot die Rolle Student/in zugeteilt. 
+Damit hat man Zugriff auf die verschiedenen Grund-Channels, wie Gaming, Administration, General, Studying, etc.. 
+In diesen Channels können sich Studierende mit anderen Studierenden sprachlich oder per Text über Themen austauschen.\\\\
+Der STAIR Discord-Server bietet auch Informationen und Unterstützung für alle Module an. 
+Dabei hat jedes Modul einen eigenen Channel. 
+Dort können sich Studierende gezielt über ein Modul austauschen, Fragen stellen oder Informationen mitteilen. 
+Für diese Module muss man sich spezifisch registrieren, erst danach werden diese angezeigt. 
+So wird verhindert,
 \begin{enumerate}
     \item dass man unn\"otig Benachrichtigungen von Channels bekommt, die einen nicht interessieren.
     \item dass sein Discord nicht \"uberf\"ullt wird mit ca. 530 Modul-Channels.
 \end{enumerate}
-
 Die Commands \textit{show <module>} und \textit{hide <module>} erlauben es, den Channel hinzuzuf\"ugen oder zu entfernen.
-Bei der jetzigen Version des Discord Bots werden die Anzahl Rollen, die vergeben werden können zum Problem.
+Bei der derzeitigen Version des Discord Bots wird die Anzahl Rollen, die vergeben werden können, zum Problem. 
 (Siehe Kapitel \ref{discord_einschraenkungen})
-Durch eine Anzahl von etwa 350 Modulen, welche am Departement Informatik unterrichtet werden, 
-kann die Modulfreigabe nicht mit Rollen gelöst werden.
-Zum jetzigen Zeitpunkt werden die Module in einzelne Themenbereiche zusammengefasst.
-Also \gls{z.B.} alle Security Module in einer Kategorie.
-Bei einem show-Command, wird dem Student nun die Rolle der entsprechenden Kategorie Hinzugefügt.
-Damit erhält er aber Einsicht in alle Module dieser Kategorie, was vielleicht gar nicht erwünscht ist.
-\newline
-
-Neu gibt es auch das Konzept von verschiedenen H\"ausern bei STAIR. Jeder Student wird dabei einem Haus zugeteilt. Die Zuteilung l\"auft
-dabei \"uber das Sekretariat der Hochschule. Es wird geschaut, dass in jedem Studiengang in jedem Startsemester, die Studenten gleichm\"assig
-auf die H\"auser verteilt werden.
-Es gibt die H\"auser Blue, Purple, Red, Orange, Yellow und Grey. \"uber das Semester hinweg organisiert STAIR verschiedene Events, bei denen
-man Punkte f\"ur sein Haus sammeln kann. Am Ende jedes Jahres, also Ende Fr\"uhlingssemester, wird das Haus, welches am meisten Punkte
-gesammelt hat, als Gewinner gelobt.
-
-Der Discord-Server bietet die Plattform um sein Haus zu mobilisieren oder die neuesten Ergebnisse den Studenten zu verk\"unden.
-Pro Haus gibt einen Channel. Momentan werden die Studenten noch manuell zu ihren zugeh\"origen Channels hinzugef\"ugt. \\
-Im folgenden Bild sieht man eine Übersicht über alle Discord Channels und Kategorien, wie sie momentan bestehen.
+Durch eine Anzahl von etwa 350 Modulen, welche am Departement Informatik unterrichtet werden, kann die Modulfreigabe nicht mit Rollen gelöst werden. 
+Zum jetzigen Zeitpunkt werden die Module in einzelnen Themenbereichen zusammengefasst. 
+Beispielsweise alle Security Module in einer Kategorie. 
+Bei einem Show-Command wird den Studierenden nun die Rolle der entsprechenden Kategorie zugeteilt. 
+Mit diesem Vorgang erhält der Studierende aber Einsicht in alle Module dieser Kategorie, was vielleicht gar nicht erwünscht ist.\\\\
+Neu gibt es das Konzept der verschiedenen Häuser bei STAIR. 
+Jeder Studierende wird dabei einem Haus zugeteilt. 
+Die Zuteilung läuft dabei über das Sekretariat der Hochschule. 
+Es wird geschaut, dass in jedem Studiengang, in jedem Startsemester die Studierenden gleichmässig auf die Häuser verteilt werden. 
+Es gibt die Häuser Blue, Purple, Red, Orange, Yellow und Grey. 
+Während dem Semester organisiert STAIR verschiedene Events, bei denen Punkte für sein Haus gesammelt werden können. 
+Am Ende jedes Studienjahres wird das Haus, welches am meisten Punkte gesammelt hat, als Gewinner gelobt.\\
+Der Discord-Server bietet die Plattform, um sein Haus zu mobilisieren oder die neuesten Ergebnisse den Studierenden zu verkünden. 
+Pro Haus gibt es einen Channel. Momentan werden die Studierenden noch manuell zu ihren zugehörigen Channels hinzugefügt.
+In der folgenden Abbildung sieht man eine Übersicht über alle Discord Channels und Kategorien, wie sie momentan bestehen.
 
 \begin{figure}[h]
     \centering
@@ -786,7 +749,7 @@ Im folgenden Bild sieht man eine Übersicht über alle Discord Channels und Kate
 \end{figure}
 
 \subsubsection*{Ablauf Authentifizierung \& Modulanmeldung}
-In den folgenden zwei Seiten wird der Authentifizierungsprozess und der Modulanmeldungsprozess als Ablaufdiagramm beschrieben.
+In den folgenden zwei Seiten werden der Authentifizierungsprozess und der Modulanmeldungsprozess als Ablaufdiagramm beschrieben. 
 Dieser Ablauf wird zum jetzigen Zeitpunkt durchgeführt.
 
 \begin{landscape}
@@ -811,7 +774,7 @@ Dieser Ablauf wird zum jetzigen Zeitpunkt durchgeführt.
 Der Bot ist mit der Programmiersprache C\# und dem .NET Framework geschrieben.
 
 \subsubsection*{Konfigurationsmanagement alter Bot}
-In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizierung und den eingesetzten Libraries.
+In der folgenden Tabelle ist eine Übersicht der verwendeten IDE, ihrer Spezifizierung und den eingesetzten Libraries.
 
 \begin{table}[h]
     \centering
@@ -852,16 +815,15 @@ In der folgenden Tabelle ist eine \"Ubersicht der benutzen IDE, ihrer Spezifizie
     \label{tab: Konfigurationsmanagement-Bot-alt}
 \end{table}
 
-
-Das Programm, welches den Bot zur Verfügung stellt, ist nicht gross. Es beinhaltet im Groben einen Client Socket der
-Events on Discord abfängt und einer E-Mail Klasse, die E-Mails an den Benutzer versenden kann.
-Das Programm ist in zwei Packages aufgeteilt.
-
+Das Programm, welches den Bot zur Verfügung stellt, ist nicht gross. 
+Beinhaltet im Groben einen Client Socket, der Events on Discord abfängt und einer E-Mail Klasse, die E-Mails an den Benutzer versenden kann. 
+Das Programm ist in zwei Packages aufgeteilt:
 \begin{itemize}
     \item StanBot.Core
     \item StanBot.Service
 \end{itemize}
 \clearpage
+
 \begin{figure}[ht]
     \centering
     \hspace*{-1.5cm}
@@ -886,70 +848,66 @@ Die Konfiguration entspricht der eines Windows Services und läuft dementspreche
 \subsubsection{Geplante Änderungen}\label{geplanteAenderungen}
 
 \subsubsection*{Wechsel zu Linux Server}
-
-Es wurde zusammen mit dem STAIR Team entschieden,
-auf Linux zu wechseln um alle Server einheitlich auf Linux zu haben.
-Bei STAIR wird noch eine Wordpress-Seite und eine JavaScript Webseite betrieben.
-WordPress ist ein Content Management System (CMS) und wird bei STAIR eingesetzt für die Hauptwebseite mit allen Events und weiteren Informationen.
-Da die Projekte sich stark voneinander unterscheiden, wurde entschieden mit verschiedenen Servern zu arbeiten und nicht alle auf dem gleichen Server zu hosten.
-Gleichzeitig befindet sich die WordPress-Seite noch auf einem anderen Rechencenter als dem Enterprise Lab der HSLU.
-Dies verursacht auch Kosten, welche eingespart werden sollen in der Zukunft.
+Es wird zusammen mit dem STAIR Team entschieden, auf Linux zu wechseln, um alle Server einheitlich auf Linux zu haben. 
+Bei STAIR wird noch eine Wordpress-Seite und eine JavaScript Webseite betrieben. 
+WordPress ist ein Content Management System (CMS) und wird bei STAIR eingesetzt für die Hauptwebseite, auf der alle Events und weitere Informationen ersichtlich sind. 
+Da die Projekte sich stark voneinander unterscheiden, wird entschieden, mit verschiedenen Servern zu arbeiten und nicht alle auf dem gleichen Server zu hosten. 
+Gleichzeitig befindet sich die WordPress-Seite noch auf einem anderen Rechencenter als dem Enterprise Lab der HSLU. 
+Dies verursacht Kosten, die eingespart werden sollen in Zukunft. 
 Um den Transfer zu vereinfachen, macht es Sinn, nicht einen ohnehin bald obsoleten Server für das Deployment zu nutzen.
 
 \subsubsection*{Entscheid den Bot neu zu schreiben}
-
-Bei der Analyse des bisherigen Bot wurde bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core 3.1 mit veralteten Libraries genützt wurden.
-Diese werden nicht mehr unterstützt und sollten ersetzt werden.
-Für die neue Version wird .NET 6 mit C\# verwendet.
-Dies ermöglicht es, inspiration bei der alten Lösung zu holen, falls zum Beispiel die Verwendung der Discord Library unklar ist oder bei einem bereits existierenden Feature ein Probleme auftaucht.
-Die neueren .NET Versionen sind Cross-Plattform fähig und können damit nun auch auf Linux verwendet werden.\autocite{de_george_installieren_nodate}
-Die Sprache wird an der Hochschule nicht breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{PDF source is not in Zotero export} und die Sprache ist ähnlich zu Java,
-welche grundsätzlich an der Hochschule verwendet wird.
-das WIPRO Team war zusätzlich bereits vertraut mit der C\# Sprache und hat diese als angenehm empfunden, was die Entscheidung zusätzlich unterstützte.
+Bei der Analyse des bisherigen Bot wird bemerkt, dass die veraltete Technologie .NET Standard 2.0 und .NET Core 3.1 mit veralteten Libraries genutzt wird. 
+Diese werden nicht mehr unterstützt und sollten ersetzt werden. 
+Für die neue Version wird .NET 6 mit C\# verwendet. 
+Dies ermöglicht es, Inspiration bei der alten Lösung zu holen, falls zum Beispiel die Verwendung der Discord Library unklar ist oder bei einem bereits existierenden Feature ein Problem auftaucht. 
+Die neueren .NET Versionen sind Cross-Plattform fähig und können auf Linux verwendet werden.\autocite{de_george_installieren_nodate}
+Die Sprache wird an der Hochschule nicht breit verwendet, es gibt jedoch ein Modul zu C\#\autocite{} \todo{PDF source is not in Zotero export} und die Sprache ist ähnlich zu Java, welche grundsätzlich an der Hochschule verwendet wird.
+Das WIPRO Team ist zusätzlich bereits vertraut mit C\# als Sprache und hat diese als angenehm empfunden, was die Entscheidung zusätzlich unterstützte. 
 
 \subsubsection*{Entscheid Login Funktionsweise}
 \todo{source}
-Beim Login wurde überlegt das Switch-Login der Hochschule zu verwenden, welches auch für aussenstehende Zwecke verwendet werden kann.
-Hierbei wurde dagegen entschieden, da STAIR nicht die volle Kontrolle über den Service hat und deshalb plötzlich neue Interface Standards erlassen werden können, was zu Problemen führen kann.
-Auch muss hierzu ein bestimmter Link geöffnet werden, welcher von Stan verschickt werden muss um die Switch Login Seite zu öffnen.
-Dies könnte nicht vertrauenswürdig wirken bei Studenten.
+Beim Login wird überlegt, das Switch-Login der Hochschule zu verwenden, welches auch für aussenstehende Zwecke verwendet werden kann. 
+Es wird dagegen entschieden, da STAIR nicht die volle Kontrolle über den Service hat. 
+Es können plötzlich neue Interface Standards erlassen werden, was zu Problemen führen kann. 
+Es muss hierzu ein bestimmter Link geöffnet werden, welcher von Stan verschickt werden muss, um die Switch Login Seite zu öffnen. 
+Dies könnte nicht vertrauenswürdig wirken bei Studierenden. 
 Ausserdem hat sich das Login mittels E-Mails bereits bewährt, weshalb dieses nun weiterhin verwendet wird.
 
 %\subsubsection*{Wechsel zu Community Server}
 % https://support.discord.com/hc/en-us/articles/360047132851-Enabling-Your-Community-Server
 
 \subsubsection*{Entscheid zur Anbindung an eine Datenbank}
-
-Eine Datenbank bringt einige Vorteile.
+Eine Datenbank bringt einige Vorteile. 
 Speziell relevant sind folgende Punkte für dieses Projekt:
 \begin{itemize}
-    \item Eine Datenbank ermöglicht eine automatische Zuweisung von Studenten zu ihren Häusern.
+    \item Eine Datenbank ermöglicht eine automatische Zuweisung von Studierenden zu ihren Häusern.
     \item Sie ermöglicht das automatische markieren von Exstudierenden.
     \item Sie bietet die grösste Erweiterbarkeit für die Zukunft.
-    \item Modul-Channels welche zur Zeit nicht gebraucht werden, könnten theoretisch auf Discord gelöscht werden und neu erstellt werden, wenn diese gebraucht werden.
-    \item Bei Problemen kann schnell herausgefunden werden, welche genau Person betroffen ist und kann sich auch über alternative Kommunikationswege, wie E-Mail, mit der Person in Kontakt setzen.
-    \item Studenten können über ihre E-Mail permanent gebannt werden, ohne dass sie sich mit neuen Discord Accounts wieder anmelden können.
+    \item Modul-Channels, welche zur Zeit nicht gebraucht werden, könnten theoretisch auf Discord gelöscht werden. Bei Bedarf können die Modul-Channels wieder neu erstellt werden.
+    \item Bei Problemen kann schnell herausgefunden werden, welche Person betroffen ist und man kann die Person über alternative Kommunikationswege, wie E-Mail, kontaktieren.
+    \item Studierende können über ihre E-Mail permanent gebannt werden, ohne dass sie sich mit neuen Discord Accounts wieder anmelden können.
 \end{itemize}
-
-Eine Datei wäre ebenfalls möglich zur Datenspeicherung.
-Diese hätte jedoch weniger Performance und würde keine Checks durchführen beim Speichern der Daten.
+Eine Datei wäre ebenfalls möglich zur Datenspeicherung. 
+Diese hätte jedoch weniger Performance und würde keine Checks durchführen beim Speichern der Daten. 
 Das Auslesen von gefilterten Daten gestaltet sich ebenfalls einfacher.\autocite{castro_why_2020}
-Da bei diesem Projekt wichtig ist, dass die Daten korrekt im Schema gespeichert werden und die Anpassbarkeit der Datenbank keinen Fokus bekommen hat, wurde eine SQL basierte Datenbank bevorzugt gegenüber von NoSQL Datenbanken.
-Als gewählte Technologie hat sich MySQL durch seine grosse Verbreitung sehr gut angeboten.
-Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie\\beschrieben.\autocite{noauthor_db-engines_2022}
+Da es bei diesem Projekt wichtig ist, dass die Daten korrekt im Schema gespeichert werden wurde eine SQL basierte Datenbank bevorzugt gegenüber von NoSQL Datenbanken. 
+Als gewählte Technologie hat sich MySQL durch seine grosse Verbreitung sehr gut angeboten. 
+Online wird MySQL als die zweitmeist genutzte Datenbank-Technologie beschrieben.\autocite{noauthor_db-engines_2022}
 
 \subsubsection*{Entscheidung einen eigenen Bot zu entwickeln}
-Zusammen mit STAIR wurde entschieden, wieder eine eigens entwickelte Lösung zu wählen.
-Dies hat verschiedene Vorteile.
-Als erstes ist damit gleich auch der Datenschutz gewährleistet.
-Auch sind so keine künstliche Limitierungen eines externen entwickelten Bots vorhanden.
-Die einzigen Limitierungen sind vom \gls{API} von Discord und von technischen Know-How der betreuenden Entwicklern.
-Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten.
+Zusammen mit STAIR wurde entschieden, wieder eine eigens entwickelte Lösung zu wählen. 
+Dies hat verschiedene Vorteile. 
+Als erstes ist damit gleich auch der Datenschutz gewährleistet. 
+Auch sind so keine künstlichen Limitierungen eines extern entwickelten Bots vorhanden. 
+Die einzigen Limitierungen sind vom \gls{API} von Discord und von technischen Know-How der betreuenden Entwicklern. 
+Da die verschiedenen Bots eventuell nicht in Europa gehostet sind, könnten Verbindungs- und/oder Performanceprobleme auftreten. 
 Durch die Log Datei(en) können Fehler einfacher gefunden und nachvollzogen werden.
+
 \newpage
 \subsection{Initialisierungsphase}
-Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert.
-Diese werden für die Realisierungsphase in Epics umgewandelt.
+Aus dem Projektauftrag und aus den Wünschen der Stakeholder werden Anforderungen an das Produkt definiert. 
+Diese werden für die Realisierungsphase in Epics umgewandelt. 
 Die Epics werden im Anschluss in einzelne User Stories aufgeteilt, die dann in den Sprints separat behandelt und gelöst werden.
 
 \subsubsection{Epics}\label{Epics}
@@ -997,14 +955,10 @@ Die Epics werden in kleinere User-Stories heruntergebrochen und dienen als Baust
 Dieser Prozess wird auch \textbf{Story-Splitting} genannt
 User-Stories sind immer nach dem gleichen Muster aufgebaut. \\
 "Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>." \\
-Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder
-infrastrukturelle User-Stories so gebildet werden.
-
-In der Strint-Planung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert.
-Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und
-können auch als Test während der Entwicklung gebraucht werden.
-Später können dann die Mitglieder des Teams, den Aufwand der Story realistisch abschätzen.
-
+Die Story muss nicht immer aus der Benutzersicht definiert sein, sondern es können auch technische oder infrastrukturelle User-Stories so gebildet werden.\\
+In der Sprint-Planung werden zu jeder User-Story zugehörige Akzeptanzkriterien definiert. 
+Diese dienen zur Kontrolle, ob die User-Story korrekt umgesetzt wurde und können auch als Test während der Entwicklung gebraucht werden. 
+Später können dann die Mitglieder des Teams den Aufwand der Story realistisch abschätzen.\\
 Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. \autocite{hammerschall_software_2013} % PMB Projektplanung p.101-103
 \begin{itemize}
     \item \textbf{I}ndependent  unabhängig voneinander
@@ -1014,7 +968,6 @@ Gute User-Stories können nach dem Modell \textbf{I.N.V.E.S.T} gebildet werden. 
     \item \textbf{S}mall        klein genug, um in einem Sprint entwickelt werden zu können
     \item \textbf{T}estable     klare Akzeptanzkriterien
 \end{itemize}
-
 Beim Story-Splitting werden folgende User-Stories für das Projekt definiert.
 
 \begin{longtable}{ | p{1em} | p{16em} | p{13em} | p{2em} | p{3em} | p{2em} |}
@@ -1103,9 +1056,8 @@ Die Projektkontrolle und der Fortschritt wird mit folgenden Tools überwacht.
 
 \subsubsection{Testdrehbuch}\label{Testdrehbuch}
 Wie im Kapitel \nameref{Teststrategie} erwähnt, werden im Folgenden die einzelnen Systemtests beschrieben.
-Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.
-\newline
-Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden.
+Diese müssen alle manuell vor der Übergabe der Software durchgeführt werden.\\
+Sie beziehen sich immer auf eine Anforderung / Epic und können so auch bei den einzelnen Sprintreviews zur Kontrolle verwendet werden. 
 Die Referenzierten Epics sind im Kapitel \nameref{Epics} beschrieben.
 
 \begin{longtable}[ht]{|p{15em}|p{25em}|}
@@ -1327,8 +1279,7 @@ In der folgenden Tabelle werden alle verwendeten NuGet Pakete mit der verwendete
     \caption{Konfigurationsmanagement}
     \label{tab: Konfigurationsmanagement}
 \end{table}
-
-Man kann diese NuGet Pakete für die ganze Solution installieren, oder für einzelne Projekte.
+Man kann diese NuGet Pakete für die ganze Solution installieren, oder für einzelne Projekte. 
 Im Folgenden wird aufgelistet, welches Projekt welche Pakete enthält.\\
 Ganze Solution:
 \begin{itemize}
@@ -1362,15 +1313,12 @@ Zum Start von Sprint 1 sieht der aktuelle Sprint Plan mit den User-Stories wie f
     \caption{Start Sprint 1 User Stories}
     \label{fig:start_sprint_one}
 \end{figure}
-
-In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und
-mit dem Aufsetzen der Linux Umgebung befasst.
+In der Abbildung erkennt man, dass sich Sprint 1 mit der Studentenerfassung und mit dem Aufsetzen der Linux Umgebung befasst.
 
 \subsubsection{Entity Relationship Diagramm}\label{entity-relationship-diagramm}
-Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden,
-welche Daten im System wichtig sind und wie diese gespeichert werden.
-Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt.
-Das ERD kann später in ein Datenbank Schema übertragen werden.
+Um die Software Architektur richtig planen zu können, muss im Vorfeld festgelegt werden, welche Daten im System wichtig sind und wie diese gespeichert werden. 
+Um diesen Zusammenhang richtig darstellen zu können, wird ein Entity-Relationship Diagramm (ERD) erstellt. 
+Das ERD kann später in ein Datenbank-Schema übertragen werden. 
 Die einzelnen Tabellen sind wie folgt beschrieben.
 
 \begin{figure}[h]
@@ -1381,23 +1329,20 @@ Die einzelnen Tabellen sind wie folgt beschrieben.
 \end{figure}
 
 (Ein grosses Bild des Diagramms findet sich im Anhang auf Seite \pageref*{fig:ER-Diagram-big})\\
-Bei der Datenspeicherung wird eine Unterteilung zwischen dem Studenten und seinem Discord Account vorgenommen.
-Dies erlaubt es, eine saubere Trennung zwischen den richtigen Studenten und ihrem Online erscheinen auf Discord zu gewährleisten.
-(Seperation of Concerns (SOC)).
-Die Studentendaten, wie Name, Vorname, E-Mail Adresse und Hauszuteilung, werden von der Hochschul-Administration zur Verfügung gestellt und können als Liste eingelesen werden.
-Dabei werden die Tabellen \textit{Student} und \textit{House} aufgefüllt und die Zuordnung gemacht.
-Implementiert wird die Funktionalität in diesem Sprint 1 (\nameref{tab: UserStories}).
-\newline
-Der \textit{DiscordAccount} wird bei der Authentifikation dem Studenten zugeordnet.
-Über die Tabelle \textit{AccountRole}, werden nach dem Authentifizierungsprozess dem Studenten, die richtigen Rollen zugeordnet.
-\newline
-Die Tabelle \textit{Module} wird auch über eine, von der Hochschul-Administration, zur Verfügung gestellte Liste befüllt.
-Wenn nun der Student sich im Discord beim Bot für ein Modul anmeldet, wird die Zuordnung von Modul und DiscordAccount vorgenommen.
-Der richtige Student, \gls{bzw.} seine Daten, haben mit dieser Zuteilung nichts zu tun.
-\newline
-Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord möglich.
-Durch die Einschränkung von 50 Channeln in einer Kategorie \ref{discord_einschraenkungen}, können nicht alle Module in einer Kategorie zusammengefasst werden.
-Dies bedeutet das die Module aufgeteilt werden müssen.
+Bei der Datenspeicherung wird eine Unterteilung zwischen dem Studierenden und seinem Discord Account vorgenommen. 
+Dies erlaubt es, eine saubere Trennung zwischen den richtigen Studierenden und ihrem Online-Erscheinen auf Discord zu gewährleisten. 
+(Seperation of Concerns (SOC)). 
+Die Studierenden Daten, wie Name, Vorname, E-Mail Adresse und Hauszuteilung, werden von der Hochschuladministration zur Verfügung gestellt und können als Liste eingelesen werden. 
+Dabei werden die Tabellen \textit{Student} und \textit{House} aufgefüllt und die Zuordnung gemacht. 
+Implementiert wird die Funktionalität in diesem Sprint 1 (\nameref{tab: UserStories}).\\
+Der \textit{DiscordAccount} wird bei der Authentifikation dem Studierenden zugeordnet.\\
+Über die Tabelle \textit{AccountRole}, werden nach dem Authentifizierungsprozess dem Studierenden, die richtigen Rollen zugeordnet.\\
+Die Tabelle \textit{Module} wird auch über eine, von der Hochschul-Administration zur Verfügung gestellten Liste befüllt. 
+Wenn sich nun der Studierende im Discord beim Bot für ein Modul anmeldet, wird die Zuordnung von Modul und DiscordAccount vorgenommen. 
+Der richtige Studierende, \gls{bzw.} seine Daten, haben mit dieser Zuteilung nichts zu tun.\\
+Die Tabelle \textit{Category} ist für die technische Umsetzung der Modulgestaltung in Discord nötig. 
+Durch die Einschränkung von 50 Channeln in einer Kategorie \ref{discord_einschraenkungen}, können nicht alle Module in einer Kategorie zusammengefasst werden. 
+Dies bedeutet, dass die Module aufgeteilt werden müssen. 
 In dieser Tabelle werden die Anzahl Kategorien gespeichert.
 
 \subsection{Aufsetzen Solution}
@@ -1409,24 +1354,25 @@ Die C\# Solution wird in drei Projekte aufgeteilt, welche jeweils andere Verantw
     \item StanDatabaseTest
 \end{itemize}
 
-In dem \textbf{StanBot} Projekt wird der Discord Bot erstellt und alle Funktionalität liegen,
-die mit dem Bot zusammenhängt.\\
-In dem \textbf{StanDatabase} Projekt wird die Datenbank Anbindung verwaltet.
-Darin werden die Tabellen der Datenbank auf zugewiesene Klassen gemappt.
-Mithilfe der Library LinQ2DB werden die Tabellen der Datenbank, dann über diese Klassen verwaltet.
+In dem \textbf{StanBot} Projekt wird der Discord Bot erstellt. 
+Dort liegt die ganze Funktionalität, welche der Bot braucht, um mit Discord zu kommunizieren. \\
+In dem \textbf{StanDatabase} Projekt wird die Datenbank-Anbindung verwaltet. 
+Darin werden die Tabellen der Datenbank auf zugewiesene Klassen gemappt. 
+Mithilfe der Library LinQ2DB werden die Tabellen der Datenbank dann über diese Klassen verwaltet. 
 Datenbank Operationen sollen nur in diesem Projekt erfolgen. 
 Die anderen Projekte sollen keinen direkten Zugriff auf die Datenbank haben.\\
-Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, 
-die für die Verwaltung des Discord Servers und der Datenbank nötig sind.
-Darin werden sich die Scripte für die Studenten -und Modulerfassung befinden.\\
+Das \textbf{StanScripts} Projekt wird alle Scripte enthalten, die für die Verwaltung des Discord Servers und der Datenbank nötig sind. 
+Darin werden sich die Scripte für die Studierende -und Modulerfassung befinden.\\
 Im \textbf{StanDatabaseTest} Projekt werden die Tests für die Datenbank geschrieben.
 In .NET Applikationen ist es üblich ein eigenes Projekt für die Tests zu erstellen.\autocite{tdykstra_organisieren_nodate}
 
+\subsection{Kontextdiagramm}
+\todo{Yannis}
+
 \subsubsection{Repository Pattern für die Daten}
-Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben.
-Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.\\
-Das Repository Pattern ist dazu da, die Create, Read, Update und Delete (CRUD) Funktionen, 
-welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{gosebrink_aspnet_2014}
+Wie im vorherigen Kapitel erwähnt, soll nur das StanDatabase Projekt direkten Zugriff auf die Datenbank haben. 
+Wenn der Discord Bot, oder ein Script, Datenbankoperationen ausführen will, wird dazu das Repository Pattern verwendet.
+Das Repository Pattern ist dazu da, die Create, Read, Update und Delete (CRUD) Funktionen, welche auf Tabellen durchgeführt werden, zu kapseln. \autocite{gosebrink_aspnet_2014}
 Es sieht vor, dass jedes Objekt genau eine Schnittstelle hat, über die Veränderung daran vorgenommen werden können.
 
 \begin{figure}[h]
@@ -1436,13 +1382,10 @@ Es sieht vor, dass jedes Objekt genau eine Schnittstelle hat, über die Verände
     \label{fig:repository_pattern}
 \end{figure}
 %https://www.google.ch/url?sa=i&url=https%3A%2F%2Fmedium.com%2Fcorebuild-software%2Fandroid-repository-pattern-using-rx-room-bac6c65d7385&psig=AOvVaw3r0fNPN8XItp0pPq7KFvUP&ust=1668526531304000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMiumpaDrvsCFQAAAAAdAAAAABAD
-
-Wie in der Darstellung zu erkennen, gibt es für andere Klassen nur noch einen Zugriffspunkt für das gewünschte Datenobjekt.
-\newline
-Ein weiterer Vorteil dieses Patterns ist die vereinfachte Testbarkeit.
-Da das Repository selbst eine Schnittstelle, also ein Interface ist, kann es mehrere Implementationen davon geben.
-Für die richtige Applikation kann nun eine Implementation erstellt werden, die wirklich Daten auf der Datenbank verändert,
-und für das Testen kann eine Implementation erstellen werden, die nur Mock Daten enthält.\\
+Wie in der Darstellung zu erkennen ist, gibt es für andere Klassen nur noch einen Zugriffspunkt für das gewünschte Datenobjekt.\\
+Ein weiterer Vorteil dieses Patterns ist die vereinfachte Testbarkeit. 
+Da das Repository selbst eine Schnittstelle, also ein Interface ist, kann es mehrere Implementationen davon geben. 
+Für die richtige Applikation kann nun eine Implementation erstellt werden, die wirklich Daten auf der Datenbank verändert, und für das Testen kann eine Implementation erstellt werden, die nur Mock Daten enthält.
 Mithilfe von Dependency Injection kann nun jeweils die gewünschte Implementation für das Repository übergeben werden.
 
 \begin{lstlisting}[language=csharp]
@@ -1496,26 +1439,23 @@ public static class Program
 }
 \end{lstlisting}
 
-\subsubsection{Studentenerfassung}
-
-Die Studenten werden über ein vordefiniertes \gls{CSV} File geladen.
-Nach dem Laden der Datei kann entschieden werden, ob die zuvor erfassten Nutzer als Exstudenten markiert werden sollen.
-Dies ermöglicht, gleich wie bei den Modulen, Studenten zu ergänzen und zum Start des neuen Semesters die Exstudierenden als solche zu markieren in der Datenbank.
-Zum Schluss muss über Discord noch ein Befehl gestartet werden um die Rollen auf dem Discord aktualisieren zu können.
+\subsubsection{Studierendenerfassung}
+Die Studierenden werden über ein vordefiniertes \gls{CSV} File geladen. 
+Nach dem Laden der Datei kann entschieden werden, ob die zuvor erfassten Nutzer als ExStudierende markiert werden und auch sollen. 
+Dies ermöglicht es, gleich wie bei den Modulen, Studierende zu ergänzen und zum Start des neuen Semesters die Exstudierenden als solche zu markieren in der Datenbank. 
+Zum Schluss muss über Discord noch ein Befehl gestartet werden, um die Rollen auf dem Discord aktualisieren zu können. 
 Das \gls{CSV} Format, sowie der Discord- und Konsolen-Befehl werden im Kapitel \nameref{Bedienungsanleitung} genauer beschrieben.
 
 \subsubsection{Aufsetzen der Linux Umgebung}
-
-Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt.
-In der Anleitung im Kapitel \nameref{Bedienungsanleitung} wird die genaue Installation erklärt.
-Bei der Installation stellte MySQL das grösste Problem dar, da diese ein Standardpasswort setzt ohne dies dem Nutzer mitzuteilen was ses ist.
+Der Ubuntu Server wurde vom Enterprise Lab aufgesetzt. 
+In der Anleitung im Kapitel \nameref{Bedienungsanleitung} wird die genaue Installation erklärt. 
+Bei der Installation stellte MySQL das grösste Problem dar, da dieses ein Standardpasswort setzt, ohne dies dem Nutzer mitzuteilen. 
 Dieses muss deshalb mühsam herausgelesen werden aus dem Log Output.
 
 \subsubsection{Verbinden der Datenbank mit Linq2DB}
-
-Die Verbindung zur Datenbank funktioniert über einen Connection String.
-Dieser beinhaltet die Adresse des Datenbank Servers, den dazugehörigen Port, den Datenbank Namen, den Benutzer, das Passwort, sowie das Encoding.
-Das genaue Format wird in der Anleitung im Kapitel \nameref{konfigurationStanBot} beschrieben.
+Die Verbindung zur Datenbank funktioniert über einen Connection String. 
+Dieser enthält die Adresse des Datenbank Servers, den dazugehörigen Port, den Datenbank Namen, den Benutzer, das Passwort, sowie das Encoding. 
+Das genaue Format wird in der Anleitung im Kapitel\nameref{konfigurationStanBot} beschrieben.
 
 \newpage
 \subsection{Sprint 2}
@@ -2332,8 +2272,23 @@ So soll verhindert werden, dass bei einem auftauchenden Bug nicht den Studierend
     \item Konsequenzen der Ergebnisse - Schlussfolgerungen, offene Fragen , Vorschläge für weitere Forschung: „future research“
 \end{itemize}
 
-Das Ziel dieser Arbeit war es... 
-In der Arbeit wurde 
+Das Ziel dieser Arbeit war es, den Discord Bot des Studentenvereins STAIR neu zu implementieren, 
+um die Administrationsarbeit auf dem Server zu verringern und neu Daten für Event- und Marketingplanung zu sammeln.
+Nach dieser Zeilstellung sind wir diese Arbeit angegenagen.\\
+In einer ersten Phase wurden Ideen und Konzepte zum Stand der Technik, sowie Methoden zur Projektdurchführung ausgearbeitet.
+Für dieses Projekt haben wir uns verstärkt mit den Sprach- und Text Messangern auf dem Markt auseinander gesetzt und diese Discord gegenüber gestellt.
+Da im Vorfeld, Discord als Zielplattform schon vorgegeben war, haben die anderen Platformen nicht zu unserer Entscheidung beigetragen, Discord als Plattform zu wählen.
+Allerdings gab es uns die Möglichkeit andere Plattformen anzuschauen und diese vielleicht in zukünftige Umgestaltungen einzubeziehen.\\
+Für die Projektmethode wurde, die an der Hochschul praktizierte Softwareentwicklungsmethode, SoDa ausgewählt.
+Es erleichtert einem die Kontrolle in der Projektführung stark, wenn man in Sprints arbeitet.
+Die User-Stories bieten eine gute Möglichkeit, Softwarefeatures einfach zu definieren und zuzuteilen.
+Die Arbeit musste nicht auf das kleinste Paket heruntergebrochen werden, da eine User-Story alle Arbeitschritte beinhaltet.
+Dadurch gestaltet es die Arbeit angenehmer und macht die Planungsphase in einem nur 14-Wöchigen Projekt deutlich kürzer.
+Allerdings wurden die Anforderungen vor dem Projekt fix festgelegt und es sind während dem Projekt keine neuen Anforderungen hinzugekommen.
+Diese hätte man mit SoDa einfach in das Projekt eingliedern können, so wurde das Projekt aber eigentlich sequentiell abgearbeitet.\\\\
+In der Realisierungsphase wurden
+
+In der Arbeit wurde neue
 
 \newpage
 \section{Ausblick}
