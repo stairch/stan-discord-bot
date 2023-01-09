@@ -23,7 +23,7 @@ namespace StanBot.Services
             );
             if (socketGuildChannel != null)
             {
-                socketGuildChannel.AddPermissionOverwriteAsync(user, OverwritePermissions.InheritAll);
+                socketGuildChannel.AddPermissionOverwriteAsync(user, PermissionService.GetStudentModulePermission());
                 return true;
             }
             return false;
@@ -47,18 +47,6 @@ namespace StanBot.Services
         public bool DoesModuleChannelExist(SocketCommandContext context, string moduleName)
         {
             return context.Guild.Channels.FirstOrDefault(c => c.Name.ToLower().Equals(moduleName.ToLower())) != null;
-        }
-
-        public void CreateModuleChannel(string moduleName)
-        {
-            // TODO
-
-        }
-
-        public void RemoveModuleChannel(string moduleName)
-        {
-            // TODO
-
         }
     }
 }

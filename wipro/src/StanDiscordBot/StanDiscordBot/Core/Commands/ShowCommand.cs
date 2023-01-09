@@ -99,7 +99,6 @@ namespace StanBot.Core.Commands
                             string errorMessage = $"User '{Context.User.Username}#{Context.User.Id}' tries to show module '{module.ChannelName}' but user wasn't found in the database!";
                             _logger.Error(errorMessage);
                             Console.WriteLine(errorMessage);
-                            // TODO: inform admin per email.
                             await ReplyAsync("There was a server error. Please contact an admin!");
                         }
                     }

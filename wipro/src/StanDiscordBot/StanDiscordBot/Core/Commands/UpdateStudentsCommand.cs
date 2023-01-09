@@ -38,14 +38,11 @@ namespace StanBot.Core.Commands
         [RequireRole("stair")]
         [RequireRole("administrator")]
         [Discord.Commands.Summary("Updates the rights of the students. This possibly sets students to exstudent or student when they're students again")]
-        // TODO: only show command to users that have the rights for it
         public async Task UpdateStudents([Remainder] string command = "")
         {
             _logger.Info($"UpdateStudents command received. Author: {Context.User} | Message: {command}");
 
-            //string author = message.Author.Username;
-            //if (discordAccountRepository.IsAdmin(author))
-            if (true) // TODO
+            if (Context.Channel.Name.Equals("bot-commands"))
             {
                 try
                 {

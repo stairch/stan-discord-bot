@@ -21,7 +21,6 @@ namespace StanDatabase
 
         public ITable<Student> Student => this.GetTable<Student>();
 
-        // TODO: check for singleton
         public DbStan()
             // possible providers list: https://github.com/linq2db/linq2db/blob/master/Source/LinqToDB/ProviderName.cs
             : base(ProviderName.MySql, StanDatabaseConfigLoader.Get().ConnectionString)
