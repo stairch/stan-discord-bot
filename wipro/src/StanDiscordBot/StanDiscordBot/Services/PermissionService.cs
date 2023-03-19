@@ -31,5 +31,29 @@ namespace StanBot.Services
                                             PermValue.Allow,
                                             PermValue.Deny);
         }
+
+        public static OverwritePermissions GetStudentModulePermission()
+        {
+            return new OverwritePermissions(PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Allow,
+                                            PermValue.Allow, // This parameter is for the 'viewChannel' permission
+                                            PermValue.Allow,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Allow,
+                                            PermValue.Allow,
+                                            PermValue.Allow,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny,
+                                            PermValue.Deny);
+        }
     }
 }

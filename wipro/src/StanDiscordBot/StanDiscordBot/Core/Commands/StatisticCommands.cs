@@ -5,10 +5,8 @@ using StanDatabase.Repositories;
 using StanDatabase.DTOs;
 using NLog;
 using StanBot.Services.ErrorNotificactionService;
-using OxyPlot;
-using OxyPlot.GtkSharp;
-using OxyPlot.Series;
-using OxyPlot.Axes;
+using System;
+using System.Drawing;
 
 namespace StanBot.Core.Commands
 {
@@ -72,7 +70,8 @@ namespace StanBot.Core.Commands
                         return;
                     }
 
-                    createStudentPerHousePlot(list);
+                    //createStudentPerHousePlot(list);
+                    createStudentPerHousePlotScottplot(list);
                     
                     await Context.Channel.SendFileAsync("img/studentsPerHouse.png");
                 }
@@ -95,8 +94,8 @@ namespace StanBot.Core.Commands
         public async Task StudentsPerSemester()
         {
             _logger.Info($"Received statistic command !studentsPerSemester from {Context.Message.Author.Username}.");
-            await ReplyAsync($"Not implemented yet.");
-            /*try
+            //await ReplyAsync($"Not implemented yet.");
+            try
             {
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
@@ -138,7 +137,7 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
-            }*/
+            }
         }
 
         [Command("accountsPerSemester", true)]
@@ -148,8 +147,8 @@ namespace StanBot.Core.Commands
         public async Task AccountsPerSemester()
         {
             _logger.Info($"Received statistic command !accountsPerSemester from {Context.Message.Author.Username}.");
-            await ReplyAsync($"Not implemented yet");
-            /*try
+            //await ReplyAsync($"Not implemented yet");
+            try
             {
                 if (Context.Channel.Name.Equals("bot-commands"))
                 {
@@ -191,7 +190,7 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
-            }*/
+            }
         }
 
         [Command("membersPerModule", true)]
@@ -201,8 +200,8 @@ namespace StanBot.Core.Commands
         public async Task MembersPerModule(int numberOfModules = 10)
         {
             _logger.Info($"Received statistic command !memebersPerModule from {Context.Message.Author.Username}.");
-            await ReplyAsync($"Not implemented yet");
-            /*try
+            //await ReplyAsync($"Not implemented yet");
+            try
             {
                 List<MembersPerModuleDTO> list = _discordAccountModuleRepository.NumberOfMembersPerModule(numberOfModules);
 
@@ -231,7 +230,7 @@ namespace StanBot.Core.Commands
                 await Context.Channel.SendMessageAsync("Es gab einen Fehler während dem Ausführen des Commands. Ein Administrator wurde schon kontaktiert. " +
                     "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                     "There was an error while executing the command. An administrator has already been contacted. Please be patient and try again later.");
-            }*/
+            }
         }
 
         private void createStudentPerHousePlotScottplot(List<StudentsPerHouseDTO> list)
@@ -261,11 +260,12 @@ namespace StanBot.Core.Commands
             plt.XLabel(nameof(StudentsPerHouseDTO.HouseName));
             plt.YLabel(nameof(StudentsPerHouseDTO.StudentsCount));
             plt.SetAxisLimits(yMin: 0);
+            plt.SaveFig("img/studentsPerHouse.png");
 
-            //await Context.Channel.SendFileAsync(plt.SaveFig("img/studentsPerHouse.png"));
+            //await Context.Channel.SendFileAsync();
         }
 
-        private void createStudentPerHousePlot(List<StudentsPerHouseDTO> students)
+        /*private void createStudentPerHousePlot(List<StudentsPerHouseDTO> students)
         {
             var model = new PlotModel
             {
@@ -297,6 +297,6 @@ namespace StanBot.Core.Commands
                     stream.WriteTo(file);
                 }
             }
-        }
+        }*/
     }
 }
