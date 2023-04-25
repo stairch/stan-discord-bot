@@ -16,7 +16,7 @@ namespace StanBot
             string jsonString;
             try
             {
-                string path = $"/home/localadmin/stair-config/stanBot/{CONFIG_FILE}";
+                string path = $"C:\Users\localadmin\stair-config\stanBot\{CONFIG_FILE}";
                 Console.WriteLine("Bot Config Path " + path);
                 jsonString = File.ReadAllText(path);
             }
