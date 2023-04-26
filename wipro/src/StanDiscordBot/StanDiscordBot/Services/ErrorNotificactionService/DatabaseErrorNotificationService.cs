@@ -8,7 +8,7 @@ namespace StanBot.Services.ErrorNotificactionService
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private const string ADMIN_FILE = "C:\Users\localadmin\stair-config\stanBot\discordAdmins.csv";
+        private const string ADMIN_FILE = "C:\\Users\\localadmin\\stair-config\\stanBot\\discordAdmins.csv";
         private readonly IMailService _mailService;
 
         public DatabaseErrorNotificationService(IMailService mailService)
