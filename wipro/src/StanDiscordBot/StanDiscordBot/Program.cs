@@ -24,11 +24,12 @@ namespace StanBot
         public async Task MainAsync()
         {
             StanBotConfigLoader.LoadConfig();
-	    Console.WriteLine("Config finished loading");
+
             using IHost host = Host.CreateDefaultBuilder()
                 .UseWindowsService()
-                //.UseSystemd()
+                .UseSystemd()
                 .ConfigureServices((_, services) => services
+                    .AddHostedService<Bot>()
                     .AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
                     {
                         GatewayIntents = GatewayIntents.All,
@@ -69,9 +70,8 @@ namespace StanBot
                     })
                     .AddSingleton<LogService>())
                 .Build();
-	    Console.WriteLine("All objects initialized");
-            await new Bot(host).StartAsync();
-	    Console.WriteLine("Program finished");
+
+            host.Run();
         }
     }
 }

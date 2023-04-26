@@ -9,7 +9,7 @@ using NLog;
 
 namespace StanBot
 {
-    public class Bot
+    public class Bot : BackgroundService
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -21,29 +21,24 @@ namespace StanBot
             _hostEnvironment = hostEnvironment;
         }
 
-        public async Task StartAsync()
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.Info("Start Bot");
-	    Console.WriteLine("Start Async");
             using IServiceScope serviceScope = _hostEnvironment.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
             _discordSocketClient = provider.GetRequiredService<DiscordSocketClient>();
-	    Console.WriteLine("Created discordSocketClient");
 
             provider.GetRequiredService<LogService>();
             await provider.GetRequiredService<EventHandler>().InitializeAsync(provider);
-	    Console.WriteLine("Create eventhandler with provider");
 
             await provider.GetRequiredService<IMailService>().InitializeAsync(
                 StanBotConfigLoader.Config.FromEmailAddress,
                 StanBotConfigLoader.Config.FromEmailName,
                 StanBotConfigLoader.Config.AppId,
                 StanBotConfigLoader.Config.Scopes);
-	    Console.WriteLine("Initialized mail service");
 
             if (string.IsNullOrWhiteSpace(StanBotConfigLoader.Config.DiscordApplicationToken)) return;
 
-	    Console.WriteLine("Login to discord");
             await _discordSocketClient.LoginAsync(TokenType.Bot, StanBotConfigLoader.Config.DiscordApplicationToken);
             await _discordSocketClient.StartAsync();
 
