@@ -26,6 +26,7 @@ namespace StanBot
             StanBotConfigLoader.LoadConfig();
 
             using IHost host = Host.CreateDefaultBuilder()
+                .UseWindowsService()
                 .UseSystemd()
                 .ConfigureServices((_, services) => services
                     .AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
