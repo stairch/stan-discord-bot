@@ -4,9 +4,6 @@ Description=Stan Discord Bot service/deamon from STAIR
 [Service]
 Type=simple
 ExecStart=/usr/bin/dotnet /home/localadmin/stan-discord-bot/wipro/src/StanDiscordBot/artifacts/StanBot.dll
-SyslogIdentifier=stanBot
-
-User=localadmin
 
 # ensure the service restarts after crashing
 Restart=always
