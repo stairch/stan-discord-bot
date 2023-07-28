@@ -90,7 +90,13 @@ namespace StanBot.Core.Commands
                             _moduleChannelService.GiveUserAccessToModule(Context, Context.User, module);
 
                             IUserMessage reply = await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
+
+                            string infoMessage = $"User '{Context.User.Username}#{Context.User.Id}' added to module '{module.ChannelName}'!";
+                            _logger.Info(infoMessage);
+                            Console.WriteLine(infoMessage);
+                            
                             Thread.Sleep(5000);
+
                             Context.Message.DeleteAsync();
                             reply.DeleteAsync();
                         }
