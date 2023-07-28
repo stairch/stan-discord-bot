@@ -91,7 +91,7 @@ namespace StanBot.Core.Commands
 
                             IUserMessage reply = await ReplyAsync($"Success! You were added to the module channel: {moduleName}");
 
-                            string infoMessage = $"User '{Context.User.Username}#{Context.User.Id}' added to module '{module.ChannelName}'!";
+                            string infoMessage = $"User '{Context.User.Username}#{Context.User.Id}' added to module '{module.ChannelName}' in category '{module.DiscordCategory}'!";
                             _logger.Info(infoMessage);
                             Console.WriteLine(infoMessage);
                             
