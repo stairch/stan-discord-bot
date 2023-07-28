@@ -1,5 +1,6 @@
 ﻿using NLog;
 using StanDatabase.DataAccessLayer;
+using StanDatabase.Repositories;
 
 namespace StanScripts
 {
@@ -61,6 +62,24 @@ namespace StanScripts
                     Console.Error.WriteLine($"{errorMessage} Check your command and try again. This is most likely an issue from the user.");
                     PrintHelp();
                 }
+            }
+            else if (commandName == "dbtest")
+            {
+                Console.WriteLine("Executing database test...");
+                try
+                {
+                    IStudentRepository studentRepository = new StudentRepository();
+                    Console.WriteLine($"Found students: {studentRepository.GetCurrentStudents().Count}");
+                    Console.WriteLine($"Connection worked");
+                }
+                catch (System.Exception ex)
+                {
+                    Console.Error.WriteLine($"Exception thrown during the DB test. Errormessage: {ex.Message}\nInnerMessage: {ex.InnerException}\nStack Trace: {ex.StackTrace}");
+                }
+            }
+            else
+            {
+                Console.Error.WriteLine($"Command \"{commandName}\" is unknown!");
             }
         }
 
