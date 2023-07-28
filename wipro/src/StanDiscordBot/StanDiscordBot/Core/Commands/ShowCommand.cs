@@ -117,7 +117,7 @@ namespace StanBot.Core.Commands
                 catch (Exception ex)
                 {
                     _databaseErrorNotificationService.SendDatabaseErrorToAdmins(ex, "ShowCommand");
-                    _logger.Error($"There was an Error, due to a database exception. Admin has been contacted. Stacktrace: {ex.Message}");
+                    _logger.Error($"There was an Error, due to a database exception. Admin has been contacted. Error in {ex.Source}\nStacktrace: {ex.StackTrace}\n{ex.InnerException}\n{ex.Data}");
                     await Context.Channel.SendMessageAsync("Es gab einen Fehler bei der Abfragen des Modules. Ein Administrator wurde schon kontaktiert. " +
                         "Bitte habe etwas Geduld und versuche es später erneut.\n\r" +
                         "There was an error retreiving the module list. An administrator has already been contacted. Please be patient and try again later.");
