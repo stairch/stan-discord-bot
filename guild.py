@@ -26,10 +26,11 @@ class ModuleDefinition:
     colour: str
 
 
-with open("./courses.json", "r+", encoding = "utf8") as f:
-    COURSE_CONFIG = [ ModuleDefinition(**x)
-                       for x in json.load(f)
-                       if x.get("short") != "???" ]
+with open("./courses.json", "r+", encoding="utf8") as f:
+    COURSE_CONFIG = [
+        ModuleDefinition(**x) for x in json.load(f) if x.get("short") != "???"
+    ]
+
 
 class DiscordServer:
     """provides the student and graduate roles for a guild (server)"""
@@ -43,9 +44,17 @@ class DiscordServer:
 
     def get_course_role(self, course: str) -> discord.Role:
         """Get the role for a course"""
-        definition = next((x.role
-                    for x in self._courses
-                    if re.match(f"^\w+\.{x.short}.*\.\d+$", course)), None)
+        definition = next(
+            (
+                x.role
+                for x in self._courses
+                if re.match(
+                    r"^\w+\.{}.*\.\d+$".format(x.short),  # pylint: disable=consider-using-f-string
+                    course,
+                )
+            ),
+            None,
+        )
         assert definition is not None
         return self._roles[definition.lower()]
 
@@ -54,23 +63,28 @@ class DiscordServer:
         has_categories = self._guild.categories
         has_roles = self._guild.roles
         for course in self._courses:
-            category = next((x for x in has_categories if x.name == course.category), None)
+            category = next(
+                (x for x in has_categories if x.name == course.category), None
+            )
             if not category:
                 category = await self._guild.create_category(course.category)
                 await self._guild.fetch_channels()
                 has_categories = self._guild.categories
-            channel = next((x for x in category.channels if x.name == course.channel), None)
+            channel = next(
+                (x for x in category.channels if x.name == course.channel), None
+            )
             if not channel:
                 await self._guild.create_text_channel(
-                    course.channel, category=category,
-                    overwrites = {
+                    course.channel,
+                    category=category,
+                    overwrites={
                         self._guild.default_role: discord.PermissionOverwrite(
-                            view_channel = False,
-                            send_messages = False),
+                            view_channel=False, send_messages=False
+                        ),
                         self.get_student_role(): discord.PermissionOverwrite(
-                            view_channel = True,
-                            send_messages = False),
-                    }
+                            view_channel=True, send_messages=False
+                        ),
+                    },
                 )
 
             if not any(x.name == course.role for x in has_roles):
@@ -79,7 +93,9 @@ class DiscordServer:
                     mentionable=True,
                     color=discord.Color.from_str(course.colour),
                 )
-                self._roles = {role.name.lower(): role for role in await self._guild.fetch_roles()}
+                self._roles = {
+                    role.name.lower(): role for role in await self._guild.fetch_roles()
+                }
                 has_roles = self._guild.roles
 
     def get_student_role(self) -> discord.Role:
