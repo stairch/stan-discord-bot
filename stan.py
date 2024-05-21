@@ -41,6 +41,7 @@ class Stan(discord.Client):
                 self._logger.warning("unexpected guild %s", guild)
                 continue
             self._servers.append(DiscordServer(guild))
+        await self._assign_programme_roles()
 
     async def on_message(self, message: discord.Message):
         """Message handler"""
@@ -86,6 +87,19 @@ class Stan(discord.Client):
                 continue
             await member.remove_roles(server.get_graduate_role())
             await member.add_roles(server.get_student_role())
+
+    async def _assign_programme_roles(self):
+        for server in self._servers:
+            await server.create_course_roles()
+        for user in self._db.all_verified():
+            student = self._db.student_by_email(user.email)
+            if student is None:
+                continue
+            for server in self._servers:
+                member = server.get_member(user.discord_id)
+                if member is None:
+                    continue
+                await member.add_roles(server.get_course_role(student.course_id))
 
     async def _move_module_channels(self, message: discord.Message):
         target: discord.CategoryChannel | None = None

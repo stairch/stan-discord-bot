@@ -1,0 +1,93 @@
+[
+    {
+        "short": "BSCAIML",
+        "role": "BSc AIML",
+        "channel": "aiml",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "BSCI_DI",
+        "role": "BSc DI",
+        "channel": "di",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "???",
+        "role": "BSc IMTEC",
+        "channel": "imtec",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "BSCI",
+        "role": "BSc INF",
+        "channel": "inf",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "BSCICS",
+        "role": "BSc ICS",
+        "channel": "ics",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "BSCIIM",
+        "role": "BSc IIM",
+        "channel": "iim",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "BSCWI",
+        "role": "BSc WI",
+        "channel": "wi",
+        "category": "Bachelor's Programmes",
+        "colour": "#206694"
+    },
+    {
+        "short": "MSCITDS",
+        "role": "MSc ITDS",
+        "channel": "itds",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    },
+    {
+        "short": "MSCE_T",
+        "role": "MSc INF",
+        "channel": "inf",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    },
+    {
+        "short": "MSCWI",
+        "role": "MSc WI",
+        "channel": "wi",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    },
+    {
+        "short": "???",
+        "role": "MSc DI",
+        "channel": "di",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    },
+    {
+        "short": "???",
+        "role": "MSc MDC",
+        "channel": "mdc",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    },
+    {
+        "short": "MFD",
+        "role": "MSc FADI",
+        "channel": "fadi",
+        "category": "Master's Programmes",
+        "colour": "#1abc9c"
+    }
+]
