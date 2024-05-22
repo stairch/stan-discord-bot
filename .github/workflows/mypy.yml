@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/mypy.yml"
-      - "requirements.txt"
+      - "service/requirements.txt"
       - "**/*.py"
 
 jobs:
@@ -20,11 +20,13 @@ jobs:
           python-version: 3.12
 
       - name: Install dependencies
+        working-directory: service
         run: |
           python -m pip install --upgrade pip
           pip install mypy
           pip install -r requirements.txt
 
       - name: Run mypy
+        working-directory: service
         run: |
           python -m mypy .

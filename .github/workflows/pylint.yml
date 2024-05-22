@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/pylint.yml"
-      - "requirements.txt"
+      - "service/requirements.txt"
       - "**/*.py"
 
 jobs:
@@ -20,11 +20,13 @@ jobs:
           python-version: 3.12
 
       - name: Install dependencies
+        working-directory: service
         run: |
           python -m pip install --upgrade pip
           pip install pylint
           pip install -r requirements.txt
 
       - name: Run pylint
+        working-directory: service
         run: |
           python -m pylint *.py */ --rcfile=.pylintrc --recursive=y --disable=fixme
