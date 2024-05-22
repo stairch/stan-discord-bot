@@ -5,6 +5,7 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 import logging
+import os
 from dataclasses import asdict
 import dataset  # type: ignore
 from common.singleton import Singleton
@@ -14,9 +15,10 @@ from .datamodels.verified_user import VerifiedUser, UserState
 VERIFIED_USERS_TABLE = "Verified_Users"
 HSLU_STUDENTS_TABLE = "HSLU_Students"
 
-DB_USERNAME = "postgres"
-DB_PASSWORD = "postgres"
-DB_HOST = "localhost:5432"
+DB_USERNAME = os.getenv("POSTGRES_USER")
+DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+DB_DATABASE = os.getenv("POSTGRES_DB")
+DB_HOST = "postgres:5432"
 DB_PROTOCOL = "postgresql"
 
 
@@ -25,7 +27,7 @@ class Database(metaclass=Singleton):
 
     def __init__(self) -> None:
         self._db = dataset.connect(
-            f"{DB_PROTOCOL}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/"
+            f"{DB_PROTOCOL}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_DATABASE}"
         )
         self._logger = logging.getLogger("Database")
 
@@ -49,9 +51,7 @@ class Database(metaclass=Singleton):
         """
         current_members = self.all_verified()
         previous_students = [x for x in current_members if x.state == UserState.STUDENT]
-        previous_graduates = [
-            x for x in current_members if x.state == UserState.GRADUATE
-        ]
+        previous_graduates = [x for x in current_members if x.state == UserState.GRADUATE]
 
         self._hslu_students_table.drop()
         # make unique
@@ -104,9 +104,5 @@ class Database(metaclass=Singleton):
     def verify_member(self, discord_id: int, email: str) -> None:
         """Verify a member by their Discord ID and email."""
         self._users_table.insert(
-            asdict(
-                VerifiedUser(
-                    discord_id=discord_id, email=email, state=UserState.STUDENT
-                )
-            )
+            asdict(VerifiedUser(discord_id=discord_id, email=email, state=UserState.STUDENT))
         )

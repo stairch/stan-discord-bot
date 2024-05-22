@@ -9,10 +9,7 @@ __email__ = "info@stair.ch"
 import os
 import logging
 from msal import PublicClientApplication  # type: ignore
-from dotenv import load_dotenv
 import aiohttp
-
-load_dotenv()
 
 AD_APP_ID = os.getenv("AD_APP_ID")
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")

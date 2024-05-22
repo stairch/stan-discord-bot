@@ -1,4 +1,6 @@
 __pycache__
+.vscode
 .ruff_cache
 .env
 token
+postgres/
