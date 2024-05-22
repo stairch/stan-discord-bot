@@ -32,7 +32,7 @@ class Database(metaclass=Singleton):
         self._users_table: dataset.Table = self._db[VERIFIED_USERS_TABLE]
         self._hslu_students_table: dataset.Table = self._db[HSLU_STUDENTS_TABLE]
 
-        # self._users_table.delete() # for development
+        self._users_table.delete()  # for development
 
     def all_students(self) -> list[HsluStudent]:
         """Get all students from the database."""

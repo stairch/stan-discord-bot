@@ -58,6 +58,20 @@ class DiscordServer:
         assert definition is not None
         return self._roles[definition.lower()]
 
+    def get_course_roles_except(self, course: str | None = None) -> list[discord.Role]:
+        """
+        Get all roles that this user should not have
+        """
+        return [
+            self._roles[x.role.lower()]
+            for x in self._courses
+            if course is None
+            or not re.match(
+                r"^\w+\.{}.*\.\d+$".format(x.short),  # pylint: disable=consider-using-f-string
+                course,
+            )
+        ]
+
     async def create_course_roles(self) -> None:
         """Create the course roles"""
         has_categories = self._guild.categories
