@@ -1,0 +1,102 @@
+:root {
+    --c-green-1: #0b6a5b;
+    --c-green-2: #107d62;
+    --c-green-3: #15906a;
+    --c-green-4: #1aa272;
+    --c-green-5: #1fb579;
+
+    --c-pink-1: #b71d5c;
+    --c-pink-2: #c32f6a;
+    --c-pink-3: #cf4279;
+    --c-pink-4: #db5487;
+    --c-pink-5: #e76695;
+
+    --c-yellow-1: #d68a05;
+    --c-yellow-2: #dd9513;
+    --c-yellow-3: #e4a020;
+    --c-yellow-4: #ecab2e;
+    --c-yellow-5: #f3b63b;
+
+    --c-black-1: #000000;
+    --c-black-2: #09090b;
+    --c-black-3: #111115;
+    --c-black-4: #1a1a20;
+    --c-black-5: #22222a;
+
+    --c-white-1: #ffffff;
+    --c-white-2: #f9fbfc;
+    --c-white-3: #f3f7f8;
+    --c-white-4: #edf2f4;
+    --c-white-5: #e7eef1;
+
+    --c-stair-dark: var(--c-green-1);
+    --c-stair-green: #04956c;
+    --c-stair-lime: var(--c-green-5);
+    --c-stair-graphite: var(--c-black-5);
+    --c-stair-grey: var(--c-white-5);
+    --c-stair-burgundy: var(--c-pink-1);
+    --c-stair-ping: #cf4279;
+    --c-stair-berry: #e76695;
+    --c-stair-mustard: var(--c-yellow-2);
+    --c-stair-yellow: var(--c-yellow-5);
+}
+
+/* semantic color variables for this project */
+:root {
+    --bg-base: var(--c-white-1);
+    --bg-soft: var(--c-white-3);
+    --bg-muted: var(--c-white-5);
+    --border: var(--c-black-3);
+    --border-hover: var(--c-black-4);
+    --fg-text: var(--c-stair-graphite);
+
+    --c-accent: var(--c-stair-green);
+    --c-accent-hover: var(--c-stair-lime);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-base: var(--c-black-1);
+        --bg-soft: var(--c-black-3);
+        --bg-muted: var(--c-black-5);
+        --border: var(--c-white-3);
+        --border-hover: var(--c-white-4);
+        --fg-text: var(--c-white-1);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Ingra";
+    font-weight: 400;
+    font-style: normal;
+    font-display: auto;
+    src: local("Ingra"), url("/fonts/Ingra/Ingra-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Ingra";
+    font-weight: 700;
+    font-style: normal;
+    font-display: auto;
+    src: local("Ingra"), url("/fonts/Ingra/Ingra-Bold.woff2") format("woff2");
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    color: var(--fg-text);
+    background: var(--bg-base);
+    font-family: "Ingra", Arial, Helvetica, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
