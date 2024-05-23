@@ -23,7 +23,7 @@ services:
         ports:
             - 80:80
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx:/etc/nginx/conf.d:ro
         depends_on:
             - stan
         networks:
