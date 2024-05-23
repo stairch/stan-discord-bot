@@ -11,7 +11,7 @@ import discord
 
 from email_client import EmailClient
 from verifying_student import VerifyingStudent
-from guild import DiscordServer
+from guild import DiscordServer, RoleType
 from db.db import Database
 from db.datamodels.verified_user import VerifiedUser
 
@@ -32,6 +32,11 @@ class Stan(discord.Client):
         self._logger = logging.getLogger("Stan")
         self._servers: list[DiscordServer] = []
         self._db: Database = Database()
+
+    @property
+    def servers(self) -> dict[str, DiscordServer]:
+        """Get all servers"""
+        return {x.name: x for x in self._servers}
 
     async def on_ready(self):
         """Bot is ready"""
@@ -55,9 +60,7 @@ class Stan(discord.Client):
             return
 
         if not message.guild:
-            make_student = await VerifyingStudent.handle_message(
-                self._email_client, message
-            )
+            make_student = await VerifyingStudent.handle_message(self._email_client, message)
             if make_student:
                 member = self._db.get_member(message.author.id)
                 if not member:
@@ -76,9 +79,11 @@ class Stan(discord.Client):
             if member is None:
                 continue
             await member.remove_roles(
-                server.get_student_role(), *server.get_course_roles_except()
+                server.get_member_role(RoleType.STUDENT), *server.get_course_roles_except()
             )
-            await member.add_roles(server.get_graduate_role())
+            await member.add_roles(
+                server.get_member_role(RoleType.GRADUATE),
+            )
 
     async def make_student(self, user: VerifiedUser) -> None:
         """applies the student role to a user on all supported servers"""
@@ -88,11 +93,11 @@ class Stan(discord.Client):
             if member is None or student is None:
                 continue
             await member.remove_roles(
-                server.get_graduate_role(),
+                server.get_member_role(RoleType.GRADUATE),
                 *server.get_course_roles_except(student.course_id),
             )
             await member.add_roles(
-                server.get_student_role(), server.get_course_role(student.course_id)
+                server.get_member_role(RoleType.STUDENT), server.get_course_role(student.course_id)
             )
 
     async def _move_module_channels(self, message: discord.Message):
