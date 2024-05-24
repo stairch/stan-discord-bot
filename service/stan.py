@@ -34,9 +34,9 @@ class Stan(discord.Client):
         self._db: Database = Database()
 
     @property
-    def servers(self) -> dict[str, DiscordServer]:
+    def servers(self) -> dict[int, DiscordServer]:
         """Get all servers"""
-        return {x.name: x for x in self._servers}
+        return {x.id: x for x in self._servers}
 
     async def on_ready(self):
         """Bot is ready"""
@@ -60,7 +60,9 @@ class Stan(discord.Client):
             return
 
         if not message.guild:
-            make_student = await VerifyingStudent.handle_message(self._email_client, message)
+            make_student = await VerifyingStudent.handle_message(
+                self._email_client, message
+            )
             if make_student:
                 member = self._db.get_member(message.author.id)
                 if not member:
@@ -79,7 +81,8 @@ class Stan(discord.Client):
             if member is None:
                 continue
             await member.remove_roles(
-                server.get_member_role(RoleType.STUDENT), *server.get_course_roles_except()
+                server.get_member_role(RoleType.STUDENT),
+                *server.get_course_roles_except(),
             )
             await member.add_roles(
                 server.get_member_role(RoleType.GRADUATE),
@@ -97,7 +100,8 @@ class Stan(discord.Client):
                 *server.get_course_roles_except(student.course_id),
             )
             await member.add_roles(
-                server.get_member_role(RoleType.STUDENT), server.get_course_role(student.course_id)
+                server.get_member_role(RoleType.STUDENT),
+                server.get_course_role(student.course_id),
             )
 
     async def _move_module_channels(self, message: discord.Message):

@@ -21,7 +21,7 @@ def main():
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
-    app = web.Application()
+    app = web.Application(client_max_size=10 * 1024**3)  # 10 MB
     WebServer(app)
 
     web.run_app(app, port=8080)

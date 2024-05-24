@@ -11,9 +11,11 @@ import dataset  # type: ignore
 from common.singleton import Singleton
 from .datamodels.hslu_student import HsluStudent
 from .datamodels.verified_user import VerifiedUser, UserState
+from .datamodels.announcement import Announcement
 
 VERIFIED_USERS_TABLE = "Verified_Users"
 HSLU_STUDENTS_TABLE = "HSLU_Students"
+ANNOUNCEMENTS_TABLE = "Announcements"
 
 DB_USERNAME = os.getenv("POSTGRES_USER")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
@@ -33,6 +35,7 @@ class Database(metaclass=Singleton):
 
         self._users_table: dataset.Table = self._db[VERIFIED_USERS_TABLE]
         self._hslu_students_table: dataset.Table = self._db[HSLU_STUDENTS_TABLE]
+        self._announcements_table: dataset.Table = self._db[ANNOUNCEMENTS_TABLE]
 
         self._users_table.delete()  # for development
 
@@ -51,7 +54,9 @@ class Database(metaclass=Singleton):
         """
         current_members = self.all_verified()
         previous_students = [x for x in current_members if x.state == UserState.STUDENT]
-        previous_graduates = [x for x in current_members if x.state == UserState.GRADUATE]
+        previous_graduates = [
+            x for x in current_members if x.state == UserState.GRADUATE
+        ]
 
         self._hslu_students_table.drop()
         # make unique
@@ -104,5 +109,34 @@ class Database(metaclass=Singleton):
     def verify_member(self, discord_id: int, email: str) -> None:
         """Verify a member by their Discord ID and email."""
         self._users_table.insert(
-            asdict(VerifiedUser(discord_id=discord_id, email=email, state=UserState.STUDENT))
+            asdict(
+                VerifiedUser(
+                    discord_id=discord_id, email=email, state=UserState.STUDENT
+                )
+            )
         )
+
+    def get_announcements(self) -> list[Announcement]:
+        """Get all announcements from the database."""
+        return [Announcement(**x) for x in self._announcements_table.all()]
+
+    def get_announcement(self, id: int) -> Announcement | None:
+        """Get an announcement by its ID."""
+        result = self._announcements_table.find_one(id=id)
+        if result:
+            return Announcement(**result)
+        return None
+
+    def create_announcement(self, announcement: Announcement) -> Announcement:
+        """Create an announcement."""
+        id_ = self._announcements_table.insert(asdict(announcement))
+        announcement.id = id_
+        return announcement
+
+    def delete_announcement(self, id_: int) -> None:
+        """Delete an announcement by its ID."""
+        self._announcements_table.delete(id=id_)
+
+    def update_announcement(self, announcement: Announcement) -> None:
+        """Update an announcement."""
+        self._announcements_table.update(asdict(announcement), ["id"])

@@ -10,7 +10,10 @@ import json
 from enum import StrEnum
 from dataclasses import dataclass
 import re
+
 import discord
+
+from db.datamodels.announcement import AnnouncementType
 
 
 class RoleType(StrEnum):
@@ -67,6 +70,18 @@ class AnnouncementChannelType(StrEnum):
         }[self]
         return role_type.get(guild)
 
+    @classmethod
+    def from_announcement_type(
+        cls, announcement_type: AnnouncementType
+    ) -> AnnouncementChannelType:
+        """Get the channel type for an announcement type"""
+        return {
+            AnnouncementType.STAIR: cls.STAIR_CHANNEL,
+            AnnouncementType.NON_STAIR: cls.NON_STAIR_CHANNEL,
+            AnnouncementType.SERVER_INFO: cls.SERVER_CHANNEL,
+            AnnouncementType.TEST: cls.TEST_CHANNEL,
+        }[announcement_type]
+
 
 @dataclass
 class ModuleDefinition:
@@ -80,7 +95,9 @@ class ModuleDefinition:
 
 
 with open("./courses.json", "r+", encoding="utf8") as f:
-    COURSE_CONFIG = [ModuleDefinition(**x) for x in json.load(f) if x.get("short") != "???"]
+    COURSE_CONFIG = [
+        ModuleDefinition(**x) for x in json.load(f) if x.get("short") != "???"
+    ]
 
 
 class DiscordServer:
@@ -130,12 +147,16 @@ class DiscordServer:
         has_categories = self._guild.categories
         has_roles = self._guild.roles
         for course in self._courses:
-            category = next((x for x in has_categories if x.name == course.category), None)
+            category = next(
+                (x for x in has_categories if x.name == course.category), None
+            )
             if not category:
                 category = await self._guild.create_category(course.category)
                 await self._guild.fetch_channels()
                 has_categories = self._guild.categories
-            channel = next((x for x in category.channels if x.name == course.channel), None)
+            channel = next(
+                (x for x in category.channels if x.name == course.channel), None
+            )
             if not channel:
                 await self._guild.create_text_channel(
                     course.channel,
@@ -144,7 +165,9 @@ class DiscordServer:
                         self._guild.default_role: discord.PermissionOverwrite(
                             view_channel=False, send_messages=False
                         ),
-                        self.get_member_role(RoleType.STUDENT): discord.PermissionOverwrite(
+                        self.get_member_role(
+                            RoleType.STUDENT
+                        ): discord.PermissionOverwrite(
                             view_channel=True, send_messages=False
                         ),
                     },
@@ -156,7 +179,9 @@ class DiscordServer:
                     mentionable=True,
                     color=discord.Color.from_str(course.colour),
                 )
-                self._roles = {role.name.lower(): role for role in await self._guild.fetch_roles()}
+                self._roles = {
+                    role.name.lower(): role for role in await self._guild.fetch_roles()
+                }
                 has_roles = self._guild.roles
 
     def get_member_role(self, role_type: RoleType) -> discord.Role:
@@ -168,6 +193,11 @@ class DiscordServer:
         return self._guild.get_member(discord_id)
 
     @property
+    def id(self) -> int:
+        """Get the ID of the guild"""
+        return self._guild.id
+
+    @property
     def name(self) -> str:
         """Get the name of the guild"""
         return self._guild.name
@@ -175,6 +205,7 @@ class DiscordServer:
     def serialise(self) -> dict[str, str]:
         """Serialise the server"""
         return {
+            "id": str(self._guild.id),
             "name": self.name,
             "picture": self._guild.icon.url if self._guild.icon else "",
         }
