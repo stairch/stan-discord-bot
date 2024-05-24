@@ -120,9 +120,9 @@ class Database(metaclass=Singleton):
         """Get all announcements from the database."""
         return [Announcement(**x) for x in self._announcements_table.all()]
 
-    def get_announcement(self, id: int) -> Announcement | None:
+    def get_announcement(self, id_: int) -> Announcement | None:
         """Get an announcement by its ID."""
-        result = self._announcements_table.find_one(id=id)
+        result = self._announcements_table.find_one(id=id_)
         if result:
             return Announcement(**result)
         return None
