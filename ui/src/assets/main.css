@@ -106,3 +106,11 @@ button {
         }
     }
 }
+
+.card {
+    background: var(--bg-soft);
+    border: 1px solid var(--bg-muted);
+    border-radius: 4px;
+    padding: 1em;
+    margin: 1em 0;
+}

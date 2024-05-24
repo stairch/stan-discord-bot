@@ -1,70 +1,90 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-interface IServer {
-    name: string;
-    picture: string;
-}
+import {
+    api,
+    type IServer,
+    type IAnnouncementSummary,
+    type IAnnouncement,
+} from "../api";
+import CardPicker from "@/components/CardPicker.vue";
 
 const servers = ref<IServer[]>([]);
-const channels = ref<string[]>([]);
+const types = ref<string[]>([]);
+const announcements = ref<IAnnouncementSummary[]>([]);
+const announcement = ref<IAnnouncement>({
+    title: "",
+    message: {
+        en: "",
+        de: "",
+    },
+    announcement_type: "test",
+});
 
-const title = ref<string>("");
-const contentEn = ref<string>("");
-const contentDe = ref<string>("");
-const server = ref<string>("");
-const imgBase64 = ref<string>("");
+const img = ref<File | null>(null);
 const route = useRoute();
 const router = useRouter();
 
 onMounted(async () => {
-    let res = await fetch("/api/announcement/servers");
-    servers.value = await res.json();
-    res = await fetch("/api/announcement/channels");
-    channels.value = await res.json();
+    servers.value = await api.announements.discordServers();
+    types.value = await api.announements.getTypes();
+    announcements.value = await api.announements.getAll();
 
-    const selectedServer = route.params.server as string;
-    if (!selectedServer) {
-        console.log(servers.value[0].name);
-        router.push(`/announcement/${servers.value[0].name}`);
+    const announcementId = Number(route.params.id);
+    if (announcementId) {
+        announcement.value = await api.announements.get(announcementId);
     }
-    server.value = selectedServer || servers.value[0].name;
 });
 
-const postAnnouncement = async (type: string) => {
-    const res = await fetch("/api/announcement", {
-        method: "POST",
-        body: JSON.stringify({
-            title: title.value,
+watch(route, async () => {
+    const announcementId = Number(route.params.id);
+    if (announcementId) {
+        announcement.value = await api.announements.get(announcementId);
+    } else {
+        announcement.value = {
+            title: "",
             message: {
-                en: contentEn.value,
-                de: contentDe.value,
+                en: "",
+                de: "",
             },
-            server: server.value,
-            channel: type,
-            image: imgBase64.value.replace(/^data:image\/[a-z]+;base64,/, ""),
-        }),
-    });
-    if (res.ok) {
-        title.value = "";
-        contentEn.value = "";
-        contentDe.value = "";
+            announcement_type: "test",
+        };
+    }
+});
+
+const postAnnouncement = async () => {
+    if (announcement.value.id) {
+        await api.announements.update(announcement.value);
+    } else {
+        announcement.value = await api.announements.create(announcement.value);
+    }
+
+    await api.announements.publish(
+        announcement.value.id!,
+        "discord",
+        String(servers.value[0].id),
+        img.value ?? undefined
+    );
+};
+
+const save = async () => {
+    if (announcement.value.id) {
+        await api.announements.update(announcement.value);
+    } else {
+        announcement.value = await api.announements.create(announcement.value);
     }
 };
 
-const actionsDisabled = computed(() => {
-    return !title.value || !contentEn.value || !contentDe.value || !server;
+const saveDisabled = computed(() => {
+    return (
+        !announcement.value.title ||
+        !(announcement.value.message?.en || announcement.value.message?.de)
+    );
 });
 
-function getBaseUrl(e: Event) {
-    var reader = new FileReader();
-    reader.onloadend = function () {
-        imgBase64.value = String(reader.result);
-        console.log(imgBase64.value);
-    };
-    reader.readAsDataURL((e.target as HTMLInputElement).files![0]);
-}
+const actionsDisabled = computed(() => {
+    return false;
+});
 </script>
 
 <template>
@@ -72,70 +92,77 @@ function getBaseUrl(e: Event) {
     <div class="announcement">
         <aside>
             <router-link
-                v-for="serverOption in servers"
-                :key="serverOption.name"
-                :to="`/announcement/${serverOption.name}`"
+                v-for="availableAnnouncement in announcements"
+                :key="availableAnnouncement.id"
+                :to="`/announcement/${availableAnnouncement.id}`"
             >
                 <div
                     class="server"
-                    :class="{ selected: server == serverOption.name }"
+                    :class="{
+                        selected: announcement.id == availableAnnouncement.id,
+                    }"
                 >
-                    <img
-                        :src="serverOption.picture"
-                        alt="server"
-                    />
-                    <span>{{ serverOption.name }}</span>
+                    <span>{{ availableAnnouncement.title }}</span>
+                </div>
+            </router-link>
+            <router-link to="/announcement">
+                <div
+                    class="server"
+                    :class="{
+                        selected: announcement.id == null,
+                    }"
+                >
+                    <span>+ New Announcement</span>
                 </div>
             </router-link>
         </aside>
         <main>
+            <CardPicker
+                v-model="announcement.announcement_type"
+                :options="types.map((type) => ({ value: type, label: type }))"
+            />
             <input
                 type="text"
-                v-model="title"
+                v-model="announcement.title"
                 placeholder="Title"
             />
             <textarea
-                v-model="contentDe"
+                v-model="announcement.message.de"
                 placeholder="German Content"
             ></textarea>
             <textarea
-                v-model="contentEn"
+                v-model="announcement.message.en"
                 placeholder="English Content"
             >
             </textarea>
             <input
                 type="file"
                 accept="image/*"
-                @change="getBaseUrl"
+                @change="
+                    img = ($event.target as HTMLInputElement).files?.[0] ?? null
+                "
             />
             <div class="actions">
                 <button
-                    @click="postAnnouncement('stair-announcements')"
+                    @click="save"
+                    class="danger"
+                    :disabled="saveDisabled"
+                >
+                    {{ announcement.id ? "Update" : "Create" }}
+                </button>
+                <button
+                    @click="api.announements.delete(announcement.id!)"
+                    class="danger"
+                    :disabled="!announcement.id"
+                >
+                    Delete
+                </button>
+                <button
+                    @click="postAnnouncement"
                     class="danger"
                     :disabled="actionsDisabled"
                 >
-                    Post as STAIR Announcement
-                </button>
-                <button
-                    @click="postAnnouncement('non-stair-announcements')"
-                    class="danger"
-                    :disabled="actionsDisabled"
-                >
-                    Post as Non-STAIR Announcement
-                </button>
-                <button
-                    @click="postAnnouncement('server-info')"
-                    class="danger"
-                    :disabled="actionsDisabled"
-                >
-                    Post as Server Announcement
-                </button>
-                <button
-                    @click="postAnnouncement('webhook-test')"
-                    class="good"
-                    :disabled="actionsDisabled"
-                >
-                    Test Announcement
+                    Publish
                 </button>
             </div>
         </main>
@@ -145,7 +172,7 @@ function getBaseUrl(e: Event) {
 <style>
 .announcement {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 25ch 1fr;
     align-items: start;
     gap: 1em;
 }
@@ -165,12 +192,12 @@ aside {
 .server {
     display: flex;
     align-items: center;
-    padding: 0.5em;
+    padding: 1em;
     gap: 1em;
     border-radius: 0.5em;
 
     &.selected {
-        background-color: var(--c-stair-grey);
+        background-color: var(--bg-muted);
     }
 
     & img {

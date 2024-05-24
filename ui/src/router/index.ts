@@ -14,7 +14,7 @@ const router = createRouter({
             component: () => import("../views/AnnouncementView.vue"),
         },
         {
-            path: "/announcement/:server",
+            path: "/announcement/:id",
             name: "announcementWithId",
             component: () => import("../views/AnnouncementView.vue"),
         },
