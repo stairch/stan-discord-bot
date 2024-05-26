@@ -97,6 +97,14 @@ button {
         }
     }
 
+    &.warning {
+        background: var(--c-stair-mustard);
+
+        &:hover {
+            background: var(--c-stair-yellow);
+        }
+    }
+
     &:disabled {
         background: var(--c-stair-grey);
         cursor: not-allowed;

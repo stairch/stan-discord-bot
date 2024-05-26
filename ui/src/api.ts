@@ -1,3 +1,5 @@
+import { useAnnouncementStore } from "./stores/announcements";
+
 export interface IServer {
     id: string;
     name: string;
@@ -37,6 +39,10 @@ const toBase64 = async (file?: File): Promise<string | undefined> => {
     });
 };
 
+const forceReloadAnnouncements = () => {
+    useAnnouncementStore().update();
+};
+
 export const api = {
     announements: {
         async getAll(): Promise<IAnnouncementSummary[]> {
@@ -50,24 +56,29 @@ export const api = {
                 },
                 body: JSON.stringify(announcement),
             });
-            return await res.json();
+            const data = await res.json();
+            forceReloadAnnouncements();
+            return data;
         },
         async get(id: number): Promise<IAnnouncement> {
             return fetch(`/api/announcements/${id}`).then((res) => res.json());
         },
-        async update(announcement: IAnnouncement): Promise<void> {
-            return fetch(`/api/announcements/${announcement.id}`, {
+        async update(announcement: IAnnouncement): Promise<IAnnouncement> {
+            const res = await fetch(`/api/announcements/${announcement.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(announcement),
-            }).then((res) => res.json());
+            });
+            const data = await res.json();
+            forceReloadAnnouncements();
+            return data;
         },
         async delete(id: number): Promise<void> {
             await fetch(`/api/announcements/${id}`, {
                 method: "DELETE",
-            });
+            }).then(forceReloadAnnouncements);
         },
         async getTypes(): Promise<string[]> {
             return fetch(`/api/announcements/types`).then((res) => res.json());

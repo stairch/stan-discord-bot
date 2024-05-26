@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import "@discord-message-components/vue/styles";
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import { RouterLink, RouterView } from "vue-router";
         />
         <nav>
             <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/announcement">Announcements</RouterLink>
+            <RouterLink to="/announcements">Announcements</RouterLink>
         </nav>
     </header>
 
@@ -31,6 +32,7 @@ header {
 
     position: sticky;
     top: 0;
+    z-index: 1000;
 }
 
 nav {

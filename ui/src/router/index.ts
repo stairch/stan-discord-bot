@@ -9,14 +9,14 @@ const router = createRouter({
             component: () => import("../views/HomeView.vue"),
         },
         {
-            path: "/announcement",
-            name: "announcement",
-            component: () => import("../views/AnnouncementView.vue"),
+            path: "/announcements",
+            name: "announcements",
+            component: () => import("../views/AnnouncementView/index.vue"),
         },
         {
-            path: "/announcement/:id",
+            path: "/announcements/:id",
             name: "announcementWithId",
-            component: () => import("../views/AnnouncementView.vue"),
+            component: () => import("../views/AnnouncementView/index.vue"),
         },
     ],
 });

@@ -13,7 +13,7 @@
  *
  */
 
-function toUnicodeVariant(str, variant, combinings) {
+export function toUnicodeVariant(str, variant, combinings) {
 
 	const string = String.fromCodePoint
 
@@ -47,16 +47,16 @@ function toUnicodeVariant(str, variant, combinings) {
 
 	const variantOffsets = {
 		'monospace': 'm',
-		'bold' : 'b',
-		'italic' : 'i',
-		'bold italic' : 'bi',
+		'bold': 'b',
+		'italic': 'i',
+		'bold italic': 'bi',
 		'script': 'c',
 		'bold script': 'bc',
 		'gothic': 'g',
 		'gothic bold': 'bg',
 		'doublestruck': 'd',
 		'sans': 's',
-		'bold sans' : 'bs',
+		'bold sans': 'bs',
 		'italic sans': 'is',
 		'bold italic sans': 'bis',
 		'parenthesis': 'p',
@@ -74,14 +74,14 @@ function toUnicodeVariant(str, variant, combinings) {
 	}
 
 	const special = {
-		m: { 
-			' ': 0x2000, '-': 0x2013 
+		m: {
+			' ': 0x2000, '-': 0x2013
 		},
-		i: { 
-			'h': 0x210e 
+		i: {
+			'h': 0x210e
 		},
-		c: { 
-			'B': 0x212C, 'E': 0x2130, 'F': 0x2131, 'H': 0x210B, 'I': 0x2110, 'L': 0x2112, 
+		c: {
+			'B': 0x212C, 'E': 0x2130, 'F': 0x2131, 'H': 0x210B, 'I': 0x2110, 'L': 0x2112,
 			'M': 0x2133, 'R': 0x211B, 'e': 0x1D4EE, 'g': 0x1D4F0, 'o': 0x1D4F8
 		},
 		g: {
@@ -91,7 +91,7 @@ function toUnicodeVariant(str, variant, combinings) {
 			'C': 0x2102, 'H': 0x210D, 'N': 0x2115, 'P': 0x2119, 'Q': 0x211A, 'R': 0x211D, 'Z': 0x2124
 		},
 		o: {
-			'0': 0x24EA,'10': 0x2469,	'11': 0x246A, '12': 0x246B, '13': 0x246C, '14': 0x246D,
+			'0': 0x24EA, '10': 0x2469, '11': 0x246A, '12': 0x246B, '13': 0x246C, '14': 0x246D,
 			'15': 0x246E, '16': 0x246F, '17': 0x2470, '18': 0x2471, '19': 0x2472, '20': 0x2473
 		},
 		on: {
@@ -99,31 +99,31 @@ function toUnicodeVariant(str, variant, combinings) {
 			'16': 0x24F0, '17': 0x24F1, '18': 0x24F2, '19': 0x24F3, '20': 0x24F4
 		},
 		p: {
-			'1': 0x2474, '2': 0x2475, '3': 0x2476, '4': 0x2477, '5': 0x2478, '6': 0x2479, 
+			'1': 0x2474, '2': 0x2475, '3': 0x2476, '4': 0x2477, '5': 0x2478, '6': 0x2479,
 			'7': 0x247A, '8': 0x247B, '9': 0x247C, '10': 0x247D, '11': 0x247E, '12': 0x247F,
-			'13': 0x2480, '14': 0x2481, '15': 0x2482, '16': 0x2483, '17': 0x2484, '18': 0x2485, 
+			'13': 0x2480, '14': 0x2481, '15': 0x2482, '16': 0x2483, '17': 0x2484, '18': 0x2485,
 			'19': 0x2486, '20': 0x2487
-		}, 
+		},
 		q: {
-			'hv': 0x1F14A, 'mv': 0x1F14B, 'sd': 0x1F14C, 'ss': 0x1F14D, 'ppv': 0x1F14E, 
-			'wc': 0x1F14F, 'cl': 0x1F191, 'cool': 0x1F192, 'free': 0x1F193, 'id': 0x1F194, 
-			'new': 0x1F195, 'ng': 0x1F196, 'ok': 0x1F197, 'sos': 0x1F198, 'up!': 0x1F199, 
-			'vs': 0x1F19A, '3d': 0x1F19B, '2ndscr': 0x1F19C, '2k': 0x1F19D, '4k': 0x1F19E, 
-			'8k': 0x1F19F, '5.1': 0x1F1A0, '7.1': 0x1F1A1, '22.2': 0x1F1A2,	'60p': 0x1F1A3, 
+			'hv': 0x1F14A, 'mv': 0x1F14B, 'sd': 0x1F14C, 'ss': 0x1F14D, 'ppv': 0x1F14E,
+			'wc': 0x1F14F, 'cl': 0x1F191, 'cool': 0x1F192, 'free': 0x1F193, 'id': 0x1F194,
+			'new': 0x1F195, 'ng': 0x1F196, 'ok': 0x1F197, 'sos': 0x1F198, 'up!': 0x1F199,
+			'vs': 0x1F19A, '3d': 0x1F19B, '2ndscr': 0x1F19C, '2k': 0x1F19D, '4k': 0x1F19E,
+			'8k': 0x1F19F, '5.1': 0x1F1A0, '7.1': 0x1F1A1, '22.2': 0x1F1A2, '60p': 0x1F1A3,
 			'120p': 0x1F1A4, 'd': 0x1F1A5, 'hc': 0x1F1A6, 'hdr': 0x1F1A7, 'hi-res': 0x1F1A8,
 			'loss-less': 0x1F1A9, 'shv': 0x1F1AA, 'uhd': 0x1F1AB, 'vod': 0x1F1AC
-		}, 
+		},
 		qn: {
-			'ic' : 0x1F18B, 'pa' : 0x1F18C, 'sa' : 0x1F18D, 'ab' : 0x1F18E, 'wc' : 0x1F18F
+			'ic': 0x1F18B, 'pa': 0x1F18C, 'sa': 0x1F18D, 'ab': 0x1F18E, 'wc': 0x1F18F
 		},
 		w: {
 			'!': 0xFF01, '"': 0xFF02, '#': 0xFF03, '$': 0xFF04, '%': 0xFF05, '&': 0xFF06,
 			'\'': 0xFF07, '(': 0xFF08, ')': 0xFF09, '*': 0xFF0A, '+': 0xFF0B, ',': 0xFF0C,
-			'-': 0xFF0D, '.': 0xFF0E, '/': 0xFF0F, ':': 0xFF1A, ';': 0xFF1B, '<': 0xFF1C, 
+			'-': 0xFF0D, '.': 0xFF0E, '/': 0xFF0F, ':': 0xFF1A, ';': 0xFF1B, '<': 0xFF1C,
 			'=': 0xFF1D, '>': 0xFF1E, '?': 0xFF1F, '@': 0xFF20, '\\': 0xFF3C, '[': 0xFF3B,
-			']': 0xFF3D, '^': 0xFF3E, '_': 0xFF3F,'`': 0xFF40, '{': 0xFF5B, '|': 0xFF5C,
+			']': 0xFF3D, '^': 0xFF3E, '_': 0xFF3F, '`': 0xFF40, '{': 0xFF5B, '|': 0xFF5C,
 			'}': 0xFF5D, '~': 0xFF5E, '⦅': 0xFF5F, '⦆': 0xFF60, '￠': 0xFFE0, '￡': 0xFFE1,
-			'¦': 0xFFE4, '￥': 0xFFE5, '￦': 0xFFE6, 'ｰ': 0xFF70, '｡': 0xFF70, 	'､': 0xFF64, 
+			'¦': 0xFFE4, '￥': 0xFFE5, '￦': 0xFFE6, 'ｰ': 0xFF70, '｡': 0xFF70, '､': 0xFF64,
 			'･': 0xFF65, '￣': 0xFFE3, '¬': 0xFFE2
 		},
 		f: {},
@@ -131,7 +131,7 @@ function toUnicodeVariant(str, variant, combinings) {
 			'0': 0x1F100, '10': 0x2491, '11': 0x2492, '12': 0x2493, '13': 0x2494, '14': 0x2495,
 			'15': 0x2496, '16': 0x2497, '17': 0x2498, '18': 0x2499, '19': 0x249A, '20': 0x249B
 		},
-		ndc: { 
+		ndc: {
 			'0': 0x1D7F6, '10': 0x24FE
 		},
 		r: {
@@ -147,8 +147,8 @@ function toUnicodeVariant(str, variant, combinings) {
 	//paranthesis, support small letters
 	//fullwidth, support small letters
 	for (var i = 97; i <= 122; i++) {
-		special['p'][String.fromCharCode(i)] = 0x249C + (i-97)
-		special['w'][String.fromCharCode(i)] = 0xFF41 + (i-97)
+		special['p'][String.fromCharCode(i)] = 0x249C + (i - 97)
+		special['w'][String.fromCharCode(i)] = 0xFF41 + (i - 97)
 	}
 
 	//circled negative, support small letters
@@ -156,9 +156,9 @@ function toUnicodeVariant(str, variant, combinings) {
 	//squared negative, support small letters
 	;['on', 'q', 'qn', 'f'].forEach(t => {
 		for (var i = 97; i <= 122; i++) {
-			special[t][String.fromCharCode(i)] = offsets[t][0] + (i-97)
+			special[t][String.fromCharCode(i)] = offsets[t][0] + (i - 97)
 		}
-	})		
+	})
 
 	const diacritics = {
 		'strike': { 'short': 's', 'code': 0x0336 },
@@ -171,7 +171,7 @@ function toUnicodeVariant(str, variant, combinings) {
 		'overline': { 'short': 'o', 'code': 0x0305 },
 		'overline-curly': { 'short': 'oc', 'code': 0x0303 },
 		'overline-sm': { 'short': 'o-sm', 'code': 0x0304 },
-		'overline-double' : { 'short': 'od', 'code': 0x033F },
+		'overline-double': { 'short': 'od', 'code': 0x033F },
 		'slash': { 'short': 'sl', 'code': 0x0338 },
 		'cross-above': { 'short': 'ca', 'code': 0x033D },
 		'plus-below': { 'short': 'pb', 'code': 0x031F },
@@ -202,7 +202,7 @@ function toUnicodeVariant(str, variant, combinings) {
 		'perispomeni': { 'code': 0x0342 },
 		'tilde': { 'code': 0x0303 },
 		'tildesm': { 'code': 0x02DC },
-		'circumflex': { 'code': 0x0302 }, 
+		'circumflex': { 'code': 0x0302 },
 		'ringabove': { 'code': 0x030A },
 		'dotabove': { 'code': 0x0307 },
 		'dotbelow': { 'code': 0x0323 },
@@ -211,14 +211,14 @@ function toUnicodeVariant(str, variant, combinings) {
 		'acute': { 'code': 0x0341 },
 		'breve': { 'code': 0x0306 },
 		'breveinverted': { 'code': 0x0311 },
-		'commabelow': { 'code' : 0x0326 },
+		'commabelow': { 'code': 0x0326 },
 		'macron': { 'code': 0x0304 },
 		'cedilla': { 'code': 0x0327 },
 		'ogonek': { 'code': 0x0328 },
 		'solidus': { 'code': 0x0338 },
 		'solidussm': { 'code': 0x0337 },
 		'hookabove': { 'code': 0x0309 },
-    'horn': { 'code': 0x031B },
+		'horn': { 'code': 0x031B },
 		//spacing combinings
 		'space-zero': { 'code': 0xFEFF },
 		'space-hair': { 'code': 0x200A },
@@ -253,27 +253,27 @@ function toUnicodeVariant(str, variant, combinings) {
 		'ĉ': { 'char': 'c', 'combine': string(diacritics.circumflex.code) },
 		'è': { 'char': 'e', 'combine': string(diacritics.grave.code) },
 		'é': { 'char': 'e', 'combine': string(diacritics.acute.code) },
-		'ē': { 'char': 'e', 'combine': string(diacritics.macron.code) }, 
-		'ĕ': { 'char': 'e', 'combine': string(diacritics.breve.code) }, 
-		'ë': { 'char': 'e', 'combine': string(diacritics.diaeresis.code) }, 
-		'ě': { 'char': 'e', 'combine': string(diacritics.caron.code) }, 
-		'ę': { 'char': 'e', 'combine': string(diacritics.ogonek.code) }, 
-		'ȇ': { 'char': 'e', 'combine': string(diacritics.breveinverted.code) }, 
-		'ȅ': { 'char': 'e', 'combine': string(diacritics.gravedouble.code) }, 
-		'ê': { 'char': 'e', 'combine': string(diacritics.circumflex.code) }, 
-		'ğ': { 'char': 'g', 'combine': string(diacritics.breve.code) }, 
-		'ǧ': { 'char': 'g', 'combine': string(diacritics.caron.code) }, 
-		'ģ': { 'char': 'g', 'combine': string(diacritics.cedilla.code) }, 
-		'ġ': { 'char': 'g', 'combine': string(diacritics.dotabove.code) }, 
-		'ḥ': { 'char': 'h', 'combine': string(diacritics.dotbelow.code) }, 
-		'î': { 'char': 'i', 'combine': string(diacritics.circumflex.code) }, 
+		'ē': { 'char': 'e', 'combine': string(diacritics.macron.code) },
+		'ĕ': { 'char': 'e', 'combine': string(diacritics.breve.code) },
+		'ë': { 'char': 'e', 'combine': string(diacritics.diaeresis.code) },
+		'ě': { 'char': 'e', 'combine': string(diacritics.caron.code) },
+		'ę': { 'char': 'e', 'combine': string(diacritics.ogonek.code) },
+		'ȇ': { 'char': 'e', 'combine': string(diacritics.breveinverted.code) },
+		'ȅ': { 'char': 'e', 'combine': string(diacritics.gravedouble.code) },
+		'ê': { 'char': 'e', 'combine': string(diacritics.circumflex.code) },
+		'ğ': { 'char': 'g', 'combine': string(diacritics.breve.code) },
+		'ǧ': { 'char': 'g', 'combine': string(diacritics.caron.code) },
+		'ģ': { 'char': 'g', 'combine': string(diacritics.cedilla.code) },
+		'ġ': { 'char': 'g', 'combine': string(diacritics.dotabove.code) },
+		'ḥ': { 'char': 'h', 'combine': string(diacritics.dotbelow.code) },
+		'î': { 'char': 'i', 'combine': string(diacritics.circumflex.code) },
 		'í': { 'char': 'i', 'combine': string(diacritics.acute.code) },
 		'ì': { 'char': 'i', 'combine': string(diacritics.grave.code) },
 		'ĩ': { 'char': 'i', 'combine': string(diacritics.tilde.code) },
-		'ḱ': { 'char': 'k', 'combine': string(diacritics.acute.code) }, 
-		'ḳ': { 'char': 'k', 'combine': string(diacritics.dotbelow.code) }, 
-		'ņ': { 'char': 'n', 'combine': string(diacritics.ogonek.code) }, 
-		'ń': { 'char': 'n', 'combine': string(diacritics.acute.code) }, 
+		'ḱ': { 'char': 'k', 'combine': string(diacritics.acute.code) },
+		'ḳ': { 'char': 'k', 'combine': string(diacritics.dotbelow.code) },
+		'ņ': { 'char': 'n', 'combine': string(diacritics.ogonek.code) },
+		'ń': { 'char': 'n', 'combine': string(diacritics.acute.code) },
 		'õ': { 'char': 'o', 'combine': string(diacritics.tilde.code) },
 		'ö': { 'char': 'o', 'combine': string(diacritics.diaeresis.code) },
 		'ō': { 'char': 'o', 'combine': string(diacritics.macron.code) },
@@ -309,56 +309,56 @@ function toUnicodeVariant(str, variant, combinings) {
 		//'r̃': { 'char': 'r', 'combine': string(diacritics.tilde.code) },
 		//'s̈': { 'char': 's', 'combine': string(diacritics.diaeresis.code) },
 		'đ': { 'char': 'd', 'combine': string(diacritics.macron.code) },
-    'à': { 'char': 'a', 'combine': string(diacritics.grave.code) },
-    'ả': { 'char': 'a', 'combine': string(diacritics.hookabove.code) },
-    'ạ': { 'char': 'a', 'combine': string(diacritics.dotbelow.code) },
-    'ẻ': { 'char': 'e', 'combine': string(diacritics.hookabove.code) },
-    'ẽ': { 'char': 'e', 'combine': string(diacritics.tilde.code) },
-    'ẹ': { 'char': 'e', 'combine': string(diacritics.dotbelow.code) },
-    'ỉ': { 'char': 'i', 'combine': string(diacritics.hookabove.code) },
-    'ị': { 'char': 'i', 'combine': string(diacritics.dotbelow.code) },
-    'ỏ': { 'char': 'o', 'combine': string(diacritics.hookabove.code) },
-    'ọ': { 'char': 'o', 'combine': string(diacritics.dotbelow.code) },
-    'ủ': { 'char': 'u', 'combine': string(diacritics.hookabove.code) },
-    'ũ': { 'char': 'u', 'combine': string(diacritics.tilde.code) },
-    'ụ': { 'char': 'u', 'combine': string(diacritics.dotbelow.code) },
-    'ý': { 'char': 'y', 'combine': string(diacritics.acute.code) },
-    'ỳ': { 'char': 'y', 'combine': string(diacritics.grave.code) },
-    'ỷ': { 'char': 'y', 'combine': string(diacritics.hookabove.code) },
-    'ỹ': { 'char': 'y', 'combine': string(diacritics.tilde.code) },
-    'ỵ': { 'char': 'y', 'combine': string(diacritics.dotbelow.code) },
-    'ắ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.acute.code) },
-    'ằ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.grave.code) },
-    'ẳ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.hookabove.code) },
-    'ẵ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.tilde.code) },
-    'ặ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.dotbelow.code) },
-    'ấ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
-    'ầ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
-    'ẩ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
-    'ẫ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
-    'ậ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
-    'ế': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
-    'ề': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
-    'ể': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
-    'ễ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
-    'ệ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
-    'ố': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
-    'ồ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
-    'ổ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
-    'ỗ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
-    'ộ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
-    'ơ': { 'char': 'o', 'combine': string(diacritics.horn.code) },
-    'ớ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
-    'ờ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
-    'ở': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
-    'ỡ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
-    'ợ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
-    'ư': { 'char': 'u', 'combine': string(diacritics.horn.code) },
-    'ứ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
-    'ừ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
-    'ử': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
-    'ữ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
-    'ự': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
+		'à': { 'char': 'a', 'combine': string(diacritics.grave.code) },
+		'ả': { 'char': 'a', 'combine': string(diacritics.hookabove.code) },
+		'ạ': { 'char': 'a', 'combine': string(diacritics.dotbelow.code) },
+		'ẻ': { 'char': 'e', 'combine': string(diacritics.hookabove.code) },
+		'ẽ': { 'char': 'e', 'combine': string(diacritics.tilde.code) },
+		'ẹ': { 'char': 'e', 'combine': string(diacritics.dotbelow.code) },
+		'ỉ': { 'char': 'i', 'combine': string(diacritics.hookabove.code) },
+		'ị': { 'char': 'i', 'combine': string(diacritics.dotbelow.code) },
+		'ỏ': { 'char': 'o', 'combine': string(diacritics.hookabove.code) },
+		'ọ': { 'char': 'o', 'combine': string(diacritics.dotbelow.code) },
+		'ủ': { 'char': 'u', 'combine': string(diacritics.hookabove.code) },
+		'ũ': { 'char': 'u', 'combine': string(diacritics.tilde.code) },
+		'ụ': { 'char': 'u', 'combine': string(diacritics.dotbelow.code) },
+		'ý': { 'char': 'y', 'combine': string(diacritics.acute.code) },
+		'ỳ': { 'char': 'y', 'combine': string(diacritics.grave.code) },
+		'ỷ': { 'char': 'y', 'combine': string(diacritics.hookabove.code) },
+		'ỹ': { 'char': 'y', 'combine': string(diacritics.tilde.code) },
+		'ỵ': { 'char': 'y', 'combine': string(diacritics.dotbelow.code) },
+		'ắ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.acute.code) },
+		'ằ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.grave.code) },
+		'ẳ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.hookabove.code) },
+		'ẵ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.tilde.code) },
+		'ặ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.dotbelow.code) },
+		'ấ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+		'ầ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+		'ẩ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+		'ẫ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+		'ậ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+		'ế': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+		'ề': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+		'ể': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+		'ễ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+		'ệ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+		'ố': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+		'ồ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+		'ổ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+		'ỗ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+		'ộ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+		'ơ': { 'char': 'o', 'combine': string(diacritics.horn.code) },
+		'ớ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
+		'ờ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
+		'ở': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
+		'ỡ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
+		'ợ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
+		'ư': { 'char': 'u', 'combine': string(diacritics.horn.code) },
+		'ứ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
+		'ừ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
+		'ử': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
+		'ữ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
+		'ự': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
 	}
 
 	//reset special chars, capital letters
@@ -370,19 +370,19 @@ function toUnicodeVariant(str, variant, combinings) {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 	const numbers = '0123456789'
 
-	const type = (function() {
+	const type = (function () {
 		if (variantOffsets[variant]) return variantOffsets[variant]
 		if (offsets[variant]) return variant
 		return 'm' //monospace as default
 	})()
 
-	const combine_with = (function() {
+	const combine_with = (function () {
 		let array = null
 		if (Array.isArray(combinings)) array = combinings
 		if (typeof combinings === 'string') array = combinings.split(',')
 		if (!array) return false
 		let result = ''
-		array.forEach(function(diacritic) {
+		array.forEach(function (diacritic) {
 			diacritic = diacritic.trim().toLowerCase()
 			for (const d in diacritics) {
 				if (diacritic === d || diacritic === diacritics[d].short) {
@@ -403,12 +403,12 @@ function toUnicodeVariant(str, variant, combinings) {
 		if (typeof str === 'number') {
 			//-- based on https://blog.stevenlevithan.com/archives/javascript-roman-numeral-converter
 			const parts = {
-				M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9,	V: 5, IV: 4, I: 1
+				M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1
 			}
 			let roman = ''
 			let num = str
 			for (let i in parts) {
-				while (num >= parts[i] ) {
+				while (num >= parts[i]) {
 					if (special[type][i]) {
 						roman += i
 					} else {
@@ -420,9 +420,9 @@ function toUnicodeVariant(str, variant, combinings) {
 			str = roman
 		}
 		let result = str
-		const romans = ['VIII', 'viii', 'III', 'iii', 'XII', 'xii', 'VII', 'vii', 'IX', 
-										'ix', 'XI', 'xi', 'IV', 'iv', 'VI', 'vi', 'II', 'ii', 'I', 'i', 
-										'D', 'd', 'M', 'm', 'L', 'l', 'V', 'v', 'C', 'c', 'X', 'x']
+		const romans = ['VIII', 'viii', 'III', 'iii', 'XII', 'xii', 'VII', 'vii', 'IX',
+			'ix', 'XI', 'xi', 'IV', 'iv', 'VI', 'vi', 'II', 'ii', 'I', 'i',
+			'D', 'd', 'M', 'm', 'L', 'l', 'V', 'v', 'C', 'c', 'X', 'x']
 		for (number of romans) {
 			if (result.indexOf(number.toString()) > -1) {
 				result = result.replaceAll(number, string(special[type][number]))
@@ -435,25 +435,19 @@ function toUnicodeVariant(str, variant, combinings) {
 
 	for (let c of str) {
 		let index
-		const combine_special = (c in special_chars) ? special_chars[c].combine : false 
+		const combine_special = (c in special_chars) ? special_chars[c].combine : false
 		c = combine_special ? special_chars[c].char : c.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 		if (special[type] && special[type][c]) c = string(special[type][c])
 		if (type && (index = chars.indexOf(c)) > -1) {
-			result += string(index + offsets[type][0]) 
+			result += string(index + offsets[type][0])
 		} else if (type && (index = numbers.indexOf(c)) > -1) {
-			result += string(index + offsets[type][1]) 
+			result += string(index + offsets[type][1])
 		} else {
-			result += c 
+			result += c
 		}
 		if (combine_special) result += combine_special
-		if (combine_with) result += combine_with 
+		if (combine_with) result += combine_with
 	}
 
 	return result
 }
-
-if (typeof module === 'object' && module && typeof module.exports === 'object') {
-	module.exports = toUnicodeVariant
-}
-
-
