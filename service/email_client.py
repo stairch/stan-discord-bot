@@ -8,13 +8,15 @@ __email__ = "info@stair.ch"
 
 import os
 import logging
-from msal import PublicClientApplication  # type: ignore
+from msal import ConfidentialClientApplication  # type: ignore
 import aiohttp
 
 AD_APP_ID = os.getenv("AD_APP_ID")
+AD_APP_SECRET = os.getenv("AD_APP_SECRET")
+AD_TENANT_ID = os.getenv("AD_TENANT_ID")
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_NAME = os.getenv("EMAIL_NAME")
-SCOPES = ["Mail.Send"]
+SCOPES = ["Mail.Send", "User.Read"]
 
 
 class EmailClient:
@@ -22,18 +24,14 @@ class EmailClient:
 
     def __init__(self) -> None:
         self._logger = logging.getLogger(__name__)
-        self._app = PublicClientApplication(
-            AD_APP_ID, authority="https://login.microsoftonline.com/common"
+        self._app = ConfidentialClientApplication(
+            client_id=AD_APP_ID,
+            client_credential=AD_APP_SECRET,
+            authority=f"https://login.microsoftonline.com/{AD_TENANT_ID}",
         )
-        flow = self._app.initiate_device_flow(SCOPES)
-        self._logger.info(flow["message"])
-        self._app.acquire_token_by_device_flow(flow)
-        accounts = self._app.get_accounts()
-        assert len(accounts) > 0
-        self._account = accounts[0]
 
     def _get_token(self) -> str:
-        result = self._app.acquire_token_silent(SCOPES, account=self._account)
+        result = self._app.acquire_token_for_client(SCOPES)
         return result["access_token"]
 
     async def send_email(self, subject: str, content: str, to: str) -> bool:

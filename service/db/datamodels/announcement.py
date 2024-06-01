@@ -29,6 +29,7 @@ class AnnouncementType(StrEnum):
     NON_STAIR = "non-stair"
     SERVER_INFO = "server"
     TEST = "test"
+    CANTEEN_MENU = "canteen-menu"
 
 
 @dataclass

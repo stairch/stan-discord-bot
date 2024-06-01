@@ -12,6 +12,7 @@ from pyaddict import JDict
 import discord
 
 from guild import AnnouncementChannelType
+from common.constants import STAIR_GREEN
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
 
@@ -99,12 +100,12 @@ class AnnouncementHandler(BaseHandler):
         embed_de = discord.Embed(
             title=f":flag_de: {announcement.title}",
             description=announcement.message_de,
-            color=0x0B6A5B,
+            color=STAIR_GREEN,
         )
         embed_en = discord.Embed(
             title=f":flag_gb: {announcement.title}",
             description=announcement.message_en,
-            color=0x0B6A5B,
+            color=STAIR_GREEN,
         )
 
         if image:

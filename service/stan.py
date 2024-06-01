@@ -11,9 +11,11 @@ import discord
 
 from email_client import EmailClient
 from verifying_student import VerifyingStudent
-from guild import DiscordServer, RoleType
+from guild import DiscordServer, RoleType, AnnouncementChannelType
+from foodstoffi_menu import Menu
 from db.db import Database
 from db.datamodels.verified_user import VerifiedUser
+from db.datamodels.announcement import AnnouncementType
 
 
 class Stan(discord.Client):
@@ -37,6 +39,24 @@ class Stan(discord.Client):
     def servers(self) -> dict[int, DiscordServer]:
         """Get all servers"""
         return {x.id: x for x in self._servers}
+
+    async def send_foodstoffi_menu_update(self) -> None:
+        """Send a foodstoffi menu update to all servers"""
+        todays_menu = await Menu.get_todays_menu()
+        if todays_menu is None:
+            self._logger.warning("No menu available")
+            return
+        for server in self._servers:
+            channel_type = AnnouncementChannelType.from_announcement_type(
+                AnnouncementType.CANTEEN_MENU
+            )
+            channel = channel_type.get(server.guild)
+            role = channel_type.get_role(server.guild)
+
+            await channel.send(
+                f"Hiya, {role.mention}! This is today's menu:",
+                embeds=[x.as_embed for x in todays_menu],
+            )
 
     async def on_ready(self):
         """Bot is ready"""

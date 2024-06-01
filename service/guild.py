@@ -36,6 +36,7 @@ class AnnouncementRoleType(StrEnum):
     NON_STAIR = "Non-STAIR Notifications"
     SERVER = "Server Notifications"
     TEST = "administrator"
+    HUNGRY_STUDENT = "Hungry Student"
 
     def get(self, guild: discord.Guild) -> discord.Role:
         """Get the role for this type"""
@@ -51,6 +52,7 @@ class AnnouncementChannelType(StrEnum):
     NON_STAIR_CHANNEL = "non-stair-announcements"
     SERVER_CHANNEL = "server-info"
     TEST_CHANNEL = "webhook-test"
+    CANTEEN_MENU_CHANNEL = "canteen-menu"
 
     def get(self, guild: discord.Guild) -> discord.TextChannel:
         """Get the channel for this type"""
@@ -67,6 +69,7 @@ class AnnouncementChannelType(StrEnum):
             AnnouncementChannelType.NON_STAIR_CHANNEL: AnnouncementRoleType.NON_STAIR,
             AnnouncementChannelType.SERVER_CHANNEL: AnnouncementRoleType.SERVER,
             AnnouncementChannelType.TEST_CHANNEL: AnnouncementRoleType.TEST,
+            AnnouncementChannelType.CANTEEN_MENU_CHANNEL: AnnouncementRoleType.HUNGRY_STUDENT,
         }[self]
         return role_type.get(guild)
 
@@ -80,6 +83,7 @@ class AnnouncementChannelType(StrEnum):
             AnnouncementType.NON_STAIR: cls.NON_STAIR_CHANNEL,
             AnnouncementType.SERVER_INFO: cls.SERVER_CHANNEL,
             AnnouncementType.TEST: cls.TEST_CHANNEL,
+            AnnouncementType.CANTEEN_MENU: cls.CANTEEN_MENU_CHANNEL,
         }[announcement_type]
 
 
