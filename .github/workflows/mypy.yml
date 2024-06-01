@@ -25,6 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install mypy
           pip install -r requirements.txt
+          pip install types-beautifulsoup4
 
       - name: Run mypy
         working-directory: service
