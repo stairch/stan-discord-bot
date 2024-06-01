@@ -13,16 +13,16 @@ export interface IAnnouncement {
         en: string;
         de: string;
     };
-    announcement_type: "stair" | "non-stair" | "server" | "test";
 }
 
 export interface IAnnouncementSummary {
     id: number;
     title: string;
-    announcement_type: "stair" | "non-stair" | "server" | "test";
 }
 
 type AnnouncementScope = "discord" | "telegram";
+export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"]
+type AnnouncementType = typeof ANNOUNCEMENT_TYPES[number];
 
 const toBase64 = async (file?: File): Promise<string | undefined> => {
     if (!file) {
@@ -87,6 +87,7 @@ export const api = {
             id: number,
             scope: AnnouncementScope,
             server: string,
+            type: AnnouncementType,
             image?: File
         ): Promise<void> {
             fetch(`/api/announcements/${id}/publish`, {
@@ -98,6 +99,7 @@ export const api = {
                     id,
                     scope,
                     server,
+                    type,
                     image: await toBase64(image),
                 }),
             });

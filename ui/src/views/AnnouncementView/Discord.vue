@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch, ref, type PropType, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api, type IServer, type IAnnouncement } from "../../api";
+import { api, ANNOUNCEMENT_TYPES, type IServer, type IAnnouncement } from "../../api";
 import {
     DiscordMarkdown,
     DiscordEmbed,
@@ -14,6 +14,7 @@ import CardPicker from "@/components/CardPicker.vue";
 
 const servers = ref<IServer[]>([]);
 const server = ref<string>("");
+const type = ref<string>(ANNOUNCEMENT_TYPES[0]);
 
 const props = defineProps({
     modelValue: { type: Object as PropType<IAnnouncement>, required: true },
@@ -45,6 +46,7 @@ const postAnnouncement = async () => {
         announcement.value.id!,
         "discord",
         String(servers.value[0].id),
+        type.value,
         img.value ?? undefined
     );
 };
@@ -69,13 +71,24 @@ const setImage = () => {
 
 <template>
     <div class="inputs">
-        <CardPicker
-            v-model="server"
-            :options="servers.map((s) => ({ value: s.id, label: s.name }))"
-            label="Server"
-            key="id"
-            value="name"
-        />
+        <select v-model="server">
+            <option
+                v-for="s in servers"
+                :key="s.id"
+                :value="s.id"
+            >
+                {{ s.name }}
+            </option>
+        </select>
+        <select v-model="type">
+            <option
+                v-for="t in ANNOUNCEMENT_TYPES"
+                :key="t"
+                :value="t"
+            >
+                {{ t }}
+            </option>
+        </select>
         <button
             @click="setImage"
             class="warning"

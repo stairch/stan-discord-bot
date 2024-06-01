@@ -12,8 +12,7 @@ const announcement = ref<IAnnouncement>({
     message: {
         en: "",
         de: "",
-    },
-    announcement_type: "test",
+    }
 });
 
 const route = useRoute();
@@ -53,8 +52,7 @@ watch(route, async () => {
             message: {
                 en: "",
                 de: "",
-            },
-            announcement_type: "test",
+            }
         };
     }
 });

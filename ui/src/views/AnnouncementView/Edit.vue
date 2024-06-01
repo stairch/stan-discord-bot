@@ -56,10 +56,6 @@ const deleteAnnouncement = async () => {
 </script>
 
 <template>
-    <CardPicker
-        v-model="announcement.announcement_type"
-        :options="types.map((type) => ({ value: type, label: type }))"
-    />
     <input
         type="text"
         v-model="announcement.title"

@@ -2,7 +2,7 @@
 import { computed, watch, ref, type PropType, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, type IServer, type IAnnouncement } from "../../api";
-import { toUnicodeVariant } from "@/assets/toUnicodeVariant.js";
+import { toUnicodeVariant } from "@/assets/toUnicodeVariant";
 import CardPicker from "@/components/CardPicker.vue";
 
 const text = ref<string>("");
@@ -22,14 +22,14 @@ const buildText = () => {
     // bold text is surrounded by * or **
     const boldRegex = /\*\*(.*?)\*\*|\*(.*?)\*/g;
     const boldReplacer = (match: string, p1: string) => {
-        return toUnicodeVariant(p1, "bold");
+        return toUnicodeVariant(p1, "bold sans");
     };
     const boldText = fullText.replace(boldRegex, boldReplacer);
 
     // italic text is surrounded by _ or __
     const italicRegex = /__(.*?)__|_(.*?)_/g;
     const italicReplacer = (match: string, p1: string) => {
-        return toUnicodeVariant(p1, "italic");
+        return toUnicodeVariant(p1, "italic sans");
     };
     const italicText = boldText.replace(italicRegex, italicReplacer);
 

@@ -36,7 +36,6 @@ class AnnouncementType(StrEnum):
 class Announcement:
     """Data model for an announcement"""
 
-    announcement_type: AnnouncementType
     title: str
     message_en: str
     message_de: str
@@ -47,7 +46,6 @@ class Announcement:
         """Deserialise the object"""
         schema = Object(
             {
-                "announcement_type": String().enum(*AnnouncementType),
                 "title": String(),
                 "message": Object(
                     {
@@ -64,9 +62,6 @@ class Announcement:
             print(data)
             return (
                 cls(
-                    announcement_type=AnnouncementType(
-                        data.assertGet("announcement_type", str)
-                    ),
                     title=data.assertGet("title", str),
                     message_en=data.assertGet("message.en", str),
                     message_de=data.assertGet("message.de", str),
@@ -79,7 +74,6 @@ class Announcement:
     def summary(self) -> dict[str, Any]:
         """Get a summary of the announcement"""
         return {
-            "announcement_type": self.announcement_type,
             "title": self.title,
             "id": self.id,
         }
@@ -87,7 +81,6 @@ class Announcement:
     def serialise(self) -> dict[str, Any]:
         """Serialise the object"""
         return {
-            "announcement_type": self.announcement_type,
             "title": self.title,
             "message": {
                 "en": self.message_en,

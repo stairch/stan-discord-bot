@@ -53,10 +53,11 @@ class Stan(discord.Client):
             channel = channel_type.get(server.guild)
             role = channel_type.get_role(server.guild)
 
-            await channel.send(
+            msg = await channel.send(
                 f"Hiya, {role.mention}! This is today's menu:",
                 embeds=[x.as_embed for x in todays_menu],
             )
+            await msg.publish()
 
     async def on_ready(self):
         """Bot is ready"""
