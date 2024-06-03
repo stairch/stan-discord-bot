@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, watch, ref, type PropType, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { api, ANNOUNCEMENT_TYPES, type IServer, type IAnnouncement } from "../../api";
 import {
     DiscordMarkdown,
@@ -9,8 +8,8 @@ import {
     DiscordEmbedField,
     DiscordMessage,
     DiscordMessages,
+    // @ts-ignore
 } from "@discord-message-components/vue";
-import CardPicker from "@/components/CardPicker.vue";
 
 const servers = ref<IServer[]>([]);
 const server = ref<string>("");
