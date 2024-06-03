@@ -11,12 +11,11 @@ import logging
 from msal import ConfidentialClientApplication  # type: ignore
 import aiohttp
 
-AD_APP_ID = os.getenv("AD_APP_ID")
+AD_APP_SECRET_ID = os.getenv("AD_APP_ID")
 AD_APP_SECRET = os.getenv("AD_APP_SECRET")
 AD_TENANT_ID = os.getenv("AD_TENANT_ID")
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-EMAIL_NAME = os.getenv("EMAIL_NAME")
-SCOPES = ["Mail.Send", "User.Read"]
+SCOPES = ["https://graph.microsoft.com/.default"]
 
 
 class EmailClient:
@@ -25,7 +24,7 @@ class EmailClient:
     def __init__(self) -> None:
         self._logger = logging.getLogger(__name__)
         self._app = ConfidentialClientApplication(
-            client_id=AD_APP_ID,
+            client_id=AD_APP_SECRET_ID,
             client_credential=AD_APP_SECRET,
             authority=f"https://login.microsoftonline.com/{AD_TENANT_ID}",
         )
@@ -52,7 +51,7 @@ class EmailClient:
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                "https://graph.microsoft.com/v1.0/me/sendMail",
+                f"https://graph.microsoft.com/v1.0/users/{EMAIL_ADDRESS}/sendMail",
                 headers={"Authorization": "Bearer " + self._get_token()},
                 json=body,
             ) as r:

@@ -15,6 +15,7 @@ from guild import AnnouncementChannelType
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
+from .msal_auth import authenticated
 
 
 class AnnouncementHandler(BaseHandler):
@@ -32,11 +33,13 @@ class AnnouncementHandler(BaseHandler):
             "/api/announcements/{id}/publish", self._publish_announcement
         )
 
+    @authenticated
     async def _get_announcements(self, _: web.Request) -> web.Response:
         """Get all announcements"""
         announcements = self._db.get_announcements()
         return web.json_response([x.summary() for x in announcements])
 
+    @authenticated
     async def _get_announcement(self, request: web.Request) -> web.Response:
         """Get a single announcement"""
         id_ = int(request.match_info["id"])
@@ -45,6 +48,7 @@ class AnnouncementHandler(BaseHandler):
             return web.json_response({"error": "Announcement not found"}, status=404)
         return web.json_response(announcement.serialise())
 
+    @authenticated
     async def _create_announcement(self, request: web.Request) -> web.Response:
         """Create a new announcement"""
         data = JDict(await request.json())
@@ -54,6 +58,7 @@ class AnnouncementHandler(BaseHandler):
         announcement = self._db.create_announcement(announcement)
         return web.json_response(announcement.serialise())
 
+    @authenticated
     async def _update_announcement(self, request: web.Request) -> web.Response:
         """Update an announcement"""
         data = JDict(await request.json())
@@ -65,12 +70,14 @@ class AnnouncementHandler(BaseHandler):
         self._db.update_announcement(announcement)
         return web.json_response(announcement.serialise())
 
+    @authenticated
     async def _delete_announcement(self, request: web.Request) -> web.Response:
         """Delete an announcement"""
         id_ = int(request.match_info["id"])
         self._db.delete_announcement(id_)
         return web.Response()
 
+    @authenticated
     async def _publish_announcement(self, request: web.Request) -> web.Response:  # pylint: disable=too-many-locals
         """Announce a message to a channel"""
         data = JDict(await request.json())
@@ -136,10 +143,12 @@ class AnnouncementHandler(BaseHandler):
             )
         return web.Response()
 
+    @authenticated
     async def _types(self, _: web.Request) -> web.Response:
         """Get all announcement channels"""
         return web.json_response([x.value for x in AnnouncementType])
 
+    @authenticated
     async def _discord_servers(self, _: web.Request) -> web.Response:
         """Get all announcement servers"""
         servers = self._stan.servers

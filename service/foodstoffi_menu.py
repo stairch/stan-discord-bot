@@ -143,7 +143,7 @@ class Category:
     @property
     def todays_recipe(self) -> Recipe | None:
         """Get the recipe for today"""
-        today = datetime.date.today() - datetime.timedelta(days=4)
+        today = datetime.date.today()
         for recipe in self.recipes:
             if recipe.date == today:
                 return recipe.recipe

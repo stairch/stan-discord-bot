@@ -8,6 +8,7 @@ from aiohttp import web
 
 from db.datamodels.hslu_student import HsluStudent
 from .base_handler import BaseHandler
+from .msal_auth import authenticated
 
 
 class DbImportHandler(BaseHandler):
@@ -17,6 +18,7 @@ class DbImportHandler(BaseHandler):
         app.router.add_post("/api/students", self._upload_students)
         app.router.add_get("/api/students", self._get_students)
 
+    @authenticated
     async def _upload_students(self, request: web.Request) -> web.Response:
         """Upload students from a CSV file. These we'll write to the database."""
         plain = await request.text()
@@ -29,6 +31,7 @@ class DbImportHandler(BaseHandler):
             await self._stan.make_student(student)
         return web.Response()
 
+    @authenticated
     async def _get_students(self, _: web.Request) -> web.Response:
         """Get number of students in the database."""
         return web.Response(text=str(len(self._db.all_students())))
