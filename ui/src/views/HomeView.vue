@@ -1,5 +1,5 @@
 <template>
     <main>
-        <h1>Discord Bot</h1>
+        <h1>PR Toolkit</h1>
     </main>
 </template>

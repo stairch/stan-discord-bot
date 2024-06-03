@@ -1,24 +1,44 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import "@discord-message-components/vue/styles";
+import { ref, onMounted } from "vue";
+import Forbidden from "./views/Forbidden.vue";
+
+const userData = ref<any | null>(null);
+
+onMounted(async () => {
+    const res = await fetch("/api/auth/me")
+    if (res.ok) {
+        userData.value = await res.json();
+    } else {
+        userData.value = false;
+    }
+});
 </script>
 
 <template>
-    <header>
-        <img
-            alt="Vue logo"
-            class="logo"
-            src="/logo_protected_inverted.png"
-            height="100"
-        />
-        <nav>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/announcements">Announcements</RouterLink>
-        </nav>
-    </header>
+    <Forbidden v-if="userData == false" />
+    <div v-else-if="userData">
+        <header>
+            <img
+                alt="Stair Logo"
+                class="logo"
+                src="/logo_protected_inverted.png"
+                height="50"
+            />
+            <nav>
+                <RouterLink title="Home" to="/"><span class="material-symbols-rounded">home</span></RouterLink>
+                <RouterLink title="Announcements" to="/announcements"><span class="material-symbols-rounded">campaign</span></RouterLink>
+                <a :href="userData ? '/api/auth/signout' : '/api/auth/signin'">
+                    <span v-if="userData">{{userData.displayName}}</span>
+                    <span v-else class="material-symbols-rounded">login</span>
+                </a>
+            </nav>
+        </header>
 
-    <div id="container">
-        <RouterView />
+        <div id="container">
+            <RouterView />
+        </div>
     </div>
 </template>
 
@@ -37,6 +57,7 @@ header {
 
 nav {
     display: flex;
+    align-items: center;
     gap: 1rem;
     font-size: 1rem;
 
