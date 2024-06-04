@@ -13,7 +13,10 @@ const signin = () => window.location.href = '/api/auth/signin'
                     height="50"
                 />
                 <h1>Sign in</h1>
-                <button @click="signin">Continue with Microsoft</button>
+                <button @click="signin">
+                    <span class="material-symbols-rounded">login</span>
+                    Continue with Microsoft
+                </button>
             </div>
         </main>
         <aside>
@@ -30,6 +33,12 @@ const signin = () => window.location.href = '/api/auth/signin'
     min-height: 100vh;
     min-height: 100svh;
     background: var(--c-white-1);
+}
+
+button span {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    translate: 0 0.2em;
 }
 
 main {

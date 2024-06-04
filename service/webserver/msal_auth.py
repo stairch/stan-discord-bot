@@ -19,7 +19,7 @@ from .base_handler import BaseHandler
 
 
 CALLBACK = "/api/auth/callback"
-SCOPES = ["User.Read"]
+SCOPES = []
 COOKIE_NAME = "msal_session"
 
 AD_APP_ID = os.getenv("AD_APP_ID")
@@ -31,7 +31,6 @@ class SessionKeys(StrEnum):
     """Session keys."""
 
     FLOW_CACHE = "flow_cache"
-    APP = "app"
     SESSION_REDIRECT = "session_redirect"
     MS_REDIRECT = "ms_redirect"
     MAIL = "mail"
@@ -57,6 +56,8 @@ def authenticated(
 
 class MsalSession:
     """MSAL Session Helper."""
+
+    _token_cache = SerializableTokenCache()
 
     def __init__(self, session: Session) -> None:
         self._session = session
@@ -115,7 +116,6 @@ class MsalSession:
         self.flow_cache = self.app.initiate_auth_code_flow(
             scopes=SCOPES,
             redirect_uri=self.ms_redirect,
-            prompt="select_account",
             domain_hint=EMAIL_ADDRESS.split("@").pop(),
             response_mode="form_post",
         )
@@ -145,7 +145,7 @@ class MsalSession:
             self._app = PublicClientApplication(
                 client_id=AD_APP_ID,
                 authority=f"https://login.microsoftonline.com/{AD_TENANT_ID}",
-                token_cache=SerializableTokenCache(),
+                token_cache=MsalSession._token_cache,
             )
         return self._app
 

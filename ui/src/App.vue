@@ -5,6 +5,7 @@ import { ref, onMounted } from "vue";
 import Forbidden from "./views/Forbidden.vue";
 
 const userData = ref<any | null>(null);
+const showUserOptions = ref(false);
 
 onMounted(async () => {
     const res = await fetch("/api/auth/me")
@@ -13,6 +14,10 @@ onMounted(async () => {
     } else {
         userData.value = false;
     }
+
+    document.body.addEventListener("click", () => {
+        showUserOptions.value = false;
+    });
 });
 </script>
 
@@ -29,10 +34,22 @@ onMounted(async () => {
             <nav>
                 <RouterLink title="Home" to="/"><span class="material-symbols-rounded">home</span></RouterLink>
                 <RouterLink title="Announcements" to="/announcements"><span class="material-symbols-rounded">campaign</span></RouterLink>
-                <a :href="userData ? '/api/auth/signout' : '/api/auth/signin'">
-                    <span v-if="userData">{{userData.displayName}}</span>
-                    <span v-else class="material-symbols-rounded">login</span>
-                </a>
+
+                <div @click.stop="showUserOptions = true" class="user">
+                    <span>{{userData.displayName}}</span>
+                    <div @click.stop class="options" v-if="showUserOptions">
+                        <div class="action">
+                            <a href='/api/auth/signout'>
+                                Sign out
+                                <span class="material-symbols-rounded">logout</span>
+                            </a>
+                        </div>
+                        <div class="data">
+                            <h2>{{ userData.userPrincipalName }}</h2>
+                            <p>{{ userData.mail }}</p>
+                        </div>
+                    </div>
+                </div>
             </nav>
         </header>
 
@@ -47,7 +64,6 @@ header {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding-right: 2rem;
 
     position: sticky;
@@ -70,6 +86,62 @@ nav {
 
         &.router-link-active {
             text-decoration: underline;
+        }
+    }
+
+    .user {
+        cursor: pointer;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .options {
+            position: absolute;
+            cursor: auto;
+            top: 100%;
+            right: 0;
+            background: var(--bg-soft);
+            border: 1px solid var(--bg-muted);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            color: var(--fg-text);
+
+            .action {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            a {
+                color: var(--fg-text);
+                display: block;
+                padding: 0.5rem;
+                text-align: center;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                & span {
+                    font-size: 1rem;
+                    margin-left: 0.5em;
+                    translate: 0 0.1em;
+                }
+            }
+
+            .data {
+                padding: 0 1rem;
+            }        
         }
     }
 }
