@@ -19,7 +19,6 @@ from .base_handler import BaseHandler
 
 
 CALLBACK = "/api/auth/callback"
-SCOPES = []
 COOKIE_NAME = "msal_session"
 
 AD_APP_ID = os.getenv("AD_APP_ID")
@@ -114,7 +113,7 @@ class MsalSession:
     def initiate_auth_code_flow(self) -> str:
         """Initiate auth code flow, return auth_uri."""
         self.flow_cache = self.app.initiate_auth_code_flow(
-            scopes=SCOPES,
+            scopes=[],
             redirect_uri=self.ms_redirect,
             domain_hint=EMAIL_ADDRESS.split("@").pop(),
             response_mode="form_post",

@@ -6,6 +6,7 @@ __email__ = "info@stair.ch"
 
 import logging
 import os
+import datetime
 
 import discord
 
@@ -13,6 +14,7 @@ from email_client import EmailClient
 from verifying_student import VerifyingStudent
 from guild import DiscordServer, RoleType, AnnouncementChannelType
 from foodstoffi_menu import Menu
+from common.aioschedule import AioSchedule
 from db.db import Database
 from db.datamodels.verified_user import VerifiedUser
 from db.datamodels.announcement import AnnouncementType
@@ -34,6 +36,14 @@ class Stan(discord.Client):
         self._logger = logging.getLogger("Stan")
         self._servers: list[DiscordServer] = []
         self._db: Database = Database()
+
+    async def start(self, token: str = "", *, reconnect: bool = True):
+        """Start the bot"""
+        AioSchedule.run_daily_at(
+            datetime.time(hour=8, minute=0),  # in UTC
+            self.send_foodstoffi_menu_update,
+        )
+        await super().start(token or self._DISCORD_APP_ID, reconnect=reconnect)
 
     @property
     def servers(self) -> dict[int, DiscordServer]:
@@ -151,7 +161,3 @@ class Stan(discord.Client):
         """Member joined the server"""
         self._logger.debug("%s has joined the server", member)
         await VerifyingStudent.add(self._email_client, member)
-
-    async def start(self, token: str = "", *, reconnect: bool = True):
-        """Start the bot"""
-        await super().start(token or self._DISCORD_APP_ID, reconnect=reconnect)
