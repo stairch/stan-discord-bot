@@ -11,6 +11,7 @@ from typing import cast
 import re
 import random
 import asyncio
+import logging
 
 import discord
 
@@ -41,6 +42,7 @@ class VerifyingStudent:
         self._verification_code = self._generate_verification_code()
         self._email: str | None = None
         self._db = Database()
+        self._logger = logging.getLogger("verifying_student")
 
     @property
     def email(self) -> str:
@@ -125,7 +127,15 @@ class VerifyingStudent:
             return False
 
         self._state = VerificationState.VERIFIED
-        Database().verify_member(self._member.id, self.email)
+        try:
+            Database().verify_member(self._member.id, self.email)
+        except Exception as e:  # pylint: disable=broad-except
+            self._logger.exception(e)
+            await self._member.send(
+                "Oops, that didn't work. Please try again or contact a STAIR member."
+            )
+            return False
+
         await self._member.send("Awesome! You have been verified!")
         return True
 

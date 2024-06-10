@@ -6,6 +6,7 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
+import time
 from enum import StrEnum
 from dataclasses import dataclass, field
 
@@ -25,4 +26,4 @@ class VerifiedUser:
     discord_id: int
     email: str
     state: UserState
-    id: int = field(default=0)
+    id: int = field(default_factory=lambda: int(time.time()))
