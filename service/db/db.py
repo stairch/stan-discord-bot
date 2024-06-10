@@ -20,6 +20,7 @@ ANNOUNCEMENTS_TABLE = "Announcements"
 DB_USERNAME = os.getenv("POSTGRES_USER")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 DB_DATABASE = os.getenv("POSTGRES_DB")
+DEV_MODE = os.getenv("DEV_MODE", "false").lower() == "true"
 DB_HOST = "postgres:5432"
 DB_PROTOCOL = "postgresql"
 
@@ -37,7 +38,8 @@ class Database(metaclass=Singleton):
         self._hslu_students_table: dataset.Table = self._db[HSLU_STUDENTS_TABLE]
         self._announcements_table: dataset.Table = self._db[ANNOUNCEMENTS_TABLE]
 
-        self._users_table.delete()  # for development
+        if DEV_MODE:
+            self._users_table.delete()  # for development
 
     def all_students(self) -> list[HsluStudent]:
         """Get all students from the database."""
@@ -95,9 +97,15 @@ class Database(metaclass=Singleton):
             return HsluStudent(**result)
         return None
 
-    def get_member(self, discord_id) -> VerifiedUser | None:
+    def get_member(
+        self, discord_id: int | None = None, email: str | None = None
+    ) -> VerifiedUser | None:
         """Get a verified user by their Discord ID, returning None if not yet verified."""
-        result = self._users_table.find_one(discord_id=discord_id)
+        result: dict | None = None
+        if discord_id is not None:
+            result = self._users_table.find_one(discord_id=discord_id)
+        if result is None and email is not None:
+            result = self._users_table.find_one(email=email)
         if result:
             return VerifiedUser(**result)
         return None

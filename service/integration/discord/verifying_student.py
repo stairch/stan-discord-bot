@@ -98,11 +98,13 @@ class VerifyingStudent:
             )
             return
 
-        if db.get_member(discord_id=self._member.id):
-            await self._member.send("You have already been verified!")
+        email_norm = email.group().lower()
+
+        if db.get_member(discord_id=self._member.id, email=email_norm):
+            await self._member.send(self._already_verified_message())
             return
 
-        self._email = email.group().lower()
+        self._email = email_norm
         await self._send_verification_code(
             f"Nice to meet you, {student.first_name.split(' ')[0]}! I sent you an email with a verification code. Please provide it here."  # pylint: disable=line-too-long
         )
@@ -149,9 +151,7 @@ class VerifyingStudent:
             db: Database = Database()
             member = db.get_member(msg.author.id)
             if member and member.state in (UserState.GRADUATE, UserState.STUDENT):
-                await msg.author.send(
-                    f"You are already verified as a {member.state}! If you believe this is an error, please contact a STAIR member."  # pylint: disable=line-too-long
-                )
+                await msg.author.send(cls._already_verified_message())
                 return False
             cls._users[msg.author.id] = cls(
                 cast(discord.Member, msg.author), email_client
@@ -164,3 +164,7 @@ class VerifyingStudent:
         if member.id not in cls._users:
             cls._users[member.id] = cls(member, email_client)
         await cls._users[member.id].handle()
+
+    @staticmethod
+    def _already_verified_message() -> str:
+        return "You are already verified! If you believe this is an error, please contact a STAIR member."  # pylint: disable=line-too-long
