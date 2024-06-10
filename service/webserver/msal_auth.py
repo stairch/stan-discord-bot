@@ -158,6 +158,8 @@ class MsalSession:
         if referer:
             scheme = request.scheme
             server_name = referer.split("/")[2]
+            if "localhost" not in server_name:
+                scheme = "https"
             instance.ms_redirect = f"{scheme}://{server_name}{CALLBACK}"
         else:
             instance.ms_redirect = f"{request.scheme}://localhost{CALLBACK}"
