@@ -118,7 +118,7 @@ class ModuleChannelSync:
                 view_channel=False, send_messages=False
             ),
             server.get_member_role(RoleType.STUDENT): discord.PermissionOverwrite(
-                view_channel=True, send_messages=False
+                view_channel=True, send_messages=True
             ),
         }
 
