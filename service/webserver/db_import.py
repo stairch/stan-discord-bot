@@ -17,6 +17,7 @@ class DbImportHandler(BaseHandler):
     def _add_routes(self, app: web.Application) -> None:
         app.router.add_post("/api/students", self._upload_students)
         app.router.add_get("/api/students", self._get_students)
+        app.router.add_post("/api/modules", self._upload_modules)
 
     @authenticated
     async def _upload_students(self, request: web.Request) -> web.Response:
@@ -35,3 +36,10 @@ class DbImportHandler(BaseHandler):
     async def _get_students(self, _: web.Request) -> web.Response:
         """Get number of students in the database."""
         return web.Response(text=str(len(self._db.all_students())))
+
+    @authenticated
+    async def _upload_modules(self, request: web.Request) -> web.Response:
+        """Upload modules from a CSV file. These we'll write to the database."""
+        plain = await request.text()
+        await self._integration.trigger_module_channel_sync(plain)
+        return web.Response()

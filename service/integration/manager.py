@@ -9,6 +9,7 @@ __email__ = "info@stair.ch"
 import asyncio
 
 from .discord.stan import Stan
+from .discord.module_channels import ModuleChannelSync
 from .email.client import EmailClient
 from .foodstoffi.menu import SendFoodstoffiMenuTask
 
@@ -20,6 +21,7 @@ class IntegrationManager:
         self._email_client = EmailClient()
         self._stan = Stan(self._email_client)
         self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._stan)
+        self._module_channel_sync = ModuleChannelSync(self._stan)
 
     @property
     def stan(self) -> Stan:
@@ -29,6 +31,10 @@ class IntegrationManager:
     async def trigger_foodstoffi_menu(self) -> None:
         """Trigger a manual foodstoffi menu update"""
         await self._send_foodstoffi_menu_task.trigger()
+
+    async def trigger_module_channel_sync(self, plain: str) -> None:
+        """Trigger a manual module channel sync"""
+        await self._module_channel_sync.sync(plain)
 
     async def start(self) -> None:
         """Start the integration services"""

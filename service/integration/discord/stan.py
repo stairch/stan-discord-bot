@@ -8,6 +8,7 @@ import logging
 import os
 
 import discord
+from pyaddict import JList
 
 from db.db import Database
 from db.datamodels.verified_user import VerifiedUser
@@ -19,7 +20,9 @@ from .server import DiscordServer, RoleType
 class Stan(discord.Client):
     """The main bot class for Stan."""
 
-    _ALLOWED_GUILDS = [1240326708284887130]
+    _ALLOWED_GUILDS = (
+        JList(os.getenv("DISCORD_SERVERS", "").split(",")).iterator().ensureCast(int)
+    )
     _DISCORD_APP_ID = os.getenv("DISCORD_APP_ID", "")
 
     def __init__(self, email_client: EmailClient) -> None:
@@ -56,8 +59,9 @@ class Stan(discord.Client):
         if message.author == self.user:
             return
 
-        if not any(x.id in Stan._ALLOWED_GUILDS for x in message.author.mutual_guilds):
-            self._logger.debug("unexpected guild %s", message.guild)
+        if not message.guild and not any(
+            x.id in Stan._ALLOWED_GUILDS for x in message.author.mutual_guilds
+        ):
             await message.author.send(
                 "I'm not allowed to interact with you. Please join our discord server to get started. If you believe this is an error, please contact a STAIR member."  # pylint: disable=line-too-long
             )
