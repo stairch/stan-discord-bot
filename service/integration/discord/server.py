@@ -21,6 +21,7 @@ class RoleType(StrEnum):
 
     STUDENT = "Student"
     GRADUATE = "Graduate"
+    STAIR = "STAIR"
 
     def get(self, guild: discord.Guild) -> discord.Role:
         """Get the role for this type"""
@@ -173,6 +174,11 @@ class DiscordServer:
                             RoleType.STUDENT
                         ): discord.PermissionOverwrite(
                             view_channel=True, send_messages=False
+                        ),
+                        self.get_member_role(
+                            RoleType.STAIR
+                        ): discord.PermissionOverwrite(
+                            view_channel=True, send_messages=True
                         ),
                     },
                 )
