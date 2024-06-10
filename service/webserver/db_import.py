@@ -26,9 +26,9 @@ class DbImportHandler(BaseHandler):
             HsluStudent.from_csv(plain)
         )
         for graduate in new_graduates:
-            await self._stan.make_graduate(graduate)
+            await self._integration.stan.make_graduate(graduate)
         for student in new_students:
-            await self._stan.make_student(student)
+            await self._integration.stan.make_student(student)
         return web.Response()
 
     @authenticated

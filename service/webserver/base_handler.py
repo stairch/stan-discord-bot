@@ -11,18 +11,18 @@ from logging import Logger
 
 from aiohttp import web
 
-from stan import Stan
+from integration.manager import IntegrationManager
 from db.db import Database
 
 
 class BaseHandler(ABC):
     """Base handler for the web server"""
 
-    __slots__ = ("_logger", "_stan", "_db")
+    __slots__ = ("_logger", "_integration", "_db")
 
-    def __init__(self, app: web.Application, stan: Stan) -> None:
+    def __init__(self, app: web.Application, integration: IntegrationManager) -> None:
         self._logger: Logger = Logger("WebServer")
-        self._stan = stan
+        self._integration: IntegrationManager = integration
         self._db: Database = Database()
         self._add_routes(app)
 

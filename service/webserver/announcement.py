@@ -11,7 +11,7 @@ from aiohttp import web
 from pyaddict import JDict
 import discord
 
-from guild import AnnouncementChannelType
+from integration.discord.server import AnnouncementChannelType
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
@@ -98,11 +98,14 @@ class AnnouncementHandler(BaseHandler):
                 },
                 status=400,
             )
-        if server not in self._stan.servers:
+
+        discord_servers = self._integration.stan.servers
+
+        if server not in discord_servers:
             return web.json_response(
                 {
                     "error": f"Unknown server {server}",
-                    "valid": list(self._stan.servers.keys()),
+                    "valid": list(discord_servers.keys()),
                 },
                 status=400,
             )
@@ -110,8 +113,8 @@ class AnnouncementHandler(BaseHandler):
         channel_type = AnnouncementChannelType.from_announcement_type(
             AnnouncementType(announcement_type)
         )
-        discord_channel = channel_type.get(self._stan.servers[server].guild)
-        role = channel_type.get_role(self._stan.servers[server].guild)
+        discord_channel = channel_type.get(discord_servers[server].guild)
+        role = channel_type.get_role(discord_servers[server].guild)
 
         embed_de = discord.Embed(
             title=f":flag_de: {announcement.title}",
@@ -151,5 +154,5 @@ class AnnouncementHandler(BaseHandler):
     @authenticated
     async def _discord_servers(self, _: web.Request) -> web.Response:
         """Get all announcement servers"""
-        servers = self._stan.servers
+        servers = self._integration.stan.servers
         return web.json_response([x.serialise() for x in servers.values()])

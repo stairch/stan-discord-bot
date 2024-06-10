@@ -5,12 +5,13 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 import asyncio
+import os
 
 from aiohttp import web
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 
-from stan import Stan
+from integration.manager import IntegrationManager
 from .db_import import DbImportHandler
 from .announcement import AnnouncementHandler
 from .foodstoffi_menu_trigger import FoodstoffMenuTrigger
@@ -25,17 +26,19 @@ class WebServer:
         "_announcement_handler",
         "_foodstoffi_menu_trigger",
         "_msal",
-        "_stan",
+        "_integration_manager",
     )
 
     def __init__(self, app: web.Application) -> None:
-        self._stan = Stan()
-        self._db_import_handler = DbImportHandler(app, self._stan)
-        self._announcement_handler = AnnouncementHandler(app, self._stan)
-        self._foodstoffi_menu_trigger = FoodstoffMenuTrigger(app, self._stan)
-        self._msal = MsalAuth(app, self._stan)
-        setup(app, EncryptedCookieStorage(b"Thirty  two  length  bytes  key."))
+        self._integration_manager = IntegrationManager()
+        self._db_import_handler = DbImportHandler(app, self._integration_manager)
+        self._announcement_handler = AnnouncementHandler(app, self._integration_manager)
+        self._foodstoffi_menu_trigger = FoodstoffMenuTrigger(
+            app, self._integration_manager
+        )
+        self._msal = MsalAuth(app, self._integration_manager)
+        setup(app, EncryptedCookieStorage(os.getenv("SESSION_SECRET", "").encode()))
         app.on_startup.append(self._on_startup)
 
     async def _on_startup(self, _: web.Application) -> None:
-        asyncio.create_task(self._stan.start())
+        asyncio.create_task(self._integration_manager.start())

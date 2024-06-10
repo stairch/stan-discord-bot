@@ -9,13 +9,18 @@ __email__ = "info@stair.ch"
 from dataclasses import dataclass, field
 import re
 import datetime
+import logging
 
 import aiohttp
 import discord
 import bs4
 from pyaddict import JDict, JList
 
+from common.aioschedule import AioSchedule
 from common.constants import STAIR_GREEN
+from db.datamodels.announcement import AnnouncementType
+from integration.discord.stan import Stan
+from integration.discord.server import AnnouncementChannelType
 
 URL = "https://app.food2050.ch/de/foodstoffi/foodstoffi/menu/foodstoffi/weekly"
 
@@ -203,3 +208,37 @@ class Menu:
         if not today_recipes:
             return None
         return today_recipes
+
+
+class SendFoodstoffiMenuTask:
+    """Task to send the Foodstoffi menu"""
+
+    def __init__(self, discord_bot: Stan) -> None:
+        self._logger = logging.getLogger("FoodstoffiMenu")
+        self._discord_bot = discord_bot
+
+    async def start(self) -> None:
+        """Start the task"""
+        AioSchedule.run_daily_at(
+            datetime.time(hour=8, minute=0),  # in UTC
+            self.trigger,
+        )
+
+    async def trigger(self) -> None:
+        """Send a foodstoffi menu update to all servers"""
+        todays_menu = await Menu.get_todays_menu()
+        if todays_menu is None:
+            self._logger.warning("No menu available")
+            return
+        for server in self._discord_bot.servers.values():
+            channel_type = AnnouncementChannelType.from_announcement_type(
+                AnnouncementType.CANTEEN_MENU
+            )
+            channel = channel_type.get(server.guild)
+            role = channel_type.get_role(server.guild)
+
+            msg = await channel.send(
+                f"Hiya, {role.mention}! This is today's menu:",
+                embeds=[x.as_embed for x in todays_menu],
+            )
+            await msg.publish()

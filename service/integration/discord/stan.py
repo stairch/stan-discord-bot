@@ -6,18 +6,14 @@ __email__ = "info@stair.ch"
 
 import logging
 import os
-import datetime
 
 import discord
 
-from email_client import EmailClient
-from verifying_student import VerifyingStudent
-from guild import DiscordServer, RoleType, AnnouncementChannelType
-from foodstoffi_menu import Menu
-from common.aioschedule import AioSchedule
 from db.db import Database
 from db.datamodels.verified_user import VerifiedUser
-from db.datamodels.announcement import AnnouncementType
+from integration.email.client import EmailClient
+from .verifying_student import VerifyingStudent
+from .server import DiscordServer, RoleType
 
 
 class Stan(discord.Client):
@@ -26,48 +22,25 @@ class Stan(discord.Client):
     _ALLOWED_GUILDS = [1240326708284887130]
     _DISCORD_APP_ID = os.getenv("DISCORD_APP_ID", "")
 
-    def __init__(self) -> None:
+    def __init__(self, email_client: EmailClient) -> None:
         intents = discord.Intents.default()
         intents.message_content = True
         intents.guilds = True
         intents.members = True
         super().__init__(intents=intents)
-        self._email_client = EmailClient()
+        self._email_client = email_client
         self._logger = logging.getLogger("Stan")
         self._servers: list[DiscordServer] = []
         self._db: Database = Database()
 
     async def start(self, token: str = "", *, reconnect: bool = True):
         """Start the bot"""
-        AioSchedule.run_daily_at(
-            datetime.time(hour=8, minute=0),  # in UTC
-            self.send_foodstoffi_menu_update,
-        )
         await super().start(token or self._DISCORD_APP_ID, reconnect=reconnect)
 
     @property
     def servers(self) -> dict[int, DiscordServer]:
         """Get all servers"""
         return {x.id: x for x in self._servers}
-
-    async def send_foodstoffi_menu_update(self) -> None:
-        """Send a foodstoffi menu update to all servers"""
-        todays_menu = await Menu.get_todays_menu()
-        if todays_menu is None:
-            self._logger.warning("No menu available")
-            return
-        for server in self._servers:
-            channel_type = AnnouncementChannelType.from_announcement_type(
-                AnnouncementType.CANTEEN_MENU
-            )
-            channel = channel_type.get(server.guild)
-            role = channel_type.get_role(server.guild)
-
-            msg = await channel.send(
-                f"Hiya, {role.mention}! This is today's menu:",
-                embeds=[x.as_embed for x in todays_menu],
-            )
-            await msg.publish()
 
     async def on_ready(self):
         """Bot is ready"""

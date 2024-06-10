@@ -11,10 +11,12 @@ from typing import cast
 import re
 import random
 import asyncio
+
 import discord
-from email_client import EmailClient
+
 from db.db import Database
 from db.datamodels.verified_user import UserState
+from integration.email.client import EmailClient
 
 
 class VerificationState(Enum):

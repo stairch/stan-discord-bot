@@ -153,7 +153,14 @@ class MsalSession:
         """Create a new session."""
         session = await new_session(request)
         instance = cls(session)
-        instance.ms_redirect = f"{request.scheme}://localhost{CALLBACK}"
+        referer = request.headers.get("Referer", "")
+        # server name
+        if referer:
+            scheme = request.scheme
+            server_name = referer.split("/")[2]
+            instance.ms_redirect = f"{scheme}://{server_name}{CALLBACK}"
+        else:
+            instance.ms_redirect = f"{request.scheme}://localhost{CALLBACK}"
         return instance
 
     @classmethod

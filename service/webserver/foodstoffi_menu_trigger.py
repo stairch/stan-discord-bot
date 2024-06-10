@@ -21,5 +21,5 @@ class FoodstoffMenuTrigger(BaseHandler):
     async def _trigger(self, _: web.Request) -> web.Response:
         """Trigger a manual foodstoffi menu update"""
         self._logger.info("Manual foodstoffi menu trigger")
-        await self._stan.send_foodstoffi_menu_update()
+        await self._integration.trigger_foodstoffi_menu()
         return web.json_response({"message": "Foodstoffi menu update triggered"})
