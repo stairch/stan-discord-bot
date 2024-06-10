@@ -112,28 +112,6 @@ class Stan(discord.Client):
                 server.get_course_role(student.course_id),
             )
 
-    async def _move_module_channels(self, message: discord.Message):
-        target: discord.CategoryChannel | None = None
-        old: list[discord.CategoryChannel] = []
-        assert message.guild
-
-        for category in message.guild.categories:
-            if category.name == "MODULE CHANNELS":
-                target = category
-                continue
-            if category.name.startswith("MODULE CHANNELS "):
-                old.append(category)
-
-        if target is None:
-            target = await message.guild.create_category("MODULE CHANNELS")
-
-        for category in old:
-            for channel in category.channels:
-                self._logger.debug("edit channel %s to %s", channel.name, target.name)
-                await channel.edit(category=target, sync_permissions=True)  # type: ignore
-            self._logger.debug("delete category %s", category.name)
-            await category.delete()
-
     async def on_member_join(self, member: discord.member.Member):
         """Member joined the server"""
         self._logger.debug("%s has joined the server", member)

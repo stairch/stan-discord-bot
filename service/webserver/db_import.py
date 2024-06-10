@@ -18,6 +18,7 @@ class DbImportHandler(BaseHandler):
         app.router.add_post("/api/students", self._upload_students)
         app.router.add_get("/api/students", self._get_students)
         app.router.add_post("/api/modules", self._upload_modules)
+        app.router.add_post("/api/degree-programmes", self._upload_degree_programmes)
 
     @authenticated
     async def _upload_students(self, request: web.Request) -> web.Response:
@@ -39,7 +40,15 @@ class DbImportHandler(BaseHandler):
 
     @authenticated
     async def _upload_modules(self, request: web.Request) -> web.Response:
-        """Upload modules from a CSV file. These we'll write to the database."""
+        """Upload modules from a CSV file."""
         plain = await request.text()
         await self._integration.trigger_module_channel_sync(plain)
+        return web.Response()
+
+    @authenticated
+    async def _upload_degree_programmes(self, _: web.Request) -> web.Response:
+        """Upload degree programmes from a CSV file. These we'll write to the database."""
+        # TODO (use json config)
+        for server in self._integration.stan.servers.values():
+            await server.create_course_roles()
         return web.Response()
