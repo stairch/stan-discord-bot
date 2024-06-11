@@ -38,5 +38,5 @@ class IntegrationManager:
 
     async def start(self) -> None:
         """Start the integration services"""
-        asyncio.create_task(await self._stan.start())
+        asyncio.create_task(self._stan.start())
         await self._send_foodstoffi_menu_task.start()
