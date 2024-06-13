@@ -20,6 +20,7 @@ from common.aioschedule import AioSchedule
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import AnnouncementType
 from integration.discord.stan import Stan
+from integration.discord.persona import PersonaSender, Personas
 from integration.discord.server import AnnouncementChannelType
 
 URL = "https://app.food2050.ch/de/foodstoffi/foodstoffi/menu/foodstoffi/weekly"
@@ -237,8 +238,7 @@ class SendFoodstoffiMenuTask:
             channel = channel_type.get(server.guild)
             role = channel_type.get_role(server.guild)
 
-            msg = await channel.send(
+            await PersonaSender(channel, Personas.CHEF).send(
                 f"Hiya, {role.mention}! This is today's menu:",
-                embeds=[x.as_embed for x in todays_menu],
+                [x.as_embed for x in todays_menu],
             )
-            await msg.publish()
