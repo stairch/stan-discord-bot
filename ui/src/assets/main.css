@@ -89,6 +89,17 @@ button {
         background: var(--c-stair-lime);
     }
 
+    &.secondary {
+        background: inherit;
+        color: var(--c-stair-green);
+        border: 1px solid var(--bg-muted);
+
+        &:hover {
+            background: var(--bg-base);
+            border: 1px solid var(--c-stair-green);
+        }
+    }
+
     &.danger {
         background: var(--c-stair-burgundy);
 

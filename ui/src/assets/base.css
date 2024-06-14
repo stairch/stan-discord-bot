@@ -31,6 +31,7 @@
 
     --c-stair-dark: var(--c-green-1);
     --c-stair-green: #04956c;
+    --c-stair-green-20: #04956c33;
     --c-stair-lime: var(--c-green-5);
     --c-stair-graphite: var(--c-black-5);
     --c-stair-grey: var(--c-white-5);
@@ -49,6 +50,7 @@
     --border: var(--c-black-3);
     --border-hover: var(--c-black-4);
     --fg-text: var(--c-stair-graphite);
+    --fg-text-muted: #6c6c6c;
 
     --c-accent: var(--c-stair-green);
     --c-accent-hover: var(--c-stair-lime);

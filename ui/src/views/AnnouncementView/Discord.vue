@@ -12,7 +12,9 @@ import {
 } from "@discord-message-components/vue";
 
 const servers = ref<IServer[]>([]);
+const personas = ref<string[]>([]);
 const server = ref<string>("");
+const persona = ref<string>("");
 const type = ref<string>(ANNOUNCEMENT_TYPES[0]);
 
 const props = defineProps({
@@ -27,6 +29,8 @@ const imgUrl = ref<string | null>(null);
 onMounted(async () => {
     servers.value = await api.announements.discordServers();
     server.value = servers.value[0].id;
+    personas.value = await api.announements.personas();
+    persona.value = personas.value[0];
 });
 
 watch(
@@ -46,6 +50,7 @@ const postAnnouncement = async () => {
         "discord",
         String(servers.value[0].id),
         type.value,
+        persona.value,
         img.value ?? undefined
     );
 };
@@ -70,27 +75,45 @@ const setImage = () => {
 
 <template>
     <div class="inputs">
-        <select v-model="server">
-            <option
-                v-for="s in servers"
-                :key="s.id"
-                :value="s.id"
-            >
-                {{ s.name }}
-            </option>
-        </select>
-        <select v-model="type">
-            <option
-                v-for="t in ANNOUNCEMENT_TYPES"
-                :key="t"
-                :value="t"
-            >
-                {{ t }}
-            </option>
-        </select>
+        <div class="dropdown">
+            <label>On Server</label>
+            <select v-model="server">
+                <option
+                    v-for="s in servers"
+                    :key="s.id"
+                    :value="s.id"
+                >
+                    {{ s.name }}
+                </option>
+            </select>
+        </div>
+        <div class="dropdown">
+            <label>As</label>
+            <select v-model="type">
+                <option
+                    v-for="t in ANNOUNCEMENT_TYPES"
+                    :key="t"
+                    :value="t"
+                >
+                    {{ t }}
+                </option>
+            </select>
+        </div>
+        <div class="dropdown">
+            <label>Post as</label>
+            <select v-model="persona">
+                <option
+                    v-for="t in personas"
+                    :key="t"
+                    :value="t"
+                >
+                    {{ t }}
+                </option>
+            </select>
+        </div>
         <button
             @click="setImage"
-            class="warning"
+            class="align-right secondary"
         >
             Set Image
         </button>
@@ -174,6 +197,16 @@ img:not(.flag) {
     display: flex;
     gap: 1em;
     align-items: center;
+}
+
+.align-right {
+    margin-left: auto;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 }
 </style>
 

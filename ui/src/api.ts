@@ -88,6 +88,7 @@ export const api = {
             scope: AnnouncementScope,
             server: string,
             type: AnnouncementType,
+            persona: string,
             image?: File
         ): Promise<void> {
             fetch(`/api/announcements/${id}/publish`, {
@@ -100,12 +101,18 @@ export const api = {
                     scope,
                     server,
                     type,
+                    persona,
                     image: await toBase64(image),
                 }),
             });
         },
         async discordServers(): Promise<IServer[]> {
             return fetch(`/api/announcements/discord/servers`).then((res) =>
+                res.json()
+            );
+        },
+        async personas(): Promise<string[]> {
+            return fetch(`/api/announcements/personas`).then((res) =>
                 res.json()
             );
         },

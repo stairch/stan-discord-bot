@@ -123,6 +123,10 @@ aside {
     background-color: var(--bg-soft);
     border: 1px solid var(--bg-muted);
     border-radius: 0.5em;
+
+    & a {
+        color: inherit;
+    }
 }
 
 .server {
@@ -134,6 +138,7 @@ aside {
 
     &.selected {
         background-color: var(--bg-muted);
+        color: var(--c-accent);
     }
 
     & img {

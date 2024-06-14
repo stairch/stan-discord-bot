@@ -25,12 +25,14 @@ onMounted(async () => {
     <Forbidden v-if="userData == false" />
     <div v-else-if="userData">
         <header>
-            <img
-                alt="Stair Logo"
-                class="logo"
-                src="/logo_protected_inverted.png"
-                height="50"
-            />
+            <router-link to="/">
+                <img
+                    alt="Stair Logo"
+                    class="logo"
+                    src="/logo_protected_inverted.png"
+                    height="50"
+                />
+            </router-link>
             <nav>
                 <RouterLink title="Home" to="/"><span class="material-symbols-rounded">home</span></RouterLink>
                 <RouterLink title="Announcements" to="/announcements"><span class="material-symbols-rounded">campaign</span></RouterLink>

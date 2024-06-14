@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed, watch, ref, type PropType, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api, type IServer, type IAnnouncement } from "../../api";
+import { watch, ref, type PropType, onMounted } from "vue";
 import { toUnicodeVariant } from "@/assets/toUnicodeVariant";
-import CardPicker from "@/components/CardPicker.vue";
+import Step from "@/components/Step.vue";
+import type { IAnnouncement } from "@/api";
 
 const text = ref<string>("");
 
@@ -42,7 +41,7 @@ onMounted(async () => {
 
 watch(
     () => props.modelValue,
-    (value) => {
+    () => {
         text.value = buildText();
     },
     { deep: true }
@@ -50,6 +49,32 @@ watch(
 </script>
 
 <template>
+    <div class="checklist">
+        <h2>Checklist</h2>
+        <div class=checklist>
+            <Step
+                title="Add Location"
+                description="Where is the Event going to be?"
+            />
+            <Step
+                title="Add Reminder"
+                description="People will be able to set a reminder for the Event."
+            />
+            <Step
+                title="Tag Accounts (optional)"
+                description="For example @schafluzern"
+            />
+            <Step
+                title="Post!"
+                description="You're ready to go!"
+            />
+            <Step
+                title="Share to Story"
+                description="Share to your Instagram Story."
+            />
+        </div>
+    </div>
+    <h2>Caption</h2>
     <textarea
         class="instagram"
         v-model="text"
@@ -58,6 +83,12 @@ watch(
 
 <style scoped>
 textarea.instagram {
-    height: 70ch;
+    height: 50ch;
+}
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 </style>
