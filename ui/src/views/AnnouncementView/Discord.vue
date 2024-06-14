@@ -122,8 +122,9 @@ const setImage = () => {
         <DiscordMessages>
             <DiscordMessage
                 :bot="true"
-                author="Stan"
+                :author="persona"
                 role-color="green"
+                :key="persona"
             >
                 <DiscordMarkdown>
                     <DiscordMention type="Announcements" />

@@ -105,7 +105,7 @@ watch(route, async () => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .announcement {
     display: grid;
     grid-template-columns: 25ch 1fr;
