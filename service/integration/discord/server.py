@@ -55,12 +55,15 @@ class AnnouncementChannelType(StrEnum):
     TEST_CHANNEL = "webhook-test"
     CANTEEN_MENU_CHANNEL = "canteen-menu"
 
-    def get(self, guild: discord.Guild) -> discord.TextChannel:
+    def get(self, guild: discord.Guild) -> discord.TextChannel | None:
         """Get the channel for this type"""
         return next(
-            channel
-            for channel in guild.text_channels
-            if channel.name.lower().endswith("︱" + self.value)
+            (
+                channel
+                for channel in guild.text_channels
+                if channel.name.lower().endswith("︱" + self.value)
+            ),
+            None,
         )
 
     def get_role(self, guild: discord.Guild) -> discord.Role:

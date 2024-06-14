@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module Channels"""
+"""Personas that the bot can use"""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ __email__ = "info@stair.ch"
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+import logging
 
 import discord
 
@@ -41,6 +42,11 @@ class Personas(Enum):
     PARTY = _Persona("Party Stan-imal", "party-hat.png")
     SANTA = _Persona("Santa Stan", "winter-hat.png")
 
+    @classmethod
+    def from_name(cls, name: str | None) -> Personas:
+        """Get a persona by name"""
+        return next((x for x in cls if x.value.name == name), cls.STAN)
+
 
 class PersonaSender:
     """Module Channel Sync"""
@@ -48,23 +54,45 @@ class PersonaSender:
     def __init__(self, channel: discord.TextChannel, persona: Personas) -> None:
         self._channel = channel
         self._persona = persona.value
+        self._logger = logging.getLogger(__name__)
 
     async def send(
         self,
         message: str = discord.utils.MISSING,
         embeds: list[discord.Embed] = discord.utils.MISSING,
+        file: discord.File | None = discord.utils.MISSING,
         publish: bool = True,
-    ) -> discord.WebhookMessage:
+    ) -> discord.Message:
         """Send a message with a persona"""
-        webhooks = await self._channel.guild.webhooks()
-        webhook = next((wh for wh in webhooks if wh.name == self._persona.name), None)
-        if webhook:
-            await webhook.edit(name=self._persona.name, avatar=self._persona.avatar)
+        file = file or discord.utils.MISSING
+
+        if self._persona == Personas.STAN.value:
+            msg = await self._channel.send(message, embeds=embeds, file=file)
         else:
-            webhook = await self._channel.create_webhook(
-                name=self._persona.name, avatar=self._persona.avatar
+            webhooks = await self._channel.guild.webhooks()
+            webhook = next(
+                (wh for wh in webhooks if wh.name == self._persona.name), None
             )
-        msg = await webhook.send(content=message, embeds=embeds, wait=True)
+            if webhook:
+                await webhook.edit(
+                    name=self._persona.name,
+                    avatar=self._persona.avatar,
+                    channel=self._channel,
+                )
+            else:
+                webhook = await self._channel.create_webhook(
+                    name=self._persona.name, avatar=self._persona.avatar
+                )
+            msg = await webhook.send(
+                content=message,
+                embeds=embeds,
+                file=file,
+                wait=True,
+            )
         if publish:
-            await msg.publish()
+            try:
+                await msg.publish()
+            except discord.errors.Forbidden as e:
+                self._logger.warning("Failed to publish message: %s", e)
+                raise
         return msg

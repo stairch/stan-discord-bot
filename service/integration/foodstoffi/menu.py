@@ -111,7 +111,8 @@ class RecipeItem:
         """Create a recipe item from a dictionary"""
         item = cls(
             typename=value.ensure("__typename", str),
-            date=datetime.datetime.fromisoformat(value.ensure("date", str)).date(),
+            date=datetime.datetime.fromisoformat(value.ensure("date", str)).date()
+            + datetime.timedelta(days=1),
             recipe=Recipe.from_dict(value.ensureCast("recipe", JDict), category),
         )
         if not item.recipe:
@@ -236,6 +237,11 @@ class SendFoodstoffiMenuTask:
                 AnnouncementType.CANTEEN_MENU
             )
             channel = channel_type.get(server.guild)
+
+            if channel is None:
+                self._logger.warning("No channel found for server %s", server.guild)
+                continue
+
             role = channel_type.get_role(server.guild)
 
             await PersonaSender(channel, Personas.CHEF).send(

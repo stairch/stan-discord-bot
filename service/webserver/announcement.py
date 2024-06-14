@@ -4,14 +4,13 @@
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-import io
-import base64
-
 from aiohttp import web
 from pyaddict import JDict
 import discord
 
 from integration.discord.server import AnnouncementChannelType
+from integration.discord.persona import Personas, PersonaSender
+from integration.discord.util import base64_image_to_discord
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
@@ -25,6 +24,7 @@ class AnnouncementHandler(BaseHandler):
         app.router.add_get("/api/announcements", self._get_announcements)
         app.router.add_get("/api/announcements/types", self._types)
         app.router.add_get("/api/announcements/discord/servers", self._discord_servers)
+        app.router.add_get("/api/announcements/personas", self._personas)
         app.router.add_post("/api/announcements", self._create_announcement)
         app.router.add_get("/api/announcements/{id}", self._get_announcement)
         app.router.add_put("/api/announcements/{id}", self._update_announcement)
@@ -85,6 +85,7 @@ class AnnouncementHandler(BaseHandler):
         announcement_id = data.ensureCast("id", int)
         image = data.optionalGet("image", str)
         announcement_type = data.ensureCast("type", str)
+        persona = Personas.from_name(data.optionalGet("persona", str))
 
         announcement = self._db.get_announcement(announcement_id)
 
@@ -114,6 +115,15 @@ class AnnouncementHandler(BaseHandler):
             AnnouncementType(announcement_type)
         )
         discord_channel = channel_type.get(discord_servers[server].guild)
+
+        if not discord_channel:
+            return web.json_response(
+                {
+                    "error": f"Channel not found for server {server} and type {announcement_type}"
+                },
+                status=404,
+            )
+
         role = channel_type.get_role(discord_servers[server].guild)
 
         embed_de = discord.Embed(
@@ -126,24 +136,14 @@ class AnnouncementHandler(BaseHandler):
             description=announcement.message_en,
             color=STAIR_GREEN,
         )
+        file = base64_image_to_discord(image)
 
-        if image:
-            file = discord.File(
-                io.BytesIO(base64.b64decode(image)), filename="image.png"
-            )
-            msg = await discord_channel.send(
-                f"{role.mention}", embeds=[embed_de, embed_en], file=file
-            )
-        else:
-            msg = await discord_channel.send(
-                f"{role.mention}", embeds=[embed_de, embed_en]
-            )
-        try:
-            await msg.publish()
-        except discord.errors.Forbidden as e:
-            return web.json_response(
-                {"error": f"Failed to publish message: {e}"}, status=206
-            )
+        await PersonaSender(discord_channel, persona).send(
+            message=role.mention,
+            embeds=[embed_de, embed_en],
+            file=file,
+            publish=True,
+        )
         return web.Response()
 
     @authenticated
@@ -156,3 +156,8 @@ class AnnouncementHandler(BaseHandler):
         """Get all announcement servers"""
         servers = self._integration.stan.servers
         return web.json_response([x.serialise() for x in servers.values()])
+
+    @authenticated
+    async def _personas(self, _: web.Request) -> web.Response:
+        """Get all announcement servers"""
+        return web.json_response([x.value.name for x in Personas])
