@@ -35,12 +35,6 @@ const signin = () => window.location.href = '/api/auth/signin'
     background: var(--c-white-1);
 }
 
-button span {
-    font-size: 1rem;
-    margin-right: 0.5rem;
-    translate: 0 0.2em;
-}
-
 main {
     display: flex;
     justify-content: center;
