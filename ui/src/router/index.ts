@@ -18,6 +18,11 @@ const router = createRouter({
             name: "announcementWithId",
             component: () => import("../views/AnnouncementView/index.vue"),
         },
+        {
+            path: "/discord/users",
+            name: "discord-users",
+            component: () => import("../views/Discord/UserManagementView/index.vue"),
+        },
     ],
 });
 

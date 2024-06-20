@@ -36,7 +36,16 @@ class DbImportHandler(BaseHandler):
     @authenticated
     async def _get_students(self, _: web.Request) -> web.Response:
         """Get number of students in the database."""
-        return web.Response(text=str(len(self._db.all_students())))
+        verified_users = self._db.all_verified()
+        return web.json_response(
+            {
+                "enrolled": len(self._db.all_students()),
+                "discord": {
+                    "students": len([u for u in verified_users if u.is_student]),
+                    "graduates": len([u for u in verified_users if u.is_graduate]),
+                },
+            }
+        )
 
     @authenticated
     async def _upload_modules(self, request: web.Request) -> web.Response:

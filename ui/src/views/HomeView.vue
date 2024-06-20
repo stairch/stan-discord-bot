@@ -17,7 +17,12 @@
         <div class=section>
             <div class="info">
                 <h1>Discord User Management</h1>
-                <p>Soon</p>
+                <router-link to="/discord/users">
+                    <button>
+                        <span class="material-symbols-rounded">explore</span>
+                        Explore
+                    </button>
+                </router-link>
             </div>
             <div class="icon">
                 <span class="material-symbols-rounded">group</span>
@@ -58,11 +63,5 @@
         padding-bottom: 2em;
         margin-bottom: 2em;
     }
-}
-
-a button {
-    display: flex;
-    align-items: center;
-    gap: 1em;
 }
 </style>

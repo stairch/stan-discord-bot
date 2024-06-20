@@ -133,3 +133,9 @@ button {
     padding: 1em;
     margin: 1em 0;
 }
+
+button:has(span.material-symbols-rounded) {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}

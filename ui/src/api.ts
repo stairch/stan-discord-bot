@@ -20,6 +20,14 @@ export interface IAnnouncementSummary {
     title: string;
 }
 
+export interface IStudentStats {
+    enrolled: number;
+    discord: {
+        students: number;
+        graduates: number;
+    }
+}
+
 type AnnouncementScope = "discord" | "telegram";
 export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"]
 type AnnouncementType = typeof ANNOUNCEMENT_TYPES[number];
@@ -117,4 +125,36 @@ export const api = {
             );
         },
     },
+    db: {
+        async students(): Promise<IStudentStats> {
+            return fetch("/api/students").then((res) => res.json());
+        },
+        async updateStudents(csvAsString: string): Promise<void> {
+            await fetch("/api/students", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xml",
+                },
+                body: csvAsString,
+            });
+        },
+        async updateModules(csvAsString: string): Promise<void> {
+            await fetch("/api/modules", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xml",
+                },
+                body: csvAsString,
+            });
+        },
+        async updateDegreeProgrammes(csvAsString: string): Promise<void> {
+            await fetch("/api/degree-programmes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/xml",
+                },
+                body: csvAsString,
+            });
+        }
+    }
 };

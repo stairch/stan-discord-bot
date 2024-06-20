@@ -27,3 +27,13 @@ class VerifiedUser:
     email: str
     state: UserState
     id: int = field(default_factory=lambda: int(time.time()))
+
+    @property
+    def is_student(self) -> bool:
+        """Check if the user is a student"""
+        return self.state == UserState.STUDENT
+
+    @property
+    def is_graduate(self) -> bool:
+        """Check if the user is a graduate"""
+        return self.state == UserState.GRADUATE
