@@ -4,9 +4,12 @@
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
+from dataclasses import asdict
+
 from aiohttp import web
 
 from db.datamodels.hslu_student import HsluStudent
+from db.datamodels.degree_programme import DegreeProgramme
 from .base_handler import BaseHandler
 from .msal_auth import authenticated
 
@@ -18,6 +21,7 @@ class DbImportHandler(BaseHandler):
         app.router.add_post("/api/students", self._upload_students)
         app.router.add_get("/api/students", self._get_students)
         app.router.add_post("/api/modules", self._upload_modules)
+        app.router.add_get("/api/degree-programmes", self._get_degree_programmes)
         app.router.add_post("/api/degree-programmes", self._upload_degree_programmes)
 
     @authenticated
@@ -55,9 +59,17 @@ class DbImportHandler(BaseHandler):
         return web.Response()
 
     @authenticated
-    async def _upload_degree_programmes(self, _: web.Request) -> web.Response:
+    async def _get_degree_programmes(self, _: web.Request) -> web.Response:
+        """Get number of degree programmes in the database."""
+        return web.json_response([asdict(x) for x in self._db.get_degree_programmes()])
+
+    @authenticated
+    async def _upload_degree_programmes(self, request: web.Request) -> web.Response:
         """Upload degree programmes from a CSV file. These we'll write to the database."""
-        # TODO (use json config)
+        programmes, error = DegreeProgramme.deserialise(await request.json())
+        if not programmes:
+            return web.HTTPBadRequest(reason=error)
+        self._db.update_degree_programmes(programmes)
         for server in self._integration.stan.servers.values():
             await server.create_course_roles()
         return web.Response()

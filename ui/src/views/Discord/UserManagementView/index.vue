@@ -72,11 +72,12 @@ onMounted(async () => {
                     <h3>Edit Degree Programmes</h3>
                     <p>Edit the mapping between the HSLU degree programmes and the Discord roles & channels.</p>
                 </div>
-                <button class="secondary" v-if="false">
-                    <span class="material-symbols-rounded">edit</span>
-                    Edit
-                </button>
-                <p>soon</p>
+                <router-link to="/discord/degree-programmes" class="secondary">
+                    <button class="secondary">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </button>
+                </router-link>
             </div>
         </div>
     </div>

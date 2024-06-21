@@ -6,14 +6,14 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-import json
 from enum import StrEnum
-from dataclasses import dataclass
 import re
 
 import discord
 
+from db.db import Database
 from db.datamodels.announcement import AnnouncementType
+from db.datamodels.degree_programme import DegreeProgramme
 
 
 class RoleType(StrEnum):
@@ -91,34 +91,22 @@ class AnnouncementChannelType(StrEnum):
         }[announcement_type]
 
 
-@dataclass
-class ModuleDefinition:
-    """A module with a name and a list of roles"""
-
-    short: str
-    role: str
-    channel: str
-    category: str
-    colour: str
-
-
-with open("./courses.json", "r+", encoding="utf8") as f:
-    COURSE_CONFIG = [
-        ModuleDefinition(**x) for x in json.load(f) if x.get("short") != "???"
-    ]
-
-
 class DiscordServer:
     """provides the student and graduate roles for a guild (server)"""
 
     def __init__(self, guild: discord.Guild) -> None:
         self._guild = guild
         self._roles = {role.name.lower(): role for role in guild.roles}
-        self._courses: list[ModuleDefinition] = COURSE_CONFIG
+        self._db: Database = Database()
 
     def get_announcement_role(self, role_type: AnnouncementRoleType) -> discord.Role:
         """Get the role for an announcement type"""
         return role_type.get(self._guild)
+
+    @property
+    def _courses(self) -> list[DegreeProgramme]:
+        """Get the courses"""
+        return self._db.get_degree_programmes()
 
     def get_course_role(self, course: str) -> discord.Role:
         """Get the role for a course"""
@@ -127,7 +115,7 @@ class DiscordServer:
                 x.role
                 for x in self._courses
                 if re.match(
-                    r"^\w+\.{}.*\.\d+$".format(x.short),  # pylint: disable=consider-using-f-string
+                    r"^\w+\.{}.*\.\d+$".format(x.id),  # pylint: disable=consider-using-f-string
                     course,
                 )
             ),
@@ -145,7 +133,7 @@ class DiscordServer:
             for x in self._courses
             if course is None
             or not re.match(
-                r"^\w+\.{}.*\.\d+$".format(x.short),  # pylint: disable=consider-using-f-string
+                r"^\w+\.{}.*\.\d+$".format(x.id),  # pylint: disable=consider-using-f-string
                 course,
             )
         ]

@@ -23,6 +23,11 @@ const router = createRouter({
             name: "discord-users",
             component: () => import("../views/Discord/UserManagementView/index.vue"),
         },
+        {
+            path: "/discord/degree-programmes",
+            name: "discord-degree-programmes",
+            component: () => import("../views/Discord/DegreeProgrammes.vue"),
+        },
     ],
 });
 

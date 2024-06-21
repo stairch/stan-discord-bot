@@ -12,10 +12,12 @@ from common.singleton import Singleton
 from .datamodels.hslu_student import HsluStudent
 from .datamodels.verified_user import VerifiedUser, UserState
 from .datamodels.announcement import Announcement
+from .datamodels.degree_programme import DegreeProgramme
 
 VERIFIED_USERS_TABLE = "Verified_Users"
 HSLU_STUDENTS_TABLE = "HSLU_Students"
 ANNOUNCEMENTS_TABLE = "Announcements"
+DEGREE_PROGRAMMES_TABLE = "Degree_Programmes"
 
 DB_USERNAME = os.getenv("POSTGRES_USER")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
@@ -37,6 +39,7 @@ class Database(metaclass=Singleton):
         self._users_table: dataset.Table = self._db[VERIFIED_USERS_TABLE]
         self._hslu_students_table: dataset.Table = self._db[HSLU_STUDENTS_TABLE]
         self._announcements_table: dataset.Table = self._db[ANNOUNCEMENTS_TABLE]
+        self._degree_programmes_table: dataset.Table = self._db[DEGREE_PROGRAMMES_TABLE]
 
         if DEV_MODE:
             self._users_table.delete()  # for development
@@ -148,3 +151,22 @@ class Database(metaclass=Singleton):
     def update_announcement(self, announcement: Announcement) -> None:
         """Update an announcement."""
         self._announcements_table.update(asdict(announcement), ["id"])
+
+    def get_degree_programmes(self) -> list[DegreeProgramme]:
+        """Get all degree programmes from the database."""
+        return [DegreeProgramme(**x) for x in self._degree_programmes_table.all()]
+
+    def update_degree_programmes(
+        self, degree_programmes: list[DegreeProgramme]
+    ) -> None:
+        """Update the degree programmes in the database."""
+        self._degree_programmes_table.drop()
+        self._degree_programmes_table = self._db.create_table(
+            DEGREE_PROGRAMMES_TABLE,
+            primary_id="id",
+            primary_type=self._db.types.text,
+            primary_increment=False,
+        )
+        self._degree_programmes_table.insert_many(
+            [asdict(degree_programme) for degree_programme in degree_programmes]
+        )

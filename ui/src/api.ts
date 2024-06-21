@@ -32,6 +32,14 @@ export interface IStudentStats {
     }
 }
 
+export interface IDegreeProgramme {
+    id: string;
+    category: string;
+    role: string;
+    colour: string;
+    channel: string;
+}
+
 type AnnouncementScope = "discord" | "telegram";
 export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"]
 type AnnouncementType = typeof ANNOUNCEMENT_TYPES[number];
@@ -151,13 +159,16 @@ export const api = {
                 body: csvAsString,
             });
         },
-        async updateDegreeProgrammes(csvAsString: string): Promise<void> {
+        async getDegreeProgrammes(): Promise<IDegreeProgramme[]> {
+            return fetch("/api/degree-programmes").then((res) => res.json());
+        },
+        async updateDegreeProgrammes(degreeProgrammes: IDegreeProgramme[]): Promise<void> {
             await fetch("/api/degree-programmes", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/xml",
+                    "Content-Type": "application/json",
                 },
-                body: csvAsString,
+                body: JSON.stringify(degreeProgrammes),
             });
         }
     }
