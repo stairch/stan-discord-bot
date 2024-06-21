@@ -11,12 +11,12 @@ const router = createRouter({
         {
             path: "/announcements",
             name: "announcements",
-            component: () => import("../views/AnnouncementView/index.vue"),
+            component: () => import("../views/Announcements/Overview.vue"),
         },
         {
             path: "/announcements/:id",
             name: "announcementWithId",
-            component: () => import("../views/AnnouncementView/index.vue"),
+            component: () => import("../views/Announcements/EditorView/index.vue"),
         },
         {
             path: "/discord/users",

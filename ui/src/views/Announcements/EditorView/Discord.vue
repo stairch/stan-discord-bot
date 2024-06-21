@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, watch, ref, type PropType, onMounted } from "vue";
-import { api, ANNOUNCEMENT_TYPES, type IServer, type IAnnouncement } from "../../api";
+import { api, ANNOUNCEMENT_TYPES, type IServer, type IAnnouncement } from "@/api";
 import {
     DiscordMarkdown,
     DiscordEmbed,

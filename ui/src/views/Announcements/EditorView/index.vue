@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api, type IAnnouncement } from "../../api";
+import { api, type IAnnouncement } from "@/api";
 import Edit from "./Edit.vue";
 import Discord from "./Discord.vue";
 import { useAnnouncementStore } from "@/stores/announcements";
@@ -59,64 +59,35 @@ watch(route, async () => {
 </script>
 
 <template>
-    <h1>Announcements</h1>
+    <router-link to="/announcements">
+        <h1>Announcements</h1>
+    </router-link>
     <div class="announcement">
-        <aside>
-            <router-link
-                v-for="availableAnnouncement in announcementStore.announcements"
-                :key="availableAnnouncement.id"
-                :to="`/announcements/${availableAnnouncement.id}`"
+        <div class="tab-list">
+            <span
+                v-for="key in Object.keys(TABS)"
+                @click="activeTab = key as keyof typeof TABS"
+                :class="{ active: key === activeTab }"
             >
-                <div
-                    class="server"
-                    :class="{
-                        selected: announcement?.id == availableAnnouncement.id,
-                    }"
-                >
-                    <span>{{ availableAnnouncement.title }}</span>
-                </div>
-            </router-link>
-            <router-link to="/announcements">
-                <div
-                    class="server"
-                    :class="{
-                        selected: announcement.id == null,
-                    }"
-                >
-                    <span>+ New Announcement</span>
-                </div>
-            </router-link>
-        </aside>
-        <main>
-            <div class="tab-list">
-                <span
-                    v-for="key in Object.keys(TABS)"
-                    @click="activeTab = key as keyof typeof TABS"
-                    :class="{ active: key === activeTab }"
-                >
-                    {{ key }}
-                </span>
-            </div>
-            <component
-                :is="TABS[activeTab]"
-                v-model="announcement"
-            />
-        </main>
+                {{ key }}
+            </span>
+        </div>
+        <component
+            :is="TABS[activeTab]"
+            v-model="announcement"
+        />
     </div>
 </template>
 
 <style scoped>
 .announcement {
-    display: grid;
-    grid-template-columns: 25ch 1fr;
-    align-items: start;
-    gap: 1em;
-}
-
-main {
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+
+a h1:hover {
+    text-decoration: underline
 }
 
 aside {

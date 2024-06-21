@@ -46,11 +46,24 @@
         align-items: start;
     }
 
+    @media (max-width: 768px) {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
     &:nth-child(even) {
         flex-direction: row-reverse;
 
         .info {
             align-items: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column-reverse;
+            
+            .info {
+                align-items: flex-start;
+            }
         }
     }
 

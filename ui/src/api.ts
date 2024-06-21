@@ -13,11 +13,15 @@ export interface IAnnouncement {
         en: string;
         de: string;
     };
+    author?: string;
+    lastModified?: string;
 }
 
 export interface IAnnouncementSummary {
     id: number;
     title: string;
+    author: string;
+    lastModified: string;
 }
 
 export interface IStudentStats {

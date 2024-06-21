@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch, type PropType } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import {
     api,
     type IServer,
-    type IAnnouncementSummary,
     type IAnnouncement,
-} from "../../api";
-import CardPicker from "@/components/CardPicker.vue";
+} from "@/api";
 import router from "@/router";
 
 const servers = ref<IServer[]>([]);

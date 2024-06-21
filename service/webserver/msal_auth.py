@@ -53,6 +53,12 @@ def authenticated(
     return _wrapper
 
 
+async def get_username(request: web.Request) -> str:
+    """Get username."""
+    session = await MsalSession.get(request)
+    return session.user_data.get("displayName", "")
+
+
 class MsalSession:
     """MSAL Session Helper."""
 

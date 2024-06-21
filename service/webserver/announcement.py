@@ -14,7 +14,7 @@ from integration.discord.util import base64_image_to_discord
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
-from .msal_auth import authenticated
+from .msal_auth import authenticated, get_username
 
 
 class AnnouncementHandler(BaseHandler):
@@ -52,7 +52,9 @@ class AnnouncementHandler(BaseHandler):
     async def _create_announcement(self, request: web.Request) -> web.Response:
         """Create a new announcement"""
         data = JDict(await request.json())
-        announcement, error = Announcement.deserialise(data)
+        announcement, error = Announcement.deserialise(
+            data, await get_username(request)
+        )
         if announcement is None:
             return web.json_response({"error": error}, status=400)
         announcement = self._db.create_announcement(announcement)
@@ -63,7 +65,9 @@ class AnnouncementHandler(BaseHandler):
         """Update an announcement"""
         data = JDict(await request.json())
         id_ = int(request.match_info["id"])
-        announcement, error = Announcement.deserialise(data)
+        announcement, error = Announcement.deserialise(
+            data, await get_username(request)
+        )
         if announcement is None:
             return web.json_response({"error": error}, status=400)
         announcement.id = id_

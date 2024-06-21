@@ -9,7 +9,18 @@ export const useAnnouncementStore = defineStore("counter", () => {
         announcements.value = await api.announements.getAll();
     };
 
+    const create = async () => {
+        const data = await api.announements.create({
+            title: "",
+            message: {
+                de: "",
+                en: "",
+            }
+        })
+        return "/announcements/" + data.id;
+    };
+
     update();
 
-    return { announcements, update };
+    return { announcements, update, create };
 });
