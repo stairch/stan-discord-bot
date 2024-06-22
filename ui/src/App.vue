@@ -34,7 +34,7 @@ onMounted(async () => {
                 />
             </router-link>
             <nav>
-                <RouterLink title="Home" to="/"><span class="material-symbols-rounded">home</span></RouterLink>
+                <RouterLink title="Manage Discord Users" to="/discord/users"><span class="material-symbols-rounded">group</span></RouterLink>
                 <RouterLink title="Announcements" to="/announcements"><span class="material-symbols-rounded">campaign</span></RouterLink>
 
                 <div @click.stop="showUserOptions = true" class="user">

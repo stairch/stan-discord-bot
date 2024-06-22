@@ -1,0 +1,5 @@
+{
+    "singleAttributePerLine": true,
+    "vueIndentScriptAndStyle": true,
+    "tabWidth": 4
+}
