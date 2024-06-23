@@ -8,7 +8,8 @@ __email__ = "info@stair.ch"
 
 import asyncio
 
-from .discord.stan import Stan
+from .discord.stan import Stan as DiscordStan
+from .telegram.stan import Stan as TelegramStan
 from .discord.module_channels import ModuleChannelSync
 from .email.client import EmailClient
 from .foodstoffi.menu import SendFoodstoffiMenuTask
@@ -19,14 +20,20 @@ class IntegrationManager:
 
     def __init__(self) -> None:
         self._email_client = EmailClient()
-        self._stan = Stan(self._email_client)
-        self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._stan)
-        self._module_channel_sync = ModuleChannelSync(self._stan)
+        self._discord_stan = DiscordStan(self._email_client)
+        self._telegram_stan = TelegramStan()
+        self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._discord_stan)
+        self._module_channel_sync = ModuleChannelSync(self._discord_stan)
 
     @property
-    def stan(self) -> Stan:
+    def discord(self) -> DiscordStan:
         """Get the discord bot Stan"""
-        return self._stan
+        return self._discord_stan
+
+    @property
+    def telegram(self) -> TelegramStan:
+        """Get the telegram bot Stan"""
+        return self._telegram_stan
 
     async def trigger_foodstoffi_menu(self) -> None:
         """Trigger a manual foodstoffi menu update"""
@@ -38,5 +45,6 @@ class IntegrationManager:
 
     async def start(self) -> None:
         """Start the integration services"""
-        asyncio.create_task(self._stan.start())
+        asyncio.create_task(self._discord_stan.start())
+        await self._telegram_stan.start()
         await self._send_foodstoffi_menu_task.start()

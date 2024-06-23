@@ -6,12 +6,11 @@ __email__ = "info@stair.ch"
 
 from aiohttp import web
 from pyaddict import JDict
-import discord
 
-from integration.discord.server import AnnouncementChannelType
-from integration.discord.persona import Personas, PersonaSender
-from integration.discord.util import base64_image_to_discord
-from common.constants import STAIR_GREEN
+from integration.discord.announcer import Announcer as DiscordAnnouncer
+from integration.discord.persona import Personas
+from integration.telegram.announcer import Announcer as TelegramAnnouncer
+from integration.manager import IntegrationManager
 from db.datamodels.announcement import Announcement, AnnouncementType
 from .base_handler import BaseHandler
 from .msal_auth import authenticated, get_username
@@ -20,10 +19,16 @@ from .msal_auth import authenticated, get_username
 class AnnouncementHandler(BaseHandler):
     """Handler for announcements"""
 
+    def __init__(self, app: web.Application, integration: IntegrationManager) -> None:
+        super().__init__(app, integration)
+        self._discord_announcer = DiscordAnnouncer(self._db, self._integration)
+        self._telegram_announcer = TelegramAnnouncer(self._db, self._integration)
+
     def _add_routes(self, app: web.Application) -> None:
         app.router.add_get("/api/announcements", self._get_announcements)
         app.router.add_get("/api/announcements/types", self._types)
         app.router.add_get("/api/announcements/discord/servers", self._discord_servers)
+        app.router.add_get("/api/announcements/telegram/chats", self._telegram_chats)
         app.router.add_get("/api/announcements/personas", self._personas)
         app.router.add_post("/api/announcements", self._create_announcement)
         app.router.add_get("/api/announcements/{id}", self._get_announcement)
@@ -85,70 +90,15 @@ class AnnouncementHandler(BaseHandler):
     async def _publish_announcement(self, request: web.Request) -> web.Response:  # pylint: disable=too-many-locals
         """Announce a message to a channel"""
         data = JDict(await request.json())
-        server = data.ensureCast("server", int)
-        announcement_id = data.ensureCast("id", int)
-        image = data.optionalGet("image", str)
-        announcement_type = data.ensureCast("type", str)
-        persona = Personas.from_name(data.optionalGet("persona", str))
-
-        announcement = self._db.get_announcement(announcement_id)
-
-        if not announcement:
-            return web.json_response({"error": "Announcement not found"}, status=404)
-        if announcement_type not in AnnouncementType:
-            return web.json_response(
-                {
-                    "error": f"Unknown announcement type {announcement_type}",
-                    "valid": list(AnnouncementType),
-                },
-                status=400,
-            )
-
-        discord_servers = self._integration.stan.servers
-
-        if server not in discord_servers:
-            return web.json_response(
-                {
-                    "error": f"Unknown server {server}",
-                    "valid": list(discord_servers.keys()),
-                },
-                status=400,
-            )
-
-        channel_type = AnnouncementChannelType.from_announcement_type(
-            AnnouncementType(announcement_type)
-        )
-        discord_channel = channel_type.get(discord_servers[server].guild)
-
-        if not discord_channel:
-            return web.json_response(
-                {
-                    "error": f"Channel not found for server {server} and type {announcement_type}"
-                },
-                status=404,
-            )
-
-        role = channel_type.get_role(discord_servers[server].guild)
-
-        embed_de = discord.Embed(
-            title=f":flag_de: {announcement.title}",
-            description=announcement.message_de,
-            color=STAIR_GREEN,
-        )
-        embed_en = discord.Embed(
-            title=f":flag_gb: {announcement.title}",
-            description=announcement.message_en,
-            color=STAIR_GREEN,
-        )
-        file = base64_image_to_discord(image)
-
-        await PersonaSender(discord_channel, persona).send(
-            message=role.mention,
-            embeds=[embed_de, embed_en],
-            file=file,
-            publish=True,
-        )
-        return web.Response()
+        match data.ensureCast("scope", str):
+            case "discord":
+                return await self._discord_announcer.publish_announcement(request)
+            case "telegram":
+                return await self._telegram_announcer.publish_announcement(request)
+            case _:
+                return web.json_response(
+                    {"error": "Unknown announcement type"}, status=400
+                )
 
     @authenticated
     async def _types(self, _: web.Request) -> web.Response:
@@ -158,8 +108,19 @@ class AnnouncementHandler(BaseHandler):
     @authenticated
     async def _discord_servers(self, _: web.Request) -> web.Response:
         """Get all announcement servers"""
-        servers = self._integration.stan.servers
+        servers = self._integration.discord.servers
         return web.json_response([x.serialise() for x in servers.values()])
+
+    @authenticated
+    async def _telegram_chats(self, _: web.Request) -> web.Response:
+        """Get all announcement servers"""
+        servers = self._integration.telegram.chats
+        return web.json_response(
+            [
+                {"id": x.id, "name": x.title, "picture": x.photo}
+                for x in servers.values()
+            ]
+        )
 
     @authenticated
     async def _personas(self, _: web.Request) -> web.Response:

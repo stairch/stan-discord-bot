@@ -32,9 +32,9 @@ class DbImportHandler(BaseHandler):
             HsluStudent.from_csv(plain)
         )
         for graduate in new_graduates:
-            await self._integration.stan.make_graduate(graduate)
+            await self._integration.discord.make_graduate(graduate)
         for student in new_students:
-            await self._integration.stan.make_student(student)
+            await self._integration.discord.make_student(student)
         return web.Response()
 
     @authenticated
@@ -70,6 +70,6 @@ class DbImportHandler(BaseHandler):
         if not programmes:
             return web.HTTPBadRequest(reason=error)
         self._db.update_degree_programmes(programmes)
-        for server in self._integration.stan.servers.values():
+        for server in self._integration.discord.servers.values():
             await server.create_course_roles()
         return web.Response()
