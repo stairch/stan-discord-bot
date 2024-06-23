@@ -29,7 +29,7 @@ export interface IStudentStats {
     discord: {
         students: number;
         graduates: number;
-    }
+    };
 }
 
 export interface IDegreeProgramme {
@@ -41,8 +41,8 @@ export interface IDegreeProgramme {
 }
 
 type AnnouncementScope = "discord" | "telegram";
-export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"]
-type AnnouncementType = typeof ANNOUNCEMENT_TYPES[number];
+export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"];
+type AnnouncementType = (typeof ANNOUNCEMENT_TYPES)[number];
 
 const toBase64 = async (file?: File): Promise<string | undefined> => {
     if (!file) {
@@ -131,6 +131,11 @@ export const api = {
                 res.json()
             );
         },
+        async telegramChats(): Promise<IServer[]> {
+            return fetch(`/api/announcements/telegram/chats`).then((res) =>
+                res.json()
+            );
+        },
         async personas(): Promise<string[]> {
             return fetch(`/api/announcements/personas`).then((res) =>
                 res.json()
@@ -162,7 +167,9 @@ export const api = {
         async getDegreeProgrammes(): Promise<IDegreeProgramme[]> {
             return fetch("/api/degree-programmes").then((res) => res.json());
         },
-        async updateDegreeProgrammes(degreeProgrammes: IDegreeProgramme[]): Promise<void> {
+        async updateDegreeProgrammes(
+            degreeProgrammes: IDegreeProgramme[]
+        ): Promise<void> {
             await fetch("/api/degree-programmes", {
                 method: "POST",
                 headers: {
@@ -170,6 +177,6 @@ export const api = {
                 },
                 body: JSON.stringify(degreeProgrammes),
             });
-        }
-    }
+        },
+    },
 };
