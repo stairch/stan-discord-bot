@@ -51,7 +51,7 @@ class Stan:
 
 ---
 
-**{announcement.message_en}**"""
+{announcement.message_en}"""
 
         async with self._bot:
             if image:
