@@ -110,8 +110,8 @@ export const api = {
             type: AnnouncementType,
             persona: string,
             image?: File
-        ): Promise<void> {
-            fetch(`/api/announcements/${id}/publish`, {
+        ): Promise<boolean | string> {
+            const res = await fetch(`/api/announcements/${id}/publish`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -125,6 +125,12 @@ export const api = {
                     image: await toBase64(image),
                 }),
             });
+            if (res.ok) {
+                return true;
+            }
+            const data = await res.text();
+            console.error(data);
+            return data;
         },
         async discordServers(): Promise<IServer[]> {
             return fetch(`/api/announcements/discord/servers`).then((res) =>

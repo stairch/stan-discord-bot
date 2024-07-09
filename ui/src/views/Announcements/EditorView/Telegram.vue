@@ -6,15 +6,7 @@
         type IServer,
         type IAnnouncement,
     } from "@/api";
-    import {
-        DiscordMarkdown,
-        DiscordEmbed,
-        DiscordMention,
-        DiscordEmbedField,
-        DiscordMessage,
-        DiscordMessages,
-        // @ts-ignore
-    } from "@discord-message-components/vue";
+    import VueMarkdown from "vue-markdown-render";
 
     const servers = ref<IServer[]>([]);
     const server = ref<string>("");
@@ -45,7 +37,7 @@
     );
 
     const postAnnouncement = async () => {
-        await api.announements.publish(
+        const error = await api.announements.publish(
             announcement.value.id!,
             "telegram",
             String(servers.value[0].id),
@@ -53,6 +45,11 @@
             "",
             img.value ?? undefined
         );
+        if (error === true) {
+            alert("Announcement successfully sent");
+        } else {
+            alert("Failed to send announcement: " + error);
+        }
     };
 
     const actionsDisabled = computed(() => {
@@ -71,6 +68,17 @@
         };
         input.click();
     };
+
+    const fullMessage = computed(() => {
+        return (
+            `**${announcement.value.title}**\n\n` +
+            announcement.value.message.de +
+            "\n\n--\-\n\n" +
+            announcement.value.message.en
+        ).replaceAll("\n", "<br/>");
+    });
+
+    const options = { html: true, breaks: true };
 </script>
 
 <template>
@@ -94,54 +102,57 @@
             Set Image
         </button>
     </div>
-    <div>
-        <DiscordMessages>
-            <DiscordMessage
-                :bot="true"
-                role-color="green"
+    <div class="message">
+        <VueMarkdown
+            :source="fullMessage"
+            :options="options"
+        />
+        <svg
+            width="9"
+            height="20"
+            class="svg-appendix"
+        >
+            <defs>
+                <filter
+                    x="-50%"
+                    y="-14.7%"
+                    width="200%"
+                    height="141.2%"
+                    filterUnits="objectBoundingBox"
+                    id="messageAppendix"
+                >
+                    <feOffset
+                        dy="1"
+                        in="SourceAlpha"
+                        result="shadowOffsetOuter1"
+                    ></feOffset>
+                    <feGaussianBlur
+                        stdDeviation="1"
+                        in="shadowOffsetOuter1"
+                        result="shadowBlurOuter1"
+                    ></feGaussianBlur>
+                    <feColorMatrix
+                        values="0 0 0 0 0.0621962482 0 0 0 0 0.138574144 0 0 0 0 0.185037364 0 0 0 0.15 0"
+                        in="shadowBlurOuter1"
+                    ></feColorMatrix>
+                </filter>
+            </defs>
+            <g
+                fill="none"
+                fill-rule="evenodd"
             >
-                <DiscordMarkdown>
-                    <DiscordMention type="Announcements" />
-                </DiscordMarkdown>
-                <img
-                    v-if="imgUrl"
-                    :src="imgUrl"
-                    draggable="false"
-                />
-                <DiscordEmbed>
-                    <DiscordEmbedField color="#0b6a5c">
-                        <DiscordMarkdown>
-                            <img
-                                src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e9-1f1ea.svg"
-                                alt="🇩🇪"
-                                title="flag_de"
-                                draggable="false"
-                                class="flag"
-                            />
-                            **{{ announcement.title }}**
-                            <br />
-                            {{ announcement.message.de }}
-                        </DiscordMarkdown>
-                    </DiscordEmbedField>
-                </DiscordEmbed>
-                <DiscordEmbed>
-                    <DiscordEmbedField color="#0b6a5c">
-                        <DiscordMarkdown
-                            ><img
-                                src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ec-1f1e7.svg"
-                                alt="🇬🇧"
-                                title="flag_gb"
-                                draggable="false"
-                                class="flag"
-                            />
-                            **{{ announcement.title }}**
-                            <br />
-                            {{ announcement.message.en }}
-                        </DiscordMarkdown>
-                    </DiscordEmbedField>
-                </DiscordEmbed>
-            </DiscordMessage>
-        </DiscordMessages>
+                <path
+                    d="M3 17h6V0c-.193 2.84-.876 5.767-2.05 8.782-.904 2.325-2.446 4.485-4.625 6.48A1 1 0 003 17z"
+                    fill="#000"
+                    filter="url(#messageAppendix)"
+                ></path>
+                <path
+                    d="M3 17h6V0c-.193 2.84-.876 5.767-2.05 8.782-.904 2.325-2.446 4.485-4.625 6.48A1 1 0 003 17z"
+                    fill="FFF"
+                    class="corner"
+                ></path>
+            </g>
+        </svg>
     </div>
 
     <div class="actions">
@@ -183,15 +194,27 @@
         flex-direction: column;
         gap: 0.5em;
     }
-</style>
 
-<style>
-    .discord-messages {
+    .message {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        background: var(--bg-soft);
         border-radius: 0.5em;
-        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
-    }
+        border: 1px solid var(--bg-muted);
+        padding: 1em;
+        max-width: 50ch;
+        position: relative;
+        border-bottom-left-radius: 0;
 
-    .discord-embed .discord-embed-left-border {
-        background-color: #0b6a5c;
+        .svg-appendix {
+            position: absolute;
+            left: -9px;
+            bottom: -4px;
+
+            .corner {
+                fill: var(--bg-muted);
+            }
+        }
     }
 </style>

@@ -1,76 +1,86 @@
 <script setup lang="ts">
-import { computed, watch, ref, type PropType, onMounted } from "vue";
-import { api, ANNOUNCEMENT_TYPES, type IServer, type IAnnouncement } from "@/api";
-import {
-    DiscordMarkdown,
-    DiscordEmbed,
-    DiscordMention,
-    DiscordEmbedField,
-    DiscordMessage,
-    DiscordMessages,
-    // @ts-ignore
-} from "@discord-message-components/vue";
+    import { computed, watch, ref, type PropType, onMounted } from "vue";
+    import {
+        api,
+        ANNOUNCEMENT_TYPES,
+        type IServer,
+        type IAnnouncement,
+    } from "@/api";
+    import {
+        DiscordMarkdown,
+        DiscordEmbed,
+        DiscordMention,
+        DiscordEmbedField,
+        DiscordMessage,
+        DiscordMessages,
+        // @ts-ignore
+    } from "@discord-message-components/vue";
 
-const servers = ref<IServer[]>([]);
-const personas = ref<string[]>([]);
-const server = ref<string>("");
-const persona = ref<string>("");
-const type = ref<string>(ANNOUNCEMENT_TYPES[0]);
+    const servers = ref<IServer[]>([]);
+    const personas = ref<string[]>([]);
+    const server = ref<string>("");
+    const persona = ref<string>("");
+    const type = ref<string>(ANNOUNCEMENT_TYPES[0]);
 
-const props = defineProps({
-    modelValue: { type: Object as PropType<IAnnouncement>, required: true },
-});
-const announcement = computed(() => ({ ...props.modelValue }));
+    const props = defineProps({
+        modelValue: { type: Object as PropType<IAnnouncement>, required: true },
+    });
+    const announcement = computed(() => ({ ...props.modelValue }));
 
-const img = ref<File | null>(null);
+    const img = ref<File | null>(null);
 
-const imgUrl = ref<string | null>(null);
+    const imgUrl = ref<string | null>(null);
 
-onMounted(async () => {
-    servers.value = await api.announements.discordServers();
-    server.value = servers.value[0].id;
-    personas.value = await api.announements.personas();
-    persona.value = personas.value[0];
-});
+    onMounted(async () => {
+        servers.value = await api.announements.discordServers();
+        server.value = servers.value[0].id;
+        personas.value = await api.announements.personas();
+        persona.value = personas.value[0];
+    });
 
-watch(
-    () => img.value,
-    async (value) => {
-        if (value) {
-            imgUrl.value = URL.createObjectURL(value);
-        } else {
-            imgUrl.value = null;
+    watch(
+        () => img.value,
+        async (value) => {
+            if (value) {
+                imgUrl.value = URL.createObjectURL(value);
+            } else {
+                imgUrl.value = null;
+            }
         }
-    }
-);
-
-const postAnnouncement = async () => {
-    await api.announements.publish(
-        announcement.value.id!,
-        "discord",
-        String(servers.value[0].id),
-        type.value,
-        persona.value,
-        img.value ?? undefined
     );
-};
 
-const actionsDisabled = computed(() => {
-    return false;
-});
-
-const setImage = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = (e) => {
-        const files = (e.target as HTMLInputElement).files;
-        if (files && files.length > 0) {
-            img.value = files[0];
+    const postAnnouncement = async () => {
+        const error = await api.announements.publish(
+            announcement.value.id!,
+            "discord",
+            String(servers.value[0].id),
+            type.value,
+            persona.value,
+            img.value ?? undefined
+        );
+        if (error === true) {
+            alert("Announcement successfully sent");
+        } else {
+            alert("Failed to send announcement: " + error);
         }
     };
-    input.click();
-};
+
+    const actionsDisabled = computed(() => {
+        return false;
+    });
+
+    const setImage = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+            const files = (e.target as HTMLInputElement).files;
+            if (files && files.length > 0) {
+                img.value = files[0];
+            }
+        };
+        input.click();
+    };
 </script>
 
 <template>
@@ -123,7 +133,7 @@ const setImage = () => {
             <DiscordMessage
                 :bot="true"
                 :author="persona"
-                role-color="green"
+                role-color="#04956c"
                 :key="persona"
             >
                 <DiscordMarkdown>
@@ -182,42 +192,42 @@ const setImage = () => {
 </template>
 
 <style scoped>
-.flag {
-    width: 2ch;
-    transform: translateY(0.25em);
-}
+    .flag {
+        width: 2ch;
+        transform: translateY(0.25em);
+    }
 
-img:not(.flag) {
-    max-width: 75ch;
-    border-radius: 0.5em;
-    display: block;
-    z-index: -1;
-}
+    img:not(.flag) {
+        max-width: 75ch;
+        border-radius: 0.5em;
+        display: block;
+        z-index: -1;
+    }
 
-.inputs {
-    display: flex;
-    gap: 1em;
-    align-items: center;
-}
+    .inputs {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+    }
 
-.align-right {
-    margin-left: auto;
-}
+    .align-right {
+        margin-left: auto;
+    }
 
-.dropdown {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
+    .dropdown {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
 </style>
 
 <style>
-.discord-messages {
-    border-radius: 0.5em;
-    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
-}
+    .discord-messages {
+        border-radius: 0.5em;
+        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
+    }
 
-.discord-embed .discord-embed-left-border {
-    background-color: #0b6a5c;
-}
+    .discord-embed .discord-embed-left-border {
+        background-color: #0b6a5c;
+    }
 </style>
