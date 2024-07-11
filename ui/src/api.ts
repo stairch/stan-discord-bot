@@ -110,7 +110,7 @@ export const api = {
             type: AnnouncementType,
             persona: string,
             image?: File
-        ): Promise<boolean | string> {
+        ): Promise<string | null> {
             const res = await fetch(`/api/announcements/${id}/publish`, {
                 method: "POST",
                 headers: {
@@ -126,7 +126,7 @@ export const api = {
                 }),
             });
             if (res.ok) {
-                return true;
+                return null;
             }
             const data = await res.text();
             console.error(data);

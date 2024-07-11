@@ -15,7 +15,9 @@
         DiscordMessages,
         // @ts-ignore
     } from "@discord-message-components/vue";
+    import LoadingWithResultModal from "@/components/LoadingWithResultModal.vue";
 
+    const modal = ref<InstanceType<typeof LoadingWithResultModal> | null>(null);
     const servers = ref<IServer[]>([]);
     const personas = ref<string[]>([]);
     const server = ref<string>("");
@@ -50,6 +52,8 @@
     );
 
     const postAnnouncement = async () => {
+        modal.value!.onLoading();
+
         const error = await api.announements.publish(
             announcement.value.id!,
             "discord",
@@ -58,10 +62,10 @@
             persona.value,
             img.value ?? undefined
         );
-        if (error === true) {
-            alert("Announcement successfully sent");
+        if (!error) {
+            modal.value!.onSuccess("Announcement posted!");
         } else {
-            alert("Failed to send announcement: " + error);
+            modal.value!.onError(error);
         }
     };
 
@@ -84,6 +88,7 @@
 </script>
 
 <template>
+    <LoadingWithResultModal ref="modal" />
     <div class="inputs">
         <div class="dropdown">
             <label>On Server</label>

@@ -2,7 +2,9 @@
     import { computed, watch, ref, type PropType, onMounted } from "vue";
     import { api, type IServer, type IAnnouncement } from "@/api";
     import VueMarkdown from "vue-markdown-render";
+    import LoadingWithResultModal from "@/components/LoadingWithResultModal.vue";
 
+    const modal = ref<InstanceType<typeof LoadingWithResultModal> | null>(null);
     const servers = ref<IServer[]>([]);
     const server = ref<string>("");
 
@@ -32,6 +34,8 @@
     );
 
     const postAnnouncement = async () => {
+        modal.value!.onLoading();
+
         const error = await api.announements.publish(
             announcement.value.id!,
             "telegram",
@@ -40,10 +44,10 @@
             "",
             img.value ?? undefined
         );
-        if (error === true) {
-            alert("Announcement successfully sent");
+        if (!error) {
+            modal.value!.onSuccess("Announcement posted!");
         } else {
-            alert("Failed to send announcement: " + error);
+            modal.value!.onError(error);
         }
     };
 
@@ -77,6 +81,7 @@
 </script>
 
 <template>
+    <LoadingWithResultModal ref="modal" />
     <div class="inputs">
         <div class="dropdown">
             <label>In Channel</label>
@@ -98,10 +103,16 @@
         </button>
     </div>
     <div class="message">
-        <VueMarkdown
-            :source="fullMessage"
-            :options="options"
+        <img
+            v-if="imgUrl"
+            :src="imgUrl"
         />
+        <div class="text">
+            <VueMarkdown
+                :source="fullMessage"
+                :options="options"
+            />
+        </div>
         <svg
             width="9"
             height="20"
@@ -192,15 +203,19 @@
 
     .message {
         display: flex;
+        flex-direction: column;
         gap: 1em;
         align-items: center;
         background: var(--bg-soft);
         border-radius: 0.5em;
         border: 1px solid var(--bg-muted);
-        padding: 1em;
         max-width: 50ch;
         position: relative;
         border-bottom-left-radius: 0;
+
+        .text {
+            padding: 1em;
+        }
 
         .svg-appendix {
             position: absolute;
@@ -210,6 +225,12 @@
             .corner {
                 fill: var(--bg-muted);
             }
+        }
+
+        img {
+            max-width: 100%;
+            z-index: 1;
+            border-radius: 0.5em 0.5em 0 0;
         }
     }
 </style>
