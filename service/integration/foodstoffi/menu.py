@@ -209,6 +209,8 @@ class Menu:
         today_recipes = menu.today_recipes
         if not today_recipes:
             return None
+        if any("ferien" in x.title.lower() for x in today_recipes):
+            return None
         return today_recipes
 
 
