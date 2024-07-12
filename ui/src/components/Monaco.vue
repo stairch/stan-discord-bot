@@ -27,6 +27,10 @@
     const container = ref<HTMLDivElement>();
     let latestValue = props.modelValue;
 
+    const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches;
+
     onMounted(() => {
         editor = monaco.editor.create(container.value!, {
             value: props.modelValue,
@@ -34,6 +38,7 @@
             readOnly: props.readOnly,
             scrollBeyondLastLine: false,
             wordWrap: "on",
+            theme: prefersDark ? "vs-dark" : "vs",
         });
         editor.getModel()?.onDidChangeContent(() => {
             latestValue = editor.getValue();

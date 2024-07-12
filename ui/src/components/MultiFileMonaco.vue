@@ -73,7 +73,7 @@
             border: 1px solid transparent;
 
             &.open {
-                background-color: #fffffe;
+                background-color: var(--bg-base);
                 border: 1px solid var(--bg-muted);
             }
         }

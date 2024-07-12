@@ -66,17 +66,18 @@
             position: absolute;
             top: 0.5em;
             right: 0.5em;
-            color: var(--bg-mute);
+            color: var(--fg-text-muted);
             cursor: pointer;
 
             &:hover {
-                color: var(--bg-main);
+                color: var(--fg-text);
             }
         }
     }
 
     dialog {
-        border: 1px solid var(--bg-mute);
+        border: 1px solid var(--bg-muted);
+        background: var(--bg-base);
         border-radius: 0.5em;
         outline: none;
         inset: 0;

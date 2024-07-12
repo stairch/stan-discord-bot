@@ -152,23 +152,31 @@ export const api = {
         async students(): Promise<IStudentStats> {
             return fetch("/api/students").then((res) => res.json());
         },
-        async updateStudents(csvAsString: string): Promise<void> {
-            await fetch("/api/students", {
+        async updateStudents(csvAsString: string): Promise<string | null> {
+            const res = await fetch("/api/students", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/xml",
                 },
                 body: csvAsString,
             });
+            if (res.ok) {
+                return null;
+            }
+            return await res.text();
         },
-        async updateModules(csvAsString: string): Promise<void> {
-            await fetch("/api/modules", {
+        async updateModules(csvAsString: string): Promise<string | null> {
+            const res = await fetch("/api/modules", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/xml",
                 },
                 body: csvAsString,
             });
+            if (res.ok) {
+                return null;
+            }
+            return await res.text();
         },
         async getDegreeProgrammes(): Promise<IDegreeProgramme[]> {
             return fetch("/api/degree-programmes").then((res) => res.json());

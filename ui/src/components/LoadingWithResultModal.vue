@@ -21,6 +21,7 @@
     const onLoading = () => {
         isSuccess.value = false;
         isError.value = false;
+        displayMessage.value = "";
         showModal.value = true;
     };
 
