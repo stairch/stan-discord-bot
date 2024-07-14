@@ -1,0 +1,10 @@
+{
+    "name": "icon",
+    "version": "0.0.0",
+    "scripts": {
+        "build": "fantasticon svg -o font --prefix icon"
+    },
+    "dependencies": {
+        "fantasticon": "^2.0.0"
+    }
+}

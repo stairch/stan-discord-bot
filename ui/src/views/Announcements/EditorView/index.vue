@@ -20,20 +20,36 @@
     const router = useRouter();
     const announcementStore = useAnnouncementStore();
 
-    const TABS = {
-        Edit: Edit,
-        "Post on Discord": Discord,
-        "Post on Telegram": Telegram,
-        "Post on Instagram": Instagram,
-    };
+    const TABS = [
+        {
+            name: "Edit",
+            component: Edit,
+            icon: "edit",
+        },
+        {
+            name: "Discord",
+            component: Discord,
+            icon: "discord",
+        },
+        {
+            name: "Telegram",
+            component: Telegram,
+            icon: "telegram",
+        },
+        {
+            name: "Instagram",
+            component: Instagram,
+            icon: "instagram",
+        },
+    ];
     let requestTab = route.query.tab as string;
-    const activeTab = ref<keyof typeof TABS>("Edit");
-    if (Object.keys(TABS).includes(requestTab)) {
-        activeTab.value = requestTab as keyof typeof TABS;
-    }
+    const activeTab = ref<number>(0);
+    activeTab.value = requestTab
+        ? TABS.findIndex((x) => x.name === requestTab)
+        : 0;
 
     watch(activeTab, (x) => {
-        const query = { tab: x };
+        const query = { tab: TABS[x].name };
         router.replace({ query });
     });
 
@@ -67,15 +83,20 @@
     <div class="announcement">
         <div class="tab-list">
             <span
-                v-for="key in Object.keys(TABS)"
-                @click="activeTab = key as keyof typeof TABS"
-                :class="{ active: key === activeTab }"
+                v-for="(tab, i) in TABS"
+                :class="{ active: i === activeTab }"
             >
-                {{ key }}
+                <div
+                    class="content"
+                    @click="activeTab = i"
+                >
+                    <i :class="'icon-' + tab.icon"></i>
+                    {{ tab.name }}
+                </div>
             </span>
         </div>
         <component
-            :is="TABS[activeTab]"
+            :is="TABS[activeTab].component"
             v-model="announcement"
         />
     </div>
@@ -129,21 +150,32 @@
 
     .tab-list {
         display: flex;
+        overflow-x: auto;
 
         & span {
-            padding: 1em 2em;
+            padding: 0.5em;
             cursor: pointer;
             border-bottom: 1px solid var(--bg-muted);
             transition: all 0.2s;
-            border-radius: 0.5em 0.5em 0 0;
+
+            .content {
+                min-width: max-content;
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+                padding: 0.5em 1.5em;
+                border-radius: 0.5em;
+            }
 
             &.active {
                 border-bottom: 1px solid var(--c-accent);
             }
 
             &:hover {
-                background-color: var(--bg-muted);
-                color: var(--c-accent);
+                .content {
+                    background-color: var(--bg-muted);
+                    color: var(--c-accent);
+                }
             }
         }
     }

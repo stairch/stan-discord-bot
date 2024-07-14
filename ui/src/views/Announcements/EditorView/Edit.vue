@@ -2,7 +2,6 @@
     import { computed, ref, watch, type PropType } from "vue";
     import { api, type IServer, type IAnnouncement } from "@/api";
     import router from "@/router";
-    import Monaco from "@/components/Monaco.vue";
     import MultiFileMonaco from "@/components/MultiFileMonaco.vue";
 
     const props = defineProps({

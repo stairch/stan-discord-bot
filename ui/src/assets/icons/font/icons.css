@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "icons";
+    src: url("./icons.eot?f5d1a7c0dc39cb445678fd7e6413139c#iefix") format("embedded-opentype"),
+url("./icons.woff2?f5d1a7c0dc39cb445678fd7e6413139c") format("woff2"),
+url("./icons.woff?f5d1a7c0dc39cb445678fd7e6413139c") format("woff");
+}
+
+i[class^="icon-"]:before, i[class*=" icon-"]:before {
+    font-family: icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-discord:before {
+    content: "\f101";
+}
+.icon-edit:before {
+    content: "\f102";
+}
+.icon-instagram:before {
+    content: "\f103";
+}
+.icon-telegram:before {
+    content: "\f104";
+}

@@ -1,4 +1,5 @@
 @import "./base.css";
+@import "./icons/font/icons.css";
 
 header {
     background: var(--c-stair-lime);

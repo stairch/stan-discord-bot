@@ -1,57 +1,69 @@
 <script setup lang="ts">
-import { watch, ref, type PropType, onMounted } from "vue";
-import { toUnicodeVariant } from "@/assets/toUnicodeVariant";
-import Step from "@/components/Step.vue";
-import type { IAnnouncement } from "@/api";
+    import { watch, ref, type PropType, onMounted } from "vue";
+    import { toUnicodeVariant } from "@/assets/toUnicodeVariant";
+    import Step from "@/components/Step.vue";
+    import ToastNotification from "@/components/ToastNotification.vue";
+    import type { IAnnouncement } from "@/api";
 
-const text = ref<string>("");
+    const text = ref<string>("");
+    const toast = ref<typeof ToastNotification>();
 
-const props = defineProps({
-    modelValue: { type: Object as PropType<IAnnouncement>, required: true },
-});
+    const props = defineProps({
+        modelValue: { type: Object as PropType<IAnnouncement>, required: true },
+    });
 
-const buildText = () => {
-    const fullText =
-        props.modelValue.message.de +
-        "\n\n---\n\n" +
-        props.modelValue.message.en;
+    const buildText = () => {
+        const fullText =
+            props.modelValue.message.de +
+            "\n\n---\n\n" +
+            props.modelValue.message.en;
 
-    // replace markdown with unicode
+        // replace markdown with unicode
 
-    // bold text is surrounded by * or **
-    const boldRegex = /\*\*(.*?)\*\*|\*(.*?)\*/g;
-    const boldReplacer = (match: string, p1: string) => {
-        return toUnicodeVariant(p1, "bold sans");
+        // bold text is surrounded by * or **
+        const boldRegex = /\*\*(.*?)\*\*|\*(.*?)\*/g;
+        const boldReplacer = (match: string, p1: string) => {
+            return toUnicodeVariant(p1, "bold sans");
+        };
+        const boldText = fullText.replace(boldRegex, boldReplacer);
+
+        // italic text is surrounded by _ or __
+        const italicRegex = /__(.*?)__|_(.*?)_/g;
+        const italicReplacer = (match: string, p1: string) => {
+            return toUnicodeVariant(p1, "italic sans");
+        };
+        const italicText = boldText.replace(italicRegex, italicReplacer);
+
+        return italicText;
     };
-    const boldText = fullText.replace(boldRegex, boldReplacer);
 
-    // italic text is surrounded by _ or __
-    const italicRegex = /__(.*?)__|_(.*?)_/g;
-    const italicReplacer = (match: string, p1: string) => {
-        return toUnicodeVariant(p1, "italic sans");
+    const copyToClipbaord = () => {
+        navigator.clipboard.writeText(text.value);
+        toast.value?.showToast({
+            message: "Copied to Clipboard!",
+            style: "success",
+            icon: "done",
+        });
     };
-    const italicText = boldText.replace(italicRegex, italicReplacer);
 
-    return italicText;
-};
-
-onMounted(async () => {
-    text.value = buildText();
-});
-
-watch(
-    () => props.modelValue,
-    () => {
+    onMounted(async () => {
         text.value = buildText();
-    },
-    { deep: true }
-);
+    });
+
+    watch(
+        () => props.modelValue,
+        () => {
+            text.value = buildText();
+        },
+        { deep: true }
+    );
 </script>
 
 <template>
+    <ToastNotification ref="toast" />
     <div class="checklist">
         <h2>Checklist</h2>
-        <div class=checklist>
+        <div class="checklist">
             <Step
                 title="Add Location"
                 description="Where is the Event going to be?"
@@ -75,20 +87,52 @@ watch(
         </div>
     </div>
     <h2>Caption</h2>
-    <textarea
-        class="instagram"
-        v-model="text"
-    ></textarea>
+    <div class="textarea">
+        <textarea
+            class="instagram"
+            v-model="text"
+        ></textarea>
+        <span
+            class="material-symbols-rounded"
+            @click="copyToClipbaord"
+            title="Copy All"
+        >
+            content_copy
+        </span>
+    </div>
 </template>
 
 <style scoped>
-textarea.instagram {
-    height: 50ch;
-}
+    textarea.instagram {
+        height: 50ch;
+        width: 100%;
+    }
 
-.checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
+    .checklist {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .textarea {
+        position: relative;
+        width: 100%;
+
+        .material-symbols-rounded {
+            position: absolute;
+            right: 0.5em;
+            top: 0.5em;
+            cursor: pointer;
+            background: var(--bg-base);
+            padding: 0.25em;
+            font-size: 1.8em;
+            border: 1px solid var(--bg-muted);
+            border-radius: 0.25em;
+
+            &:hover {
+                color: var(--c-accent);
+                border-color: var(--c-accent);
+            }
+        }
+    }
 </style>
