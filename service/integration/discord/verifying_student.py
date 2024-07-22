@@ -9,15 +9,21 @@ __email__ = "info@stair.ch"
 from enum import Enum
 from typing import cast
 import re
-import random
 import asyncio
 import logging
+import string
+import secrets
 
 import discord
 
 from db.db import Database
 from db.datamodels.verified_user import UserState
 from integration.email.client import EmailClient
+
+GENERIC_VALIDATION_ERROR_MESSAGE = """
+You must provide a valid email address ending in @stud.hslu.ch.
+Please try again or contact a STAIR member.
+"""
 
 
 class VerificationState(Enum):
@@ -86,24 +92,21 @@ class VerifyingStudent:
 
     async def _handle_waiting_for_email(self, msg: str) -> None:
         email = re.search(r"[a-zA-Z0-9_.+-]+@stud.hslu.ch", msg)
+
         if not email:
-            await self._member.send(
-                "Please provide a valid email address! It must end with @stud.hslu.ch"
-            )
+            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
             return
         db: Database = Database()
         student = db.student_by_email(email.group().lower())
 
         if not student:
-            await self._member.send(
-                "I'm sorry, I couldn't find your email in the database."
-            )
+            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
             return
 
         email_norm = email.group().lower()
 
         if db.get_member(discord_id=self._member.id, email=email_norm):
-            await self._member.send(self._already_verified_message())
+            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
             return
 
         self._email = email_norm
@@ -150,7 +153,8 @@ class VerifyingStudent:
 
     @staticmethod
     def _generate_verification_code() -> str:
-        return str(random.randint(100000, 999999))
+        alphabet = string.ascii_letters + string.digits
+        return "".join(secrets.choice(alphabet) for i in range(8))
 
     @classmethod
     async def handle_message(
