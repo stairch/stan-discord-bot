@@ -30,8 +30,12 @@ class EmailClient:
         )
 
     def _get_token(self) -> str:
-        result = self._app.acquire_token_for_client(SCOPES)
-        return result["access_token"]
+        try:
+            result = self._app.acquire_token_for_client(SCOPES)
+            return result["access_token"]
+        except Exception:  # pylint: disable=broad-except
+            result = self._app.acquire_token_for_client(SCOPES)
+            return result["access_token"]
 
     async def send_email(self, subject: str, content: str, to: str) -> bool:
         """
@@ -44,7 +48,7 @@ class EmailClient:
         body = {
             "Message": {
                 "Subject": subject,
-                "Body": {"ContentType": "Text", "Content": content},
+                "Body": {"ContentType": "HTML", "Content": content},
                 "ToRecipients": [{"EmailAddress": {"Address": to}}],
             },
             "SaveToSentItems": "true",

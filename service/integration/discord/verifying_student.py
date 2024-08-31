@@ -115,9 +115,18 @@ class VerifyingStudent:
         )
 
     async def _send_verification_code(self, msg: str) -> None:
+        verification_code_splice = (
+            self._verification_code[:4] + " " + self._verification_code[4:]
+        )
         await self._email_client.send_email(
             "STAIR Discord Verification Code",
-            f"Your verification code is {self._verification_code}",
+            f"""Hi there!
+<br />
+Your verification code is:
+<h1 style="color: #04956c">{verification_code_splice}</h1>
+
+<span style="font-size: 0.75rem; color: #22222A">Pro tip: Send me this code on Discord to verify your account and get full access to the server!</span>
+""",
             self.email,
         )
         await self._member.send(msg)
@@ -125,7 +134,7 @@ class VerifyingStudent:
         asyncio.create_task(self._expire())
 
     async def _handle_waiting_for_code(self, msg: str) -> bool:
-        if msg != self._verification_code:
+        if msg.replace(" ", "") != self._verification_code:
             await self._member.send("Invalid verification code. Please try again.")
             return False
 
@@ -153,7 +162,7 @@ class VerifyingStudent:
 
     @staticmethod
     def _generate_verification_code() -> str:
-        alphabet = string.ascii_letters + string.digits
+        alphabet = string.ascii_uppercase + string.digits
         return "".join(secrets.choice(alphabet) for i in range(8))
 
     @classmethod

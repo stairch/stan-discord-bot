@@ -128,8 +128,8 @@ class DiscordServer:
         """
         Get all roles that this user should not have
         """
-        return [
-            self._roles[x.role.lower()]
+        roles = [
+            self._roles.get(x.role.lower(), None)
             for x in self._courses
             if course is None
             or not re.match(
@@ -137,6 +137,7 @@ class DiscordServer:
                 course,
             )
         ]
+        return [x for x in roles if x is not None]
 
     async def create_course_roles(self) -> None:
         """Create the course roles"""
