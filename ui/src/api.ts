@@ -154,7 +154,7 @@ export const api = {
         },
         async updateStudents(csvAsString: string): Promise<string | null> {
             const res = await fetch("/api/students", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/xml",
                 },
@@ -167,7 +167,7 @@ export const api = {
         },
         async updateModules(csvAsString: string): Promise<string | null> {
             const res = await fetch("/api/modules", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/xml",
                 },
@@ -185,7 +185,7 @@ export const api = {
             degreeProgrammes: IDegreeProgramme[]
         ): Promise<void> {
             await fetch("/api/degree-programmes", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },

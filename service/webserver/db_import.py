@@ -18,11 +18,11 @@ class DbImportHandler(BaseHandler):
     """Handler for importing students from CSV"""
 
     def _add_routes(self, app: web.Application) -> None:
-        app.router.add_post("/api/students", self._upload_students)
+        app.router.add_put("/api/students", self._upload_students)
         app.router.add_get("/api/students", self._get_students)
-        app.router.add_post("/api/modules", self._upload_modules)
+        app.router.add_put("/api/modules", self._upload_modules)
         app.router.add_get("/api/degree-programmes", self._get_degree_programmes)
-        app.router.add_post("/api/degree-programmes", self._upload_degree_programmes)
+        app.router.add_put("/api/degree-programmes", self._upload_degree_programmes)
 
     @authenticated
     async def _upload_students(self, request: web.Request) -> web.Response:
