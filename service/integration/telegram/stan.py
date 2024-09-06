@@ -5,8 +5,9 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 import os
-import telegram
+import logging
 
+import telegram
 from pyaddict import JList
 
 from db.datamodels.announcement import Announcement
@@ -24,12 +25,16 @@ class Stan:
     def __init__(self) -> None:
         self._bot = telegram.Bot(Stan._TELEGRAM_BOT_TOKEN)
         self._chats: dict[int, telegram.ChatFullInfo] = {}
+        self._logger = logging.getLogger(__name__)
 
     async def start(self) -> None:
         """Start the bot"""
         async with self._bot:
             for chat_id in Stan._ALLOWED_CHATS:
-                self._chats[chat_id] = await self._bot.get_chat(chat_id)
+                try:
+                    self._chats[chat_id] = await self._bot.get_chat(chat_id)
+                except telegram.error.BadRequest:
+                    self._logger.warning("Chat %s not found", chat_id)
 
     @property
     def chats(self) -> dict[int, telegram.ChatFullInfo]:
