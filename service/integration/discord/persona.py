@@ -94,5 +94,5 @@ class PersonaSender:
                 await msg.publish()
             except discord.errors.Forbidden as e:
                 self._logger.warning("Failed to publish message: %s", e)
-                raise
+                return msg
         return msg
