@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import * as monaco from "monaco-editor";
     import { onMounted, onUnmounted, ref, watch } from "vue";
+    import { initialiseMonacoCommands } from "@/monaco/commands";
 
     const props = defineProps({
         language: {
@@ -44,6 +45,8 @@
             latestValue = editor.getValue();
             emit("update:modelValue", latestValue);
         });
+
+        initialiseMonacoCommands(editor);
     });
 
     onUnmounted(() => {

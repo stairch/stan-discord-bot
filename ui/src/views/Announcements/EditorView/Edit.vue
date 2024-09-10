@@ -1,5 +1,12 @@
 <script setup lang="ts">
-    import { computed, ref, watch, type PropType } from "vue";
+    import {
+        computed,
+        onMounted,
+        onUnmounted,
+        ref,
+        watch,
+        type PropType,
+    } from "vue";
     import { api, type IServer, type IAnnouncement } from "@/api";
     import router from "@/router";
     import MultiFileMonaco from "@/components/MultiFileMonaco.vue";
@@ -46,6 +53,21 @@
             router.push("/announcements");
         }
     };
+
+    const onKeydown = (event: KeyboardEvent) => {
+        // Save on Ctrl + S
+        if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
+            event.preventDefault();
+            save();
+        }
+    };
+
+    onMounted(() => {
+        window.addEventListener("keydown", onKeydown);
+    });
+    onUnmounted(() => {
+        window.removeEventListener("keydown", onKeydown);
+    });
 </script>
 
 <template>

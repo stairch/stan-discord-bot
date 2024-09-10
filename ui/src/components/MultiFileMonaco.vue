@@ -21,8 +21,17 @@
 
     watch(
         () => props.modelValue,
-        (files) => {
-            open.value = Object.keys(files)[0];
+        (newFiles, oldFiles) => {
+            if (
+                oldFiles &&
+                Object.values(newFiles).every(
+                    (v, i) => v === Object.values(oldFiles)[i]
+                )
+            ) {
+                return;
+            }
+
+            open.value = Object.keys(newFiles)[0];
         },
         { immediate: true }
     );
