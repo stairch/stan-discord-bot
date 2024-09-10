@@ -39,7 +39,7 @@
         const error = await api.announements.publish(
             announcement.value.id!,
             "telegram",
-            String(servers.value[0].id),
+            server.value,
             "",
             "",
             img.value ?? undefined

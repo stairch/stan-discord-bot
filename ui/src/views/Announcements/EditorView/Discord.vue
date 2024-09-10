@@ -57,7 +57,7 @@
         const error = await api.announements.publish(
             announcement.value.id!,
             "discord",
-            String(servers.value[0].id),
+            server.value,
             type.value,
             persona.value,
             img.value ?? undefined
