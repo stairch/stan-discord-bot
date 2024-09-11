@@ -13,17 +13,13 @@ import asyncio
 import logging
 import string
 import secrets
+from datetime import datetime
 
 import discord
 
 from db.db import Database
 from db.datamodels.verified_user import UserState
 from integration.email.client import EmailClient
-
-GENERIC_VALIDATION_ERROR_MESSAGE = """
-You must provide a valid email address ending in @stud.hslu.ch.
-Please try again or contact a STAIR member.
-"""
 
 
 class VerificationState(Enum):
@@ -90,23 +86,38 @@ class VerifyingStudent:
             "Welcome to the server! Please send me your email to verify!"
         )
 
+    @staticmethod
+    def _generic_validation_error_message() -> str:
+        base = """
+⛔ Your email address is already taken, invalid or you are not a student. ⛔
+
+You must provide a valid email address ending in `@stud.hslu.ch`.
+Please try again or contact a STAIR member.
+        """
+        # current month is july - september or december - february
+        if 7 <= datetime.now().month <= 9 or 12 <= datetime.now().month <= 2:
+            base += """
+ If you are a new student, please try again after the first week of the semester.
+            """
+        return base
+
     async def _handle_waiting_for_email(self, msg: str) -> None:
         email = re.search(r"[a-zA-Z0-9_.+-]+@stud.hslu.ch", msg)
 
         if not email:
-            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
+            await self._member.send(self._generic_validation_error_message())
             return
         db: Database = Database()
         student = db.student_by_email(email.group().lower())
 
         if not student:
-            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
+            await self._member.send(self._generic_validation_error_message())
             return
 
         email_norm = email.group().lower()
 
         if db.get_member(discord_id=self._member.id, email=email_norm):
-            await self._member.send(GENERIC_VALIDATION_ERROR_MESSAGE)
+            await self._member.send(self._generic_validation_error_message())
             return
 
         self._email = email_norm
@@ -148,7 +159,7 @@ Your verification code is:
             )
             return False
 
-        await self._member.send("Awesome! You have been verified!")
+        await self._member.send("Awesome! You have been verified! ✅")
         return True
 
     async def _handle_expired(self, _: str) -> None:
