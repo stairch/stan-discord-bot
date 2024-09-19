@@ -8,8 +8,9 @@ from typing import Callable, Awaitable
 from datetime import datetime, time
 import asyncio
 
+ONE_DAY_IN_SECONDS = 24 * 3600
 
-# run daily at
+
 class AioSchedule:
     """Asyncio scheduler for scheduling a coroutine"""
 
@@ -29,7 +30,49 @@ class AioSchedule:
             while True:
                 time_until = cls._diff(at, datetime.now().time())
                 if time_until <= 0:
-                    time_until += 24 * 3600
+                    time_until += ONE_DAY_IN_SECONDS
+                await asyncio.sleep(time_until)
+                await func()
+
+        asyncio.create_task(_implement())
+
+    @classmethod
+    def run_weekly_at(
+        cls, at: time, weekdays: list[int], func: Callable[[], Awaitable[None]]
+    ) -> None:
+        """
+        Run a coroutine weekly at a specific time on specific weekdays
+
+        :param weekdays: list of weekdays where 0 = Monday, 6 = Sunday
+        """
+        if len(weekdays) == 0:
+            return
+
+        if any(not (0 <= x <= 6) for x in weekdays):
+            raise ValueError("Weekdays must be between 0 (Monday) and 6 (Sunday)")
+
+        weekdays.sort()
+
+        async def _implement() -> None:
+            while True:
+                now = datetime.now()
+                time_until = cls._diff(at, now.time())
+
+                next_target = now.weekday()
+
+                if time_until <= 0:
+                    # was today
+                    time_until += ONE_DAY_IN_SECONDS
+                    next_target = (next_target + 1) % 7
+
+                if next_target not in weekdays:
+                    next_weekday_to_run = next(
+                        (x for x in weekdays if x >= next_target), weekdays[0] + 7
+                    )
+                    time_until += ONE_DAY_IN_SECONDS * (
+                        next_weekday_to_run - next_target
+                    )
+
                 await asyncio.sleep(time_until)
                 await func()
 
