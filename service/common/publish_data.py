@@ -33,7 +33,7 @@ class PublishData:
         data = JDict(value)
         return cls(
             type=AnnouncementType(data.ensureCast("type", str)),
-            scope=AnnouncementScope(data.ensureCast("type", str)),
+            scope=AnnouncementScope(data.ensureCast("scope", str)),
             server=data.ensureCast("server", int),
             persona=Personas.from_name(data.optionalGet("type", str)),
             user=username,

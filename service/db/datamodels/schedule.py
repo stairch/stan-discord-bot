@@ -72,7 +72,7 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         return {
             "scope": self.scope,
             "type": self.type,
-            "server": self.server,
+            "server": str(self.server),
             "persona": self.persona,
             "time": self.time.isoformat(),
             "days": self.days,
