@@ -124,7 +124,7 @@ class AnnouncementHandler(BaseHandler):
         servers = self._integration.telegram.chats
         return web.json_response(
             [
-                {"id": x.id, "name": x.title, "picture": x.photo}
+                {"id": x.id, "name": x.title, "picture": None}
                 for x in servers.values()
             ]
         )
