@@ -6,6 +6,15 @@ export interface IServer {
     picture: string;
 }
 
+export interface ISchedule {
+    scope: AnnouncementScope;
+    type: AnnouncementType;
+    persona: string;
+    server: string;
+    days: number[];
+    time: string;
+}
+
 export interface IAnnouncement {
     id?: number;
     title: string;
@@ -41,7 +50,7 @@ export interface IDegreeProgramme {
 }
 
 type AnnouncementScope = "discord" | "telegram";
-export const ANNOUNCEMENT_TYPES = ["stair", "non-stair", "server", "test"];
+export const ANNOUNCEMENT_TYPES = ["test", "stair", "non-stair", "server"];
 type AnnouncementType = (typeof ANNOUNCEMENT_TYPES)[number];
 
 const toBase64 = async (file?: File): Promise<string | undefined> => {
@@ -102,6 +111,34 @@ export const api = {
         },
         async getTypes(): Promise<string[]> {
             return fetch(`/api/announcements/types`).then((res) => res.json());
+        },
+        schedule: {
+            async get(announcementId: number): Promise<ISchedule[]> {
+                return fetch(
+                    `/api/announcements/${announcementId}/schedules`
+                ).then((x) => x.json());
+            },
+            async update(
+                announcementId: number,
+                schedules: ISchedule[]
+            ): Promise<string | null> {
+                const res = await fetch(
+                    `/api/announcements/${announcementId}/schedules`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(schedules),
+                    }
+                );
+                if (res.ok) {
+                    return null;
+                }
+                const data = await res.text();
+                console.error(data);
+                return data;
+            },
         },
         async publish(
             id: number,

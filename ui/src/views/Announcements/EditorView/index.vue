@@ -7,6 +7,7 @@
     import Telegram from "./Telegram.vue";
     import { useAnnouncementStore } from "@/stores/announcements";
     import Instagram from "./Instagram.vue";
+    import Schedule from "./Schedule.vue";
 
     const announcement = ref<IAnnouncement>({
         title: "",
@@ -40,6 +41,11 @@
             name: "Instagram",
             component: Instagram,
             icon: "instagram",
+        },
+        {
+            name: "Schedule",
+            component: Schedule,
+            icon: "schedule",
         },
     ];
     let requestTab = route.query.tab as string;
