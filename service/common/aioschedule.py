@@ -39,14 +39,14 @@ class AioSchedule:
     @classmethod
     def run_weekly_at(
         cls, at: time, weekdays: list[int], func: Callable[[], Awaitable[None]]
-    ) -> None:
+    ) -> asyncio.Task | None:
         """
         Run a coroutine weekly at a specific time on specific weekdays
 
         :param weekdays: list of weekdays where 0 = Monday, 6 = Sunday
         """
         if len(weekdays) == 0:
-            return
+            return None
 
         if any(not (0 <= x <= 6) for x in weekdays):
             raise ValueError("Weekdays must be between 0 (Monday) and 6 (Sunday)")
@@ -76,4 +76,4 @@ class AioSchedule:
                 await asyncio.sleep(time_until)
                 await func()
 
-        asyncio.create_task(_implement())
+        return asyncio.create_task(_implement())

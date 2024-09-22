@@ -11,7 +11,7 @@ from aiohttp import web
 from db.datamodels.hslu_student import HsluStudent
 from db.datamodels.degree_programme import DegreeProgramme
 from .base_handler import BaseHandler
-from .msal_auth import authenticated
+from .msal_auth.auth import authenticated
 
 
 class DbImportHandler(BaseHandler):

@@ -6,13 +6,16 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
+from typing import Callable, Awaitable, Any
 import asyncio
 
+from common.publish_data import PublishData
 from .discord.stan import Stan as DiscordStan
 from .telegram.stan import Stan as TelegramStan
 from .discord.module_channels import ModuleChannelSync
 from .email.client import EmailClient
 from .foodstoffi.menu import SendFoodstoffiMenuTask
+from .scheduled_announcement.scheduler import Scheduler
 
 
 class IntegrationManager:
@@ -24,6 +27,14 @@ class IntegrationManager:
         self._telegram_stan = TelegramStan()
         self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._discord_stan)
         self._module_channel_sync = ModuleChannelSync(self._discord_stan)
+
+        self.on_announce: Callable[[PublishData], Awaitable[Any | None]] | None = None
+        self._announcement_scheduler = Scheduler(self._on_announce)
+
+    async def _on_announce(self, data: PublishData) -> Any | None:
+        if self.on_announce is not None:
+            return await self.on_announce(data)
+        return None
 
     @property
     def discord(self) -> DiscordStan:
@@ -48,3 +59,4 @@ class IntegrationManager:
         asyncio.create_task(self._discord_stan.start())
         await self._telegram_stan.start()
         await self._send_foodstoffi_menu_task.start()
+        self._announcement_scheduler.start()

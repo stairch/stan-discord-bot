@@ -64,7 +64,6 @@ class Announcement:
         validate = schema.validate(obj)
         if validate:
             data = JDict(validate.unwrap()).chain()
-            print(data)
             return (
                 cls(
                     title=data.assertGet("title", str),
@@ -102,3 +101,14 @@ class Announcement:
             else None,
             "id": self.id,
         }
+
+    @classmethod
+    def empty(cls, id_: int | None) -> Announcement:
+        """returns an empty container"""
+        return cls(
+            "<unknown>",
+            "<unknown>",
+            "<unknown>",
+            "<unknown>",
+            id=id_ or int(time.time()),
+        )

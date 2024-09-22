@@ -1,2 +1,3 @@
 [MESSAGES CONTROL]
-disable=too-few-public-methods # R0903
+disable=too-few-public-methods, # R0903
+        duplicate-code # check is too stupid

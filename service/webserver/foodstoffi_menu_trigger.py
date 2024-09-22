@@ -8,7 +8,7 @@ __email__ = "info@stair.ch"
 from aiohttp import web
 
 from .base_handler import BaseHandler
-from .msal_auth import authenticated
+from .msal_auth.auth import authenticated
 
 
 class FoodstoffMenuTrigger(BaseHandler):

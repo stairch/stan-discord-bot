@@ -5,24 +5,18 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 from aiohttp import web
-from pyaddict import JDict
+from pyaddict import JDict, JList
 
-from integration.discord.announcer import Announcer as DiscordAnnouncer
 from integration.discord.persona import Personas
-from integration.telegram.announcer import Announcer as TelegramAnnouncer
-from integration.manager import IntegrationManager
+from common.publish_data import PublishData
 from db.datamodels.announcement import Announcement, AnnouncementType
+from db.datamodels.schedule import AnnouncementSchedule
 from .base_handler import BaseHandler
-from .msal_auth import authenticated, get_username
+from .msal_auth.auth import authenticated, get_username
 
 
 class AnnouncementHandler(BaseHandler):
     """Handler for announcements"""
-
-    def __init__(self, app: web.Application, integration: IntegrationManager) -> None:
-        super().__init__(app, integration)
-        self._discord_announcer = DiscordAnnouncer(self._db, self._integration)
-        self._telegram_announcer = TelegramAnnouncer(self._db, self._integration)
 
     def _add_routes(self, app: web.Application) -> None:
         app.router.add_get("/api/announcements", self._get_announcements)
@@ -32,7 +26,9 @@ class AnnouncementHandler(BaseHandler):
         app.router.add_get("/api/announcements/personas", self._personas)
         app.router.add_post("/api/announcements", self._create_announcement)
         app.router.add_get("/api/announcements/{id}", self._get_announcement)
+        app.router.add_get("/api/announcements/{id}/schedules", self._get_schedules)
         app.router.add_put("/api/announcements/{id}", self._update_announcement)
+        app.router.add_put("/api/announcements/{id}/schedules", self._update_schedules)
         app.router.add_delete("/api/announcements/{id}", self._delete_announcement)
         app.router.add_post(
             "/api/announcements/{id}/publish", self._publish_announcement
@@ -87,18 +83,29 @@ class AnnouncementHandler(BaseHandler):
         return web.Response()
 
     @authenticated
-    async def _publish_announcement(self, request: web.Request) -> web.Response:  # pylint: disable=too-many-locals
+    async def _publish_announcement(self, request: web.Request) -> web.Response:
         """Announce a message to a channel"""
-        data = JDict(await request.json())
-        match data.ensureCast("scope", str):
-            case "discord":
-                return await self._discord_announcer.publish_announcement(request)
-            case "telegram":
-                return await self._telegram_announcer.publish_announcement(request)
-            case _:
-                return web.json_response(
-                    {"error": "Unknown announcement type"}, status=400
-                )
+        data = await PublishData.from_request(request)
+        return await self._announcer.publish_announcement(data)
+
+    @authenticated
+    async def _get_schedules(self, request: web.Request) -> web.Response:
+        announcement_id = int(request.match_info["id"])
+        schedules = self._db.get_schedules(announcement_id)
+        return web.json_response([x.serialise() for x in schedules])
+
+    @authenticated
+    async def _update_schedules(self, request: web.Request) -> web.Response:
+        schedules = JList(await request.json()).iterator().ensureCast(JDict)
+        announcement_id = int(request.match_info["id"])
+        schedule_ids = [x.get("id", int) for x in schedules]
+        self._db.delete_schedules_except(announcement_id, schedule_ids)
+        for schedule in schedules:
+            item, err = AnnouncementSchedule.deserialise(schedule, announcement_id)
+            if err or item is None:
+                return web.json_response({"error": err}, status=400)
+            self._db.upsert_schedule(item)
+        return web.Response()
 
     @authenticated
     async def _types(self, _: web.Request) -> web.Response:

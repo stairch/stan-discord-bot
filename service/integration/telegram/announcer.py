@@ -4,46 +4,41 @@
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-from pyaddict import JDict
 from aiohttp import web
 
-
-from db.db import Database
+from common.publish_data import PublishData
+from integration.iannouncer import IAnnouncer
 from integration.manager import IntegrationManager
+from db.db import Database
 
 
-class Announcer:
+class Announcer(IAnnouncer):
     """Announcement publisher"""
 
     def __init__(self, db: Database, integration: IntegrationManager):
         self._db = db
         self._integration = integration
 
-    async def publish_announcement(self, request: web.Request) -> web.Response:
+    async def publish_announcement(self, data: PublishData) -> web.Response:
         """Publish an announcement to Discord."""
-        data = JDict(await request.json())
-        server = data.ensureCast("server", int)
-        image = data.optionalGet("image", str)
-        announcement_id = data.ensureCast("id", int)
-
-        announcement = self._db.get_announcement(announcement_id)
+        announcement = self._db.get_announcement(data.announcement_id)
 
         if not announcement:
             return web.json_response({"error": "Announcement not found"}, status=404)
 
         chats = self._integration.telegram.chats
 
-        if server not in chats:
+        if data.server not in chats:
             return web.json_response(
                 {
-                    "error": f"Unknown server {server}",
+                    "error": f"Unknown server {data.server}",
                     "valid": list(chats.keys()),
                 },
                 status=400,
             )
 
         success = await self._integration.telegram.send_announcement(
-            announcement, server, image
+            announcement, data.server, data.image
         )
         if not success:
             return web.json_response(

@@ -7,16 +7,21 @@ __email__ = "info@stair.ch"
 import logging
 import os
 from dataclasses import asdict
+from typing import Callable
+
 import dataset  # type: ignore
+
 from common.singleton import Singleton
 from .datamodels.hslu_student import HsluStudent
 from .datamodels.verified_user import VerifiedUser, UserState
 from .datamodels.announcement import Announcement
+from .datamodels.schedule import AnnouncementSchedule
 from .datamodels.degree_programme import DegreeProgramme
 
 VERIFIED_USERS_TABLE = "Verified_Users"
 HSLU_STUDENTS_TABLE = "HSLU_Students"
 ANNOUNCEMENTS_TABLE = "Announcements"
+SCHEDULES_TABLE = "Announcement_Schedules"
 DEGREE_PROGRAMMES_TABLE = "Degree_Programmes"
 
 DB_USERNAME = os.getenv("POSTGRES_USER")
@@ -27,7 +32,7 @@ DB_HOST = "postgres:5432"
 DB_PROTOCOL = "postgresql"
 
 
-class Database(metaclass=Singleton):
+class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attributes
     """Wraps the database using dataset & our custom data models"""
 
     def __init__(self) -> None:
@@ -39,10 +44,24 @@ class Database(metaclass=Singleton):
         self._users_table: dataset.Table = self._db[VERIFIED_USERS_TABLE]
         self._hslu_students_table: dataset.Table = self._db[HSLU_STUDENTS_TABLE]
         self._announcements_table: dataset.Table = self._db[ANNOUNCEMENTS_TABLE]
+        self._schedules_table: dataset.Table = self._db[SCHEDULES_TABLE]
         self._degree_programmes_table: dataset.Table = self._db[DEGREE_PROGRAMMES_TABLE]
+
+        self._on_schedule_change: set[Callable[[list[AnnouncementSchedule]], None]] = (
+            set()
+        )
 
         if DEV_MODE:
             self._users_table.delete()  # for development
+
+    @property
+    def on_schedule_change(self) -> set[Callable[[list[AnnouncementSchedule]], None]]:
+        """on schedula change callbacks"""
+        return self._on_schedule_change
+
+    def _fire_on_schedule_change(self) -> None:
+        for callback in self._on_schedule_change:
+            callback(self.all_schedules())
 
     def all_students(self) -> list[HsluStudent]:
         """Get all students from the database."""
@@ -151,6 +170,51 @@ class Database(metaclass=Singleton):
     def update_announcement(self, announcement: Announcement) -> None:
         """Update an announcement."""
         self._announcements_table.update(asdict(announcement), ["id"])
+
+    def all_schedules(self) -> list[AnnouncementSchedule]:
+        """Get all schedules."""
+        result: list[AnnouncementSchedule] = []
+        for row in self._schedules_table.all():
+            if not row:
+                continue
+            item = AnnouncementSchedule.from_db(row, self.get_announcement)
+            if not item:
+                continue
+            result.append(item)
+        return result
+
+    def get_schedules(self, announcement_id: int) -> list[AnnouncementSchedule]:
+        """Get schedules by announcement ID."""
+        result: list[AnnouncementSchedule] = []
+        for row in self._schedules_table.find(FK_announcement_id=announcement_id):
+            if not row:
+                continue
+            item = AnnouncementSchedule.from_db(row, self.get_announcement)
+            if not item:
+                continue
+            result.append(item)
+        return result
+
+    def delete_schedule(self, id_: int) -> None:
+        """Get an announcement by its ID."""
+        self._schedules_table.delete(id=id_)
+        self._fire_on_schedule_change()
+
+    def upsert_schedule(self, schedule: AnnouncementSchedule) -> None:
+        """Get an announcement by its ID."""
+        self._schedules_table.upsert(schedule.to_db(), ["id"])
+        self._fire_on_schedule_change()
+
+    def delete_schedules_except(
+        self, announcement_id: int, schedule_ids: list[int]
+    ) -> None:
+        """Deletes all of an announcement's schedules except for the ids specified"""
+        schedules = self._schedules_table.find(FK_announcement_id=announcement_id)
+        for schedule in schedules:
+            if not schedule or schedule.get("id") in schedule_ids:
+                continue
+            self._schedules_table.delete(id=schedule.get("id"))
+        self._fire_on_schedule_change()
 
     def get_degree_programmes(self) -> list[DegreeProgramme]:
         """Get all degree programmes from the database."""
