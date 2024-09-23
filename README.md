@@ -99,6 +99,7 @@ To set up and run the project, follow these steps:
     SESSION_SECRET="" # random string, used for the session cookie (web app)
 
     # General
+    CONFIG_PATH="/config" # path to the configuration directory
     DEV_MODE="False" # when true, the database will be cleared on startup
     ```
 
