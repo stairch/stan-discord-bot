@@ -2,7 +2,6 @@
     import { computed, ref, type PropType, onMounted } from "vue";
     import {
         api,
-        ANNOUNCEMENT_TYPES,
         type IServer,
         type IAnnouncement,
         type ISchedule,
@@ -11,6 +10,7 @@
 
     const telegramServers = ref<IServer[]>([]);
     const discordServers = ref<IServer[]>([]);
+    const types = ref<string[]>([]);
     const personas = ref<string[]>([]);
 
     const schedules = ref<ISchedule[]>([]);
@@ -28,6 +28,7 @@
         discordServers.value = await api.announements.discordServers();
         telegramServers.value = await api.announements.telegramChats();
         personas.value = await api.announements.personas();
+        types.value = await api.announements.types();
 
         schedules.value = await api.announements.schedule.get(
             announcement.value.id!
@@ -49,7 +50,7 @@
         schedules.value.push({
             scope: "discord",
             persona: personas.value[0],
-            type: ANNOUNCEMENT_TYPES[0],
+            type: types.value[0],
             server: discordServers.value[0].id,
             time: "12:00:00",
             days: [],
@@ -106,7 +107,6 @@
                 </div>
                 <div class="dropdown">
                     <label>
-                        On
                         {{ schedule.scope == "discord" ? "Server" : "Channel" }}
                     </label>
                     <select
@@ -136,10 +136,10 @@
                 </div>
                 <template v-if="schedule.scope == 'discord'">
                     <div class="dropdown">
-                        <label>As</label>
+                        <label>Channel</label>
                         <select v-model="schedule.type">
                             <option
-                                v-for="t in ANNOUNCEMENT_TYPES"
+                                v-for="t in types"
                                 :key="t"
                                 :value="t"
                             >

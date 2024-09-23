@@ -84,7 +84,7 @@
     <LoadingWithResultModal ref="modal" />
     <div class="inputs">
         <div class="dropdown">
-            <label>In Channel</label>
+            <label>Channel</label>
             <select v-model="server">
                 <option
                     v-for="s in servers"

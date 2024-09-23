@@ -1,11 +1,6 @@
 <script setup lang="ts">
     import { computed, watch, ref, type PropType, onMounted } from "vue";
-    import {
-        api,
-        ANNOUNCEMENT_TYPES,
-        type IServer,
-        type IAnnouncement,
-    } from "@/api";
+    import { api, type IServer, type IAnnouncement } from "@/api";
     import {
         DiscordMarkdown,
         DiscordEmbed,
@@ -20,9 +15,10 @@
     const modal = ref<InstanceType<typeof LoadingWithResultModal> | null>(null);
     const servers = ref<IServer[]>([]);
     const personas = ref<string[]>([]);
+    const types = ref<string[]>([]);
     const server = ref<string>("");
     const persona = ref<string>("");
-    const type = ref<string>(ANNOUNCEMENT_TYPES[0]);
+    const type = ref<string>("");
 
     const props = defineProps({
         modelValue: { type: Object as PropType<IAnnouncement>, required: true },
@@ -38,6 +34,8 @@
         server.value = servers.value[0].id;
         personas.value = await api.announements.personas();
         persona.value = personas.value[0];
+        types.value = await api.announements.types();
+        type.value = types.value[0];
     });
 
     watch(
@@ -91,7 +89,7 @@
     <LoadingWithResultModal ref="modal" />
     <div class="inputs">
         <div class="dropdown">
-            <label>On Server</label>
+            <label>Server</label>
             <select v-model="server">
                 <option
                     v-for="s in servers"
@@ -103,10 +101,10 @@
             </select>
         </div>
         <div class="dropdown">
-            <label>As</label>
+            <label>Channel</label>
             <select v-model="type">
                 <option
-                    v-for="t in ANNOUNCEMENT_TYPES"
+                    v-for="t in types"
                     :key="t"
                     :value="t"
                 >

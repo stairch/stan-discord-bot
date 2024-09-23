@@ -8,7 +8,7 @@ export interface IServer {
 
 export interface ISchedule {
     scope: AnnouncementScope;
-    type: AnnouncementType;
+    type: string;
     persona: string;
     server: string;
     days: number[];
@@ -50,8 +50,6 @@ export interface IDegreeProgramme {
 }
 
 type AnnouncementScope = "discord" | "telegram";
-export const ANNOUNCEMENT_TYPES = ["test", "stair", "non-stair", "server"];
-type AnnouncementType = (typeof ANNOUNCEMENT_TYPES)[number];
 
 const toBase64 = async (file?: File): Promise<string | undefined> => {
     if (!file) {
@@ -109,7 +107,7 @@ export const api = {
                 method: "DELETE",
             }).then(forceReloadAnnouncements);
         },
-        async getTypes(): Promise<string[]> {
+        async types(): Promise<string[]> {
             return fetch(`/api/announcements/types`).then((res) => res.json());
         },
         schedule: {
@@ -144,7 +142,7 @@ export const api = {
             id: number,
             scope: AnnouncementScope,
             server: string,
-            type: AnnouncementType,
+            type: string,
             persona: string,
             image?: File
         ): Promise<string | null> {
