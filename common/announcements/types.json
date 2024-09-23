@@ -1,0 +1,32 @@
+{
+    "items": {
+        "stair-announcements": {
+            "name": "STAIR Announcements",
+            "role": "STAIR Notifications"
+        },
+        "non-stair-announcements": {
+            "name": "Non-STAIR Announcements",
+            "role": "Non-STAIR Notifications"
+        },
+        "server-info": {
+            "name": "Server Announcements",
+            "role": "Server Notifications"
+        },
+        "webhook-test": {
+            "name": "Test Announcements",
+            "role": "administrator"
+        },
+        "canteen-menu": {
+            "name": "Canteen Menu",
+            "role": "Hungry Student"
+        },
+        "ctf-challenge": {
+            "name": "CTF Challenge",
+            "role": "Cyber Ninja"
+        },
+        "docker-bar-announcements": {
+            "name": "Docker Bar Announcements",
+            "role": "STAIR Notifications"
+        }
+    }
+}

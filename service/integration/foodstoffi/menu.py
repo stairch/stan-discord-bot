@@ -20,10 +20,13 @@ from common.aioschedule import AioSchedule
 from common.constants import STAIR_GREEN
 from db.datamodels.announcement import AnnouncementType
 from integration.discord.stan import Stan
-from integration.discord.persona import PersonaSender, Personas
-from integration.discord.server import AnnouncementChannelType
+from integration.discord.persona import PersonaSender, Persona
 
 URL = "https://app.food2050.ch/de/foodstoffi/foodstoffi/menu/foodstoffi/weekly"
+
+
+_PERSONA = Persona.get("Chef Stan-dwich", Persona.default())
+_ANNOUNCEMENT_TYPE = AnnouncementType.get("canteen-menu", AnnouncementType.default())
 
 
 @dataclass
@@ -235,18 +238,15 @@ class SendFoodstoffiMenuTask:
             self._logger.warning("No menu available")
             return
         for server in self._discord_bot.servers.values():
-            channel_type = AnnouncementChannelType.from_announcement_type(
-                AnnouncementType.CANTEEN_MENU
-            )
-            channel = channel_type.get(server.guild)
+            channel = server.get_announcement_channel(_ANNOUNCEMENT_TYPE)
 
             if channel is None:
                 self._logger.warning("No channel found for server %s", server.guild)
                 continue
 
-            role = channel_type.get_role(server.guild)
+            role = server.get_announcement_role(_ANNOUNCEMENT_TYPE)
 
-            await PersonaSender(channel, Personas.CHEF).send(
+            await PersonaSender(channel, _PERSONA).send(
                 f"Hiya, {role.mention}! This is today's menu:",
                 [x.as_embed for x in todays_menu],
             )

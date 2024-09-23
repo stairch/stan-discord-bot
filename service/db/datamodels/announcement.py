@@ -15,6 +15,8 @@ from datetime import datetime
 from pyaddict import JDict
 from pyaddict.schema import Object, String, Integer
 
+from common.configurable_enum import ConfigurableEnum
+
 
 class AnnouncementScope(StrEnum):
     """The scope of the announcement"""
@@ -23,14 +25,30 @@ class AnnouncementScope(StrEnum):
     TELEGRAM = "telegram"
 
 
-class AnnouncementType(StrEnum):
+class AnnouncementType(ConfigurableEnum):
     """The state of the user / server member"""
 
-    STAIR = "stair"
-    NON_STAIR = "non-stair"
-    SERVER_INFO = "server"
-    TEST = "test"
-    CANTEEN_MENU = "canteen-menu"
+    _config_path = "/announcements/types.json"
+
+    @property
+    def role(self) -> str:
+        """The role to mention"""
+        return self._data.ensure("role", str)
+
+    @property
+    def channel(self) -> str:
+        """The channel to send the announcement to"""
+        return self.name
+
+    @property
+    def friendly_name(self) -> str:
+        """The friendly name of the announcement type"""
+        return self._data.ensure("name", str)
+
+    @staticmethod
+    def default() -> AnnouncementType:
+        """Default announcement type"""
+        return next(AnnouncementType)
 
 
 @dataclass

@@ -30,67 +30,6 @@ class RoleType(StrEnum):
         return role
 
 
-class AnnouncementRoleType(StrEnum):
-    """Announcement roles"""
-
-    STAIR = "STAIR Notifications"
-    NON_STAIR = "Non-STAIR Notifications"
-    SERVER = "Server Notifications"
-    TEST = "administrator"
-    HUNGRY_STUDENT = "Hungry Student"
-
-    def get(self, guild: discord.Guild) -> discord.Role:
-        """Get the role for this type"""
-        role = discord.utils.get(guild.roles, name=self.value)
-        assert role is not None
-        return role
-
-
-class AnnouncementChannelType(StrEnum):
-    """Announcement channels"""
-
-    STAIR_CHANNEL = "stair-announcements"
-    NON_STAIR_CHANNEL = "non-stair-announcements"
-    SERVER_CHANNEL = "server-info"
-    TEST_CHANNEL = "webhook-test"
-    CANTEEN_MENU_CHANNEL = "canteen-menu"
-
-    def get(self, guild: discord.Guild) -> discord.TextChannel | None:
-        """Get the channel for this type"""
-        return next(
-            (
-                channel
-                for channel in guild.text_channels
-                if channel.name.lower().endswith("︱" + self.value)
-            ),
-            None,
-        )
-
-    def get_role(self, guild: discord.Guild) -> discord.Role:
-        """Get the role for this type"""
-        role_type = {
-            AnnouncementChannelType.STAIR_CHANNEL: AnnouncementRoleType.STAIR,
-            AnnouncementChannelType.NON_STAIR_CHANNEL: AnnouncementRoleType.NON_STAIR,
-            AnnouncementChannelType.SERVER_CHANNEL: AnnouncementRoleType.SERVER,
-            AnnouncementChannelType.TEST_CHANNEL: AnnouncementRoleType.TEST,
-            AnnouncementChannelType.CANTEEN_MENU_CHANNEL: AnnouncementRoleType.HUNGRY_STUDENT,
-        }[self]
-        return role_type.get(guild)
-
-    @classmethod
-    def from_announcement_type(
-        cls, announcement_type: AnnouncementType
-    ) -> AnnouncementChannelType:
-        """Get the channel type for an announcement type"""
-        return {
-            AnnouncementType.STAIR: cls.STAIR_CHANNEL,
-            AnnouncementType.NON_STAIR: cls.NON_STAIR_CHANNEL,
-            AnnouncementType.SERVER_INFO: cls.SERVER_CHANNEL,
-            AnnouncementType.TEST: cls.TEST_CHANNEL,
-            AnnouncementType.CANTEEN_MENU: cls.CANTEEN_MENU_CHANNEL,
-        }[announcement_type]
-
-
 class DiscordServer:
     """provides the student and graduate roles for a guild (server)"""
 
@@ -99,9 +38,25 @@ class DiscordServer:
         self._roles = {role.name.lower(): role for role in guild.roles}
         self._db: Database = Database()
 
-    def get_announcement_role(self, role_type: AnnouncementRoleType) -> discord.Role:
+    def get_announcement_role(self, role_type: AnnouncementType) -> discord.Role:
         """Get the role for an announcement type"""
-        return role_type.get(self._guild)
+        item = discord.utils.get(self._guild.roles, name=role_type.role)
+        if not item:
+            raise ValueError(f"Role {role_type.role} not found")
+        return item
+
+    def get_announcement_channel(
+        self, role_type: AnnouncementType
+    ) -> discord.TextChannel | None:
+        """Get the channel for an announcement type"""
+        return next(
+            (
+                channel
+                for channel in self._guild.text_channels
+                if channel.name.lower().endswith("︱" + role_type.channel.lower())
+            ),
+            None,
+        )
 
     @property
     def _courses(self) -> list[DegreeProgramme]:

@@ -1,0 +1,28 @@
+{
+    "global": {
+        "basePath": "/config/personas/avatars/"
+    },
+    "items": {
+        "Stan": {
+            "avatar": "default-hat.png"
+        },
+        "Chef Stan-dwich": {
+            "avatar": "grill-hat.png"
+        },
+        "Gradua-Stan": {
+            "avatar": "graduation-hat.png"
+        },
+        "Captain Stan-tastic": {
+            "avatar": "halloween-pirate-hat.png"
+        },
+        "Stan-dalf the Green": {
+            "avatar": "halloween-witch-hat.png"
+        },
+        "Party Stan-imal": {
+            "avatar": "party-hat.png"
+        },
+        "Santa Stan": {
+            "avatar": "winter-hat.png"
+        }
+    }
+}

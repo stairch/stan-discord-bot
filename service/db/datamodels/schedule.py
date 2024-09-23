@@ -15,7 +15,7 @@ from pyaddict import JDict
 from pyaddict.schema import Object, String, Integer, Array
 
 from common.publish_data import PublishData
-from integration.discord.persona import Personas
+from integration.discord.persona import Persona
 from .announcement import AnnouncementScope, AnnouncementType, Announcement
 
 
@@ -41,9 +41,9 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         schema = Object(
             {
                 "scope": String(),
-                "type": String(),
+                "type": String().enum(*AnnouncementType.serialise()),
                 "server": Integer().coerce(),
-                "persona": String(),
+                "persona": String().enum(*Persona.serialise()),
                 "time": String(),
                 "days": Array(Integer()),
                 "id": Integer().optional(),
@@ -56,7 +56,9 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
                 cls(
                     announcement=Announcement.empty(announcement_id),
                     scope=AnnouncementScope(data.ensure("scope", str)),
-                    type=AnnouncementType(data.ensure("type", str)),
+                    type=AnnouncementType.get(
+                        data.ensure("type", str), AnnouncementType.default()
+                    ),
                     persona=data.ensure("persona", str),
                     server=data.ensure("server", int),
                     time=dtime.fromisoformat(data.ensure("time", str)),
@@ -71,7 +73,7 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         """Serialise the object"""
         return {
             "scope": self.scope,
-            "type": self.type,
+            "type": self.type.name,
             "server": str(self.server),
             "persona": self.persona,
             "time": self.time.isoformat(),
@@ -91,7 +93,9 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         return cls(
             announcement=announcement,
             scope=AnnouncementScope(data.ensure("scope", str)),
-            type=AnnouncementType(data.ensure("type", str)),
+            type=AnnouncementType.get(
+                data.ensure("type", str), AnnouncementType.default()
+            ),
             persona=data.ensure("persona", str),
             server=data.ensure("server", int),
             time=dtime.fromisoformat(data.ensure("time", str)),
@@ -104,7 +108,7 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         return {
             "FK_announcement_id": self.announcement.id,
             "scope": self.scope.value,
-            "type": self.type.value,
+            "type": self.type,
             "server": self.server,
             "persona": self.persona,
             "time": self.time.isoformat(),
@@ -117,7 +121,7 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         return PublishData(
             self.scope,
             self.type,
-            Personas.from_name(self.persona),
+            Persona.get(self.persona, Persona.default()),
             self.server,
             None,
             self.announcement.id,

@@ -3,6 +3,8 @@ services:
         build:
             context: service
             dockerfile: Dockerfile
+        volumes:
+            - ./common:/config:ro
         depends_on:
             - postgres
         networks:
@@ -25,6 +27,7 @@ services:
         volumes:
             - ./nginx:/etc/nginx/conf.d:ro
             - ./ui/dist:/var/www/html:ro
+            - ./common:/var/www/common/:ro
         depends_on:
             - stan
         networks:

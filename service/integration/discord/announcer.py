@@ -7,7 +7,6 @@ __email__ = "info@stair.ch"
 from aiohttp import web
 import discord
 
-from integration.discord.server import AnnouncementChannelType
 from integration.discord.persona import PersonaSender
 from integration.discord.util import base64_image_to_discord
 from integration.iannouncer import IAnnouncer
@@ -15,7 +14,6 @@ from integration.manager import IntegrationManager
 from common.constants import STAIR_GREEN
 from common.publish_data import PublishData
 from db.db import Database
-from db.datamodels.announcement import AnnouncementType
 
 
 class Announcer(IAnnouncer):
@@ -45,10 +43,8 @@ class Announcer(IAnnouncer):
                 status=400,
             )
 
-        channel_type = AnnouncementChannelType.from_announcement_type(
-            AnnouncementType(data.type)
-        )
-        discord_channel = channel_type.get(discord_servers[data.server].guild)
+        server = discord_servers[data.server]
+        discord_channel = server.get_announcement_channel(data.type)
 
         if not discord_channel:
             return web.json_response(
@@ -58,7 +54,7 @@ class Announcer(IAnnouncer):
                 status=404,
             )
 
-        role = channel_type.get_role(discord_servers[data.server].guild)
+        role = server.get_announcement_role(data.type)
 
         embed_de = discord.Embed(
             title=f":flag_de: {announcement.title}",

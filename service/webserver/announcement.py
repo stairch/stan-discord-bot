@@ -7,7 +7,7 @@ __email__ = "info@stair.ch"
 from aiohttp import web
 from pyaddict import JDict, JList
 
-from integration.discord.persona import Personas
+from integration.discord.persona import Persona
 from common.publish_data import PublishData
 from db.datamodels.announcement import Announcement, AnnouncementType
 from db.datamodels.schedule import AnnouncementSchedule
@@ -110,7 +110,7 @@ class AnnouncementHandler(BaseHandler):
     @authenticated
     async def _types(self, _: web.Request) -> web.Response:
         """Get all announcement channels"""
-        return web.json_response([x.value for x in AnnouncementType])
+        return web.json_response(AnnouncementType.serialise())
 
     @authenticated
     async def _discord_servers(self, _: web.Request) -> web.Response:
@@ -123,13 +123,10 @@ class AnnouncementHandler(BaseHandler):
         """Get all announcement servers"""
         servers = self._integration.telegram.chats
         return web.json_response(
-            [
-                {"id": x.id, "name": x.title, "picture": None}
-                for x in servers.values()
-            ]
+            [{"id": x.id, "name": x.title, "picture": None} for x in servers.values()]
         )
 
     @authenticated
     async def _personas(self, _: web.Request) -> web.Response:
         """Get all announcement servers"""
-        return web.json_response([x.value.name for x in Personas])
+        return web.json_response(Persona.serialise())

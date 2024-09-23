@@ -6,54 +6,43 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-
-from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
 import logging
 
 import discord
 
-ASSET_LOCATION = Path(__file__).parent / "avatars"
+from common.configurable_enum import ConfigurableEnum
 
 
-@dataclass
-class _Persona:
+class Persona(ConfigurableEnum):
     """Persona"""
 
-    name: str
-    avatar_location: str
+    _config_path = "/personas/definition.json"
+
+    @property
+    def avatar_location(self) -> str:
+        """Avatar location"""
+        return self._global_data.ensure("basePath", str) + self._data.ensure(
+            "avatar", str
+        )
 
     @property
     def avatar(self) -> bytes:
         """Avatar"""
-        with open(ASSET_LOCATION / self.avatar_location, "rb") as file:
+        with open(self.avatar_location, "rb") as file:
             return file.read()
 
-
-class Personas(Enum):
-    """Pre-defined personas"""
-
-    STAN = _Persona("Stan", "default-hat.png")
-    CHEF = _Persona("Chef Stan-dwich", "grill-hat.png")
-    GRADUATE = _Persona("Gradua-Stan", "graduation-hat.png")
-    PIRATE = _Persona("Captain Stan-tastic", "halloween-pirate-hat.png")
-    WITCH = _Persona("Stan-dalf the Green", "halloween-witch-hat.png")
-    PARTY = _Persona("Party Stan-imal", "party-hat.png")
-    SANTA = _Persona("Santa Stan", "winter-hat.png")
-
-    @classmethod
-    def from_name(cls, name: str | None) -> Personas:
-        """Get a persona by name"""
-        return next((x for x in cls if x.value.name == name), cls.STAN)
+    @staticmethod
+    def default() -> Persona:
+        """Default persona"""
+        return Persona("Stan", {}, {})
 
 
 class PersonaSender:
     """Module Channel Sync"""
 
-    def __init__(self, channel: discord.TextChannel, persona: Personas) -> None:
+    def __init__(self, channel: discord.TextChannel, persona: Persona) -> None:
         self._channel = channel
-        self._persona = persona.value
+        self._persona = persona
         self._logger = logging.getLogger(__name__)
 
     async def send(
@@ -66,7 +55,7 @@ class PersonaSender:
         """Send a message with a persona"""
         file = file or discord.utils.MISSING
 
-        if self._persona == Personas.STAN.value:
+        if self._persona == Persona.default():
             msg = await self._channel.send(message, embeds=embeds, file=file)
         else:
             webhooks = await self._channel.guild.webhooks()

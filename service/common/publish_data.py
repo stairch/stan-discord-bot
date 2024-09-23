@@ -12,7 +12,7 @@ from aiohttp import web
 
 from db.datamodels.announcement import AnnouncementType, AnnouncementScope
 from webserver.msal_auth.auth import get_username
-from integration.discord.persona import Personas
+from integration.discord.persona import Persona
 
 
 @dataclass
@@ -21,7 +21,7 @@ class PublishData:
 
     scope: AnnouncementScope
     type: AnnouncementType
-    persona: Personas
+    persona: Persona
     server: int
     image: str | None
     announcement_id: int
@@ -31,11 +31,17 @@ class PublishData:
     def from_dict(cls, value: Any, username: str | None = None) -> "PublishData":
         """from dict"""
         data = JDict(value)
+        announcement_type = AnnouncementType.get(data.ensureCast("type", str))
+        if not announcement_type:
+            raise ValueError(f"Invalid announcement type: {data.ensure('type', str)}")
+        persona = Persona.get(data.ensure("persona", str))
+        if not persona:
+            raise ValueError(f"Invalid persona: {data.ensure('type', str)}")
         return cls(
-            type=AnnouncementType(data.ensureCast("type", str)),
+            type=announcement_type,
             scope=AnnouncementScope(data.ensureCast("scope", str)),
             server=data.ensureCast("server", int),
-            persona=Personas.from_name(data.optionalGet("type", str)),
+            persona=persona,
             user=username,
             image=data.optionalGet("image", str),
             announcement_id=data.ensureCast("id", int),
