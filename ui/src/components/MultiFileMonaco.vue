@@ -17,6 +17,10 @@
             type: String,
             default: "markdown",
         },
+        offersHelp: {
+            type: Boolean,
+            default: false,
+        },
     });
 
     watch(
@@ -35,6 +39,15 @@
         },
         { immediate: true }
     );
+
+    const emit = defineEmits(["help", "switchTab"]);
+
+    watch(
+        () => open.value,
+        (file) => {
+            emit("switchTab", file);
+        }
+    );
 </script>
 
 <template>
@@ -48,6 +61,13 @@
                 :class="{ open: open === file }"
             >
                 {{ props.filenames?.[file] ?? file }}
+            </div>
+            <div
+                v-if="props.offersHelp"
+                class="help"
+                @click="emit('help')"
+            >
+                <span class="material-symbols-rounded">help</span>
             </div>
         </div>
         <div class="file">
@@ -84,6 +104,17 @@
             &.open {
                 background-color: var(--bg-base);
                 border: 1px solid var(--bg-muted);
+            }
+        }
+
+        .help {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            & span {
+                font-size: 1.1rem;
             }
         }
     }

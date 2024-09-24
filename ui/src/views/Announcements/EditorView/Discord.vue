@@ -16,8 +16,10 @@
     const servers = ref<IServer[]>([]);
     const personas = ref<string[]>([]);
     const types = ref<string[]>([]);
+    const announcementRole = ref<string>("");
     const server = ref<string>("");
     const persona = ref<string>("");
+    const personaAvatar = ref<string>("");
     const type = ref<string>("");
 
     const props = defineProps({
@@ -36,6 +38,8 @@
         persona.value = personas.value[0];
         types.value = await api.announements.types();
         type.value = types.value[0];
+        loadAvatar();
+        loadRole();
     });
 
     watch(
@@ -48,6 +52,19 @@
             }
         }
     );
+
+    const loadAvatar = async () => {
+        personaAvatar.value = await api.commonSources.personas.avatarByName(
+            persona.value
+        );
+    };
+    watch(() => persona.value, loadAvatar);
+
+    const loadRole = async () => {
+        announcementRole.value =
+            await api.commonSources.announcementTypes.roleByType(type.value);
+    };
+    watch(() => type.value, loadRole);
 
     const postAnnouncement = async () => {
         modal.value!.onLoading();
@@ -137,10 +154,11 @@
                 :bot="true"
                 :author="persona"
                 role-color="#04956c"
-                :key="persona"
+                :key="personaAvatar"
+                :avatar="personaAvatar"
             >
                 <DiscordMarkdown>
-                    <DiscordMention type="Announcements" />
+                    <DiscordMention :type="announcementRole" />
                 </DiscordMarkdown>
                 <img
                     v-if="imgUrl"

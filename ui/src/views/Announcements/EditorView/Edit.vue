@@ -7,16 +7,46 @@
         watch,
         type PropType,
     } from "vue";
-    import { api, type IServer, type IAnnouncement } from "@/api";
+    import { api, type IAnnouncement } from "@/api";
     import router from "@/router";
     import MultiFileMonaco from "@/components/MultiFileMonaco.vue";
+    import HelpModal from "./HelpModal.vue";
 
     const props = defineProps({
         modelValue: { type: Object as PropType<IAnnouncement>, required: true },
     });
+
+    const openLanguage = ref<string | null>(null);
+    const helpModal = ref<InstanceType<typeof HelpModal> | null>(null);
     const announcement = ref<IAnnouncement>(
         JSON.parse(JSON.stringify(props.modelValue))
     );
+    const canTranslate = computed(() => {
+        return (
+            openLanguage.value &&
+            Object.values(announcement.value.message).some((v) => v) &&
+            !(announcement.value.message as any)[openLanguage.value]
+        );
+    });
+
+    const translateWithDeepl = async () => {
+        if (!canTranslate.value) return;
+
+        const fromLanguage = Object.keys(announcement.value.message).find(
+            (key) =>
+                (announcement.value.message as any)[key] &&
+                key !== openLanguage.value
+        )!;
+        const toLanguage = openLanguage.value;
+        const text = (announcement.value.message as any)[fromLanguage];
+
+        window.open(
+            `https://www.deepl.com/translator#${fromLanguage}/${toLanguage}/${encodeURIComponent(
+                text
+            )}`,
+            "_blank"
+        );
+    };
 
     watch(
         () => props.modelValue,
@@ -71,6 +101,7 @@
 </script>
 
 <template>
+    <HelpModal ref="helpModal" />
     <input
         type="text"
         v-model="announcement.title"
@@ -79,8 +110,18 @@
     <MultiFileMonaco
         v-model="announcement.message"
         :filenames="{ de: 'German Content', en: 'English Content' }"
+        offers-help
+        @switch-tab="openLanguage = $event"
+        @help="helpModal?.open"
     />
     <div class="actions">
+        <button
+            @click="translateWithDeepl"
+            class="primary"
+            v-if="canTranslate"
+        >
+            Translate with Deepl
+        </button>
         <button
             @click="save"
             class="danger"

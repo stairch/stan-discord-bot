@@ -6,6 +6,73 @@ export const initialiseMonacoCommands = (editor: Editor) => {
     addBoldCommand(editor);
     addItalicCommand(editor);
     addLinkCommand(editor);
+    redUnderlineForTranslatedWithDeepl(editor);
+};
+
+const redUnderlineForTranslatedWithDeepl = (editor: Editor) => {
+    // on paste, check if the text contains "Translated with DeepL.com (free version)"
+    // if so, mark it as a warning
+
+    const checkText = () => {
+        const matches =
+            editor
+                .getModel()
+                ?.findMatches(
+                    "\n\nTranslated with DeepL.com (free version)",
+                    true,
+                    false,
+                    false,
+                    null,
+                    true
+                )
+                .map((match) => ({
+                    startLineNumber: match.range.startLineNumber,
+                    startColumn: match.range.startColumn,
+                    endLineNumber: match.range.endLineNumber,
+                    endColumn: match.range.endColumn,
+                    message:
+                        "Are you sure you want to include this in your post?",
+                    severity: monaco.MarkerSeverity.Warning,
+                })) ?? [];
+
+        monaco.editor.setModelMarkers(editor.getModel()!, "deepl", matches);
+    };
+
+    editor.onDidPaste(checkText);
+    editor.onDidChangeModelContent(checkText);
+
+    monaco.languages.registerCodeActionProvider("markdown", {
+        provideCodeActions: (model, range, context, token) => {
+            const actions = context.markers.map((marker) => {
+                return {
+                    title: `Remove this watermark`,
+                    diagnostics: [marker],
+                    kind: "quickfix",
+                    edit: {
+                        edits: [
+                            {
+                                resource: model.uri,
+                                textEdit: {
+                                    range: {
+                                        startLineNumber: marker.startLineNumber,
+                                        startColumn: marker.startColumn,
+                                        endLineNumber: marker.endLineNumber,
+                                        endColumn: marker.endColumn,
+                                    },
+                                    text: "",
+                                },
+                            },
+                        ],
+                    },
+                    isPreferred: true,
+                };
+            });
+            return {
+                actions: actions,
+                dispose: checkText,
+            } as monaco.languages.CodeActionList;
+        },
+    });
 };
 
 const addBoldCommand = (editor: Editor) => {

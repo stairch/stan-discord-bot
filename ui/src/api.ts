@@ -51,6 +51,21 @@ export interface IDegreeProgramme {
 
 type AnnouncementScope = "discord" | "telegram";
 
+export type IPersonaDefinition = Record<
+    string,
+    {
+        avatar: string;
+    }
+>;
+
+export type IAnnouncementTypesDefinition = Record<
+    string,
+    {
+        name: string;
+        role: string;
+    }
+>;
+
 const toBase64 = async (file?: File): Promise<string | undefined> => {
     if (!file) {
         return undefined;
@@ -226,6 +241,48 @@ export const api = {
                 },
                 body: JSON.stringify(degreeProgrammes),
             });
+        },
+    },
+    commonSources: {
+        _cache: new Map<string, any>(),
+        personas: {
+            _base: "/common/personas",
+            _cacheKey: "personas",
+            async definition(): Promise<IPersonaDefinition> {
+                if (api.commonSources._cache.has(this._cacheKey)) {
+                    return api.commonSources._cache.get(this._cacheKey);
+                }
+
+                const res = await fetch(this._base + "/definition.json");
+                const data = await res.json();
+                api.commonSources._cache.set(this._cacheKey, data.items);
+                return data.items;
+            },
+            avatarByPath(avatar: string): string {
+                return this._base + "/avatars/" + avatar;
+            },
+            async avatarByName(avatar: string): Promise<string> {
+                const definition = await this.definition();
+                return this.avatarByPath(definition[avatar].avatar);
+            },
+        },
+        announcementTypes: {
+            _base: "/common/announcements",
+            _cacheKey: "announcement.types",
+            async definition(): Promise<IAnnouncementTypesDefinition> {
+                if (api.commonSources._cache.has(this._cacheKey)) {
+                    return api.commonSources._cache.get(this._cacheKey);
+                }
+
+                const res = await fetch(this._base + "/types.json");
+                const data = await res.json();
+                api.commonSources._cache.set(this._cacheKey, data.items);
+                return data.items;
+            },
+            async roleByType(announcementType: string): Promise<string> {
+                const definition = await this.definition();
+                return definition[announcementType].role;
+            },
         },
     },
 };

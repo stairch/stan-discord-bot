@@ -82,6 +82,7 @@
         outline: none;
         inset: 0;
         margin: auto;
+        font-size: 1rem;
         min-width: 20vw;
         max-width: 80ch;
         padding: 0;
