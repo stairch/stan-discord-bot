@@ -116,16 +116,20 @@
     }
 
     kbd {
-        background-color: #f4f4f4;
-        border: 1px solid #ccc;
+        background-color: var(--bg-soft);
+        border: 1px solid var(--bg-muted);
         border-radius: 3px;
         box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
-        color: #333;
+        color: var(--fg-text);
         display: inline-block;
         font-size: 0.85em;
         font-weight: 700;
         line-height: 1;
         padding: 0.2em 0.6em;
         white-space: nowrap;
+    }
+
+    p, span {
+        color: var(--fg-text);
     }
 </style>
