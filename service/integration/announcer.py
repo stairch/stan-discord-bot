@@ -13,24 +13,22 @@ from db.db import Database
 from db.datamodels.announcement import AnnouncementScope
 from .iannouncer import IAnnouncer
 from .discord.announcer import Announcer as DiscordAnnouncer
+from .discord.stan import Stan as DiscordStan
 from .telegram.announcer import Announcer as TelegramAnnouncer
-from .manager import IntegrationManager
-
-# TODO: refactor to have integration manage everything
+from .telegram.stan import Stan as TelegramStan
 
 
 class Announcer(IAnnouncer):
     """announcer supporting all announcements"""
 
-    def __init__(self, integration_manager: IntegrationManager) -> None:
-        integration_manager.on_announce = self.publish_announcement
+    def __init__(
+        self,
+        discord_stan: DiscordStan,
+        telegram_stan: TelegramStan,
+    ) -> None:
         self._announcers: dict[AnnouncementScope, IAnnouncer] = {
-            AnnouncementScope.DISCORD: DiscordAnnouncer(
-                Database(), integration_manager
-            ),
-            AnnouncementScope.TELEGRAM: TelegramAnnouncer(
-                Database(), integration_manager
-            ),
+            AnnouncementScope.DISCORD: DiscordAnnouncer(Database(), discord_stan),
+            AnnouncementScope.TELEGRAM: TelegramAnnouncer(Database(), telegram_stan),
         }
 
     async def publish_announcement(self, data: PublishData) -> web.Response:

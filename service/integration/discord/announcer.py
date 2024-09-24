@@ -10,18 +10,19 @@ import discord
 from integration.discord.persona import PersonaSender
 from integration.discord.util import base64_image_to_discord
 from integration.iannouncer import IAnnouncer
-from integration.manager import IntegrationManager
 from common.constants import STAIR_GREEN
 from common.publish_data import PublishData
 from db.db import Database
+
+from .stan import Stan as DiscordStan
 
 
 class Announcer(IAnnouncer):
     """Announcement publisher"""
 
-    def __init__(self, db: Database, integration: IntegrationManager):
+    def __init__(self, db: Database, stan: DiscordStan):
         self._db = db
-        self._integration = integration
+        self._discord = stan
 
     async def publish_announcement(  # pylint: disable=too-many-locals
         self, data: PublishData
@@ -32,7 +33,7 @@ class Announcer(IAnnouncer):
         if not announcement:
             return web.json_response({"error": "Announcement not found"}, status=404)
 
-        discord_servers = self._integration.discord.servers
+        discord_servers = self._discord.servers
 
         if data.server not in discord_servers:
             return web.json_response(

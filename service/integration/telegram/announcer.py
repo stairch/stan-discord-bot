@@ -8,16 +8,17 @@ from aiohttp import web
 
 from common.publish_data import PublishData
 from integration.iannouncer import IAnnouncer
-from integration.manager import IntegrationManager
 from db.db import Database
+
+from .stan import Stan as TelegramStan
 
 
 class Announcer(IAnnouncer):
     """Announcement publisher"""
 
-    def __init__(self, db: Database, integration: IntegrationManager):
+    def __init__(self, db: Database, stan: TelegramStan):
         self._db = db
-        self._integration = integration
+        self._telegram = stan
 
     async def publish_announcement(self, data: PublishData) -> web.Response:
         """Publish an announcement to Discord."""
@@ -26,7 +27,7 @@ class Announcer(IAnnouncer):
         if not announcement:
             return web.json_response({"error": "Announcement not found"}, status=404)
 
-        chats = self._integration.telegram.chats
+        chats = self._telegram.chats
 
         if data.server not in chats:
             return web.json_response(
@@ -37,7 +38,7 @@ class Announcer(IAnnouncer):
                 status=400,
             )
 
-        success = await self._integration.telegram.send_announcement(
+        success = await self._telegram.send_announcement(
             announcement, data.server, data.image
         )
         if not success:

@@ -86,7 +86,7 @@ class AnnouncementHandler(BaseHandler):
     async def _publish_announcement(self, request: web.Request) -> web.Response:
         """Announce a message to a channel"""
         data = await PublishData.from_request(request)
-        return await self._announcer.publish_announcement(data)
+        return await self._integration.publish_announcement(data)
 
     @authenticated
     async def _get_schedules(self, request: web.Request) -> web.Response:

@@ -6,8 +6,9 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-from typing import Callable, Awaitable, Any
 import asyncio
+
+from aiohttp import web
 
 from common.publish_data import PublishData
 from .discord.stan import Stan as DiscordStan
@@ -16,9 +17,11 @@ from .discord.module_channels import ModuleChannelSync
 from .email.client import EmailClient
 from .foodstoffi.menu import SendFoodstoffiMenuTask
 from .scheduled_announcement.scheduler import Scheduler
+from .iannouncer import IAnnouncer
+from .announcer import Announcer
 
 
-class IntegrationManager:
+class IntegrationManager(IAnnouncer):
     """Manager for the integration services"""
 
     def __init__(self) -> None:
@@ -28,13 +31,12 @@ class IntegrationManager:
         self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._discord_stan)
         self._module_channel_sync = ModuleChannelSync(self._discord_stan)
 
-        self.on_announce: Callable[[PublishData], Awaitable[Any | None]] | None = None
-        self._announcement_scheduler = Scheduler(self._on_announce)
+        self._announcer = Announcer(self._discord_stan, self._telegram_stan)
+        self._announcement_scheduler = Scheduler(self.publish_announcement)
 
-    async def _on_announce(self, data: PublishData) -> Any | None:
-        if self.on_announce is not None:
-            return await self.on_announce(data)
-        return None
+    async def publish_announcement(self, data: PublishData) -> web.Response:
+        """Publish an announcement to Discord."""
+        return await self._announcer.publish_announcement(data)
 
     @property
     def discord(self) -> DiscordStan:
