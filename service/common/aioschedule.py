@@ -5,8 +5,9 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 from typing import Callable, Awaitable
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import asyncio
+import logging
 
 ONE_DAY_IN_SECONDS = 24 * 3600
 
@@ -72,6 +73,12 @@ class AioSchedule:
                     time_until += ONE_DAY_IN_SECONDS * (
                         next_weekday_to_run - next_target
                     )
+
+                logging.getLogger().debug(
+                    "Next run at %s in %d seconds",
+                    datetime.now() + timedelta(seconds=time_until),
+                    time_until
+                )
 
                 await asyncio.sleep(time_until)
                 await func()
