@@ -7,7 +7,7 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 from abc import ABC, abstractmethod
-from logging import Logger
+import logging
 
 from aiohttp import web
 
@@ -21,7 +21,7 @@ class BaseHandler(ABC):
     __slots__ = ("_logger", "_integration", "_db")
 
     def __init__(self, app: web.Application, integration: IntegrationManager) -> None:
-        self._logger: Logger = Logger("WebServer")
+        self._logger = logging.getLogger("WebServer")
         self._integration: IntegrationManager = integration
         self._db: Database = Database()
         self._add_routes(app)

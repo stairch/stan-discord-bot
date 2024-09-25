@@ -6,8 +6,8 @@ __email__ = "info@stair.ch"
 
 import asyncio
 from typing import Callable, Awaitable, Any
+import logging
 
-from logging import Logger
 from common.aioschedule import AioSchedule
 from common.publish_data import PublishData
 from db.db import Database
@@ -20,7 +20,7 @@ class Scheduler:
     def __init__(
         self, on_announcement: Callable[[PublishData], Awaitable[Any | None]]
     ) -> None:
-        self._logger: Logger = Logger("AnnouncementScheduler")
+        self._logger = logging.getLogger("AnnouncementScheduler")
         self._db: Database = Database()
         self._on_announcement = on_announcement
         self._tasks: dict[int, asyncio.Task | None] = {}
