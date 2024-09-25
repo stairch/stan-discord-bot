@@ -6,6 +6,8 @@ from __future__ import annotations
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
+import logging
+
 from aiohttp import web
 
 from common.publish_data import PublishData
@@ -26,6 +28,7 @@ class Announcer(IAnnouncer):
         discord_stan: DiscordStan,
         telegram_stan: TelegramStan,
     ) -> None:
+        self._logger = logging.getLogger("Announcer")
         self._announcers: dict[AnnouncementScope, IAnnouncer] = {
             AnnouncementScope.DISCORD: DiscordAnnouncer(Database(), discord_stan),
             AnnouncementScope.TELEGRAM: TelegramAnnouncer(Database(), telegram_stan),
@@ -35,6 +38,7 @@ class Announcer(IAnnouncer):
         """make an announcement"""
         announcer = self._announcers.get(data.scope)
         if not announcer:
+            self._logger.error("Announcement scope %s not supported", data.scope)
             return web.json_response(
                 {"error": f"Announcement scope {data.scope} not supported"},
                 status=400,

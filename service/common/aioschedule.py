@@ -77,7 +77,7 @@ class AioSchedule:
                 logging.getLogger().debug(
                     "Next run at %s in %d seconds",
                     datetime.now() + timedelta(seconds=time_until),
-                    time_until
+                    time_until,
                 )
 
                 await asyncio.sleep(time_until)

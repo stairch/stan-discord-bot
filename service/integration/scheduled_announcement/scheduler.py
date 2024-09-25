@@ -38,9 +38,12 @@ class Scheduler:
             self._logger.debug(
                 "sending scheduled announcement %s (scope: %s)",
                 schedule.announcement.title,
-                schedule.scope,
+                type(schedule.scope),
             )
-            await self._on_announcement(schedule.as_publish_data())
+            res = await self._on_announcement(schedule.as_publish_data())
+            self._logger.debug(
+                "scheduled announcement %s sent (%s)", schedule.announcement.title, res
+            )
 
         self._tasks[schedule.id] = AioSchedule.run_weekly_at(
             schedule.time, schedule.days, _implement

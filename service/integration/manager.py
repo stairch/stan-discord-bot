@@ -7,6 +7,7 @@ __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
 import asyncio
+import logging
 
 from aiohttp import web
 
@@ -21,10 +22,11 @@ from .iannouncer import IAnnouncer
 from .announcer import Announcer
 
 
-class IntegrationManager(IAnnouncer):
+class IntegrationManager(IAnnouncer):  # pylint: disable=too-many-instance-attributes
     """Manager for the integration services"""
 
     def __init__(self) -> None:
+        self._logger = logging.getLogger("IntegrationManager")
         self._email_client = EmailClient()
         self._discord_stan = DiscordStan(self._email_client)
         self._telegram_stan = TelegramStan()
@@ -36,6 +38,7 @@ class IntegrationManager(IAnnouncer):
 
     async def publish_announcement(self, data: PublishData) -> web.Response:
         """Publish an announcement to Discord."""
+        self._logger.info("Publishing announcement %s", data.announcement_id)
         return await self._announcer.publish_announcement(data)
 
     @property
