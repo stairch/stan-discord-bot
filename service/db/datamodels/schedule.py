@@ -108,7 +108,7 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
         return {
             "FK_announcement_id": self.announcement.id,
             "scope": self.scope.value,
-            "type": self.type,
+            "type": self.type.name,
             "server": self.server,
             "persona": self.persona,
             "time": self.time.isoformat(),
