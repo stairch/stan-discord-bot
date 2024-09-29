@@ -24,6 +24,10 @@ class AnnouncementScope(StrEnum):
     DISCORD = "discord"
     TELEGRAM = "telegram"
 
+    def requires_announcement_type(self) -> bool:
+        """Check if the scope requires an announcement type"""
+        return self in (self.DISCORD,)
+
 
 class AnnouncementType(ConfigurableEnum):
     """The state of the user / server member"""

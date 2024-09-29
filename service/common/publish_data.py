@@ -20,7 +20,7 @@ class PublishData:
     """publish data datamodel"""
 
     scope: AnnouncementScope
-    type: AnnouncementType
+    type: AnnouncementType | None
     persona: Persona
     server: int
     image: str | None
@@ -31,21 +31,34 @@ class PublishData:
     def from_dict(cls, value: Any, username: str | None = None) -> "PublishData":
         """from dict"""
         data = JDict(value)
+        scope = AnnouncementScope(data.ensureCast("scope", str))
+
         announcement_type = AnnouncementType.get(data.ensureCast("type", str))
-        if not announcement_type:
+        if not announcement_type and scope.requires_announcement_type():
             raise ValueError(f"Invalid announcement type: {data.ensure('type', str)}")
-        persona = Persona.get(data.ensure("persona", str))
+
+        persona: Persona | None = Persona.default()
+        if persona_str := data.optionalGet("persona", str):
+            persona = Persona.get(persona_str)
         if not persona:
-            raise ValueError(f"Invalid persona: {data.ensure('type', str)}")
+            raise ValueError(f"Invalid persona: {persona_str}")
+
         return cls(
             type=announcement_type,
-            scope=AnnouncementScope(data.ensureCast("scope", str)),
+            scope=scope,
             server=data.ensureCast("server", int),
             persona=persona,
             user=username,
             image=data.optionalGet("image", str),
             announcement_id=data.ensureCast("id", int),
         )
+
+    @property
+    def announcement_type(self) -> AnnouncementType:
+        """get announcement type"""
+        if not self.type:
+            raise ValueError("Missing announcement type")
+        return self.type
 
     @classmethod
     async def from_request(cls, request: web.Request) -> "PublishData":

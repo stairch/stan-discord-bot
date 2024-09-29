@@ -45,7 +45,7 @@ class Announcer(IAnnouncer):
             )
 
         server = discord_servers[data.server]
-        discord_channel = server.get_announcement_channel(data.type)
+        discord_channel = server.get_announcement_channel(data.announcement_type)
 
         if not discord_channel:
             return web.json_response(
@@ -55,7 +55,7 @@ class Announcer(IAnnouncer):
                 status=404,
             )
 
-        role = server.get_announcement_role(data.type)
+        role = server.get_announcement_role(data.announcement_type)
 
         embed_de = discord.Embed(
             title=f":flag_de: {announcement.title}",
