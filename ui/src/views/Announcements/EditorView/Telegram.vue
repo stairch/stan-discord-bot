@@ -3,7 +3,6 @@
     import { api, type IServer, type IAnnouncement } from "@/api";
     import VueMarkdown from "vue-markdown-render";
     import LoadingWithResultModal from "@/components/LoadingWithResultModal.vue";
-    import { title } from "process";
 
     const modal = ref<InstanceType<typeof LoadingWithResultModal> | null>(null);
     const servers = ref<IServer[]>([]);
