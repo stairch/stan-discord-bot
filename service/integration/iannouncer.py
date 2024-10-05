@@ -8,14 +8,13 @@ __email__ = "info@stair.ch"
 
 from abc import ABC, abstractmethod
 
-from aiohttp import web
-
 from common.publish_data import PublishData
+from common.result import Result
 
 
 class IAnnouncer(ABC):
     """announcer interface"""
 
     @abstractmethod
-    async def publish_announcement(self, data: PublishData) -> web.Response:
+    async def publish_announcement(self, data: PublishData) -> Result[None]:
         """publishes an announcement"""

@@ -8,9 +8,9 @@ __email__ = "info@stair.ch"
 
 import logging
 
-from aiohttp import web
 
 from common.publish_data import PublishData
+from common.result import Result
 from db.db import Database
 from db.datamodels.announcement import AnnouncementScope
 from .iannouncer import IAnnouncer
@@ -34,13 +34,12 @@ class Announcer(IAnnouncer):
             AnnouncementScope.TELEGRAM: TelegramAnnouncer(Database(), telegram_stan),
         }
 
-    async def publish_announcement(self, data: PublishData) -> web.Response:
+    async def publish_announcement(self, data: PublishData) -> Result[None]:
         """make an announcement"""
         announcer = self._announcers.get(data.scope)
         if not announcer:
             self._logger.error("Announcement scope %s not supported", data.scope)
-            return web.json_response(
-                {"error": f"Announcement scope {data.scope} not supported"},
-                status=400,
+            return Result.err(
+                "Announcement scope {data.scope} not supported", status=501
             )
         return await announcer.publish_announcement(data)

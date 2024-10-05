@@ -4,7 +4,6 @@
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
-from aiohttp import web
 import discord
 
 from integration.discord.persona import PersonaSender
@@ -12,6 +11,7 @@ from integration.discord.util import base64_image_to_discord
 from integration.iannouncer import IAnnouncer
 from common.constants import STAIR_GREEN
 from common.publish_data import PublishData
+from common.result import Result
 from db.db import Database
 
 from .stan import Stan as DiscordStan
@@ -26,32 +26,27 @@ class Announcer(IAnnouncer):
 
     async def publish_announcement(  # pylint: disable=too-many-locals
         self, data: PublishData
-    ) -> web.Response:
+    ) -> Result[None]:
         """Publish an announcement to Discord."""
         announcement = self._db.get_announcement(data.announcement_id)
 
         if not announcement:
-            return web.json_response({"error": "Announcement not found"}, status=404)
+            return Result.err(error="Announcement not found", status=404)
 
         discord_servers = self._discord.servers
 
         if data.server not in discord_servers:
-            return web.json_response(
-                {
-                    "error": f"Unknown server {data.server}",
-                    "valid": list(discord_servers.keys()),
-                },
-                status=400,
+            return Result.err(
+                "Server not found",
+                status=404,
             )
 
         server = discord_servers[data.server]
         discord_channel = server.get_announcement_channel(data.announcement_type)
 
         if not discord_channel:
-            return web.json_response(
-                {
-                    "error": f"Channel not found for server {data.server} and type {data.type}"
-                },
+            return Result.err(
+                "Channel not found",
                 status=404,
             )
 
@@ -82,4 +77,4 @@ class Announcer(IAnnouncer):
             file=file,
             publish=True,
         )
-        return web.Response()
+        return Result.ok(value=None)

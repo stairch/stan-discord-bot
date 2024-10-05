@@ -10,6 +10,7 @@ import logging
 import telegram
 from pyaddict import JList
 
+from common.result import Result
 from db.datamodels.announcement import Announcement
 from .helper import actual_markdown_to_markdownv2, base64_image_to_telegram
 
@@ -46,10 +47,10 @@ class Stan:
         announcement: Announcement,
         chat_id: int,
         image: str | None = None,
-    ) -> bool:
+    ) -> Result[None]:
         """Send an announcement to all chats"""
         if chat_id not in self._chats:
-            return False
+            return Result.err("Chat not found", status=404)
         markdown = f"""**{announcement.title}**
 
 {announcement.message_de}
@@ -58,18 +59,21 @@ class Stan:
 
 {announcement.message_en}"""
 
-        async with self._bot:
-            if image:
-                await self._bot.send_photo(
-                    chat_id,
-                    base64_image_to_telegram(image),
-                    caption=actual_markdown_to_markdownv2(markdown),
-                    parse_mode="MarkdownV2",
-                )
-            else:
-                await self._bot.send_message(
-                    chat_id,
-                    actual_markdown_to_markdownv2(markdown),
-                    parse_mode="MarkdownV2",
-                )
-        return True
+        try:
+            async with self._bot:
+                if image:
+                    await self._bot.send_photo(
+                        chat_id,
+                        base64_image_to_telegram(image),
+                        caption=actual_markdown_to_markdownv2(markdown),
+                        parse_mode="MarkdownV2",
+                    )
+                else:
+                    await self._bot.send_message(
+                        chat_id,
+                        actual_markdown_to_markdownv2(markdown),
+                        parse_mode="MarkdownV2",
+                    )
+        except telegram.error.BadRequest as e:
+            return Result.err(str(e), status=400)
+        return Result.ok(None)

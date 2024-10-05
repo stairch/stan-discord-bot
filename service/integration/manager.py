@@ -9,9 +9,8 @@ __email__ = "info@stair.ch"
 import asyncio
 import logging
 
-from aiohttp import web
-
 from common.publish_data import PublishData
+from common.result import Result
 from .discord.stan import Stan as DiscordStan
 from .telegram.stan import Stan as TelegramStan
 from .discord.module_channels import ModuleChannelSync
@@ -36,7 +35,7 @@ class IntegrationManager(IAnnouncer):  # pylint: disable=too-many-instance-attri
         self._announcer = Announcer(self._discord_stan, self._telegram_stan)
         self._announcement_scheduler = Scheduler(self.publish_announcement)
 
-    async def publish_announcement(self, data: PublishData) -> web.Response:
+    async def publish_announcement(self, data: PublishData) -> Result[None]:
         """Publish an announcement to Discord."""
         self._logger.info("Publishing announcement %s", data.announcement_id)
         return await self._announcer.publish_announcement(data)
