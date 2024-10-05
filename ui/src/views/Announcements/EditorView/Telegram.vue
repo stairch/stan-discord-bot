@@ -3,6 +3,7 @@
     import { api, type IServer, type IAnnouncement } from "@/api";
     import VueMarkdown from "vue-markdown-render";
     import LoadingWithResultModal from "@/components/LoadingWithResultModal.vue";
+    import { title } from "process";
 
     const modal = ref<InstanceType<typeof LoadingWithResultModal> | null>(null);
     const servers = ref<IServer[]>([]);
@@ -52,7 +53,7 @@
     };
 
     const actionsDisabled = computed(() => {
-        return false;
+        return fullMessage.value.length > characterLimit.value;
     });
 
     const setImage = () => {
@@ -78,6 +79,10 @@
     });
 
     const options = { html: true, breaks: true };
+
+    const characterLimit = computed(() => {
+        return imgUrl.value ? 1024 : 4096;
+    });
 </script>
 
 <template>
@@ -95,17 +100,17 @@
                 </option>
             </select>
         </div>
-        <button
-            @click="setImage"
-            class="align-right secondary"
-        >
-            Set Image
-        </button>
     </div>
     <div class="message">
         <img
-            v-if="imgUrl"
-            :src="imgUrl"
+            @click="setImage"
+            :src="imgUrl ?? 'https://placehold.co/1920x1080/png'"
+            :title="imgUrl ? 'Click to change image' : 'Click to add image'"
+            :alt="
+                imgUrl
+                    ? 'Image attached to the message'
+                    : 'No image attached to the message'
+            "
         />
         <div class="text">
             <VueMarkdown
@@ -161,6 +166,30 @@
         </svg>
     </div>
 
+    <div class="helpers">
+        <span
+            class="material-symbols-rounded"
+            @click="img = null"
+            :title="imgUrl ? 'Remove Image' : ''"
+        >
+            {{ imgUrl ? "hide_image" : "" }}
+        </span>
+        <div
+            class="limit"
+            :style="{
+                color:
+                    fullMessage.length > characterLimit
+                        ? 'var(--c-stair-burgundy)'
+                        : 'inherit',
+            }"
+            :title="`Telegram messages ${
+                imgUrl ? 'with' : 'without'
+            } images can be up to ${characterLimit} characters long.`"
+        >
+            {{ fullMessage.length }} / {{ characterLimit }}
+        </div>
+    </div>
+
     <div class="actions">
         <button
             @click="postAnnouncement"
@@ -201,6 +230,31 @@
         gap: 0.5em;
     }
 
+    .helpers {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        justify-content: space-between;
+
+        & span {
+            cursor: pointer;
+
+            &:hover {
+                color: var(--c-accent);
+            }
+        }
+    }
+
+    .message,
+    .actions,
+    .helpers {
+        max-width: 50ch;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+
     .message {
         display: flex;
         flex-direction: column;
@@ -209,7 +263,6 @@
         background: var(--bg-soft);
         border-radius: 0.5em;
         border: 1px solid var(--bg-muted);
-        max-width: 50ch;
         position: relative;
         border-bottom-left-radius: 0;
 
@@ -231,6 +284,11 @@
             max-width: 100%;
             z-index: 1;
             border-radius: 0.5em 0.5em 0 0;
+            cursor: pointer;
+        }
+
+        .actions {
+            flex: 1;
         }
     }
 </style>
