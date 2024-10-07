@@ -52,18 +52,26 @@ class Announcer(IAnnouncer):
 
         role = server.get_announcement_role(data.announcement_type)
 
-        embed_de = discord.Embed(
-            title=f":flag_de: {announcement.title}",
-            description=announcement.message_de,
-            color=STAIR_GREEN,
-        )
-        embed_en = discord.Embed(
-            title=f":flag_gb: {announcement.title}",
-            description=announcement.message_en,
-            color=STAIR_GREEN,
-        )
+        embeds: list[discord.Embed] = []
 
-        for embed in (embed_de, embed_en):
+        if announcement.message_de:
+            embeds.append(
+                discord.Embed(
+                    title=f":flag_de: {announcement.title}",
+                    description=announcement.message_de,
+                    color=STAIR_GREEN,
+                )
+            )
+        if announcement.message_en:
+            embeds.append(
+                discord.Embed(
+                    title=f":flag_gb: {announcement.title}",
+                    description=announcement.message_en,
+                    color=STAIR_GREEN,
+                )
+            )
+
+        for embed in embeds:
             if data.user:
                 embed.set_footer(text=f"by {data.user}")
             else:
@@ -73,7 +81,7 @@ class Announcer(IAnnouncer):
 
         await PersonaSender(discord_channel, data.persona).send(
             message=role.mention,
-            embeds=[embed_de, embed_en],
+            embeds=embeds,
             file=file,
             publish=True,
         )
