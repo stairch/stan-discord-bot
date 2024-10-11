@@ -30,4 +30,4 @@ jobs:
       - name: Run mypy
         working-directory: service
         run: |
-          python -m mypy . --enable_incomplete_feature=NewGenericSyntax
+          python -m mypy . --enable-incomplete-feature=NewGenericSyntax
