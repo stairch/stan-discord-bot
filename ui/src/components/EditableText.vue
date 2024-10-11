@@ -6,7 +6,6 @@
 
     watchEffect(() => {
         if (editing.value) {
-            console.log(input.value);
             input.value?.focus();
         }
     });

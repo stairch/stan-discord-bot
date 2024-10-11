@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import "@discord-message-components/vue/styles";
-import { ref, onMounted } from "vue";
-import Forbidden from "./views/Forbidden.vue";
+    import { RouterLink, RouterView } from "vue-router";
+    import "@discord-message-components/vue/styles";
+    import { ref, onMounted } from "vue";
+    import Forbidden from "./views/Forbidden.vue";
 
-const userData = ref<any | null>(null);
-const showUserOptions = ref(false);
+    const userData = ref<any | null>(null);
+    const showUserOptions = ref(false);
 
-onMounted(async () => {
-    const res = await fetch("/api/auth/me")
-    if (res.ok) {
-        userData.value = await res.json();
-    } else {
-        userData.value = false;
-    }
+    onMounted(async () => {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+            userData.value = await res.json();
+        } else {
+            userData.value = false;
+        }
 
-    document.body.addEventListener("click", () => {
-        showUserOptions.value = false;
+        document.body.addEventListener("click", () => {
+            showUserOptions.value = false;
+        });
     });
-});
 </script>
 
 <template>
@@ -34,16 +34,37 @@ onMounted(async () => {
                 />
             </router-link>
             <nav>
-                <RouterLink title="Manage Discord Users" to="/discord/users"><span class="material-symbols-rounded">group</span></RouterLink>
-                <RouterLink title="Announcements" to="/announcements"><span class="material-symbols-rounded">campaign</span></RouterLink>
+                <RouterLink
+                    title="Manage Discord Users"
+                    to="/discord/users"
+                    ><span class="material-symbols-rounded"
+                        >group</span
+                    ></RouterLink
+                >
+                <RouterLink
+                    title="Announcements"
+                    to="/announcements"
+                    ><span class="material-symbols-rounded"
+                        >campaign</span
+                    ></RouterLink
+                >
 
-                <div @click.stop="showUserOptions = true" class="user">
-                    <span>{{userData.displayName}}</span>
-                    <div @click.stop class="options" v-if="showUserOptions">
+                <div
+                    @click.stop="showUserOptions = true"
+                    class="user"
+                >
+                    <span>{{ userData.displayName }}</span>
+                    <div
+                        @click.stop
+                        class="options"
+                        v-if="showUserOptions"
+                    >
                         <div class="action">
-                            <a href='/api/auth/signout'>
+                            <a href="/api/auth/signout">
                                 Sign out
-                                <span class="material-symbols-rounded">logout</span>
+                                <span class="material-symbols-rounded"
+                                    >logout</span
+                                >
                             </a>
                         </div>
                         <div class="data">
@@ -62,95 +83,102 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-right: 2rem;
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 2rem;
 
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-size: 1rem;
-
-    & a {
-        color: var(--c-white-1);
-
-        &:hover {
-            color: var(--c-stair-graphite);
-        }
-
-        &.router-link-active {
-            text-decoration: underline;
-        }
+        position: sticky;
+        top: 0;
+        z-index: 1000;
     }
 
-    .user {
-        cursor: pointer;
-        height: 100%;
-        position: relative;
+    nav {
         display: flex;
         align-items: center;
-        padding: 0.5rem;
+        gap: 1rem;
+        font-size: 1rem;
 
-        &:hover {
-            background: rgba(255, 255, 255, 0.1);
+        & a {
+            color: var(--c-white-1);
+
+            &:hover {
+                color: var(--c-stair-graphite);
+            }
+
+            &.router-link-active {
+                text-decoration: underline;
+            }
         }
 
-        .options {
-            position: absolute;
-            cursor: auto;
-            top: 100%;
-            right: 0;
-            background: var(--bg-soft);
-            border: 1px solid var(--bg-muted);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            border-radius: 0.5rem;
-            padding: 1rem;
+        .user {
+            cursor: pointer;
+            height: 100%;
+            position: relative;
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            color: var(--fg-text);
+            align-items: center;
+            padding: 0.5rem;
 
-            .action {
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .options {
+                position: absolute;
+                cursor: auto;
+                top: 100%;
+                right: 0;
+                background: var(--bg-soft);
+                border: 1px solid var(--bg-muted);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+                border-radius: 0.5rem;
+                padding: 1rem;
                 display: flex;
-                justify-content: flex-end;
-            }
-
-            a {
+                flex-direction: column;
+                gap: 2rem;
                 color: var(--fg-text);
-                display: block;
-                padding: 0.5rem;
-                text-align: center;
-                text-decoration: none;
 
-                &:hover {
-                    text-decoration: underline;
+                .action {
+                    display: flex;
+                    justify-content: flex-end;
                 }
 
-                & span {
-                    font-size: 1rem;
-                    margin-left: 0.5em;
-                    translate: 0 0.1em;
+                a {
+                    color: var(--fg-text);
+                    display: block;
+                    padding: 0.5rem;
+                    text-align: center;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+
+                    & span {
+                        font-size: 1rem;
+                        margin-left: 0.5em;
+                        translate: 0 0.1em;
+                    }
+                }
+
+                .data {
+                    padding: 0 1rem;
                 }
             }
-
-            .data {
-                padding: 0 1rem;
-            }        
         }
     }
-}
 
-#container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-}
+    #container {
+        max-width: 1280px;
+        height: calc(100vh - 54px);
+        margin: 0 auto;
+        padding: 2rem;
+        padding-bottom: 0;
+        overflow: clip;
+
+        & div {
+            padding-bottom: 2rem;
+        }
+    }
 </style>

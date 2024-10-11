@@ -102,6 +102,30 @@ export const api = {
             forceReloadAnnouncements();
             return data;
         },
+        async search(
+            query: string,
+            byMe: boolean = false,
+            timeRange?: {
+                start: Date;
+                end: Date;
+            },
+            limit: number = 10,
+            offset: number = 0
+        ): Promise<{ items: IAnnouncementSummary[]; totalCount: number }> {
+            const params = new URLSearchParams();
+            params.append("query", query);
+            params.append("author", byMe ? "me" : "");
+            params.append("start", timeRange?.start?.toISOString() || "");
+            params.append("end", timeRange?.end?.toISOString() || "");
+            params.append("limit", limit.toString());
+            params.append("offset", offset.toString());
+            const res = await fetch(`/api/announcements?${params}`);
+            const data = await res.json();
+            return {
+                items: data,
+                totalCount: Number(res.headers.get("X-Total-Count") || 0),
+            };
+        },
         async get(id: number): Promise<IAnnouncement> {
             return fetch(`/api/announcements/${id}`).then((res) => res.json());
         },

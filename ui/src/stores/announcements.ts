@@ -15,8 +15,8 @@ export const useAnnouncementStore = defineStore("counter", () => {
             message: {
                 de: "",
                 en: "",
-            }
-        })
+            },
+        });
         return "/announcements/" + data.id;
     };
 
