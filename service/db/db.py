@@ -8,8 +8,10 @@ import logging
 import os
 from dataclasses import asdict
 from typing import Callable
+from datetime import datetime
 
 import dataset  # type: ignore
+import sqlalchemy  # type: ignore
 
 from common.singleton import Singleton
 from .datamodels.hslu_student import HsluStudent
@@ -149,6 +151,40 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
     def get_announcements(self) -> list[Announcement]:
         """Get all announcements from the database."""
         return [Announcement(**x) for x in self._announcements_table.all()]
+
+    def search_announcements(
+        self,
+        query: str | None = None,
+        author: str | None = None,
+        time_range: tuple[datetime | None, datetime | None] | None = None,
+    ) -> list[Announcement]:
+        """Search announcements by query, author, and time range."""
+        result: list[Announcement] = []
+
+        sql_query: list[str] = []
+
+        if author:
+            sql_query.append(f"last_author = '{author}'")
+        if time_range:
+            if time_range[0]:
+                sql_query.append(f"last_modified >= {time_range[0].timestamp()}")
+            if time_range[1]:
+                sql_query.append(f"last_modified <= {time_range[1].timestamp()}")
+        if query:
+            sql_query.append(f"title LIKE '%{query}%'")
+
+        if sql_query:
+            text_statement = " AND ".join(sql_query)
+            select = self._announcements_table.table.select(
+                sqlalchemy.text(text_statement)
+            )
+            for row in self._db.query(select):
+                if not row:
+                    continue
+                item = Announcement(**row)
+                result.append(item)
+            return result
+        return self.get_announcements()
 
     def get_announcement(self, id_: int) -> Announcement | None:
         """Get an announcement by its ID."""

@@ -4,6 +4,8 @@
 __copyright__ = "Copyright (c) 2024 STAIR. All Rights Reserved."
 __email__ = "info@stair.ch"
 
+from datetime import datetime
+
 from aiohttp import web
 from pyaddict import JDict, JList
 
@@ -35,10 +37,35 @@ class AnnouncementHandler(BaseHandler):
         )
 
     @authenticated
-    async def _get_announcements(self, _: web.Request) -> web.Response:
+    async def _get_announcements(self, request: web.Request) -> web.Response:
         """Get all announcements"""
-        announcements = self._db.get_announcements()
-        return web.json_response([x.summary() for x in announcements])
+        # query can contain 'query', 'author', 'start' and 'end'
+        request_query = JDict(dict(request.query))
+        search_query = request_query.optionalGet("query", str)
+        author: str | None = None
+        if request_query.optionalGet("author", str) == "me":
+            author = await get_username(request)
+        start_stamp = request_query.optionalGet("start", str)
+        end_stamp = request_query.optionalGet("end", str)
+        start = datetime.fromisoformat(start_stamp) if start_stamp else None
+        end = datetime.fromisoformat(end_stamp) if end_stamp else None
+
+        limit = request_query.ensureCast("limit", int, 20)
+        offset = request_query.ensureCast("offset", int, 0)
+
+        announcements = self._db.search_announcements(
+            search_query, author, time_range=(start, end)
+        )
+        announcement_window = announcements[offset : offset + limit]
+        return web.json_response(
+            [x.summary() for x in announcement_window],
+            headers={
+                "X-Total-Count": str(len(announcements)),
+                "X-Count": str(len(announcement_window)),
+                "X-Offset": str(offset),
+                "X-Limit": str(limit),
+            },
+        )
 
     @authenticated
     async def _get_announcement(self, request: web.Request) -> web.Response:
