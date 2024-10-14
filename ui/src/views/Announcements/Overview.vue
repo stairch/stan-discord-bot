@@ -15,16 +15,7 @@
     const page = ref(0);
     const announcements = ref<IAnnouncementSummary[]>([]);
 
-    const sortedAnnouncements = computed(() => {
-        return announcements.value.sort((a, b) => {
-            return (
-                new Date(b.lastModified).getTime() -
-                new Date(a.lastModified).getTime()
-            );
-        });
-    });
-
-    const firstAnnouncement = computed(() => sortedAnnouncements.value?.[0]);
+    const firstAnnouncement = computed(() => announcements.value?.[0]);
 
     const createAnnouncement = async () => {
         const href = await announcementStore.create();
@@ -49,8 +40,14 @@
     const searchAnnouncementsThrottled = throttle(searchAnnouncements, 500);
     const searchAnnouncementsDebounced = debounce(searchAnnouncements, 500);
 
-    watch(filter, searchAnnouncementsDebounced);
-    watch(onlyMe, searchAnnouncementsThrottled);
+    watch(filter, () => {
+        page.value = 0;
+        searchAnnouncementsDebounced();
+    });
+    watch(onlyMe, () => {
+        page.value = 0;
+        searchAnnouncementsThrottled();
+    });
 
     const pageCount = computed(() => {
         return Math.ceil(announcementCount.value / PAGE_SIZE);
@@ -91,6 +88,7 @@
                 <div
                     class="card"
                     disabled="true"
+                    data-hide-mobile
                 >
                     <div class="icon">
                         <span class="material-symbols-rounded">
@@ -137,7 +135,7 @@
                     </a>
                 </div>
                 <div
-                    v-for="availableAnnouncement in sortedAnnouncements"
+                    v-for="availableAnnouncement in announcements"
                     :key="availableAnnouncement.id"
                     class="announcement"
                 >
@@ -188,6 +186,12 @@
 </template>
 
 <style scoped>
+    @media (max-width: 800px) {
+        .card[data-hide-mobile] {
+            display: none;
+        }
+    }
+
     .root {
         height: calc(100% - 2rem);
         overflow: clip;
