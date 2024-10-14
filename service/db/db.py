@@ -150,7 +150,12 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
 
     def get_announcements(self) -> list[Announcement]:
         """Get all announcements from the database."""
-        return [Announcement(**x) for x in self._announcements_table.all()]
+        all_rows = self._announcements_table.find(order_by=["-last_modified"])
+        all_announcements = [Announcement(**x) for x in all_rows]
+        self._logger.info(
+            "items: %s", [(x.title, x.last_modified) for x in all_announcements]
+        )
+        return all_announcements
 
     def search_announcements(
         self,
@@ -171,13 +176,13 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
             if time_range[1]:
                 sql_query.append(f"last_modified <= {time_range[1].timestamp()}")
         if query:
-            sql_query.append(f"title LIKE '%{query}%'")
+            sql_query.append(f"title ILIKE '%{query}%'")
 
         if sql_query:
             text_statement = " AND ".join(sql_query)
             select = self._announcements_table.table.select(
                 sqlalchemy.text(text_statement)
-            )
+            ).order_by(sqlalchemy.desc("last_modified"))
             for row in self._db.query(select):
                 if not row:
                     continue
