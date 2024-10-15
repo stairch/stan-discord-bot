@@ -25,7 +25,7 @@ services:
         ports:
             - 8080:80
         volumes:
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx/conf.d:/etc/nginx/conf.d:ro
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./ui/dist:/var/www/html:ro
             - ./common:/var/www/common:ro
