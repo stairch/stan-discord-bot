@@ -169,7 +169,7 @@
                     <DiscordEmbedField color="#0b6a5c">
                         <DiscordMarkdown>
                             <img
-                                src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e9-1f1ea.svg"
+                                src="/flags/de.svg"
                                 alt="🇩🇪"
                                 title="flag_de"
                                 draggable="false"
@@ -185,7 +185,7 @@
                     <DiscordEmbedField color="#0b6a5c">
                         <DiscordMarkdown
                             ><img
-                                src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ec-1f1e7.svg"
+                                src="/flags/gb.svg"
                                 alt="🇬🇧"
                                 title="flag_gb"
                                 draggable="false"
