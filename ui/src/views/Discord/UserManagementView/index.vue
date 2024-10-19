@@ -51,80 +51,86 @@
     });
 </script>
 <template>
-    <LoadingWithResultModal ref="modal" />
-    <h1>User Management</h1>
-    <div class="user-management">
-        <div
-            class="stats"
-            v-if="students"
-        >
-            <div class="card">
-                <h1>{{ students.enrolled }}</h1>
-                <p>HSLU-I Students</p>
-            </div>
-            <div class="card">
-                <h1>{{ students.discord.students }}</h1>
-                <p>Students on Discord</p>
-            </div>
-            <div class="card">
-                <h1>{{ students.discord.graduates }}</h1>
-                <p>Graduates on Discord</p>
-            </div>
-        </div>
-        <h2>Configuration</h2>
-        <div class="config">
-            <div class="config-option">
-                <div class="info">
-                    <h3>Update Students</h3>
-                    <p>
-                        Update the list of students that is provided by the HSLU
-                        administration.
-                    </p>
+    <main>
+        <LoadingWithResultModal ref="modal" />
+        <h1>User Management</h1>
+        <div class="user-management">
+            <div
+                class="stats"
+                v-if="students"
+            >
+                <div class="card">
+                    <h1>{{ students.enrolled }}</h1>
+                    <p>HSLU-I Students</p>
                 </div>
-                <button
-                    class="secondary"
-                    @click="uploadCsv('students')"
-                >
-                    <span class="material-symbols-rounded">file_upload</span>
-                    Update
-                </button>
-            </div>
-            <div class="config-option">
-                <div class="info">
-                    <h3>Update Modules</h3>
-                    <p>
-                        Update the list of modules that is provided by the HSLU
-                        administration.
-                    </p>
+                <div class="card">
+                    <h1>{{ students.discord.students }}</h1>
+                    <p>Students on Discord</p>
                 </div>
-                <button
-                    class="secondary"
-                    @click="uploadCsv('modules')"
-                >
-                    <span class="material-symbols-rounded">file_upload</span>
-                    Update
-                </button>
-            </div>
-            <div class="config-option">
-                <div class="info">
-                    <h3>Edit Degree Programmes</h3>
-                    <p>
-                        Edit the mapping between the HSLU degree programmes and
-                        the Discord roles & channels.
-                    </p>
+                <div class="card">
+                    <h1>{{ students.discord.graduates }}</h1>
+                    <p>Graduates on Discord</p>
                 </div>
-                <router-link
-                    to="/discord/degree-programmes"
-                    class="secondary"
-                >
-                    <button class="secondary">
-                        <span class="material-symbols-rounded">edit</span>
-                        Edit
+            </div>
+            <h2>Configuration</h2>
+            <div class="config">
+                <div class="config-option">
+                    <div class="info">
+                        <h3>Update Students</h3>
+                        <p>
+                            Update the list of students that is provided by the
+                            HSLU administration.
+                        </p>
+                    </div>
+                    <button
+                        class="secondary"
+                        @click="uploadCsv('students')"
+                    >
+                        <span class="material-symbols-rounded"
+                            >file_upload</span
+                        >
+                        Update
                     </button>
-                </router-link>
+                </div>
+                <div class="config-option">
+                    <div class="info">
+                        <h3>Update Modules</h3>
+                        <p>
+                            Update the list of modules that is provided by the
+                            HSLU administration.
+                        </p>
+                    </div>
+                    <button
+                        class="secondary"
+                        @click="uploadCsv('modules')"
+                    >
+                        <span class="material-symbols-rounded"
+                            >file_upload</span
+                        >
+                        Update
+                    </button>
+                </div>
+                <div class="config-option">
+                    <div class="info">
+                        <h3>Edit Degree Programmes</h3>
+                        <p>
+                            Edit the mapping between the HSLU degree programmes
+                            and the Discord roles & channels.
+                        </p>
+                    </div>
+                    <router-link
+                        to="/discord/degree-programmes"
+                        class="secondary"
+                    >
+                        <button class="secondary">
+                            <span class="material-symbols-rounded">edit</span>
+                            Edit
+                        </button>
+                    </router-link>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 <style scoped>
     .user-management {

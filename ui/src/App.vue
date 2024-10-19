@@ -23,7 +23,10 @@
 
 <template>
     <Forbidden v-if="userData == false" />
-    <div v-else-if="userData">
+    <div
+        id="body"
+        v-else-if="userData"
+    >
         <header>
             <router-link to="/">
                 <img
@@ -83,13 +86,20 @@
 </template>
 
 <style scoped>
+    #body {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+    }
+
     header {
         width: 100%;
         display: flex;
         justify-content: space-between;
         padding-right: 2rem;
 
-        position: sticky;
+        position: fixed;
         top: 0;
         z-index: 1000;
     }
@@ -170,15 +180,20 @@
     }
 
     #container {
-        margin: 0 auto;
         padding: 0;
+        height: 100%;
+        min-height: 100%;
+        margin-top: 54px;
+        position: relative;
+        overflow: clip;
 
-        & > div {
+        & > main {
+            margin: 0 auto;
             max-width: 1280px;
-            height: calc(100vh - 54px);
             padding: 2rem;
-            padding-bottom: 2rem;
             overflow: auto;
+            height: 100%;
+            display: block;
         }
     }
 </style>

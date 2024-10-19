@@ -83,29 +83,31 @@
 </script>
 
 <template>
-    <router-link to="/announcements">
-        <h1>Announcements</h1>
-    </router-link>
-    <div class="announcement">
-        <div class="tab-list">
-            <span
-                v-for="(tab, i) in TABS"
-                :class="{ active: i === activeTab }"
-            >
-                <div
-                    class="content"
-                    @click="activeTab = i"
+    <main>
+        <router-link to="/announcements">
+            <h1>Announcements</h1>
+        </router-link>
+        <div class="announcement">
+            <div class="tab-list">
+                <span
+                    v-for="(tab, i) in TABS"
+                    :class="{ active: i === activeTab }"
                 >
-                    <i :class="'icon-' + tab.icon"></i>
-                    {{ tab.name }}
-                </div>
-            </span>
+                    <div
+                        class="content"
+                        @click="activeTab = i"
+                    >
+                        <i :class="'icon-' + tab.icon"></i>
+                        {{ tab.name }}
+                    </div>
+                </span>
+            </div>
+            <component
+                :is="TABS[activeTab].component"
+                v-model="announcement"
+            />
         </div>
-        <component
-            :is="TABS[activeTab].component"
-            v-model="announcement"
-        />
-    </div>
+    </main>
 </template>
 
 <style scoped>

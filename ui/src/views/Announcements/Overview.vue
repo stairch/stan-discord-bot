@@ -4,7 +4,6 @@
     import { useAnnouncementStore } from "@/stores/announcements";
     import { api, type IAnnouncementSummary } from "@/api";
     import { debounce, throttle } from "@/assets/debounce";
-    import { isTemplateSpan } from "typescript";
 
     const announcementStore = useAnnouncementStore();
     const router = useRouter();
@@ -71,118 +70,120 @@
     });
 </script>
 <template>
-    <div class="root">
-        <h1>Announcements</h1>
-        <div class="announcements">
-            <div class="cards">
-                <div
-                    class="card"
-                    @click="createAnnouncement"
-                >
-                    <div class="icon">
-                        <span class="material-symbols-rounded"> add </span>
+    <main>
+        <div class="root">
+            <h1>Announcements</h1>
+            <div class="announcements">
+                <div class="cards">
+                    <div
+                        class="card"
+                        @click="createAnnouncement"
+                    >
+                        <div class="icon">
+                            <span class="material-symbols-rounded"> add </span>
+                        </div>
+                        <h3>New Announcement</h3>
+                        <p>Create a new announcement from scratch!</p>
                     </div>
-                    <h3>New Announcement</h3>
-                    <p>Create a new announcement from scratch!</p>
+                    <div
+                        class="card"
+                        disabled="true"
+                        data-hide-mobile
+                    >
+                        <div class="icon">
+                            <span class="material-symbols-rounded">
+                                construction
+                            </span>
+                        </div>
+                        <h3>Not yet implemented</h3>
+                        <p>
+                            post one-time announcements on Discord, edit sent
+                            announcements & more
+                        </p>
+                    </div>
+                </div>
+
+                <div class="filters">
+                    <input
+                        type="text"
+                        v-model="filter"
+                        placeholder="Search..."
+                    />
+                    <label
+                        @click="onlyMe = !onlyMe"
+                        :aria-checked="onlyMe"
+                        :title="
+                            onlyMe
+                                ? 'Show all'
+                                : 'Show only announcements I last modified'
+                        "
+                    >
+                        <span class="material-symbols-rounded"> person </span>
+                        My announcements
+                    </label>
+                </div>
+
+                <div
+                    class="itemlist"
+                    v-if="announcements.length"
+                >
+                    <div class="announcement">
+                        <a>
+                            <span>Name</span>
+                            <span>Date modified</span>
+                            <span>Modified by</span>
+                        </a>
+                    </div>
+                    <div
+                        v-for="availableAnnouncement in announcements"
+                        :key="availableAnnouncement.id"
+                        class="announcement"
+                    >
+                        <router-link
+                            :to="`/announcements/${availableAnnouncement.id}`"
+                        >
+                            <h3 v-if="availableAnnouncement.title">
+                                {{ availableAnnouncement.title }}
+                            </h3>
+                            <h3 v-else><i>N/A</i></h3>
+                            <span>{{
+                                new Date(
+                                    availableAnnouncement.lastModified
+                                ).toLocaleString()
+                            }}</span>
+                            <span>{{ availableAnnouncement.author }}</span>
+                        </router-link>
+                    </div>
                 </div>
                 <div
-                    class="card"
-                    disabled="true"
-                    data-hide-mobile
+                    v-if="announcements.length"
+                    class="pagination"
                 >
-                    <div class="icon">
-                        <span class="material-symbols-rounded">
-                            construction
+                    <span>
+                        Showing <strong>{{ announcements.length }}</strong> of
+                        <strong>{{ announcementCount }}</strong> announcements
+                    </span>
+                    <div class="pager">
+                        <span
+                            class="material-symbols-rounded"
+                            :disabled="page === 0"
+                            @click="switchToPage(page - 1)"
+                        >
+                            chevron_left
+                        </span>
+                        <span>Page {{ page + 1 }} of {{ pageCount }}</span>
+                        <span
+                            class="material-symbols-rounded"
+                            :disabled="page === pageCount - 1"
+                            @click="switchToPage(page + 1)"
+                        >
+                            chevron_right
                         </span>
                     </div>
-                    <h3>Not yet implemented</h3>
-                    <p>
-                        post one-time announcements on Discord, edit sent
-                        announcements & more
-                    </p>
-                </div>
-            </div>
-
-            <div class="filters">
-                <input
-                    type="text"
-                    v-model="filter"
-                    placeholder="Search..."
-                />
-                <label
-                    @click="onlyMe = !onlyMe"
-                    :aria-checked="onlyMe"
-                    :title="
-                        onlyMe
-                            ? 'Show all'
-                            : 'Show only announcements I last modified'
-                    "
-                >
-                    <span class="material-symbols-rounded"> person </span>
-                    My announcements
-                </label>
-            </div>
-
-            <div
-                class="itemlist"
-                v-if="announcements.length"
-            >
-                <div class="announcement">
-                    <a>
-                        <span>Name</span>
-                        <span>Date modified</span>
-                        <span>Modified by</span>
-                    </a>
-                </div>
-                <div
-                    v-for="availableAnnouncement in announcements"
-                    :key="availableAnnouncement.id"
-                    class="announcement"
-                >
-                    <router-link
-                        :to="`/announcements/${availableAnnouncement.id}`"
-                    >
-                        <h3 v-if="availableAnnouncement.title">
-                            {{ availableAnnouncement.title }}
-                        </h3>
-                        <h3 v-else><i>N/A</i></h3>
-                        <span>{{
-                            new Date(
-                                availableAnnouncement.lastModified
-                            ).toLocaleString()
-                        }}</span>
-                        <span>{{ availableAnnouncement.author }}</span>
-                    </router-link>
-                </div>
-            </div>
-            <div
-                v-if="announcements.length"
-                class="pagination"
-            >
-                <span>
-                    Showing <strong>{{ announcements.length }}</strong> of
-                    <strong>{{ announcementCount }}</strong> announcements
-                </span>
-                <div class="pager">
-                    <span
-                        class="material-symbols-rounded"
-                        :disabled="page === 0"
-                        @click="switchToPage(page - 1)"
-                    >
-                        chevron_left
-                    </span>
-                    <span>Page {{ page + 1 }} of {{ pageCount }}</span>
-                    <span
-                        class="material-symbols-rounded"
-                        :disabled="page === pageCount - 1"
-                        @click="switchToPage(page + 1)"
-                    >
-                        chevron_right
-                    </span>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <style scoped>
@@ -193,17 +194,10 @@
     }
 
     .root {
-        height: calc(100% - 2rem);
-        overflow: clip;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .itemlist {
-        height: calc(100% - 2rem);
-        max-height: calc(100% - 2rem);
-        overflow-y: scroll;
-        flex: 1;
+        height: 100%;
+        min-height: 100%;
+        display: block;
+        position: relative;
     }
 
     .card {
@@ -302,10 +296,21 @@
         padding: 1em;
         border-radius: 4px;
 
+        height: 47px;
+        &:first-child {
+            height: 40px;
+        }
+
         & a {
             display: grid;
-            grid-template-columns: 1fr 20ch 10ch;
+            grid-template-columns: 1fr 20ch 15ch;
             color: var(--fg-text-muted);
+
+            & h3 {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
 
             @media (max-width: 800px) {
                 grid-template-columns: 1fr;
@@ -334,6 +339,12 @@
         flex-direction: column;
         gap: 2em;
         min-height: calc(100% - 2rem);
+        overflow: clip;
+        flex: 1;
+    }
+
+    .itemlist {
+        height: calc(8 * 47px + 40px);
     }
 
     .cards {
