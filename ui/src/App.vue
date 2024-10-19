@@ -170,15 +170,15 @@
     }
 
     #container {
-        max-width: 1280px;
-        height: calc(100vh - 54px);
         margin: 0 auto;
-        padding: 2rem;
-        padding-bottom: 0;
-        overflow: clip;
+        padding: 0;
 
-        & div {
+        & > div {
+            max-width: 1280px;
+            height: calc(100vh - 54px);
+            padding: 2rem;
             padding-bottom: 2rem;
+            overflow: auto;
         }
     }
 </style>

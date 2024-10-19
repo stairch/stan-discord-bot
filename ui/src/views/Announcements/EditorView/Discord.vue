@@ -141,12 +141,6 @@
                 </option>
             </select>
         </div>
-        <button
-            @click="setImage"
-            class="align-right secondary"
-        >
-            Set Image
-        </button>
     </div>
     <div>
         <DiscordMessages>
@@ -161,9 +155,16 @@
                     <DiscordMention :type="announcementRole" />
                 </DiscordMarkdown>
                 <img
-                    v-if="imgUrl"
-                    :src="imgUrl"
-                    draggable="false"
+                    @click="setImage"
+                    :src="imgUrl ?? 'https://placehold.co/1920x1080/png'"
+                    :title="
+                        imgUrl ? 'Click to change image' : 'Click to add image'
+                    "
+                    :alt="
+                        imgUrl
+                            ? 'Image attached to the message'
+                            : 'No image attached to the message'
+                    "
                 />
                 <DiscordEmbed>
                     <DiscordEmbedField color="#0b6a5c">
@@ -202,6 +203,13 @@
     </div>
 
     <div class="actions">
+        <span
+            class="material-symbols-rounded"
+            @click="img = null"
+            :title="imgUrl ? 'Remove Image' : ''"
+        >
+            {{ imgUrl ? "hide_image" : "" }}
+        </span>
         <button
             @click="postAnnouncement"
             class="danger"
@@ -226,6 +234,12 @@
     }
 
     .inputs {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+    }
+
+    .actions {
         display: flex;
         gap: 1em;
         align-items: center;
