@@ -95,7 +95,11 @@ You must provide a valid email address ending in `@stud.hslu.ch`.
 Please try again or contact a STAIR member.
         """
         # current month is july - september or december - february
-        if 7 <= datetime.now().month <= 9 or 12 <= datetime.now().month <= 2:
+        if (
+            7 <= datetime.now().month <= 9
+            or 12 <= datetime.now().month
+            or datetime.now().month <= 2
+        ):
             base += """
  If you are a new student, please try again after the first week of the semester.
             """
