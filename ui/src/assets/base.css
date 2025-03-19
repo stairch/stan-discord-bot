@@ -58,8 +58,8 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-base: var(--c-black-1);
-        --bg-soft: var(--c-black-3);
+        --bg-base: var(--c-black-3);
+        --bg-soft: var(--c-black-1);
         --bg-muted: var(--c-black-5);
         --border: var(--c-white-3);
         --border-hover: var(--c-white-4);

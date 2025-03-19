@@ -3,14 +3,16 @@ export type IconsId =
   | "edit"
   | "instagram"
   | "schedule"
-  | "telegram";
+  | "telegram"
+  | "whatsapp";
 
 export type IconsKey =
   | "Discord"
   | "Edit"
   | "Instagram"
   | "Schedule"
-  | "Telegram";
+  | "Telegram"
+  | "Whatsapp";
 
 export enum Icons {
   Discord = "discord",
@@ -18,6 +20,7 @@ export enum Icons {
   Instagram = "instagram",
   Schedule = "schedule",
   Telegram = "telegram",
+  Whatsapp = "whatsapp",
 }
 
 export const ICONS_CODEPOINTS: { [key in Icons]: string } = {
@@ -26,4 +29,5 @@ export const ICONS_CODEPOINTS: { [key in Icons]: string } = {
   [Icons.Instagram]: "61699",
   [Icons.Schedule]: "61700",
   [Icons.Telegram]: "61701",
+  [Icons.Whatsapp]: "61702",
 };
