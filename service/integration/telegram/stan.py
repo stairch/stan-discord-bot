@@ -51,13 +51,11 @@ class Stan:
         """Send an announcement to all chats"""
         if chat_id not in self._chats:
             return Result.err("Chat not found", status=404)
-        markdown = f"""**{announcement.title}**
+        markdown = f"**{announcement.title}**\n\n"
 
-{announcement.message_de}
-
----
-
-{announcement.message_en}"""
+        markdown += "\n\n---\n\n".join(
+            [x for x in (announcement.message_de, announcement.message_en) if x]
+        )
 
         try:
             async with self._bot:
