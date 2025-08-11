@@ -16,17 +16,24 @@ const router = createRouter({
         {
             path: "/announcements/:id",
             name: "announcementWithId",
-            component: () => import("../views/Announcements/EditorView/index.vue"),
+            component: () =>
+                import("../views/Announcements/EditorView/index.vue"),
         },
         {
             path: "/discord/users",
             name: "discord-users",
-            component: () => import("../views/Discord/UserManagementView/index.vue"),
+            component: () =>
+                import("../views/Discord/UserManagementView/index.vue"),
         },
         {
             path: "/discord/degree-programmes",
             name: "discord-degree-programmes",
             component: () => import("../views/Discord/DegreeProgrammes.vue"),
+        },
+        {
+            path: "/promotion-schedule",
+            name: "promotion-schedule",
+            component: () => import("../views/PromotionSchedule/index.vue"),
         },
     ],
 });
