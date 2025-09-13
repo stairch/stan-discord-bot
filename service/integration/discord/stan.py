@@ -69,7 +69,7 @@ class Stan(discord.Client):
 
         if not message.guild:
             make_student = await VerifyingStudent.handle_message(
-                self._email_client, message
+                self._email_client, message, self.make_hackstair
             )
             if make_student:
                 member = self._db.get_member(message.author.id)
@@ -112,7 +112,17 @@ class Stan(discord.Client):
                 server.get_course_role(student.course_id),
             )
 
-    async def on_member_join(self, member: discord.member.Member):
+    async def make_hackstair(self, user: discord.Member) -> None:
+        """applies the hackstair role to a user on all supported servers"""
+        for server in self._servers:
+            member = server.get_member(user.id)
+            if member is None:
+                continue
+            await member.add_roles(
+                server.get_member_role(RoleType.HACKSTAIR),
+            )
+
+    async def on_member_join(self, member: discord.Member):
         """Member joined the server"""
         self._logger.debug("%s has joined the server", member)
-        await VerifyingStudent.add(self._email_client, member)
+        await VerifyingStudent.add(self._email_client, member, self.make_hackstair)

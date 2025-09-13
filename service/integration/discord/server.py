@@ -22,6 +22,7 @@ class RoleType(StrEnum):
     STUDENT = "Student"
     GRADUATE = "Graduate"
     STAIR = "STAIR"
+    HACKSTAIR = "Hacker"
 
     def get(self, guild: discord.Guild) -> discord.Role:
         """Get the role for this type"""
