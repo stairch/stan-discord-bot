@@ -130,7 +130,7 @@ Check out https://hack.stair.ch for more information.
     @staticmethod
     def _generic_validation_error_message() -> str:
         base = """
-⛔ Your email address is already taken, invalid or you are not a student. ⛔
+⛔ Your email address is already taken, invalid or you are not a student at HSLU-I. ⛔
 
 You must provide a valid email address ending in `@stud.hslu.ch`.
 Please try again or contact a STAIR member.

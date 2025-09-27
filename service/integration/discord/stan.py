@@ -50,7 +50,9 @@ class Stan(discord.Client):
         self._logger.info("We have logged in as %s", self.user)
         for guild in self.guilds:
             if guild.id not in Stan._ALLOWED_GUILDS:
-                self._logger.warning("unexpected guild %s", guild)
+                self._logger.warning(
+                    "ignoring unknown guild %s. not specified in DISCORD_SERVERS", guild
+                )
                 continue
             self._servers.append(DiscordServer(guild))
 
@@ -79,7 +81,10 @@ class Stan(discord.Client):
             return
 
         if message.guild.id not in Stan._ALLOWED_GUILDS:
-            self._logger.debug("unexpected guild %s", message.guild)
+            self._logger.debug(
+                "ignoring unknown guild %s. not specified in DISCORD_SERVERS",
+                message.guild,
+            )
             return
 
     async def make_graduate(self, user: VerifiedUser) -> None:
@@ -107,10 +112,13 @@ class Stan(discord.Client):
                 server.get_member_role(RoleType.GRADUATE),
                 *server.get_course_roles_except(student.course_id),
             )
-            await member.add_roles(
+            to_add = [
                 server.get_member_role(RoleType.STUDENT),
-                server.get_course_role(student.course_id),
-            )
+            ]
+            if course_role := server.get_course_role(student.course_id):
+                to_add.append(course_role)
+
+            await member.add_roles(*to_add)
 
     async def make_hackstair(self, user: discord.Member) -> None:
         """applies the hackstair role to a user on all supported servers"""
