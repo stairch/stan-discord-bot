@@ -3,6 +3,7 @@
 
     const props = defineProps<{
         modelValue: Date;
+        disabled?: Boolean;
     }>();
 
     const emit = defineEmits<{
@@ -24,6 +25,7 @@
     const dateInput = ref<HTMLInputElement>();
 
     const showPicker = () => {
+        if (props.disabled) return;
         if (dateInput.value) {
             dateInput.value.showPicker();
         }
@@ -39,7 +41,9 @@
 <template>
     <div
         class="date"
+        :tabindex="props.disabled ? -1 : 0"
         @click="showPicker"
+        @keyup.enter="showPicker"
     >
         <div class="day">
             {{ modelValue.getDate() }}

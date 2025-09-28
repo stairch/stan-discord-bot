@@ -18,7 +18,7 @@
 <template>
     <div
         class="editable-text"
-        tabindex="0"
+        :tabindex="editing || !modelValue ? -1 : 0"
         @keyup.enter.stop="editing = !editing"
         @dblclick="editing = true"
     >

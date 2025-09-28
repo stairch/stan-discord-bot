@@ -161,7 +161,7 @@
         const nextDate = new Date(lastDate);
         nextDate.setDate(nextDate.getDate() + 7); // add one week
         events.value.push({
-            name: "New Event",
+            name: "",
             responsible: "",
             date: nextDate,
         });
@@ -220,13 +220,13 @@
                                 <DatePicker v-model="event.date" />
                                 <div class="vstack">
                                     <EditableText
-                                        placeholder="Event Name"
+                                        placeholder="Click to set event name"
                                         v-model="event.name"
                                     >
                                         <strong>{{ event.name }}</strong>
                                     </EditableText>
                                     <EditableText
-                                        placeholder="Responsible Person"
+                                        placeholder="Click to set responsible person"
                                         v-model="event.responsible"
                                     >
                                         <span class="responsible">
@@ -245,7 +245,11 @@
                         </div>
                         <div
                             @click="addEvent"
+                            @keypress.enter="addEvent"
                             class="add-event"
+                            role="button"
+                            tabindex="0"
+                            title="Add event"
                         >
                             <span class="material-symbols-rounded">add</span>
                             Add event
@@ -254,9 +258,18 @@
                 </aside>
                 <div class="schedule">
                     <h2>Promotion Schedule</h2>
-                    <div class="promo">
+                    <div class="promo card">
+                        <span
+                            v-if="tasks.length === 0"
+                            class="caption"
+                        >
+                            No tasks scheduled. Add events to see the promotion
+                            schedule here.
+                        </span>
+
                         <div
                             class="month"
+                            v-else
                             v-for="(tasks, month) in tasksByMonth"
                         >
                             <span class="caption">{{ month }}</span>
@@ -265,7 +278,10 @@
                                 v-for="task in tasks"
                                 :key="task.name + task.due.toISOString()"
                             >
-                                <DatePicker v-model="task.due" />
+                                <DatePicker
+                                    v-model="task.due"
+                                    :disabled="true"
+                                />
                                 <div class="vstack">
                                     <strong>{{ task.name }}</strong>
                                     <span class="responsible">
@@ -375,5 +391,16 @@
         flex-direction: column;
         gap: 1em;
         margin-top: 1em;
+    }
+
+    .month {
+        &:not(:first-child) {
+            border-top: 1px solid var(--bg-muted);
+            padding-top: 1em;
+        }
+
+        .caption {
+            font-weight: 900;
+        }
     }
 </style>
