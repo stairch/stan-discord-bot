@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine AS production
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf:ro
-COPY ./nginx/conf.d /etc/nginx/conf.d:ro
-VOLUME /var/www/common:ro
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/conf.d /etc/nginx/conf.d
+VOLUME /var/www/common
 EXPOSE 80
