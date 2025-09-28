@@ -6,7 +6,7 @@ COPY . .
 RUN npm run build
 
 FROM nginx:stable-alpine AS production
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /var/www/html
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/conf.d /etc/nginx/conf.d
 VOLUME /var/www/common
