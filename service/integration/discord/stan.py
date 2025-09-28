@@ -50,7 +50,9 @@ class Stan(discord.Client):
         self._logger.info("We have logged in as %s", self.user)
         for guild in self.guilds:
             if guild.id not in Stan._ALLOWED_GUILDS:
-                self._logger.warning("unexpected guild %s", guild)
+                self._logger.warning(
+                    "ignoring unknown guild %s. not specified in DISCORD_SERVERS", guild
+                )
                 continue
             self._servers.append(DiscordServer(guild))
 
@@ -69,7 +71,7 @@ class Stan(discord.Client):
 
         if not message.guild:
             make_student = await VerifyingStudent.handle_message(
-                self._email_client, message
+                self._email_client, message, self.make_hackstair
             )
             if make_student:
                 member = self._db.get_member(message.author.id)
@@ -79,7 +81,10 @@ class Stan(discord.Client):
             return
 
         if message.guild.id not in Stan._ALLOWED_GUILDS:
-            self._logger.debug("unexpected guild %s", message.guild)
+            self._logger.debug(
+                "ignoring unknown guild %s. not specified in DISCORD_SERVERS",
+                message.guild,
+            )
             return
 
     async def make_graduate(self, user: VerifiedUser) -> None:
@@ -107,12 +112,25 @@ class Stan(discord.Client):
                 server.get_member_role(RoleType.GRADUATE),
                 *server.get_course_roles_except(student.course_id),
             )
-            await member.add_roles(
+            to_add = [
                 server.get_member_role(RoleType.STUDENT),
-                server.get_course_role(student.course_id),
+            ]
+            if course_role := server.get_course_role(student.course_id):
+                to_add.append(course_role)
+
+            await member.add_roles(*to_add)
+
+    async def make_hackstair(self, user: discord.Member) -> None:
+        """applies the hackstair role to a user on all supported servers"""
+        for server in self._servers:
+            member = server.get_member(user.id)
+            if member is None:
+                continue
+            await member.add_roles(
+                server.get_member_role(RoleType.HACKSTAIR),
             )
 
-    async def on_member_join(self, member: discord.member.Member):
+    async def on_member_join(self, member: discord.Member):
         """Member joined the server"""
         self._logger.debug("%s has joined the server", member)
-        await VerifyingStudent.add(self._email_client, member)
+        await VerifyingStudent.add(self._email_client, member, self.make_hackstair)

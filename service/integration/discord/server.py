@@ -22,6 +22,7 @@ class RoleType(StrEnum):
     STUDENT = "Student"
     GRADUATE = "Graduate"
     STAIR = "STAIR"
+    HACKSTAIR = "Hacker"
 
     def get(self, guild: discord.Guild) -> discord.Role:
         """Get the role for this type"""
@@ -63,7 +64,7 @@ class DiscordServer:
         """Get the courses"""
         return self._db.get_degree_programmes()
 
-    def get_course_role(self, course: str) -> discord.Role:
+    def get_course_role(self, course: str) -> discord.Role | None:
         """Get the role for a course"""
         definition = next(
             (
@@ -76,7 +77,8 @@ class DiscordServer:
             ),
             None,
         )
-        assert definition is not None
+        if definition is None:
+            return None
         return self._roles[definition.lower()]
 
     def get_course_roles_except(self, course: str | None = None) -> list[discord.Role]:

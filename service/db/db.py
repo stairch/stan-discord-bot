@@ -53,8 +53,9 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
             set()
         )
 
+        self._logger.warning("database connected, DEV_MODE=%s", DEV_MODE)
         if DEV_MODE:
-            self._users_table.delete()  # for development
+            self._users_table.delete()
 
     @property
     def on_schedule_change(self) -> set[Callable[[list[AnnouncementSchedule]], None]]:
