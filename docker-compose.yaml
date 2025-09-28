@@ -22,7 +22,7 @@ services:
             - .env
     nginx:
         build:
-            context: service
+            context: ui
             dockerfile: Dockerfile
         ports:
             - 8080:80
