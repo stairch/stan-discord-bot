@@ -23,84 +23,86 @@
     });
 </script>
 <template>
-    <h1>Degree Programmes</h1>
-    <div class="actions">
-        <button
-            @click="updateData"
-            :disabled="!changed"
-        >
-            <span class="material-symbols-rounded">save</span>
-            Save
-        </button>
-    </div>
-    <div class="programmes">
-        <div class="programme">
-            <span class="swatch"></span>
-            <p>ID</p>
-            <span>Category</span>
-            <span>Channel</span>
-            <span>Role</span>
-            <span class="delete"></span>
+    <main>
+        <h1>Degree Programmes</h1>
+        <div class="actions">
+            <button
+                @click="updateData"
+                :disabled="!changed"
+            >
+                <span class="material-symbols-rounded">save</span>
+                Save
+            </button>
         </div>
-        <div
-            v-for="programme in programmes"
-            :key="programme.id"
-            class="programme"
-        >
-            <div class="swatch-wrapper">
-                <input
-                    type="color"
-                    class="swatch"
-                    v-model="programme.colour"
-                />
+        <div class="programmes">
+            <div class="programme">
+                <span class="swatch"></span>
+                <p>ID</p>
+                <span>Category</span>
+                <span>Channel</span>
+                <span>Role</span>
+                <span class="delete"></span>
             </div>
-            <EditableText
-                placeholder="'Anlassnummer' from students db"
-                v-model="programme.id"
+            <div
+                v-for="programme in programmes"
+                :key="programme.id"
+                class="programme"
             >
-                <p>{{ programme.id }}</p>
-            </EditableText>
-            <EditableText
-                placeholder="Discord channel category"
-                v-model="programme.category"
+                <div class="swatch-wrapper">
+                    <input
+                        type="color"
+                        class="swatch"
+                        v-model="programme.colour"
+                    />
+                </div>
+                <EditableText
+                    placeholder="'Anlassnummer' from students db"
+                    v-model="programme.id"
+                >
+                    <p>{{ programme.id }}</p>
+                </EditableText>
+                <EditableText
+                    placeholder="Discord channel category"
+                    v-model="programme.category"
+                >
+                    <span>{{ programme.category }}</span>
+                </EditableText>
+                <EditableText
+                    placeholder="Discord channel name"
+                    v-model="programme.channel"
+                >
+                    <span>{{ programme.channel }}</span>
+                </EditableText>
+                <EditableText
+                    placeholder="Discord role name"
+                    v-model="programme.role"
+                >
+                    <span>{{ programme.role }}</span>
+                </EditableText>
+                <span
+                    @click="programmes.splice(programmes.indexOf(programme), 1)"
+                    class="delete material-symbols-rounded"
+                >
+                    delete
+                </span>
+            </div>
+            <div
+                class="add-programme"
+                @click="
+                    programmes.push({
+                        id: '',
+                        category: '',
+                        channel: '',
+                        role: '',
+                        colour: '#000000',
+                    })
+                "
             >
-                <span>{{ programme.category }}</span>
-            </EditableText>
-            <EditableText
-                placeholder="Discord channel name"
-                v-model="programme.channel"
-            >
-                <span>{{ programme.channel }}</span>
-            </EditableText>
-            <EditableText
-                placeholder="Discord role name"
-                v-model="programme.role"
-            >
-                <span>{{ programme.role }}</span>
-            </EditableText>
-            <span
-                @click="programmes.splice(programmes.indexOf(programme), 1)"
-                class="delete material-symbols-rounded"
-            >
-                delete
-            </span>
+                <span class="material-symbols-rounded">add</span>
+                Add Programme
+            </div>
         </div>
-        <div
-            class="add-programme"
-            @click="
-                programmes.push({
-                    id: '',
-                    category: '',
-                    channel: '',
-                    role: '',
-                    colour: '#000000',
-                })
-            "
-        >
-            <span class="material-symbols-rounded">add</span>
-            Add Programme
-        </div>
-    </div>
+    </main>
 </template>
 <style scoped>
     .programmes {

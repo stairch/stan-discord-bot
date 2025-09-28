@@ -30,6 +30,22 @@
                 <span class="material-symbols-rounded">group</span>
             </div>
         </div>
+        <div class="section">
+            <div class="info">
+                <h1>Promotion Schedule</h1>
+                <router-link to="/promotion-schedule">
+                    <button>
+                        <span class="material-symbols-rounded"
+                            >arrow_forward</span
+                        >
+                        Generate
+                    </button>
+                </router-link>
+            </div>
+            <div class="icon">
+                <span class="material-symbols-rounded">calendar_month</span>
+            </div>
+        </div>
     </main>
 </template>
 

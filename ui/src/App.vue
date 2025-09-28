@@ -51,6 +51,14 @@
                         >campaign</span
                     ></RouterLink
                 >
+                <RouterLink
+                    title="Promotion Schedule"
+                    to="/promotion-schedule"
+                >
+                    <span class="material-symbols-rounded">
+                        calendar_month
+                    </span>
+                </RouterLink>
 
                 <div
                     @click.stop="showUserOptions = true"
