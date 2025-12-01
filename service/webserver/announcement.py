@@ -24,7 +24,6 @@ class AnnouncementHandler(BaseHandler):
         app.router.add_get("/api/announcements", self._get_announcements)
         app.router.add_get("/api/announcements/types", self._types)
         app.router.add_get("/api/announcements/discord/servers", self._discord_servers)
-        app.router.add_get("/api/announcements/telegram/chats", self._telegram_chats)
         app.router.add_get("/api/announcements/personas", self._personas)
         app.router.add_post("/api/announcements", self._create_announcement)
         app.router.add_get("/api/announcements/{id}", self._get_announcement)
@@ -145,14 +144,6 @@ class AnnouncementHandler(BaseHandler):
         """Get all announcement servers"""
         servers = self._integration.discord.servers
         return web.json_response([x.serialise() for x in servers.values()])
-
-    @authenticated
-    async def _telegram_chats(self, _: web.Request) -> web.Response:
-        """Get all announcement servers"""
-        servers = self._integration.telegram.chats
-        return web.json_response(
-            [{"id": x.id, "name": x.title, "picture": None} for x in servers.values()]
-        )
 
     @authenticated
     async def _personas(self, _: web.Request) -> web.Response:

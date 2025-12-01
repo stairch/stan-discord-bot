@@ -19,7 +19,6 @@ def main():
     logger = logging.getLogger(__name__)
     logging.getLogger("discord").setLevel(logging.INFO)
     logging.getLogger("httpcore").setLevel(logging.INFO)
-    logging.getLogger("telegram").setLevel(logging.INFO)
     logger.info("Starting Stan...")
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())

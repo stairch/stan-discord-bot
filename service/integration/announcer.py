@@ -16,22 +16,15 @@ from db.datamodels.announcement import AnnouncementScope
 from .iannouncer import IAnnouncer
 from .discord.announcer import Announcer as DiscordAnnouncer
 from .discord.stan import Stan as DiscordStan
-from .telegram.announcer import Announcer as TelegramAnnouncer
-from .telegram.stan import Stan as TelegramStan
 
 
 class Announcer(IAnnouncer):
     """announcer supporting all announcements"""
 
-    def __init__(
-        self,
-        discord_stan: DiscordStan,
-        telegram_stan: TelegramStan,
-    ) -> None:
+    def __init__(self, discord_stan: DiscordStan) -> None:
         self._logger = logging.getLogger("Announcer")
         self._announcers: dict[AnnouncementScope, IAnnouncer] = {
-            AnnouncementScope.DISCORD: DiscordAnnouncer(Database(), discord_stan),
-            AnnouncementScope.TELEGRAM: TelegramAnnouncer(Database(), telegram_stan),
+            AnnouncementScope.DISCORD: DiscordAnnouncer(Database(), discord_stan)
         }
 
     async def publish_announcement(self, data: PublishData) -> Result[None]:

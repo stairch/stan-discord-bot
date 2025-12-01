@@ -22,7 +22,6 @@ class AnnouncementScope(StrEnum):
     """The scope of the announcement"""
 
     DISCORD = "discord"
-    TELEGRAM = "telegram"
 
     def requires_announcement_type(self) -> bool:
         """Check if the scope requires an announcement type"""

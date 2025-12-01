@@ -12,7 +12,6 @@ import logging
 from common.publish_data import PublishData
 from common.result import Result
 from .discord.stan import Stan as DiscordStan
-from .telegram.stan import Stan as TelegramStan
 from .discord.module_channels import ModuleChannelSync
 from .email.client import EmailClient
 from .foodstoffi.menu import SendFoodstoffiMenuTask
@@ -28,11 +27,10 @@ class IntegrationManager(IAnnouncer):  # pylint: disable=too-many-instance-attri
         self._logger = logging.getLogger("IntegrationManager")
         self._email_client = EmailClient()
         self._discord_stan = DiscordStan(self._email_client)
-        self._telegram_stan = TelegramStan()
         self._send_foodstoffi_menu_task = SendFoodstoffiMenuTask(self._discord_stan)
         self._module_channel_sync = ModuleChannelSync(self._discord_stan)
 
-        self._announcer = Announcer(self._discord_stan, self._telegram_stan)
+        self._announcer = Announcer(self._discord_stan)
         self._announcement_scheduler = Scheduler(self.publish_announcement)
 
     async def publish_announcement(self, data: PublishData) -> Result[None]:
@@ -45,11 +43,6 @@ class IntegrationManager(IAnnouncer):  # pylint: disable=too-many-instance-attri
         """Get the discord bot Stan"""
         return self._discord_stan
 
-    @property
-    def telegram(self) -> TelegramStan:
-        """Get the telegram bot Stan"""
-        return self._telegram_stan
-
     async def trigger_foodstoffi_menu(self) -> None:
         """Trigger a manual foodstoffi menu update"""
         await self._send_foodstoffi_menu_task.trigger()
@@ -61,6 +54,5 @@ class IntegrationManager(IAnnouncer):  # pylint: disable=too-many-instance-attri
     async def start(self) -> None:
         """Start the integration services"""
         asyncio.create_task(self._discord_stan.start())
-        await self._telegram_stan.start()
         await self._send_foodstoffi_menu_task.start()
         self._announcement_scheduler.start()
