@@ -39,7 +39,6 @@ The web server is the main entry point for the STAIR PR Toolkit. It handles inco
 The integration module manages external services and APIs.
 
 -   **Main Manager**: [`IntegrationManager`](/service/integration/manager.py)
--   **Telegram Announcer**: [`service/integration/telegram/announcer.py`](/service/integration/telegram/announcer.py)
 -   **Discord Announcer**: [`service/integration/discord/announcer.py`](/service/integration/discord/announcer.py)
 -   **Foodstoffi Menu**: [`service/integration/foodstoffi/menu.py`](/service/integration/foodstoffi/menu.py)
 -   **Email (via MSGraph)**: [`service/integration/email/client.py`](/service/integration/email/client.py)
@@ -86,10 +85,6 @@ To set up and run the project, follow these steps:
     DISCORD_APP_ID="1234567890" # discord application ID (from discord developer portal)
     DISCORD_SERVERS="12345,54321" # comma-separated list of allowed discord server IDs
 
-    # Telegram
-    TELEGRAM_BOT_TOKEN="1234567890:ABCDEF" # telegram bot token (from BotFather)
-    TELEGRAM_CHATS="12345,54321" # comma-separated list of allowed telegram group chat IDs
-
     # Database
     POSTGRES_PASSWORD="" # database password
     POSTGRES_USER="" # database user
@@ -101,6 +96,9 @@ To set up and run the project, follow these steps:
     # General
     CONFIG_PATH="/config" # path to the configuration directory
     DEV_MODE="False" # when true, the database will be cleared on startup
+
+    # Docker
+    COMPOSE_BAKE=true
     ```
 
 3. **Build and run the Docker containers**:
