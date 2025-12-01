@@ -49,7 +49,7 @@ export interface IDegreeProgramme {
     channel: string;
 }
 
-type AnnouncementScope = "discord" | "telegram";
+type AnnouncementScope = "discord";
 
 export type IPersonaDefinition = Record<
     string,
@@ -208,11 +208,6 @@ export const api = {
         },
         async discordServers(): Promise<IServer[]> {
             return fetch(`/api/announcements/discord/servers`).then((res) =>
-                res.json()
-            );
-        },
-        async telegramChats(): Promise<IServer[]> {
-            return fetch(`/api/announcements/telegram/chats`).then((res) =>
                 res.json()
             );
         },

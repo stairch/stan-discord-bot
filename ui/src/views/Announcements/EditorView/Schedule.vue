@@ -8,7 +8,6 @@
     } from "@/api";
     import Loader from "@/components/Loader.vue";
 
-    const telegramServers = ref<IServer[]>([]);
     const discordServers = ref<IServer[]>([]);
     const types = ref<string[]>([]);
     const personas = ref<string[]>([]);
@@ -26,7 +25,6 @@
 
     onMounted(async () => {
         discordServers.value = await api.announements.discordServers();
-        telegramServers.value = await api.announements.telegramChats();
         personas.value = await api.announements.personas();
         types.value = await api.announements.types();
 
@@ -97,7 +95,7 @@
                     <label>Platform</label>
                     <select v-model="schedule.scope">
                         <option
-                            v-for="s in ['discord', 'telegram']"
+                            v-for="s in ['discord']"
                             :key="s"
                             :value="s"
                         >
@@ -115,18 +113,6 @@
                     >
                         <option
                             v-for="s in discordServers"
-                            :key="s.id"
-                            :value="s.id"
-                        >
-                            {{ s.name }}
-                        </option>
-                    </select>
-                    <select
-                        v-model="schedule.server"
-                        v-else-if="schedule.scope == 'telegram'"
-                    >
-                        <option
-                            v-for="s in telegramServers"
                             :key="s.id"
                             :value="s.id"
                         >

@@ -1,5 +1,5 @@
 export const actualMarkdownToMarkdownV2 = (text: string) => {
-    // Convert actual markdown to Telegram/WhatsApp-required MarkdownV2
+    // Convert actual markdown to WhatsApp-required MarkdownV2
     text = text.replace(/(?<!\*)\*(?!\*)/g, "_");
     text = text.replace(/\*\*/g, "*");
     text = text.replace(/([!\-.()])/g, "$1");

@@ -1,8 +1,8 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.eot?5cd3e0d0a7df534576e18c469c0be0d4#iefix") format("embedded-opentype"),
-url("./icons.woff2?5cd3e0d0a7df534576e18c469c0be0d4") format("woff2"),
-url("./icons.woff?5cd3e0d0a7df534576e18c469c0be0d4") format("woff");
+    src: url("./icons.eot?6fb150dd02408cc5688345dbf26e6d12#iefix") format("embedded-opentype"),
+url("./icons.woff2?6fb150dd02408cc5688345dbf26e6d12") format("woff2"),
+url("./icons.woff?6fb150dd02408cc5688345dbf26e6d12") format("woff");
 }
 
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -28,9 +28,6 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 .icon-schedule:before {
     content: "\f104";
 }
-.icon-telegram:before {
-    content: "\f105";
-}
 .icon-whatsapp:before {
-    content: "\f106";
+    content: "\f105";
 }

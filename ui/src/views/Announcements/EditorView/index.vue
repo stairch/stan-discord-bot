@@ -4,8 +4,6 @@
     import { api, type IAnnouncement } from "@/api";
     import Edit from "./Edit.vue";
     import Discord from "./Discord.vue";
-    import Telegram from "./Telegram.vue";
-    import { useAnnouncementStore } from "@/stores/announcements";
     import Instagram from "./Instagram.vue";
     import WhatsApp from "./WhatsApp.vue";
     import Schedule from "./Schedule.vue";
@@ -20,7 +18,6 @@
 
     const route = useRoute();
     const router = useRouter();
-    const announcementStore = useAnnouncementStore();
 
     const TABS = [
         {
@@ -32,11 +29,6 @@
             name: "Discord",
             component: Discord,
             icon: "discord",
-        },
-        {
-            name: "Telegram",
-            component: Telegram,
-            icon: "telegram",
         },
         {
             name: "Instagram",
