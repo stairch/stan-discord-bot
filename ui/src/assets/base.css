@@ -64,6 +64,7 @@
         --border: var(--c-white-3);
         --border-hover: var(--c-white-4);
         --fg-text: var(--c-white-1);
+        --fg-text-muted: #ababab;
     }
 }
 
