@@ -14,8 +14,6 @@
     const page = ref(0);
     const announcements = ref<IAnnouncementSummary[]>([]);
 
-    const firstAnnouncement = computed(() => announcements.value?.[0]);
-
     const createAnnouncement = async () => {
         const href = await announcementStore.create();
         router.push(href);
@@ -82,23 +80,23 @@
                         <div class="icon">
                             <span class="material-symbols-rounded"> add </span>
                         </div>
-                        <h3>New Announcement</h3>
-                        <p>Create a new announcement from scratch!</p>
+                        <h3>New Announcement Draft</h3>
+                        <p>Create a new announcement draft from scratch.</p>
                     </div>
                     <div
                         class="card"
-                        disabled="true"
                         data-hide-mobile
+                        @click="router.push('/announcements/temporary')"
                     >
                         <div class="icon">
                             <span class="material-symbols-rounded">
-                                construction
+                                chat_dashed
                             </span>
                         </div>
-                        <h3>Not yet implemented</h3>
+                        <h3>Quick Send</h3>
                         <p>
-                            post one-time announcements on Discord, edit sent
-                            announcements & more
+                            Send the announcement instantly without creating a
+                            saved draft.
                         </p>
                     </div>
                 </div>
