@@ -72,19 +72,50 @@
                 <br />
                 <br />
                 Important things to remember:
-                <ul>
-                    <li>Keep posts short and to the point</li>
-                    <li>Use emojis to make posts more engaging 🎉</li>
-                    <li>Highlight <strong>important information</strong> with bold text</li>
-                    <li>
-                        Format your dates and times consistently:
-                        <ul>
-                            <li>English: <kbd>{{ date.toLocaleDateString("en-GB", {dateStyle: "long"}) }}, {{ date.toLocaleTimeString("en-GB", { timeStyle: "short" }) }}</kbd></li>
-                            <li>German: <kbd>{{ date.toLocaleDateString("de-DE", {dateStyle: "long"}) }}, {{ date.toLocaleTimeString("de-DE", { timeStyle: "short" }) }}</kbd></li>
-                        </ul>
-                    </li>
-                </ul>
             </p>
+            <ul>
+                <li>Keep posts short and to the point</li>
+                <li>Use emojis to make posts more engaging 🎉</li>
+                <li>
+                    Highlight <strong>important information</strong> with bold
+                    text
+                </li>
+                <li>
+                    Format your dates and times consistently:
+                    <ul>
+                        <li>
+                            English:
+                            <kbd
+                                >{{
+                                    date.toLocaleDateString("en-GB", {
+                                        dateStyle: "long",
+                                    })
+                                }},
+                                {{
+                                    date.toLocaleTimeString("en-GB", {
+                                        timeStyle: "short",
+                                    })
+                                }}</kbd
+                            >
+                        </li>
+                        <li>
+                            German:
+                            <kbd
+                                >{{
+                                    date.toLocaleDateString("de-DE", {
+                                        dateStyle: "long",
+                                    })
+                                }},
+                                {{
+                                    date.toLocaleTimeString("de-DE", {
+                                        timeStyle: "short",
+                                    })
+                                }}</kbd
+                            >
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </Modal>
 </template>
@@ -129,7 +160,8 @@
         white-space: nowrap;
     }
 
-    p, span {
+    p,
+    span {
         color: var(--fg-text);
     }
 </style>

@@ -13,10 +13,12 @@
     });
 
     const buildText = () => {
-        const fullText =
-            props.modelValue.message.de +
-            "\n\n---\n\n" +
-            props.modelValue.message.en;
+        const fullText = [
+            props.modelValue.message.de,
+            props.modelValue.message.en,
+        ]
+            .filter(Boolean)
+            .join("\n\n---\n\n");
 
         // replace markdown with unicode
 

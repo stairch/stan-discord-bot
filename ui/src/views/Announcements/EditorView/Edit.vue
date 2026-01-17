@@ -14,6 +14,7 @@
 
     const props = defineProps({
         modelValue: { type: Object as PropType<IAnnouncement>, required: true },
+        temporary: { type: Boolean, required: true },
     });
 
     const openLanguage = ref<string | null>(null);
@@ -58,6 +59,18 @@
 
     const emit = defineEmits(["update:modelValue"]);
 
+    const onEdit = () => {
+        // temporary: cache to session storage and emit update
+        // !temporary: wait for save and send to API (other event handler)
+        if (!props.temporary) return;
+
+        window.sessionStorage.setItem(
+            "temporaryAnnouncement",
+            JSON.stringify(announcement.value)
+        );
+        emit("update:modelValue", announcement.value);
+    };
+
     const save = async () => {
         let result;
 
@@ -84,6 +97,17 @@
         }
     };
 
+    const clearAnnouncement = () => {
+        announcement.value = {
+            title: "",
+            message: {
+                en: "",
+                de: "",
+            },
+        };
+        emit("update:modelValue", announcement.value);
+    };
+
     const onKeydown = (event: KeyboardEvent) => {
         // Save on Ctrl + S
         if (event.key === "s" && (event.ctrlKey || event.metaKey)) {
@@ -93,9 +117,11 @@
     };
 
     onMounted(() => {
+        if (props.temporary) return;
         window.addEventListener("keydown", onKeydown);
     });
     onUnmounted(() => {
+        if (props.temporary) return;
         window.removeEventListener("keydown", onKeydown);
     });
 </script>
@@ -107,14 +133,24 @@
             type="text"
             v-model="announcement.title"
             placeholder="Title"
+            @input="onEdit"
         />
         <button
             @click="deleteAnnouncement"
             class="secondary danger small"
             :disabled="!announcement.id"
+            v-if="!temporary"
         >
             <span class="material-symbols-rounded">delete</span>
             Delete
+        </button>
+        <button
+            @click="clearAnnouncement"
+            class="secondary danger small"
+            v-else
+        >
+            <span class="material-symbols-rounded">delete</span>
+            Clear
         </button>
     </div>
     <MultiFileMonaco
@@ -123,6 +159,7 @@
         offers-help
         @switch-tab="openLanguage = $event"
         @help="helpModal?.open"
+        @change="onEdit"
     />
     <div class="actions">
         <button
@@ -135,6 +172,7 @@
         <button
             @click="save"
             :disabled="saveDisabled"
+            v-if="!temporary"
         >
             {{ announcement.id ? "Save" : "Create" }}
         </button>

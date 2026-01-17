@@ -14,6 +14,13 @@ const router = createRouter({
             component: () => import("../views/Announcements/Overview.vue"),
         },
         {
+            path: "/announcements/temporary",
+            name: "announcementTemporary",
+            component: () =>
+                import("../views/Announcements/EditorView/index.vue"),
+            props: { temporary: true },
+        },
+        {
             path: "/announcements/:id",
             name: "announcementWithId",
             component: () =>

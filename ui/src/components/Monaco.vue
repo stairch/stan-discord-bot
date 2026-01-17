@@ -22,7 +22,7 @@
         },
     });
 
-    const emit = defineEmits(["update:modelValue"]);
+    const emit = defineEmits(["update:modelValue", "change"]);
 
     let editor: monaco.editor.IStandaloneCodeEditor;
     const container = ref<HTMLDivElement>();
@@ -44,6 +44,7 @@
         editor.getModel()?.onDidChangeContent(() => {
             latestValue = editor.getValue();
             emit("update:modelValue", latestValue);
+            emit("change");
         });
 
         initialiseMonacoCommands(editor);

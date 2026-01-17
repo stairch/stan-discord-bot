@@ -8,6 +8,10 @@
     import WhatsApp from "./WhatsApp.vue";
     import Schedule from "./Schedule.vue";
 
+    const props = defineProps<{
+        temporary: boolean;
+    }>();
+
     const announcement = ref<IAnnouncement>({
         title: "",
         message: {
@@ -40,12 +44,26 @@
             component: WhatsApp,
             icon: "whatsapp",
         },
-        {
-            name: "Schedule",
-            component: Schedule,
-            icon: "schedule",
-        },
     ];
+    if (!props.temporary) {
+        TABS.push(
+            ...[
+                {
+                    name: "Schedule",
+                    component: Schedule,
+                    icon: "schedule",
+                },
+            ]
+        );
+    } else {
+        const cachedAnnouncement = window.sessionStorage.getItem(
+            "temporaryAnnouncement"
+        );
+        if (cachedAnnouncement) {
+            announcement.value = JSON.parse(cachedAnnouncement);
+        }
+    }
+
     let requestTab = route.query.tab as string;
     const activeTab = ref<number>(0);
     activeTab.value = requestTab
@@ -68,7 +86,7 @@
         const announcementId = Number(route.params.id);
         if (announcementId) {
             announcement.value = await api.announements.get(announcementId);
-        } else {
+        } else if (!props.temporary) {
             announcement.value = {
                 title: "",
                 message: {
@@ -103,6 +121,7 @@
             <component
                 :is="TABS[activeTab].component"
                 v-model="announcement"
+                :temporary="temporary"
             />
         </div>
     </main>

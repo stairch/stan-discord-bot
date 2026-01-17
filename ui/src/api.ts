@@ -177,14 +177,23 @@ export const api = {
                 return data;
             },
         },
-        async publish(
-            id: number,
-            scope: AnnouncementScope,
-            server: string,
-            type: string,
-            persona: string,
-            image?: File
-        ): Promise<string | null> {
+        async publish({
+            id,
+            announcement,
+            scope,
+            server,
+            type,
+            persona,
+            image,
+        }: {
+            id?: number;
+            announcement?: IAnnouncement;
+            scope: AnnouncementScope;
+            server: string;
+            type: string;
+            persona: string;
+            image?: File;
+        }): Promise<string | null> {
             const res = await fetch(`/api/announcements/${id}/publish`, {
                 method: "POST",
                 headers: {
@@ -192,6 +201,7 @@ export const api = {
                 },
                 body: JSON.stringify({
                     id,
+                    announcement,
                     scope,
                     server,
                     type,

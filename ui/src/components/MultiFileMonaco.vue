@@ -40,7 +40,7 @@
         { immediate: true }
     );
 
-    const emit = defineEmits(["help", "switchTab"]);
+    const emit = defineEmits(["help", "switchTab", "change"]);
 
     watch(
         () => open.value,
@@ -73,6 +73,7 @@
         <div class="file">
             <Monaco
                 v-model="props.modelValue[open!]"
+                @change="emit('change')"
                 :language="props.language"
             />
         </div>

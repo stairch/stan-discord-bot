@@ -24,6 +24,7 @@
 
     const props = defineProps({
         modelValue: { type: Object as PropType<IAnnouncement>, required: true },
+        temporary: { type: Boolean, required: true },
     });
     const announcement = computed(() => ({ ...props.modelValue }));
 
@@ -69,14 +70,16 @@
     const postAnnouncement = async () => {
         modal.value!.onLoading();
 
-        const error = await api.announements.publish(
-            announcement.value.id!,
-            "discord",
-            server.value,
-            type.value,
-            persona.value,
-            img.value ?? undefined
-        );
+        const error = await api.announements.publish({
+            id: props.temporary ? undefined : announcement.value.id!,
+            announcement: props.temporary ? announcement.value : undefined,
+
+            scope: "discord",
+            server: server.value,
+            type: type.value,
+            persona: persona.value,
+            image: img.value ?? undefined,
+        });
         if (!error) {
             modal.value!.onSuccess("Announcement posted!");
         } else {
