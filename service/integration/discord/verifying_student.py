@@ -22,7 +22,7 @@ from db.datamodels.verified_user import UserState
 from integration.email.client import EmailClient
 
 
-HACKSTAIR_UPCOMING = True
+HACKSTAIR_UPCOMING = False
 
 
 class VerificationState(Enum):
