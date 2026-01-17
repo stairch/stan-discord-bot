@@ -34,7 +34,7 @@
         // bold text is surrounded by * or **
         const boldRegex = /\*\*(.*?)\*\*|\*(.*?)\*/g;
         const boldReplacer = (match: string, ...groups: string[]) => {
-            const p = groups.filter((g) => g)[0];
+            const p = groups.filter((g) => g)[0]!;
             return toUnicodeVariant(p, "bold sans");
         };
         const boldText = hyperlinkText.replace(boldRegex, boldReplacer);
@@ -42,7 +42,7 @@
         // italic text is surrounded by _ or __
         const italicRegex = /__(.*?)__|_(.*?)_/g;
         const italicReplacer = (match: string, ...groups: string[]) => {
-            const p = groups.filter((g) => g)[0];
+            const p = groups.filter((g) => g)[0]!;
             return toUnicodeVariant(p, "italic sans");
         };
         const italicText = boldText.replace(italicRegex, italicReplacer);

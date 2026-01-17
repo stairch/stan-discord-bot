@@ -11,7 +11,7 @@
     }>();
 
     const toIsoString = (date: Date) => {
-        return date.toISOString().split("T")[0];
+        return date.toISOString().split("T")[0]!;
     };
 
     const date = computed<string>({

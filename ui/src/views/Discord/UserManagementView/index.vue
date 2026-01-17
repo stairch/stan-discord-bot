@@ -18,9 +18,9 @@
                 return;
             }
 
-            const file = input.files[0];
+            const file = input.files[0]!;
             const data = await file.text();
-            const header = data.split("\n")[0];
+            const header = data.split("\n")[0]!;
             let error = null;
 
             if (type === "students") {

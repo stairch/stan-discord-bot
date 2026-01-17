@@ -47,9 +47,9 @@
     const addSchedule = () => {
         schedules.value.push({
             scope: "discord",
-            persona: personas.value[0],
-            type: types.value[0],
-            server: discordServers.value[0].id,
+            persona: personas.value[0]!,
+            type: types.value[0]!,
+            server: discordServers.value[0]!.id,
             time: "12:00:00",
             days: [],
         });

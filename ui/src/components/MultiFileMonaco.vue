@@ -35,7 +35,7 @@
                 return;
             }
 
-            open.value = Object.keys(newFiles)[0];
+            open.value = Object.keys(newFiles)[0]!;
         },
         { immediate: true }
     );

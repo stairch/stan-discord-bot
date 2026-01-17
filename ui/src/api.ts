@@ -292,7 +292,7 @@ export const api = {
             },
             async avatarByName(avatar: string): Promise<string> {
                 const definition = await this.definition();
-                return this.avatarByPath(definition[avatar].avatar);
+                return this.avatarByPath(definition[avatar]!.avatar);
             },
         },
         announcementTypes: {
@@ -310,7 +310,7 @@ export const api = {
             },
             async roleByType(announcementType: string): Promise<string> {
                 const definition = await this.definition();
-                return definition[announcementType].role;
+                return definition[announcementType]!.role;
             },
         },
     },

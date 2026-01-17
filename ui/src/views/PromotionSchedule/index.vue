@@ -138,7 +138,7 @@
                 tasks.push({
                     name: name,
                     responsible: event.responsible,
-                    due: schedule.reminders[schedule.reminders.length - i - 1],
+                    due: schedule.reminders[schedule.reminders.length - i - 1]!,
                 });
             }
             tasks.push({

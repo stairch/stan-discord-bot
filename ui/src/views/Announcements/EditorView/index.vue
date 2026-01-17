@@ -71,7 +71,7 @@
         : 0;
 
     watch(activeTab, (x) => {
-        const query = { tab: TABS[x].name };
+        const query = { tab: TABS[x]!.name };
         router.replace({ query });
     });
 
@@ -119,7 +119,7 @@
                 </span>
             </div>
             <component
-                :is="TABS[activeTab].component"
+                :is="TABS[activeTab]!.component"
                 v-model="announcement"
                 :temporary="temporary"
             />

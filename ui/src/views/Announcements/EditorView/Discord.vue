@@ -34,11 +34,11 @@
 
     onMounted(async () => {
         servers.value = await api.announements.discordServers();
-        server.value = servers.value[0].id;
+        server.value = servers.value[0]!.id;
         personas.value = await api.announements.personas();
-        persona.value = personas.value[0];
+        persona.value = personas.value[0]!;
         types.value = await api.announements.types();
-        type.value = types.value[0];
+        type.value = types.value[0]!;
         loadAvatar();
         loadRole();
     });
@@ -98,7 +98,7 @@
         input.onchange = (e) => {
             const files = (e.target as HTMLInputElement).files;
             if (files && files.length > 0) {
-                img.value = files[0];
+                img.value = files[0]!;
             }
         };
         input.click();
