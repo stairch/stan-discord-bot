@@ -13,6 +13,7 @@ from common.constants import STAIR_GREEN
 from common.publish_data import PublishData
 from common.result import Result
 from db.db import Database
+from db.datamodels.announcement import Announcement
 
 from .stan import Stan as DiscordStan
 
@@ -28,7 +29,12 @@ class Announcer(IAnnouncer):
         self, data: PublishData
     ) -> Result[None]:
         """Publish an announcement to Discord."""
-        announcement = self._db.get_announcement(data.announcement_id)
+        announcement: Announcement | None
+
+        if data.announcement_id is not None:
+            announcement = self._db.get_announcement(data.announcement_id)
+        if data.announcement is not None:
+            announcement = data.announcement
 
         if not announcement:
             return Result.err(error="Announcement not found", status=404)

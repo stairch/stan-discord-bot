@@ -133,3 +133,11 @@ class Announcement:
             "<unknown>",
             id=id_ or int(time.time()),
         )
+
+    @classmethod
+    def safe_deserialise(cls, obj: Any, author: str) -> Announcement | None:
+        """Deserialise the object, returning None on failure"""
+        announcement, _ = cls.deserialise(obj, author)
+        if announcement is None:
+            return None
+        return announcement

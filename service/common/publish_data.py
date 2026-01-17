@@ -10,13 +10,13 @@ from dataclasses import dataclass
 from pyaddict import JDict
 from aiohttp import web
 
-from db.datamodels.announcement import AnnouncementType, AnnouncementScope
+from db.datamodels.announcement import Announcement, AnnouncementType, AnnouncementScope
 from webserver.msal_auth.auth import get_username
 from integration.discord.persona import Persona
 
 
 @dataclass
-class PublishData:
+class PublishData:  # pylint: disable=too-many-instance-attributes
     """publish data datamodel"""
 
     scope: AnnouncementScope
@@ -24,7 +24,8 @@ class PublishData:
     persona: Persona
     server: int
     image: str | None
-    announcement_id: int
+    announcement_id: int | None
+    announcement: Announcement | None
     user: str | None
 
     @classmethod
@@ -50,7 +51,10 @@ class PublishData:
             persona=persona,
             user=username,
             image=data.optionalGet("image", str),
-            announcement_id=data.ensureCast("id", int),
+            announcement_id=data.optionalCast("id", int),
+            announcement=Announcement.safe_deserialise(
+                data.optionalGet("announcement", dict), username or ""
+            ),
         )
 
     @property

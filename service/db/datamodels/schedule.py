@@ -126,4 +126,5 @@ class AnnouncementSchedule:  # pylint: disable=too-many-instance-attributes
             None,
             self.announcement.id,
             None,
+            None,
         )

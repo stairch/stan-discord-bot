@@ -112,7 +112,7 @@ class ModuleChannelSync:
         old_categories: set[discord.CategoryChannel] = set()
 
         permissions: dict[
-            discord.Role | discord.Member, discord.PermissionOverwrite
+            discord.Role | discord.Member | discord.Object, discord.PermissionOverwrite
         ] = {
             discord_guild.default_role: discord.PermissionOverwrite(
                 view_channel=False, send_messages=False
