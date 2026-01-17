@@ -45,6 +45,12 @@ class HsluStudent:  # pylint: disable=too-many-instance-attributes
     study_model: StudyModel
     email: str  # e.g., a.b@stud.hslu.ch
 
+    def email_matches(self, email: str) -> bool:
+        """Check whether the provided email matches the student's email, ignoring the domain."""
+        local_part = self.email.split("@")[0]
+        provided_local_part = email.split("@")[0]
+        return local_part.lower() == provided_local_part.lower()
+
     @classmethod
     def _from_csv_dict(cls, value: dict[str, Any]) -> HsluStudent:
         data = JDict(value)

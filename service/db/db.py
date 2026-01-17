@@ -94,7 +94,7 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
         new_students = []
 
         for student in previous_students:
-            if any(x.email == student.email for x in students):
+            if any(x.email_matches(student.email) for x in students):
                 continue
             self._logger.debug("%s is now a graduate", student)
             self._users_table.update(
@@ -104,7 +104,7 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
             new_graduates.append(student)
 
         for student in previous_graduates:
-            if not any(x.email == student.email for x in students):
+            if not any(x.email_matches(student.email) for x in students):
                 continue
             self._logger.debug("%s is now a student again", student)
             self._users_table.update(
@@ -118,6 +118,13 @@ class Database(metaclass=Singleton):  # pylint: disable=too-many-instance-attrib
     def student_by_email(self, email: str) -> HsluStudent | None:
         """Search for a student by email. Returns None if not found."""
         result = self._hslu_students_table.find_one(email=email)
+        if result:
+            return HsluStudent(**result)
+        # try matching ignoring domain
+        clause = self._hslu_students_table.table.columns.email.like(
+            f"{email.split('@')[0]}@%"
+        )
+        result = self._hslu_students_table.find_one(clause)
         if result:
             return HsluStudent(**result)
         return None
