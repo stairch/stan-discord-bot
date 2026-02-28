@@ -12,6 +12,7 @@ services:
             - db
         env_file:
             - .env
+        restart: always
     postgres:
         image: postgres:16-alpine
         volumes:
@@ -20,6 +21,7 @@ services:
             - db
         env_file:
             - .env
+        restart: always
     nginx:
         build:
             context: ui
